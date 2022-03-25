@@ -13,11 +13,11 @@ export default function Index() {
       >
         <Grid item xs={1}></Grid>
         <Grid item xs={10}  style={{
-          
           width: '100vw',
           height: '100vh',
           spacing: 0,
-          justify: 'space-around'
+          justify: 'space-around',
+
         }}> 
           <ParticleBackground />
           <HomeScreenOptionsContainer />

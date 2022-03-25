@@ -8,7 +8,7 @@ const particleCongfig = {
         }
       },
       color: {
-        value: "#ffffff"
+        value: "#babcc2"
       },
       shape: {
         type: "circle",
@@ -26,7 +26,7 @@ const particleCongfig = {
         }
       },
       opacity: {
-        value: 0.5,
+        value: 0.2,
         random: false,
         anim: {
           enable: false,
@@ -48,7 +48,7 @@ const particleCongfig = {
       line_linked: {
         enable: true,
         distance: 150,
-        color: "#ffffff",
+        color: "#babcc2",
         opacity: 0.4,
         width: 1
       },
