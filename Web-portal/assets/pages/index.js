@@ -1,18 +1,29 @@
-import * as React from 'react';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-
+import { Container, Grid } from "@mui/material";
+import * as React from "react";
+import HomeScreenOptionsContainer from "../ReactComponents/Home/HomeScreenOptionsContainer";
+import Navbar from "../ReactComponents/Home/Navbar";
+import ParticleBackground from "../ReactComponents/Home/ParticleBackground";
 
 export default function Index() {
   return (
-    <Container maxWidth="sm">
-      <Box sx={{ my: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Next.js example
-        </Typography>
+    <div>
+      {/* <Navbar /> */}
+      <Grid
        
-      </Box>
-    </Container>
+      >
+        <Grid item xs={1}></Grid>
+        <Grid item xs={10}  style={{
+          
+          width: '100vw',
+          height: '100vh',
+          spacing: 0,
+          justify: 'space-around'
+        }}> 
+          <ParticleBackground />
+          <HomeScreenOptionsContainer />
+        </Grid>
+        <Grid item xs={1}></Grid>
+      </Grid>
+    </div>
   );
 }

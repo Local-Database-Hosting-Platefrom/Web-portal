@@ -13,10 +13,14 @@
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.8.1",
     "@material-ui/core": "^4.12.3",
+    "@mui/icons-material": "^5.5.1",
     "@mui/material": "^5.5.2",
+    "material-icons": "^1.10.8",
     "next": "12.1.0",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-tsparticles": "^1.42.4",
+    "tsparticles": "^1.42.4"
   },
   "devDependencies": {
     "eslint": "8.11.0",
