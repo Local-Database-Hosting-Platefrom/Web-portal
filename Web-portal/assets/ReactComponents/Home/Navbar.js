@@ -3,66 +3,122 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Logo from "../../public/LOGO1.png";
-import Tabs from "@mui/material/Tabs";
+
 import Tab from "@mui/material/Tab";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
-import Image from "next/image";
+
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-function LinkTab(props) {
-  return (
-    <Tab
-      component="a"
-      onClick={(event) => {
-        event.preventDefault();
-      }}
-      {...props}
-    />
-  );
-}
-export default function Navbar() {
-  const [value, setValue] = React.useState(0);
-  const [anchorEToken, setAnchorEToken] = React.useState(null);
-  const [anchorEEndPoint, setAnchorEndPoint] = React.useState(null);
-  const [anchorEDocumentation, setAnchorEDocumentation] = React.useState(null);
-  
-  const openToken = Boolean(anchorEToken);
-  const openEndPoint = Boolean(anchorEEndPoint);
-  const openDocumentation = Boolean(anchorEDocumentation);
+import { KeyboardArrowDownOutlined } from "@mui/icons-material";
+import { Link } from "@mui/material";
 
+export default function Navbar() {
+  //Color controls
+  const [serviceBtnColorControl, setServiceBtnColorControl] =
+    React.useState(false);
+  const [integrationBtnColorControl, setIntegrationBtnColorControl] =
+    React.useState(false);
+  const [documentationBtnColorControl, setDocumentationBtnColorControl] =
+    React.useState(false);
+  const [contactBtnColorControl, setContactBtnColorControl] =
+    React.useState(false);
+  const [getHostConnectorBtnColorControl, setHostConnectorBtnColorControl] =
+    React.useState(false);
+  const [signInBtnColorControl, setSignInBtnColorControl] =
+    React.useState(false);
+
+  const [anchorEToken, setAnchorEToken] = React.useState(null);
+  const openToken = Boolean(anchorEToken);
   const handleClickToken = (event) => {
     setAnchorEToken(event.currentTarget);
   };
   const handleCloseToken = () => {
     setAnchorEToken(null);
   };
+  const handleOptionSelection = (event, index) => {
+    switch (index) {
+      case 0:
+        //Services option
+        handleClickToken(event);
+        setServiceBtnColorControl(true);
+        setIntegrationBtnColorControl(false);
+        setDocumentationBtnColorControl(false);
+        setContactBtnColorControl(false);
+        setHostConnectorBtnColorControl(false);
+        setSignInBtnColorControl(false);
+        break;
+      case 1:
+        //Integration option
+        setServiceBtnColorControl(false);
+        setIntegrationBtnColorControl(true);
+        setDocumentationBtnColorControl(false);
+        setContactBtnColorControl(false);
+        setHostConnectorBtnColorControl(false);
+        setSignInBtnColorControl(false);
+        break;
+        break;
+      case 2:
+        //Documentation option
+        setServiceBtnColorControl(false);
+        setIntegrationBtnColorControl(false);
+        setDocumentationBtnColorControl(true);
+        setContactBtnColorControl(false);
+        setHostConnectorBtnColorControl(false);
+        setSignInBtnColorControl(false);
+        break;
 
-  const handleClickEndPoint = (event) => {
-    setAnchorEndPoint(event.currentTarget);
-  };
-  const handleCloseEndPoint = () => {
-    setAnchorEndPoint(null);
+      case 3:
+        //Download option
+        setServiceBtnColorControl(false);
+        setIntegrationBtnColorControl(false);
+        setDocumentationBtnColorControl(false);
+
+        setHostConnectorBtnColorControl(true);
+        setContactBtnColorControl(false);
+        setSignInBtnColorControl(false);
+        break;
+        break;
+      case 4:
+        //Contact option
+        setServiceBtnColorControl(false);
+        setIntegrationBtnColorControl(false);
+        setDocumentationBtnColorControl(false);
+
+        setHostConnectorBtnColorControl(false);
+        setContactBtnColorControl(true);
+        setSignInBtnColorControl(false);
+        break;
+      case 5:
+        //Sign in option
+        setServiceBtnColorControl(false);
+        setIntegrationBtnColorControl(false);
+        setDocumentationBtnColorControl(false);
+        setContactBtnColorControl(false);
+        setHostConnectorBtnColorControl(false);
+        setSignInBtnColorControl(true);
+        break;
+        
+    }
   };
 
-  const handleClickDocumnetation = (event) => {
-    setAnchorEDocumentation(event.currentTarget);
-  };
-  const handleCloseDocumnetation = () => {
-    setAnchorEDocumentation(null);
-  };
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" elevation={0}>
+      <AppBar
+        position="static"
+        elevation={0}
+        sx={{
+          borderBottom: 1,
+          borderWidth: 0.1,
+          borderColor: "#333333",
+          paddingLeft: "10%",
+          paddingRight: "5%",
+        }}
+      >
         <Toolbar>
           <ConnectWithoutContactIcon
             fontSize="large"
-            style={{ color: "yellow" }}
+            sx={{ fontSize: 40 }}
+            style={{ color: "white" }}
           />
           <Typography
             variant="h4"
@@ -74,22 +130,28 @@ export default function Navbar() {
                 sm: "block",
                 marginLeft: "1%",
                 fontWeight: "bold",
+                fontFamily: "Roboto Mono,monospace",
               },
             }}
           >
             L D H
           </Typography>
           {/* <Image src={require('../../public/LOGO1.png')} width="60" height="60"/> */}
-          <div style={{marginLeft:"2%"}}>
+          <div style={{ marginLeft: "5%" }}>
             <Button
               id="token-button"
               aria-controls={openToken ? "token-menu" : undefined}
               aria-haspopup="true"
               aria-expanded={openToken ? "true" : undefined}
-              onClick={handleClickToken}
-              style={{color:"white"}}
+              onClick={(e) => handleOptionSelection(e, 0)}
+              style={{
+                color: serviceBtnColorControl ? "white" : "#b8bfbf",
+                textTransform: "none",
+                fontSize: 14,
+              }}
+              endIcon={<KeyboardArrowDownOutlined fontSize="large" />}
             >
-              Tokens
+              Services
             </Button>
             <Menu
               id="token-menu"
@@ -99,97 +161,101 @@ export default function Navbar() {
               MenuListProps={{
                 "aria-labelledby": "token-button",
               }}
-            >
-              <MenuItem onClick={handleCloseToken}>Renew token</MenuItem>
-              <MenuItem onClick={handleCloseToken}>View details</MenuItem>
-            </Menu>
-          </div>
-          <div style={{marginLeft:"2%"}}>
-            <Button
-              id="end-points-button"
-              aria-controls={openEndPoint ? "end-points-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={openEndPoint ? "true" : undefined}
-              onClick={handleClickEndPoint}
-              style={{color:"white"}}
-            >
-              End-points
-            </Button>
-            <Menu
-              id="end-points-menu"
-              anchorEl={anchorEEndPoint}
-              open={openEndPoint}
-              onClose={handleCloseEndPoint}
-              MenuListProps={{
-                "aria-labelledby": "end-points-button",
+              PaperProps={{
+                style: {
+                  width: "100%",
+                  marginTop: "2%",
+                  height: "20%",
+                },
               }}
             >
-              <MenuItem onClick={handleCloseEndPoint}>Host Access URL</MenuItem>
-              <MenuItem onClick={handleCloseEndPoint}>Remote Database URL</MenuItem>
+              {/* <MenuItem onClick={handleCloseToken}>Renew token</MenuItem>
+              <MenuItem onClick={handleCloseToken}>View details</MenuItem> */}
             </Menu>
           </div>
-          <div style={{marginLeft:"2%"}}>
-            <Button
-              id="documentation-button"
-              aria-controls={openDocumentation ? "documentation-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={openDocumentation ? "true" : undefined}
-              onClick={handleClickDocumnetation}
-              style={{color:"white"}}
-            >
-              How to use?
-            </Button>
-            <Menu
-              id="documentation-menu"
-              anchorEl={anchorEDocumentation}
-              open={openDocumentation}
-              onClose={handleCloseDocumnetation}
-              MenuListProps={{
-                "aria-labelledby": "documentation-button",
-              }}
-            >
-              <MenuItem onClick={handleCloseDocumnetation}>Host Access URL</MenuItem>
-              <MenuItem onClick={handleCloseDocumnetation}>Remote Database Access URL</MenuItem>
-            
-            </Menu>
-          </div>
-          {/* <Box>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              aria-label="nav tabs example"
-            >
-              <LinkTab style={{ color: "white" }} label="Tokens" href="/#" />
-              <LinkTab
-                style={{ color: "white" }}
-                label="End-points"
-                href="/#"
-              />
-              <LinkTab
-                style={{ color: "white" }}
-                label="Implementation"
-                href="/#"
-              />
-              <LinkTab
-                style={{ color: "white" }}
-                label="Host connector"
-                href="/#"
-              />
-            </Tabs>
-          </Box> */}
+
+          <Button
+            color="secondary"
+            style={{
+              marginLeft: "1%",
+              color: integrationBtnColorControl ? "white" : "#b8bfbf",
+              textTransform: "none",
+              fontSize: 14,
+            }}
+            onClick={(e) => {
+              handleOptionSelection(e, 1);
+            }}
+          >
+            Integration
+          </Button>
+          <Button
+            color="secondary"
+            style={{
+              marginLeft: "1%",
+              color: documentationBtnColorControl ? "white" : "#b8bfbf",
+              textTransform: "none",
+              fontSize: 14,
+            }}
+            onClick={(e) => {
+              handleOptionSelection(e, 2);
+            }}
+          >
+            Documentation
+          </Button>
+          <Button
+            color="secondary"
+            style={{
+              marginLeft: "1%",
+              color: getHostConnectorBtnColorControl ? "white" : "#b8bfbf",
+              textTransform: "none",
+              fontSize: 14,
+            }}
+            onClick={(e) => {
+              handleOptionSelection(e, 3);
+            }}
+          >
+            Downloads
+          </Button>
+
           <Box sx={{ flexGrow: 1 }} />
 
-          <Box>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              aria-label="nav tabs example"
-            >
-              <LinkTab style={{ color: "white" }} label="About us" href="/#" />
-              <LinkTab style={{ color: "white" }} label="Sign in" href="/#" />
-              <LinkTab style={{ color: "white" }} label="Sign up" href="/#" />
-            </Tabs>
-          </Box>
+          <Button
+            color="secondary"
+            style={{
+              marginRight: "1%",
+              color: contactBtnColorControl ? "white" : "#b8bfbf",
+              textTransform: "none",
+              fontSize: 14,
+            }}
+            onClick={(e) => {
+              handleOptionSelection(e, 4);
+            }}
+          >
+            Contact
+          </Button>
+          <Button
+            color="secondary"
+            style={{
+              marginRight: "1%",
+              color: signInBtnColorControl ? "white" : "#b8bfbf",
+              textTransform: "none",
+              fontSize: 14,
+            }}
+            onClick={(e) => {
+              handleOptionSelection(e, 5);
+            }}
+          >
+            Sign in
+          </Button>
+          <Button
+            variant="contained"
+            style={{ color: "black", backgroundColor: "white" }}
+            onClick={(e) => {
+              handleOptionSelection(e, 6);
+            }}
+          >
+            Sign up
+          </Button>
         </Toolbar>
       </AppBar>
     </Box>

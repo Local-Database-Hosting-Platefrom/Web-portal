@@ -5,7 +5,7 @@ const HomeScreenOptionsContainer = () => {
   return (
     <div
       style={{
-        backgroundColor: "#0f0b28",
+        backgroundColor: "#080808",
         width: "100vw",
         height: "100vh",
         spacing: 0,

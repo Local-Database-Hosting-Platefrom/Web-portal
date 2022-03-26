@@ -5,13 +5,29 @@ const theme = createTheme({
   palette: {
     mode:"light",
     primary: {
-      light: '#0f0b28',
-      main: '#0f0b28',
-      dark: "#4856E8",
+      light: '#080808',
+      main: '#080808',
+      dark: "#080808",
       contrastText: '#FFFFFF',
     },
     
   },
+  typography: {
+    fontFamily: [
+      '-apple-system',
+      'Roboto Mono',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    
+  }
 });
 
 export default theme;

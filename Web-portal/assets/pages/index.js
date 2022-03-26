@@ -19,7 +19,7 @@ export default function Index() {
           justify: 'space-around',
 
         }}> 
-          <ParticleBackground />
+          {/* <ParticleBackground /> */}
           <HomeScreenOptionsContainer />
         </Grid>
         <Grid item xs={1}></Grid>
