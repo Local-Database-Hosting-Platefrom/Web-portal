@@ -6,11 +6,11 @@ import Typography from "@mui/material/Typography";
 
 import Tab from "@mui/material/Tab";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
-
+import RestoreIcon from '@mui/icons-material/Restore';
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import { KeyboardArrowDownOutlined } from "@mui/icons-material";
-import { Link } from "@mui/material";
+import { Container, Grid, Link, MenuItem } from "@mui/material";
 
 export default function Navbar() {
   //Color controls
@@ -97,7 +97,6 @@ export default function Navbar() {
         setHostConnectorBtnColorControl(false);
         setSignInBtnColorControl(true);
         break;
-        
     }
   };
 
@@ -161,16 +160,141 @@ export default function Navbar() {
               MenuListProps={{
                 "aria-labelledby": "token-button",
               }}
+              anchorOrigin={{
+                vertical: "bottom",
+              }}
               PaperProps={{
                 style: {
                   width: "100%",
                   marginTop: "2%",
-                  height: "20%",
+                  height: "25%",
                 },
               }}
             >
-              {/* <MenuItem onClick={handleCloseToken}>Renew token</MenuItem>
-              <MenuItem onClick={handleCloseToken}>View details</MenuItem> */}
+              <Container>
+                <div  style={{ display: "inline",position:"absolute"}}>
+                  {/* Access token services */}
+                  
+                  <Typography
+                    variant="h6"
+                    noWrap
+                    component="div"
+                    style={{
+                        borderBottomStyle:"groove",
+                        borderBottomWidth:"0.5",
+                        fontWeight:"bold",
+                        fontFamily: "Roboto Mono,monospace",
+                    }}
+                  >
+                    Access token services
+                  </Typography>
+
+                  {/* Renew token */}
+                  <div>
+                  <div style={{position:"relative",top:10,display:"inline",marginLeft:"5%"}}>
+                    <RestoreIcon style={{fontSize:"35"}} />
+                  </div>
+                  <Typography
+                    variant="p"
+                    noWrap
+                    component="div"
+                    style={{
+                        display:"inline",
+                        position:"relative",
+                        top:-1,
+                        left:"5%",
+                        fontFamily: "Roboto Mono,monospace",
+                        borderBottomStyle:"groove"
+                    }}
+                  >
+                    Renew token
+                  </Typography>
+                  </div>
+                   {/* Get token details */}
+                   <div>
+                  <div style={{position:"relative",top:10,display:"inline",marginLeft:"5%"}}>
+                    <RestoreIcon style={{fontSize:"35"}} />
+                  </div>
+                  <Typography
+                    variant="p"
+                    noWrap
+                    component="p"
+                    style={{
+                        display:"inline",
+                        position:"relative",
+                        top:-1,
+                        left:"5%",
+                        fontFamily: "Roboto Mono,monospace",
+                        borderBottom:"groove"
+                    }}
+                  >
+                    Get token details
+                  </Typography>
+                  </div>
+                
+                </div>
+
+                <div style={{ display: "inline",marginLeft:"35%",position:"absolute",width:"30%"}}>
+                  {/* Access token services */}
+                  <Typography
+                    variant="h6"
+                    noWrap
+                    component="div"
+                    style={{
+                        display:"inline",
+                        fontWeight:"bold",
+                        fontFamily: "Roboto Mono,monospace",
+                        borderBottomStyle:"groove",
+                        borderBottomWidth:"0.5"
+                    }}
+                  >
+                    Access URL services
+                  </Typography>
+                  {/* Test Host access url */}
+                  <div>
+                  <div style={{position:"relative",top:10,display:"inline",marginLeft:"5%"}}>
+                    <RestoreIcon style={{fontSize:"35"}} />
+                  </div>
+                  <Typography
+                    variant="p"
+                    noWrap
+                    component="p"
+                    style={{
+                        display:"inline",
+                        position:"relative",
+                        top:-1,
+                        left:"5%",
+                        fontFamily: "Roboto Mono,monospace",
+                        borderBottom:"groove"
+                    }}
+                  >
+                    Test Host access URL
+                  </Typography>
+                  </div>
+                  <div style={{width:"100%"}}>
+                  <div style={{position:"relative",top:10,display:"inline",marginLeft:"5%"}}>
+                    <RestoreIcon style={{fontSize:"35"}} />
+                  </div>
+                  <Typography
+                    variant="p"
+                    noWrap
+                    component="p"
+                    style={{
+                        display:"inline",
+                        position:"relative",
+                        top:-1,
+                        left:"5%",
+                        fontFamily: "Roboto Mono,monospace",
+                        borderBottom:"groove"
+                    }}
+                  >
+                    Test Remote database access URL
+                  </Typography>
+                  </div>
+                  
+                </div>
+              </Container>
+             
             </Menu>
           </div>
 
