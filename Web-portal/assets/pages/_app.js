@@ -25,6 +25,10 @@ export default function MyApp(props) {
           @import
           url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,500;1,100;1,200&display=swap');
         </style>
+        <style>
+          @import
+          url('https://fonts.googleapis.com/css2?family=Anton&family=Dela+Gothic+One&display=swap');
+        </style>
       </Head>
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}

@@ -1,20 +1,21 @@
 import { Box, Grid, Typography } from "@material-ui/core";
 import Navbar from "./Navbar";
+import PunchLineContainer from "./PunchLineContainer";
 
 const HomeScreenOptionsContainer = () => {
   return (
     <div
       style={{
         backgroundColor: "#080808",
-        width: "100vw",
-        height: "100vh",
+        width: "100%",
+        height: "100%",
         spacing: 0,
         justify: "space-around",
       }}
     >
       <Navbar />
-     
-           </div>
+      <PunchLineContainer />
+    </div>
   );
 };
 
