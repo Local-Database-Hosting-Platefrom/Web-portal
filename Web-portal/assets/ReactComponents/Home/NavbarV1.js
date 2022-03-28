@@ -15,7 +15,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import { Button } from "@material-ui/core";
+import { Button, Card, CardContent } from "@material-ui/core";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 import RestoreIcon from "@mui/icons-material/Restore";
 import { useState, useEffect } from "react";
@@ -23,6 +23,11 @@ import { KeyboardArrowDownOutlined } from "@mui/icons-material";
 import { Container, Grid, Link } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import ReplayCircleFilledIcon from "@mui/icons-material/ReplayCircleFilled";
+import InfoIcon from '@mui/icons-material/Info';
+import SpeedIcon from '@mui/icons-material/Speed';
+import StorageIcon from '@mui/icons-material/Storage';
+import SatelliteAltIcon from '@mui/icons-material/SatelliteAlt';
+import InstallDesktopIcon from '@mui/icons-material/InstallDesktop';
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -218,7 +223,7 @@ export default function NavbarV1() {
         style: {
           width: "100%",
           marginTop: "5%",
-          height: "25%",
+          height: "35%",
           borderBottomStyle: "groove",
           borderTopStyle: "groove",
           borderWidth: 1,
@@ -230,28 +235,137 @@ export default function NavbarV1() {
     >
       {/* <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem> */}
-      <Container>
-        <Grid container>
-          <Grid item xs={6}>
-            <h3>Token Services</h3>
-            <div style={{ marginLeft: "1.5rem" }}>
-              {/* Service 1 */}
-              <Grid container>
-                <Grid item xs={1}>
-                  <ReplayCircleFilledIcon style={{fontSize:"3rem"}}/>
+
+      <Grid container>
+        <Grid item xs={4}>
+          {/* <h3 style={{textDecoration:"underline"}}>Token Services</h3> */}
+
+          <div style={{ marginLeft: "1.5rem" }}>
+            {/* Service 1 */}
+            <Card>
+              <CardContent>
+                <Grid container>
+                  <Grid item xs={1}>
+                    <ReplayCircleFilledIcon style={{ fontSize: "3rem" }} />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={10}
+                    style={{ marginLeft: "1rem", marginTop: "0.3rem" }}
+                  >
+                    <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                      Renew access token
+                    </div>
+                    <div style={{ fontSize: "0.7rem" }}>
+                      Send renewal request to admin
+                    </div>
+                  </Grid>
                 </Grid>
-                <Grid item xs={6} style={{padding:"0.2rem"}}>
-                  <div style={{fontSize:"1rem",fontWeight:"bold"}}>Renew access token</div>
-                  <div style={{fontSize:"0.7rem"}}>Send renewal request to admin</div>
+              </CardContent>
+            </Card>
+
+            {/* Service 2 */}
+            <Card style={{ marginTop: "0.5rem" }}>
+              <CardContent>
+                <Grid container style={{ marginTop: "0.5rem" }}>
+                  <Grid item xs={1}>
+                    <InfoIcon style={{ fontSize: "3rem" }} />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={10}
+                    style={{ marginLeft: "1rem", marginTop: "0.3rem" }}
+                  >
+                    <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                      Get details
+                    </div>
+                    <div style={{ fontSize: "0.7rem" }}>Check token status</div>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </div>
-          </Grid>
-          <Grid item xs={6}>
-            <h3>Access URL Services</h3>
-          </Grid>
+              </CardContent>
+            </Card>
+          </div>
         </Grid>
-      </Container>
+        <Grid item xs={4}>
+          {/* <h3 style={{textDecoration:"underline"}}>Access URL Services</h3> */}
+          <div style={{ marginLeft: "1.5rem" }}>
+            {/* Service 1 */}
+            <Card>
+              <CardContent>
+                <Grid container>
+                  <Grid item xs={1}>
+                    <StorageIcon style={{ fontSize: "3rem" }} />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={10}
+                    style={{ marginLeft: "1rem", marginTop: "0.3rem" }}
+                  >
+                    <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                      Host access URL
+                    </div>
+                    <div style={{ fontSize: "0.7rem" }}>
+                      Execute quries and view request responses
+                    </div>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+            <Card style={{ marginTop: "0.5rem" }}>
+              <CardContent>
+                <Grid container style={{ marginTop: "0.5rem" }}>
+                  <Grid item xs={1}>
+                    <SatelliteAltIcon style={{ fontSize: "3rem" }} />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={10}
+                    style={{ marginLeft: "1rem", marginTop: "0.3rem" }}
+                  >
+                    <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                      Remote database access URL
+                    </div>
+                    <div style={{ fontSize: "0.7rem" }}>
+                      View request responses
+                    </div>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+            {/* Service 2 */}
+          </div>
+        </Grid>
+        <Grid item xs={4} >
+          {/* <h3 style={{textDecoration:"underline"}}>Access URL Services</h3> */}
+          <div style={{ marginLeft: "1.5rem",marginRight: "1.5rem" }}>
+            {/* Service 1 */}
+            <Card>
+              <CardContent>
+                <Grid container>
+                  <Grid item xs={1}>
+                    <InstallDesktopIcon style={{ fontSize: "3rem" }} />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={10}
+                    style={{ marginLeft: "1rem", marginTop: "0.3rem" }}
+                  >
+                    <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
+                      Npm packages
+                    </div>
+                    <div style={{ fontSize: "0.7rem" }}>
+                      Download npm packages
+                    </div>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+          
+          
+          </div>
+        </Grid>
+       
+      </Grid>
     </Menu>
   );
 
