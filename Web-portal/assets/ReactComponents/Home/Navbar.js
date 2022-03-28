@@ -13,6 +13,7 @@ import { KeyboardArrowDownOutlined } from "@mui/icons-material";
 import { Container, Grid, Link, MenuItem } from "@mui/material";
 
 export default function Navbar() {
+
   //Color controls
   const [serviceBtnColorControl, setServiceBtnColorControl] =
     React.useState(false);
@@ -35,6 +36,7 @@ export default function Navbar() {
   const handleCloseToken = () => {
     setAnchorEToken(null);
   };
+  
   const handleOptionSelection = (event, index) => {
     switch (index) {
       case 0:

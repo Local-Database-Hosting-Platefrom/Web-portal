@@ -7,23 +7,7 @@ import ParticleBackground from "../ReactComponents/Home/ParticleBackground";
 export default function Index() {
   return (
     <div>
-      {/* <Navbar /> */}
-      <Grid
-       
-      >
-        <Grid item xs={1}></Grid>
-        <Grid item xs={10}  style={{
-          width: '100vw',
-          height: '100vh',
-          spacing: 0,
-          justify: 'space-around',
-
-        }}> 
-          {/* <ParticleBackground /> */}
-          <HomeScreenOptionsContainer />
-        </Grid>
-        <Grid item xs={1}></Grid>
-      </Grid>
+      <HomeScreenOptionsContainer/>
     </div>
   );
 }

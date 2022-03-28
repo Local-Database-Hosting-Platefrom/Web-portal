@@ -5,28 +5,13 @@ const theme = createTheme({
   palette: {
     mode:"light",
     primary: {
-      light: '#080808',
-      main: '#080808',
+      light: '#FFFFFF',
+      main: '#FFFFFF',
       dark: "#080808",
-      contrastText: '#FFFFFF',
+      contrastText: '#6B6B6B',
     },
-    
-  },
-  typography: {
-    fontFamily: [
-      '-apple-system',
-      'Roboto Mono',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-    
+    navlinkSelected:"#060047",
+    navlinkUnSelected:"#808791",
   }
 });
 
