@@ -23,11 +23,21 @@ import { KeyboardArrowDownOutlined } from "@mui/icons-material";
 import { Container, Grid, Link } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import ReplayCircleFilledIcon from "@mui/icons-material/ReplayCircleFilled";
-import InfoIcon from '@mui/icons-material/Info';
-import SpeedIcon from '@mui/icons-material/Speed';
-import StorageIcon from '@mui/icons-material/Storage';
-import SatelliteAltIcon from '@mui/icons-material/SatelliteAlt';
-import InstallDesktopIcon from '@mui/icons-material/InstallDesktop';
+import InfoIcon from "@mui/icons-material/Info";
+import SpeedIcon from "@mui/icons-material/Speed";
+import StorageIcon from "@mui/icons-material/Storage";
+import SatelliteAltIcon from "@mui/icons-material/SatelliteAlt";
+import InstallDesktopIcon from "@mui/icons-material/InstallDesktop";
+import Paper from "@mui/material/Paper";
+import Divider from "@mui/material/Divider";
+import MenuList from "@mui/material/MenuList";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import Check from "@mui/icons-material/Check";
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -95,6 +105,11 @@ export default function NavbarV1() {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  const [expanded, setExpanded] = React.useState(false);
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -237,7 +252,7 @@ export default function NavbarV1() {
       <MenuItem onClick={handleMenuClose}>My account</MenuItem> */}
 
       <Grid container>
-        <Grid item xs={4}>
+        <Grid item lg={4} sm={6}>
           {/* <h3 style={{textDecoration:"underline"}}>Token Services</h3> */}
 
           <div style={{ marginLeft: "1.5rem" }}>
@@ -286,7 +301,7 @@ export default function NavbarV1() {
             </Card>
           </div>
         </Grid>
-        <Grid item xs={4}>
+        <Grid item lg={4} sm={6}>
           {/* <h3 style={{textDecoration:"underline"}}>Access URL Services</h3> */}
           <div style={{ marginLeft: "1.5rem" }}>
             {/* Service 1 */}
@@ -335,9 +350,15 @@ export default function NavbarV1() {
             {/* Service 2 */}
           </div>
         </Grid>
-        <Grid item xs={4} >
+        <Grid item lg={4} sm={6}>
           {/* <h3 style={{textDecoration:"underline"}}>Access URL Services</h3> */}
-          <div style={{ marginLeft: "1.5rem",marginRight: "1.5rem" }}>
+          <div
+            style={{
+              marginLeft: "1.5rem",
+              marginTop: windSize.width <= 1115 ? "1rem" : "0rem",
+              marginRight: "1.5rem",
+            }}
+          >
             {/* Service 1 */}
             <Card>
               <CardContent>
@@ -348,7 +369,7 @@ export default function NavbarV1() {
                   <Grid
                     item
                     xs={10}
-                    style={{ marginLeft: "1rem", marginTop: "0.3rem" }}
+                    style={{ marginLeft: "5%", marginTop: "0.3rem" }}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
                       Npm packages
@@ -360,11 +381,8 @@ export default function NavbarV1() {
                 </Grid>
               </CardContent>
             </Card>
-          
-          
           </div>
         </Grid>
-       
       </Grid>
     </Menu>
   );
@@ -383,41 +401,61 @@ export default function NavbarV1() {
         vertical: "top",
         horizontal: "right",
       }}
+      PaperProps={{
+        style: {
+          width: "100%",
+          marginTop: "15%",
+
+          borderBottomStyle: "groove",
+          borderTopStyle: "groove",
+          borderWidth: 1,
+          borderColor: "#6B6B6B",
+        },
+      }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+      <Container>
+        <Paper elevation={0} sx={{ width: "100%" }}>
+          <MenuList>
+           
+              <Container>
+              <Accordion
+                expanded={expanded === "panel1"}
+                onChange={handleChange("panel1")}
+                elevation={0}
+              >
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1bh-content"
+                  id="panel1bh-header"
+                >
+                  <Typography sx={{ marginLeft:-2,width: "100%" }}>
+                    Services
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                 {/* Services */}
+                 
+                </AccordionDetails>
+              </Accordion>
+              </Container>
+           
+            <Divider />
+            <MenuItem>
+              <ListItemText>Integration</ListItemText>
+            </MenuItem>
+            <Divider />
+            <MenuItem>
+              <ListItemText>Documentation</ListItemText>
+            </MenuItem>
+            <Divider />
+            <MenuItem>
+              <ListItemText>Downloads</ListItemText>
+            </MenuItem>
+          </MenuList>
+        </Paper>
+      </Container>
     </Menu>
   );
 
@@ -446,7 +484,7 @@ export default function NavbarV1() {
             component="div"
             sx={{
               display: {
-                xs: "none",
+                xs: "block",
                 sm: "block",
                 marginLeft: "1%",
                 fontWeight: "bold",
@@ -457,7 +495,7 @@ export default function NavbarV1() {
             L D H
           </Typography>
 
-          <Box sx={{ flexGrow: windSize.width <= 900 ? 1 : 0.9 }} />
+          <Box sx={{ flexGrow: windSize.width <= 900 ? 1 : 1 }} />
 
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Button
@@ -525,54 +563,58 @@ export default function NavbarV1() {
               Downloads
             </Button>
           </Box>
-          <Box sx={{ flexGrow: 0.4 }} />
 
-          <Button
-            color="secondary"
-            style={{
-              marginLeft: "1%",
-              color: contactBtnColorControl
-                ? theme.palette.navlinkSelected
-                : theme.palette.navlinkUnSelected,
-              textTransform: "none",
-              fontSize: 14,
-            }}
-            onClick={(e) => {
-              handleOptionSelection(e, 4);
-            }}
-          >
-            Contact
-          </Button>
-
-          <Button
-            color="secondary"
-            style={{
-              marginRight: "1%",
-              color: signInBtnColorControl
-                ? theme.palette.navlinkSelected
-                : theme.palette.navlinkUnSelected,
-              textTransform: "none",
-              fontSize: 14,
-            }}
-            onClick={(e) => {
-              handleOptionSelection(e, 5);
-            }}
-          >
-            Sign in
-          </Button>
-          <Button
-            variant="contained"
-            style={{
-              color: "white",
-              backgroundColor: "black",
-              fontSize: 10,
-            }}
-            onClick={(e) => {
-              handleOptionSelection(e, 6);
-            }}
-          >
-            Sign up
-          </Button>
+          <Box sx={{ marginLeft: "4rem", display: { xs: "none", md: "flex" } }}>
+            <Button
+              color="secondary"
+              style={{
+                marginLeft: "1%",
+                color: contactBtnColorControl
+                  ? theme.palette.navlinkSelected
+                  : theme.palette.navlinkUnSelected,
+                textTransform: "none",
+                fontSize: 14,
+              }}
+              onClick={(e) => {
+                handleOptionSelection(e, 4);
+              }}
+            >
+              Contact
+            </Button>
+          </Box>
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <Button
+              color="secondary"
+              style={{
+                marginRight: "1%",
+                color: signInBtnColorControl
+                  ? theme.palette.navlinkSelected
+                  : theme.palette.navlinkUnSelected,
+                textTransform: "none",
+                fontSize: 14,
+              }}
+              onClick={(e) => {
+                handleOptionSelection(e, 5);
+              }}
+            >
+              Sign in
+            </Button>
+          </Box>
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <Button
+              variant="contained"
+              style={{
+                color: "white",
+                backgroundColor: "black",
+                fontSize: 10,
+              }}
+              onClick={(e) => {
+                handleOptionSelection(e, 6);
+              }}
+            >
+              Sign up
+            </Button>
+          </Box>
 
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
