@@ -405,21 +405,52 @@ export default function NavbarV1() {
         style: {
           width: "100%",
           marginTop: "15%",
-
+          // maxHeight:"100%",
           borderBottomStyle: "groove",
           borderTopStyle: "groove",
           borderWidth: 1,
           borderColor: "#6B6B6B",
         },
       }}
+      
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <Container>
+      <Container style={{marginTop:"1%"}}>
         <Paper elevation={0} sx={{ width: "100%" }}>
           <MenuList>
-           
-              <Container>
+          <Button
+                variant="contained"
+                fullWidth
+                style={{
+                  color: "white",
+                  backgroundColor: "blue",
+                  fontSize: 10,
+                }}
+                onClick={(e) => {
+                  handleOptionSelection(e, 6);
+                }}
+              >
+                Sign up
+              </Button>
+              <Button
+                variant="contained"
+                fullWidth
+                style={{
+                  color: "white",
+                  backgroundColor: "black",
+                  fontSize: 10,
+                  marginTop:"2%"
+                }}
+                onClick={(e) => {
+                  handleOptionSelection(e, 6);
+                }}
+              >
+                Sign in
+              </Button>
+
+            <Container style={{marginTop:"1%"}}>
+              
               <Accordion
                 expanded={expanded === "panel1"}
                 onChange={handleChange("panel1")}
@@ -430,17 +461,72 @@ export default function NavbarV1() {
                   aria-controls="panel1bh-content"
                   id="panel1bh-header"
                 >
-                  <Typography sx={{ marginLeft:-2,width: "100%" }}>
+                  {/* Sign in and up */}
+
+                  <Typography sx={{ marginLeft: -2, width: "100%" }}>
                     Services
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                 {/* Services */}
-                 
+                  {/* Services */}
+                  <Grid container>
+                    <Grid item xs={2}>
+                      <RestoreIcon fontSize="large" />
+                    </Grid>
+                    <Grid item xs={10}>
+                      <div style={{ fontSize: "10", marginTop: "3%" }}>
+                        Renew Token
+                      </div>
+                    </Grid>
+                  </Grid>
+                  <Divider />
+                  <Grid container>
+                    <Grid item xs={2}>
+                      <InfoIcon fontSize="large" />
+                    </Grid>
+                    <Grid item xs={10}>
+                      <div style={{ fontSize: "10", marginTop: "3%" }}>
+                        Get details
+                      </div>
+                    </Grid>
+                  </Grid>
+                  <Divider />
+                  <Grid container>
+                    <Grid item xs={2}>
+                      <StorageIcon fontSize="large" />
+                    </Grid>
+                    <Grid item xs={10}>
+                      <div style={{ fontSize: "10", marginTop: "3%" }}>
+                        Host access URL
+                      </div>
+                    </Grid>
+                  </Grid>
+                  <Divider />
+                  <Grid container>
+                    <Grid item xs={2}>
+                      <SatelliteAltIcon fontSize="large" />
+                    </Grid>
+                    <Grid item xs={10}>
+                      <div style={{ fontSize: "10", marginTop: "3%" }}>
+                        Remote database access URL
+                      </div>
+                    </Grid>
+                  </Grid>
+                  <Divider />
+                  <Grid container>
+                    <Grid item xs={2}>
+                      <InstallDesktopIcon fontSize="large" />
+                    </Grid>
+                    <Grid item xs={10}>
+                      <div style={{ fontSize: "10", marginTop: "3%" }}>
+                        Npm packages
+                      </div>
+                    </Grid>
+                  </Grid>
                 </AccordionDetails>
               </Accordion>
-              </Container>
-           
+            </Container>
+
             <Divider />
             <MenuItem>
               <ListItemText>Integration</ListItemText>
@@ -452,6 +538,10 @@ export default function NavbarV1() {
             <Divider />
             <MenuItem>
               <ListItemText>Downloads</ListItemText>
+            </MenuItem>
+            <Divider />
+            <MenuItem>
+              <ListItemText>Contact</ListItemText>
             </MenuItem>
           </MenuList>
         </Paper>
