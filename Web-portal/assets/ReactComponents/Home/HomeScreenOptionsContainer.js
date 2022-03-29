@@ -6,10 +6,12 @@ import PunchLineContainer from "./PunchLineContainer";
 const HomeScreenOptionsContainer = () => {
   return (
     <div
+    style={{height:"100%"}}
     >
       {/* <Navbar /> */}
-      {/* <PunchLineContainer /> */}
       <NavbarV1/>
+      <PunchLineContainer />
+
     </div>
   );
 };

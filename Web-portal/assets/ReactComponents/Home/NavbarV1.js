@@ -554,10 +554,12 @@ export default function NavbarV1() {
       <AppBar
         position="static"
         elevation={0}
+         
         sx={{
           //   borderBottom: 1,
           //   borderWidth: 0.1,
           //   borderColor: "#6B6B6B",
+          
           paddingLeft: "10%",
           paddingRight: "10%",
         }}
