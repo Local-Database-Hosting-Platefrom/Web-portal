@@ -552,14 +552,14 @@ export default function NavbarV1() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
-        position="static"
+        position="fixed"
         elevation={0}
-         
+        color="transparent"
         sx={{
           //   borderBottom: 1,
           //   borderWidth: 0.1,
           //   borderColor: "#6B6B6B",
-          
+          backdropFilter:"blur(20px)",
           paddingLeft: "10%",
           paddingRight: "10%",
         }}

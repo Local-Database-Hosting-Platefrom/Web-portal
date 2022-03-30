@@ -19,15 +19,7 @@ export default function MyApp(props) {
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <style>
           @import
-          url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;1,100;1,200&display=swap');
-        </style>
-        <style>
-          @import
-          url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,500;1,100;1,200&display=swap');
-        </style>
-        <style>
-          @import
-          url('https://fonts.googleapis.com/css2?family=Anton&family=Dela+Gothic+One&display=swap');
+          url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,400;0,800;1,100&family=Roboto+Mono:ital,wght@0,100;0,200;0,500;1,100;1,200&display=swap');
         </style>
       </Head>
       <ThemeProvider theme={theme}>
