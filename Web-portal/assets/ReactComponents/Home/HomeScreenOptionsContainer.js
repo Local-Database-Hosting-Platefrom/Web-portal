@@ -12,7 +12,7 @@ const HomeScreenOptionsContainer = () => {
       {/* <Navbar /> */}
       <NavbarV1/>
       <PunchLineContainer />
-      <SummuryContainer/>
+    
     </div>
   );
 };
