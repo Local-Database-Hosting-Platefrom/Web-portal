@@ -68,7 +68,7 @@ const SummuryContainer = () => {
           90099
         </div>
       </Grid>
-      <Grid item md={4} xs={6} className={classes.summury_card}>
+      <Grid item md={3} xs={6} className={classes.summury_card}>
         <img src="/hosts.png"  width={isMediumScreen?"25%":"30%"}  />
         <div
           className={

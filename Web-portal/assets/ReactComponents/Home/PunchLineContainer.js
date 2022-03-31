@@ -10,7 +10,7 @@ import SummuryContainer from "./SummuryContainer";
 const useStyles = makeStyles({
   root: {
     width: "100%",
-    marginTop: "5%",
+    marginTop: "6%",
   },
 
   // Text headings
