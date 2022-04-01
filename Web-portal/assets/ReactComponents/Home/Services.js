@@ -233,7 +233,7 @@ const Services = () => {
         <Grid container>
           <Grid
             item
-            md={6}
+            md={12}
             xs={12}
             className={
               isMediumScreen

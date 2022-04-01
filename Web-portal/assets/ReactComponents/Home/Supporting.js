@@ -84,6 +84,7 @@ const Supporting = () => {
         <Grid item md={2} xs={0}></Grid>
       </Grid>
       <Grid container style={{ marginTop: "2%", padding: "2rem" }}>
+        <Grid item md={2}></Grid>
         <Grid item md={4}>
           <div
             className={
@@ -107,9 +108,12 @@ const Supporting = () => {
                 : classes.frame_work_container_xs
             }
           >
-            <FramworkHolder img="electron.png" title="Electron JS" details="Electron is a free and open-source software framework developed and maintained by GitHub. It allows for the development of desktop GUI applications using web technologies"/>
+            <FramworkHolder img="react.png" title="Electron JS" details="Electron is a free and open-source software framework developed and maintained by GitHub. It allows for the development of desktop GUI applications using web technologies"/>
           </div>
         </Grid>
+        <Grid item md={2}></Grid>
+        <Grid item md={2}></Grid>
+        
         <Grid item md={4}>
           <div
             className={
@@ -121,6 +125,19 @@ const Supporting = () => {
             <FramworkHolder img="next.png" title="Next JS" details="Next.js is an open-source web development framework built on top of Node.js enabling React based web applications functionalities such as server-side rendering and generating static websites." />
           </div>
         </Grid>
+        <Grid item md={4}>
+          <div
+            className={
+              isMediumScreen
+                ? classes.frame_work_container_md
+                : classes.frame_work_container_xs
+            }
+          >
+            <FramworkHolder img="react_native.png" title="React Native" details="Next.js is an open-source web development framework built on top of Node.js enabling React based web applications functionalities such as server-side rendering and generating static websites." />
+          </div>
+        </Grid>
+        <Grid item md={2}></Grid>
+     
       </Grid>
     </div>
   );

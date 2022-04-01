@@ -1,4 +1,5 @@
 import { Box, Grid, Typography } from "@material-ui/core";
+import Footer from "./Footer";
 import Navbar from "./Navbar";
 import NavbarV1 from "./NavbarV1";
 import PunchLineContainer from "./PunchLineContainer";
@@ -16,6 +17,7 @@ const HomeScreenOptionsContainer = () => {
       <PunchLineContainer />
       <Services/>
       <Supporting/>
+      <Footer/>
     </div>
   );
 };

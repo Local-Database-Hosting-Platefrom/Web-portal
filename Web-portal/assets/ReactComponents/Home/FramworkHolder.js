@@ -8,24 +8,25 @@ import Typography from '@mui/material/Typography';
 
 export default function FramworkHolder(props) {
   return (
-    <Card sx={{ maxWidth: 340,height:400 }}>
+    <Card style={{backgroundColor:"#E6E8EC"}} sx={{ maxWidth: 340,height:350,}}>
 
       <CardContent>
           <div>
-              <img src={`/${props.img}`} width="50%" height="150"/>
+              <img src={`/${props.img}`} width="35%" height="100"/>
           </div>
         <Typography gutterBottom variant="h5" component="div">
           {props.title}
         </Typography>
         <Typography variant="body2" color="text.secondary" >
           {props.details}
-        
         </Typography>
+        <div style={{textAlign:"center",marginTop:"10%"}}>
+        <Button variant='outlined'  size="small" style={{backgroundColor:"black",color:"white",fontSize:"0.8rem",letterSpacing:"0.1rem"}}>Integrate</Button>
+        </div>
       </CardContent>
-      <CardActions>
-        
+      {/* <CardActions>
         <Button size="small">Integrate</Button>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 }
