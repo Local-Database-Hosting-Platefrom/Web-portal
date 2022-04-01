@@ -6,25 +6,25 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
-export default function FramworkHolder() {
+export default function FramworkHolder(props) {
   return (
-    <Card sx={{ maxWidth: 340 }}>
+    <Card sx={{ maxWidth: 340,height:400 }}>
 
       <CardContent>
           <div>
-              <img src="/react.png"/>
+              <img src={`/${props.img}`} width="50%" height="150"/>
           </div>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          {props.title}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+        <Typography variant="body2" color="text.secondary" >
+          {props.details}
+        
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        
+        <Button size="small">Integrate</Button>
       </CardActions>
     </Card>
   );
