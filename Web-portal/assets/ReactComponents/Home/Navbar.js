@@ -1,391 +1,233 @@
-import * as React from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+import * as React from 'react';
+import { styled, alpha } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import InputBase from '@mui/material/InputBase';
+import Badge from '@mui/material/Badge';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MailIcon from '@mui/icons-material/Mail';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import MoreIcon from '@mui/icons-material/MoreVert';
 
-import Tab from "@mui/material/Tab";
-import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
-import RestoreIcon from '@mui/icons-material/Restore';
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import { KeyboardArrowDownOutlined } from "@mui/icons-material";
-import { Container, Grid, Link, MenuItem } from "@mui/material";
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(3),
+    width: 'auto',
+  },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  },
+}));
 
 export default function Navbar() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-  //Color controls
-  const [serviceBtnColorControl, setServiceBtnColorControl] =
-    React.useState(false);
-  const [integrationBtnColorControl, setIntegrationBtnColorControl] =
-    React.useState(false);
-  const [documentationBtnColorControl, setDocumentationBtnColorControl] =
-    React.useState(false);
-  const [contactBtnColorControl, setContactBtnColorControl] =
-    React.useState(false);
-  const [getHostConnectorBtnColorControl, setHostConnectorBtnColorControl] =
-    React.useState(false);
-  const [signInBtnColorControl, setSignInBtnColorControl] =
-    React.useState(false);
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const [anchorEToken, setAnchorEToken] = React.useState(null);
-  const openToken = Boolean(anchorEToken);
-  const handleClickToken = (event) => {
-    setAnchorEToken(event.currentTarget);
+  const handleProfileMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
   };
-  const handleCloseToken = () => {
-    setAnchorEToken(null);
+
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
   };
-  
-  const handleOptionSelection = (event, index) => {
-    switch (index) {
-      case 0:
-        //Services option
-        handleClickToken(event);
-        setServiceBtnColorControl(true);
-        setIntegrationBtnColorControl(false);
-        setDocumentationBtnColorControl(false);
-        setContactBtnColorControl(false);
-        setHostConnectorBtnColorControl(false);
-        setSignInBtnColorControl(false);
-        break;
-      case 1:
-        //Integration option
-        setServiceBtnColorControl(false);
-        setIntegrationBtnColorControl(true);
-        setDocumentationBtnColorControl(false);
-        setContactBtnColorControl(false);
-        setHostConnectorBtnColorControl(false);
-        setSignInBtnColorControl(false);
-        break;
-        break;
-      case 2:
-        //Documentation option
-        setServiceBtnColorControl(false);
-        setIntegrationBtnColorControl(false);
-        setDocumentationBtnColorControl(true);
-        setContactBtnColorControl(false);
-        setHostConnectorBtnColorControl(false);
-        setSignInBtnColorControl(false);
-        break;
 
-      case 3:
-        //Download option
-        setServiceBtnColorControl(false);
-        setIntegrationBtnColorControl(false);
-        setDocumentationBtnColorControl(false);
-
-        setHostConnectorBtnColorControl(true);
-        setContactBtnColorControl(false);
-        setSignInBtnColorControl(false);
-        break;
-        break;
-      case 4:
-        //Contact option
-        setServiceBtnColorControl(false);
-        setIntegrationBtnColorControl(false);
-        setDocumentationBtnColorControl(false);
-
-        setHostConnectorBtnColorControl(false);
-        setContactBtnColorControl(true);
-        setSignInBtnColorControl(false);
-        break;
-      case 5:
-        //Sign in option
-        setServiceBtnColorControl(false);
-        setIntegrationBtnColorControl(false);
-        setDocumentationBtnColorControl(false);
-        setContactBtnColorControl(false);
-        setHostConnectorBtnColorControl(false);
-        setSignInBtnColorControl(true);
-        break;
-    }
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
   };
+
+  const handleMobileMenuOpen = (event) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const menuId = 'primary-search-account-menu';
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+    </Menu>
+  );
+
+  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>
+        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+          <Badge badgeContent={4} color="error">
+            <MailIcon />
+          </Badge>
+        </IconButton>
+        <p>Messages</p>
+      </MenuItem>
+      <MenuItem>
+        <IconButton
+          size="large"
+          aria-label="show 17 new notifications"
+          color="inherit"
+        >
+          <Badge badgeContent={17} color="error">
+            <NotificationsIcon />
+          </Badge>
+        </IconButton>
+        <p>Notifications</p>
+      </MenuItem>
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Profile</p>
+      </MenuItem>
+    </Menu>
+  );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar
-        position="static"
-        elevation={0}
-        
-        sx={{
-          borderBottom: 1,
-          borderWidth: 0.1,
-          borderColor: "#333333",
-          paddingLeft: "10%",
-          paddingRight: "5%",
-          
-        }}
-      >
+      <AppBar position="static">
         <Toolbar>
-          <ConnectWithoutContactIcon
-            fontSize="large"
-            sx={{ fontSize: 40 }}
-            style={{ color: "white" }}
-          />
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
           <Typography
-            variant="h4"
+            variant="h6"
             noWrap
             component="div"
-            sx={{
-              display: {
-                xs: "none",
-                sm: "block",
-                marginLeft: "1%",
-                fontWeight: "bold",
-                fontFamily: "Roboto Mono,monospace",
-              },
-            }}
+            sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            L D H
+            MUI
           </Typography>
-          {/* <Image src={require('../../public/LOGO1.png')} width="60" height="60"/> */}
-          <div style={{ marginLeft: "5%" }}>
-            <Button
-              id="token-button"
-              aria-controls={openToken ? "token-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={openToken ? "true" : undefined}
-              onClick={(e) => handleOptionSelection(e, 0)}
-              style={{
-                color: serviceBtnColorControl ? "white" : "#b8bfbf",
-                textTransform: "none",
-                fontSize: 14,
-              }}
-              endIcon={<KeyboardArrowDownOutlined fontSize="large" />}
-            >
-              Services
-            </Button>
-            <Menu
-              id="token-menu"
-              anchorEl={anchorEToken}
-              open={openToken}
-              onClose={handleCloseToken}
-              MenuListProps={{
-                "aria-labelledby": "token-button",
-              }}
-              anchorOrigin={{
-                vertical: "bottom",
-              }}
-              PaperProps={{
-                style: {
-                  width: "100%",
-                  marginTop: "2%",
-                  height: "25%",
-                },
-              }}
-            >
-              <Container>
-                <div  style={{ display: "inline",position:"absolute"}}>
-                  {/* Access token services */}
-                  
-                  <Typography
-                    variant="h6"
-                    noWrap
-                    component="div"
-                    style={{
-                        borderBottomStyle:"groove",
-                        borderBottomWidth:"0.5",
-                        fontWeight:"bold",
-                        fontFamily: "Roboto Mono,monospace",
-                    }}
-                  >
-                    Access token services
-                  </Typography>
-
-                  {/* Renew token */}
-                  <div>
-                  <div style={{position:"relative",top:10,display:"inline",marginLeft:"5%"}}>
-                    <RestoreIcon style={{fontSize:"35"}} />
-                  </div>
-                  <Typography
-                    variant="p"
-                    noWrap
-                    component="div"
-                    style={{
-                        display:"inline",
-                        position:"relative",
-                        top:-1,
-                        left:"5%",
-                        fontFamily: "Roboto Mono,monospace",
-                        borderBottomStyle:"groove"
-                    }}
-                  >
-                    Renew token
-                  </Typography>
-                  </div>
-                   {/* Get token details */}
-                   <div>
-                  <div style={{position:"relative",top:10,display:"inline",marginLeft:"5%"}}>
-                    <RestoreIcon style={{fontSize:"35"}} />
-                  </div>
-                  <Typography
-                    variant="p"
-                    noWrap
-                    component="p"
-                    style={{
-                        display:"inline",
-                        position:"relative",
-                        top:-1,
-                        left:"5%",
-                        fontFamily: "Roboto Mono,monospace",
-                        borderBottom:"groove"
-                    }}
-                  >
-                    Get token details
-                  </Typography>
-                  </div>
-                
-                </div>
-
-                <div style={{ display: "inline",marginLeft:"35%",position:"absolute",width:"30%"}}>
-                  {/* Access token services */}
-                  <Typography
-                    variant="h6"
-                    noWrap
-                    component="div"
-                    style={{
-                        display:"inline",
-                        fontWeight:"bold",
-                        fontFamily: "Roboto Mono,monospace",
-                        borderBottomStyle:"groove",
-                        borderBottomWidth:"0.5"
-                    }}
-                  >
-                    Access URL services
-                  </Typography>
-                  {/* Test Host access url */}
-                  <div>
-                  <div style={{position:"relative",top:10,display:"inline",marginLeft:"5%"}}>
-                    <RestoreIcon style={{fontSize:"35"}} />
-                  </div>
-                  <Typography
-                    variant="p"
-                    noWrap
-                    component="p"
-                    style={{
-                        display:"inline",
-                        position:"relative",
-                        top:-1,
-                        left:"5%",
-                        fontFamily: "Roboto Mono,monospace",
-                        borderBottom:"groove"
-                    }}
-                  >
-                    Test Host access URL
-                  </Typography>
-                  </div>
-                  <div style={{width:"100%"}}>
-                  <div style={{position:"relative",top:10,display:"inline",marginLeft:"5%"}}>
-                    <RestoreIcon style={{fontSize:"35"}} />
-                  </div>
-                  <Typography
-                    variant="p"
-                    noWrap
-                    component="p"
-                    style={{
-                        display:"inline",
-                        position:"relative",
-                        top:-1,
-                        left:"5%",
-                        fontFamily: "Roboto Mono,monospace",
-                        borderBottom:"groove"
-                    }}
-                  >
-                    Test Remote database access URL
-                  </Typography>
-                  </div>
-                  
-                </div>
-              </Container>
-             
-            </Menu>
-          </div>
-
-          <Button
-            color="secondary"
-            style={{
-              marginLeft: "1%",
-              color: integrationBtnColorControl ? "white" : "#b8bfbf",
-              textTransform: "none",
-              fontSize: 14,
-            }}
-            onClick={(e) => {
-              handleOptionSelection(e, 1);
-            }}
-          >
-            Integration
-          </Button>
-          <Button
-            color="secondary"
-            style={{
-              marginLeft: "1%",
-              color: documentationBtnColorControl ? "white" : "#b8bfbf",
-              textTransform: "none",
-              fontSize: 14,
-            }}
-            onClick={(e) => {
-              handleOptionSelection(e, 2);
-            }}
-          >
-            Documentation
-          </Button>
-          <Button
-            color="secondary"
-            style={{
-              marginLeft: "1%",
-              color: getHostConnectorBtnColorControl ? "white" : "#b8bfbf",
-              textTransform: "none",
-              fontSize: 14,
-            }}
-            onClick={(e) => {
-              handleOptionSelection(e, 3);
-            }}
-          >
-            Downloads
-          </Button>
-
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search>
           <Box sx={{ flexGrow: 1 }} />
-
-          <Button
-            color="secondary"
-            style={{
-              marginRight: "1%",
-              color: contactBtnColorControl ? "white" : "#b8bfbf",
-              textTransform: "none",
-              fontSize: 14,
-            }}
-            onClick={(e) => {
-              handleOptionSelection(e, 4);
-            }}
-          >
-            Contact
-          </Button>
-          <Button
-            color="secondary"
-            style={{
-              marginRight: "1%",
-              color: signInBtnColorControl ? "white" : "#b8bfbf",
-              textTransform: "none",
-              fontSize: 14,
-            }}
-            onClick={(e) => {
-              handleOptionSelection(e, 5);
-            }}
-          >
-            Sign in
-          </Button>
-          <Button
-            variant="contained"
-            style={{ color: "black", backgroundColor: "white" }}
-            onClick={(e) => {
-              handleOptionSelection(e, 6);
-            }}
-          >
-            Sign up
-          </Button>
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+              <Badge badgeContent={4} color="error">
+                <MailIcon />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              aria-label="show 17 new notifications"
+              color="inherit"
+            >
+              <Badge badgeContent={17} color="error">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+            <IconButton
+              size="large"
+              edge="end"
+              aria-label="account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+          </Box>
+          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MoreIcon />
+            </IconButton>
+          </Box>
         </Toolbar>
       </AppBar>
+      {renderMobileMenu}
+      {renderMenu}
     </Box>
   );
 }

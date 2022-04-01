@@ -8,14 +8,13 @@ import Supporting from "./Supporting";
 
 const HomeScreenOptionsContainer = () => {
   return (
-    <div
-    style={{height:"100%"}}
-    >
-      {/* <Navbar /> */}
-      <NavbarV1/>
-      <PunchLineContainer />
-      <Services/>
-      <Supporting/>
+    <div>
+    {/* / <h1>GE</h1> */}
+      <Navbar />
+      {/* <NavbarV1/> */}
+      {/* <PunchLineContainer /> */}
+      {/* <Services/> */}
+      {/* <Supporting/> */}
     </div>
   );
 };

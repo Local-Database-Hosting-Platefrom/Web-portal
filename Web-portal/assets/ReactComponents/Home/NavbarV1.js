@@ -38,45 +38,9 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "auto",
-  },
-}));
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
-}));
+
 
 export default function NavbarV1() {
   //isMobileScreen
@@ -559,13 +523,14 @@ export default function NavbarV1() {
           //   borderBottom: 1,
           //   borderWidth: 0.1,
           //   borderColor: "#6B6B6B",
-          backdropFilter:"blur(20px)",
+          // backdropFilter:"blur(20px)",
           paddingLeft: "10%",
           paddingRight: "10%",
         }}
       >
+        
         <Toolbar>
-          <ConnectWithoutContactIcon
+         <ConnectWithoutContactIcon
             fontSize="large"
             sx={{ fontSize: 40 }}
             style={{ color: "black" }}
@@ -587,7 +552,7 @@ export default function NavbarV1() {
             L D H
           </Typography>
 
-          <Box sx={{ flexGrow: windSize.width <= 900 ? 1 : 1 }} />
+          <Box sx={{ flexGrow: windSize.width <= 900 ? 0 : 0.5 }} />
 
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Button

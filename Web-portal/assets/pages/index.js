@@ -6,8 +6,16 @@ import ParticleBackground from "../ReactComponents/Home/ParticleBackground";
 
 export default function Index() {
   return (
-    <div>
-      <HomeScreenOptionsContainer/>
-    </div>
+   
+    // <div
+    //   style={{
+    //     // width: "100%",
+    //     // height: "50vh",
+    //     // overflow: "hidden",
+    //   }}
+    // >
+      <HomeScreenOptionsContainer />
+    // </div>
+   
   );
 }
