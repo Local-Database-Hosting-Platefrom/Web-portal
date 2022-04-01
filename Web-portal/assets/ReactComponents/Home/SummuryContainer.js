@@ -1,4 +1,5 @@
 import {
+  Box,
   Card,
   CardContent,
   Container,
@@ -69,7 +70,7 @@ const SummuryContainer = () => {
         </div>
       </Grid>
       <Grid item md={3} xs={6} className={classes.summury_card}>
-        <img src="/hosts.png"  width={isMediumScreen?"25%":"30%"}  />
+        <img src="/hosts.png"  width={isMediumScreen?"30%":"30%"}  />
         <div
           className={
             isMediumScreen
@@ -90,7 +91,8 @@ const SummuryContainer = () => {
           8021
         </div>
       </Grid>
-      <Grid item md={3} xs={12} className={classes.summury_card}>
+      <Grid item md={3} xs={4} className={classes.summury_card}>
+      <Box sx={{display:{xs:"none",md:"block"}}}>
         <img src="/requests.png" width={isMediumScreen?"35%":"30%"} />
         <div
           className={
@@ -111,8 +113,35 @@ const SummuryContainer = () => {
          
           85903
         </div>
+        </Box>
       </Grid>
-      <Grid item md={1}></Grid>
+      <Grid item md={1} xs={0}></Grid>
+     
+      <Grid item md={0} xs={12}  className={classes.summury_card}>
+        <Box sx={{display:{xs:"block",md:"none"}}}>
+        <img src="/requests.png" width={isMediumScreen?"35%":"15%"} />
+        <div
+          className={
+            isMediumScreen
+              ? classes.summury_card_title_md
+              : classes.summury_card_title_xs
+          }
+        >
+          Requests
+        </div>
+        <div
+          className={
+            isMediumScreen
+              ? classes.summury_card_number_md
+              : classes.summury_card_number_xs
+          }
+        >
+         
+          85903
+        </div>
+        </Box>
+      </Grid>
+      
     </Grid>
     //   {/* </CardContent>
     //     </Card> */}

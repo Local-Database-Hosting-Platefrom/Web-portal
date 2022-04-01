@@ -1,24 +1,25 @@
-import { Container, Grid, useMediaQuery } from "@mui/material";
+import { Box, Container, Grid, useMediaQuery } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 const useStyles = makeStyles({
   root: {
     marginTop: "5%",
   },
+
   txt_heading_1_md: {
     textAlign: "center",
     fontFamily: "Fira Sans",
     fontSize: "3.5rem",
     fontWeight: "bold",
     marginTop: "5%",
-    letterSpacing: "1rem",
+    // letterSpacing: "1rem",
   },
   txt_heading_1_xs: {
     textAlign: "center",
     fontFamily: "Fira Sans",
-    fontSize: "3.5rem",
+    fontSize: "2.5rem",
     fontWeight: "bold",
     marginTop: "5%",
-    letterSpacing: "1rem",
+    // letterSpacing: "0.5rem",
   },
   txt_sub_heading_1_md: {
     textAlign: "center",
@@ -26,15 +27,15 @@ const useStyles = makeStyles({
     fontSize: "1.5rem",
 
     marginTop: "1%",
-    letterSpacing: "0.2rem",
+    // letterSpacing: "0.2rem",
   },
   txt_sub_heading_1_xs: {
     textAlign: "center",
     fontFamily: "Fira Sans",
-    fontSize: "1.5rem",
+    fontSize: "0.8rem",
 
     marginTop: "1%",
-    letterSpacing: "0.2rem",
+    // letterSpacing: "0.2rem",
   },
 
   //   Service containers.
@@ -46,7 +47,10 @@ const useStyles = makeStyles({
     textAlign: "center",
     marginTop: "3%",
   },
-  service_image_container_xs: {},
+  service_image_container_xs: {
+    textAlign: "center",
+    marginTop: "3%",
+  },
   service_detail_container_xs: {},
   service_detail_container_md: {
     height: 400,
@@ -54,15 +58,16 @@ const useStyles = makeStyles({
   service_title_container_xs: {
     fontFamily: "Fira Sans",
     fontSize: "1.8rem",
-    letterSpacing: "0.1rem",
+    // letterSpacing: "0.1rem",
     marginLeft: "5%",
     fontWeight: "bold",
     marginTop: "5%",
+    textAlign: "center",
   },
   service_title_container_md: {
     fontFamily: "Fira Sans",
     fontSize: "1.8rem",
-    letterSpacing: "0.1rem",
+    // letterSpacing: "0.1rem",
     marginLeft: "5%",
     fontWeight: "bold",
     marginTop: "5%",
@@ -70,20 +75,22 @@ const useStyles = makeStyles({
   service_summury_container_xs: {
     fontFamily: "Fira Sans",
     fontSize: "1rem",
-    letterSpacing: "0.1rem",
+    // letterSpacing: "0.1rem",
     marginLeft: "10%",
-    marginRight: "20%",
+    marginRight: "10%",
     marginTop: "5%",
+    textAlign: "center",
   },
   service_summury_container_md: {
     fontFamily: "Fira Sans",
     fontSize: "1rem",
-    letterSpacing: "0.1rem",
+    // letterSpacing: "0.1rem",
     marginLeft: "10%",
     marginRight: "20%",
     marginTop: "5%",
   },
 });
+
 const Services = () => {
   const classes = useStyles();
   const isMediumScreen = useMediaQuery("(min-width:600px)");
@@ -103,8 +110,8 @@ const Services = () => {
               What we provide
             </div>
           </Grid>
-          <Grid item xs={2}></Grid>
-          <Grid item xs={8}>
+          <Grid item md={2} xs={0}></Grid>
+          <Grid item md={8} xs={12}>
             <div>
               <div
                 className={
@@ -120,10 +127,9 @@ const Services = () => {
               </div>
             </div>
           </Grid>
-          <Grid item xs={2}></Grid>
+          <Grid item md={2} xs={0}></Grid>
         </Grid>
         {/*Servic 1  */}
-
         <Grid>
           <Grid
             item
@@ -137,10 +143,13 @@ const Services = () => {
             <img src="/one.png" />
           </Grid>
         </Grid>
+
         <Grid container>
+          {/* Visible only on pc */}
           <Grid
             item
-            xs={6}
+            md={6}
+            xs={12}
             className={
               isMediumScreen
                 ? classes.service_image_container_md
@@ -148,13 +157,20 @@ const Services = () => {
             }
           >
             {/* Image/gif */}
-            <div>
-              <img src="/service_1.png" />
-            </div>
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <div>
+                <img
+                  src="/service_1.png"
+                  width={isMediumScreen ? "100%" : "70%"}
+                />
+              </div>
+            </Box>
           </Grid>
+
           <Grid
             item
-            xs={6}
+            md={6}
+            xs={12}
             className={
               isMediumScreen
                 ? classes.service_detail_container_md
@@ -168,6 +184,7 @@ const Services = () => {
                   ? classes.service_title_container_md
                   : classes.service_title_container_xs
               }
+              style={{}}
             >
               Execute database quries remotely
             </div>
@@ -175,20 +192,48 @@ const Services = () => {
               className={
                 isMediumScreen
                   ? classes.service_summury_container_md
-                  : classes.service_summury_container_md
+                  : classes.service_summury_container_xs
               }
             >
               We provide you service to execute your database quries on your
-              locally hosted database from any where and get repoonses
+              locally hosted database from any where and get repoonses. Lorem
+              Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+         
             </div>
+          </Grid>
+
+          {/* Visible only on mobile */}
+          <Grid
+            item
+            md={6}
+            xs={12}
+            className={
+              isMediumScreen
+                ? classes.service_image_container_md
+                : classes.service_image_container_xs
+            }
+          >
+            {/* Image/gif */}
+            <Box sx={{ display: { xs: "flex", md: "none" } }}>
+              <div>
+                <img
+                  src="/service_1.png"
+                  width={isMediumScreen ? "100%" : "70%"}
+                />
+              </div>
+            </Box>
           </Grid>
         </Grid>
       </div>
+
       <div style={{ backgroundColor: "#E6E8EC" }}>
         {/* Service 2 */}
         <Grid container>
           <Grid
             item
+            md={6}
             xs={12}
             className={
               isMediumScreen
@@ -200,9 +245,12 @@ const Services = () => {
           </Grid>
         </Grid>
         <Grid container>
+          {/* Visisble only on mobile */}
+
           <Grid
             item
-            xs={6}
+            md={6}
+            xs={12}
             className={
               isMediumScreen
                 ? classes.service_detail_container_md
@@ -216,23 +264,31 @@ const Services = () => {
                   ? classes.service_title_container_md
                   : classes.service_title_container_xs
               }
+              style={{ marginLeft: isMediumScreen ? "10%" : "" }}
             >
-              Access local dabases without Node js API
+              No need of Node Js to access MySQL
             </div>
             <div
               className={
                 isMediumScreen
                   ? classes.service_summury_container_md
-                  : classes.service_summury_container_md
+                  : classes.service_summury_container_xs
               }
+              style={{ marginLeft: isMediumScreen ? "15%" : "" }}
             >
               We provide you service that without Node js API, access your local
-              databases in your applications from anywhere.
+              databases in your applications from anywhere. Lorem Ipsum is
+              simply dummy text of the printing and typesetting industry. Lorem
+              Ipsum has been the industry's standard dummy text ever since the
+              1500s, when an unknown printer took a galley of type and scrambled
+              it to make a type specimen book
             </div>
           </Grid>
+
           <Grid
             item
-            xs={6}
+            md={6}
+            xs={12}
             className={
               isMediumScreen
                 ? classes.service_image_container_md
@@ -240,12 +296,17 @@ const Services = () => {
             }
           >
             {/* Image/gif */}
+
             <div>
-              <img src="/service_2.png" />
+              <img
+                src="/service_2.png"
+                width={isMediumScreen ? "100%" : "70%"}
+              />
             </div>
           </Grid>
         </Grid>
       </div>
+
       <div style={{ backgroundColor: "#F5F6F8" }}>
         {/* Service 3 */}
         <Grid container>
@@ -262,9 +323,11 @@ const Services = () => {
           </Grid>
         </Grid>
         <Grid container>
+          {/* Only visible on pc */}
           <Grid
             item
-            xs={6}
+            md={6}
+            xs={12}
             className={
               isMediumScreen
                 ? classes.service_image_container_md
@@ -272,13 +335,17 @@ const Services = () => {
             }
           >
             {/* Image/gif */}
-            <div>
-              <img src="/service_3.png" />
-            </div>
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <div>
+                <img src="/service_3.png" width="90%" />
+              </div>
+            </Box>
           </Grid>
+
           <Grid
             item
-            xs={6}
+            md={6}
+            xs={12}
             className={
               isMediumScreen
                 ? classes.service_detail_container_md
@@ -299,12 +366,39 @@ const Services = () => {
               className={
                 isMediumScreen
                   ? classes.service_summury_container_md
-                  : classes.service_summury_container_md
+                  : classes.service_summury_container_xs
               }
             >
               We provide you to service to manage your shared databases, get
-              analytics your consumers and connected hosts with admin-dashboard.
+              analytics your consumers and connected hosts with
+              admin-dashboard.Lorem Ipsum is simply dummy text of the printing
+              and typesetting industry. Lorem Ipsum has been the industry's
+              standard dummy text ever since the 1500s, when an unknown printer
+              took a galley of type and scrambled it to make a type specimen
+              book
             </div>
+          </Grid>
+
+          {/* Only visible on mobile */}
+          <Grid
+            item
+            md={6}
+            xs={12}
+            className={
+              isMediumScreen
+                ? classes.service_image_container_md
+                : classes.service_image_container_xs
+            }
+          >
+            {/* Image/gif */}
+            <Box sx={{ display: { xs: "flex", md: "none" } }}>
+              <div>
+                <img
+                  src="/service_3.png"
+                  width={isMediumScreen ? "100%" : "60%"}
+                />
+              </div>
+            </Box>
           </Grid>
         </Grid>
       </div>

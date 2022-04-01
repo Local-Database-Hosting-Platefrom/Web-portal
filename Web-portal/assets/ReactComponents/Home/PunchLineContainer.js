@@ -108,9 +108,8 @@ const PunchLineContainer = () => {
             }}
           >
             <Grid container>
-              <Grid item xs={2} style={{ textAlign: "right" }}>
+              <Grid item xs={2} style={{ textAlign: "center" }}>
                 <img src="/connectbtn.png" width="50%" height="70%" />
-               
               </Grid>
               <Grid item xs={10} style={{ backgroundColor: "" }}>
                 <div
