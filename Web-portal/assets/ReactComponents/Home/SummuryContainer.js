@@ -116,7 +116,7 @@ const SummuryContainer = () => {
         </Box>
       </Grid>
       <Grid item md={1} xs={0}></Grid>
-     
+      
       <Grid item md={0} xs={12}  className={classes.summury_card}>
         <Box sx={{display:{xs:"block",md:"none"}}}>
         <img src="/requests.png" width={isMediumScreen?"35%":"15%"} />

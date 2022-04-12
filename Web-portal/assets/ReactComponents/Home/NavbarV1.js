@@ -252,21 +252,22 @@ export default function NavbarV1() {
       <MenuItem onClick={handleMenuClose}>My account</MenuItem> */}
 
       <Grid container>
-        <Grid item lg={4} sm={6}>
+        <Grid item lg={1} sm={6}></Grid>
+        <Grid item lg={3} sm={6}>
           {/* <h3 style={{textDecoration:"underline"}}>Token Services</h3> */}
 
           <div style={{ marginLeft: "1.5rem" }}>
             {/* Service 1 */}
-            <Card>
+            <Card elevation={0}>
               <CardContent>
                 <Grid container>
                   <Grid item xs={1}>
-                    <ReplayCircleFilledIcon style={{ fontSize: "3rem" }} />
+                    <ReplayCircleFilledIcon style={{ fontSize: "2.5rem" }} />
                   </Grid>
                   <Grid
                     item
                     xs={10}
-                    style={{ marginLeft: "1rem", marginTop: "0.3rem" }}
+                    style={{ marginLeft: "1.39rem", marginTop: "0.3rem" }}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
                       Renew access token
@@ -280,16 +281,16 @@ export default function NavbarV1() {
             </Card>
 
             {/* Service 2 */}
-            <Card style={{ marginTop: "0.5rem" }}>
+            <Card elevation={0} style={{ marginTop: "0.5rem" }}>
               <CardContent>
                 <Grid container style={{ marginTop: "0.5rem" }}>
                   <Grid item xs={1}>
-                    <InfoIcon style={{ fontSize: "3rem" }} />
+                    <InfoIcon style={{ fontSize: "2.5rem" }} />
                   </Grid>
                   <Grid
                     item
                     xs={10}
-                    style={{ marginLeft: "1rem", marginTop: "0.3rem" }}
+                    style={{ marginLeft: "1.39rem", marginTop: "0.3rem" }}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
                       Get details
@@ -305,11 +306,11 @@ export default function NavbarV1() {
           {/* <h3 style={{textDecoration:"underline"}}>Access URL Services</h3> */}
           <div style={{ marginLeft: "1.5rem" }}>
             {/* Service 1 */}
-            <Card>
+            <Card elevation={0}>
               <CardContent>
                 <Grid container>
                   <Grid item xs={1}>
-                    <StorageIcon style={{ fontSize: "3rem" }} />
+                    <StorageIcon style={{ fontSize: "2.5rem" }} />
                   </Grid>
                   <Grid
                     item
@@ -326,11 +327,11 @@ export default function NavbarV1() {
                 </Grid>
               </CardContent>
             </Card>
-            <Card style={{ marginTop: "0.5rem" }}>
+            <Card elevation={0} style={{ marginTop: "0.5rem" }}>
               <CardContent>
                 <Grid container style={{ marginTop: "0.5rem" }}>
                   <Grid item xs={1}>
-                    <SatelliteAltIcon style={{ fontSize: "3rem" }} />
+                    <SatelliteAltIcon style={{ fontSize: "2.5rem" }} />
                   </Grid>
                   <Grid
                     item
@@ -350,7 +351,7 @@ export default function NavbarV1() {
             {/* Service 2 */}
           </div>
         </Grid>
-        <Grid item lg={4} sm={6}>
+        <Grid item lg={3} sm={6}>
           {/* <h3 style={{textDecoration:"underline"}}>Access URL Services</h3> */}
           <div
             style={{
@@ -360,16 +361,16 @@ export default function NavbarV1() {
             }}
           >
             {/* Service 1 */}
-            <Card>
+            <Card elevation={0}>
               <CardContent>
                 <Grid container>
                   <Grid item xs={1}>
-                    <InstallDesktopIcon style={{ fontSize: "3rem" }} />
+                    <InstallDesktopIcon style={{ fontSize: "2.5rem" }} />
                   </Grid>
                   <Grid
                     item
                     xs={10}
-                    style={{ marginLeft: "5%", marginTop: "0.3rem" }}
+                    style={{ marginLeft: "1.32rem", marginTop: "0.3rem" }}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
                       Npm packages
@@ -383,6 +384,7 @@ export default function NavbarV1() {
             </Card>
           </div>
         </Grid>
+        <Grid item lg={1} sm={6}></Grid>
       </Grid>
     </Menu>
   );

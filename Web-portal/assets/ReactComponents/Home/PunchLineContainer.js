@@ -182,9 +182,8 @@ const PunchLineContainer = () => {
                       : classes.txt_feature_details_heading_3_xs
                   }
                 >
-                  Consume shared databases within application based on
-                  React,Next-js,Electron JS, and any framework based on
-                  Javascript and using NPM
+                 Consume shared databases within application based on
+                 various popular javascript frameworks.
                 </div>
               </Grid>
             </Grid>

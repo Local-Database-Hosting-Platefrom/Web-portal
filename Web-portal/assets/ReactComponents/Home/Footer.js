@@ -11,7 +11,7 @@ import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact
 const useStyles = makeStyles({
   root: {
     backgroundColor: "#343434",
-  
+
     marginTop: "10%",
   },
   txt_cat_title_md: {
@@ -25,12 +25,12 @@ const useStyles = makeStyles({
     fontSize: "1rem",
   },
   txt_cat_detail_md: {
-      color:"white",
-      fontSize:"0.8rem",
-      marginTop:'3%'
+    color: "white",
+    fontSize: "0.8rem",
+    marginTop: "3%",
   },
   txt_cat_detail_xs: {
-      color:"white"
+    color: "white",
   },
 
   txt_connect_with_us_md: {
@@ -48,14 +48,24 @@ const Footer = () => {
     <div className={classes.root}>
       <Container>
         <Grid container style={{ paddingTop: "5%" }}>
-            <Grid item md={1} xs={12}>  <ConnectWithoutContactIcon
-            fontSize="large"
-            sx={{ fontSize: 40 }}
-            style={{ color: "white" }}
-          />
-          <div style={{color:"white",fontSize:"1rem",fontWeight:"bold",letterSpacing:"1rem"}}>LDH</div>
+          <Grid item md={1} xs={12}>
+            <ConnectWithoutContactIcon
+              fontSize="large"
+              sx={{ fontSize: 40 }}
+              style={{ color: "white" }}
+            />
+            <div
+              style={{
+                color: "white",
+                fontSize: "1rem",
+                fontWeight: "bold",
+                letterSpacing: "1rem",
+              }}
+            >
+              LDH
+            </div>
           </Grid>
-          <Grid item md={2} xs={6} style={{padding:"2%"}}>
+          <Grid item md={2} xs={6} style={{ padding: "2%" }}>
             <div
               className={
                 isMediumScreen
@@ -65,20 +75,37 @@ const Footer = () => {
             >
               Services
             </div>
-            <div className={isMediumScreen?classes.txt_cat_detail_md:classes.txt_cat_detail_xs}>
-                Remote qurey execution
+            <div
+              className={
+                isMediumScreen
+                  ? classes.txt_cat_detail_md
+                  : classes.txt_cat_detail_xs
+              }
+            >
+              Remote qurey execution
             </div>
-            <div className={isMediumScreen?classes.txt_cat_detail_md:classes.txt_cat_detail_xs}>
-                Remote mysql database access
+            <div
+              className={
+                isMediumScreen
+                  ? classes.txt_cat_detail_md
+                  : classes.txt_cat_detail_xs
+              }
+            >
+              Remote mysql database access
             </div>
-      
-            <div className={isMediumScreen?classes.txt_cat_detail_md:classes.txt_cat_detail_xs}>
-                Request cache 
+
+            <div
+              className={
+                isMediumScreen
+                  ? classes.txt_cat_detail_md
+                  : classes.txt_cat_detail_xs
+              }
+            >
+              Request cache
             </div>
-            
           </Grid>
 
-          <Grid item md={2} xs={6} style={{padding:"2%"}}>
+          <Grid item md={2} xs={6} style={{ padding: "2%" }}>
             <div
               className={
                 isMediumScreen
@@ -88,17 +115,35 @@ const Footer = () => {
             >
               Learn
             </div>
-            <div className={isMediumScreen?classes.txt_cat_detail_md:classes.txt_cat_detail_xs}>
-                Request cache 
+            <div
+              className={
+                isMediumScreen
+                  ? classes.txt_cat_detail_md
+                  : classes.txt_cat_detail_xs
+              }
+            >
+              Request cache
             </div>
-            <div className={isMediumScreen?classes.txt_cat_detail_md:classes.txt_cat_detail_xs}>
-                How to renew access token token
+            <div
+              className={
+                isMediumScreen
+                  ? classes.txt_cat_detail_md
+                  : classes.txt_cat_detail_xs
+              }
+            >
+              How to renew access token token
             </div>
-            <div className={isMediumScreen?classes.txt_cat_detail_md:classes.txt_cat_detail_xs}>
-                How to view details of access token
+            <div
+              className={
+                isMediumScreen
+                  ? classes.txt_cat_detail_md
+                  : classes.txt_cat_detail_xs
+              }
+            >
+              How to view details of access token
             </div>
           </Grid>
-          <Grid item md={2} xs={6} style={{padding:"2%"}}>
+          <Grid item md={2} xs={6} style={{ padding: "2%" }}>
             <div
               className={
                 isMediumScreen
@@ -108,22 +153,45 @@ const Footer = () => {
             >
               Code
             </div>
-            <div className={isMediumScreen?classes.txt_cat_detail_md:classes.txt_cat_detail_xs}>
-                create  table using host access url
-            </div>
-            
-            <div className={isMediumScreen?classes.txt_cat_detail_md:classes.txt_cat_detail_xs}>
-                Fetch data using host access url
-            </div>
-            <div className={isMediumScreen?classes.txt_cat_detail_md:classes.txt_cat_detail_xs}>
-                send data using host access url
-            </div>
-            <div className={isMediumScreen?classes.txt_cat_detail_md:classes.txt_cat_detail_xs}>
-                update data using host access url
+            <div
+              className={
+                isMediumScreen
+                  ? classes.txt_cat_detail_md
+                  : classes.txt_cat_detail_xs
+              }
+            >
+              create table using host access url
             </div>
 
+            <div
+              className={
+                isMediumScreen
+                  ? classes.txt_cat_detail_md
+                  : classes.txt_cat_detail_xs
+              }
+            >
+              Fetch data using host access url
+            </div>
+            <div
+              className={
+                isMediumScreen
+                  ? classes.txt_cat_detail_md
+                  : classes.txt_cat_detail_xs
+              }
+            >
+              send data using host access url
+            </div>
+            <div
+              className={
+                isMediumScreen
+                  ? classes.txt_cat_detail_md
+                  : classes.txt_cat_detail_xs
+              }
+            >
+              update data using host access url
+            </div>
           </Grid>
-          <Grid item md={2} xs={6} style={{padding:"2%"}}>
+          <Grid item md={2} xs={6} style={{ padding: "2%" }}>
             <div
               className={
                 isMediumScreen
@@ -131,19 +199,43 @@ const Footer = () => {
                   : classes.txt_cat_title_xs
               }
             >
-             Integration Support
+              Integration Support
             </div>
-            <div className={isMediumScreen?classes.txt_cat_detail_md:classes.txt_cat_detail_xs}>
-               React Js
+            <div
+              className={
+                isMediumScreen
+                  ? classes.txt_cat_detail_md
+                  : classes.txt_cat_detail_xs
+              }
+            >
+              React Js
             </div>
-            <div className={isMediumScreen?classes.txt_cat_detail_md:classes.txt_cat_detail_xs}>
-               Electron Js
+            <div
+              className={
+                isMediumScreen
+                  ? classes.txt_cat_detail_md
+                  : classes.txt_cat_detail_xs
+              }
+            >
+              Electron Js
             </div>
-            <div className={isMediumScreen?classes.txt_cat_detail_md:classes.txt_cat_detail_xs}>
-               React Native
+            <div
+              className={
+                isMediumScreen
+                  ? classes.txt_cat_detail_md
+                  : classes.txt_cat_detail_xs
+              }
+            >
+              React Native
             </div>
-            <div className={isMediumScreen?classes.txt_cat_detail_md:classes.txt_cat_detail_xs}>
-               Next Js
+            <div
+              className={
+                isMediumScreen
+                  ? classes.txt_cat_detail_md
+                  : classes.txt_cat_detail_xs
+              }
+            >
+              Next Js
             </div>
           </Grid>
           <Grid md={3} xs={12}>
@@ -183,12 +275,62 @@ const Footer = () => {
               </Button>
             </div>
           </Grid>
+          {/* <Grid item md={1} xs={12}></Grid>
+          <Grid item md={3} xs={6} style={{ padding: "2%" }}>
+            <div
+              className={
+                isMediumScreen
+                  ? classes.txt_cat_title_md
+                  : classes.txt_cat_title_xs
+              }
+            >
+              About us
+            </div>
+            <div
+              className={
+                isMediumScreen
+                  ? classes.txt_cat_detail_md
+                  : classes.txt_cat_detail_xs
+              }
+            >
+              React Js
+            </div>
+            <div
+                 className={
+                isMediumScreen
+                  ? classes.txt_cat_detail_md
+                  : classes.txt_cat_detail_xs
+              }
+            >
+              Electron Js
+            </div>
+            <div
+              className={
+                isMediumScreen
+                  ? classes.txt_cat_detail_md
+                  : classes.txt_cat_detail_xs
+              }
+            >
+              React Native
+            </div>
+            <div
+              className={
+                isMediumScreen
+                  ? classes.txt_cat_detail_md
+                  : classes.txt_cat_detail_xs
+              }
+            >
+              Next Js
+            </div>
+          </Grid> */}
         </Grid>
-        <div style={{textAlign:"center",color:"#666666",marginTop:"2%"}}>
-        Copyright © 2022 Local database hosting Foundation. All rights reserved.
+        <div style={{ textAlign: "center", color: "#666666", marginTop: "2%" }}>
+          Copyright © 2022 Local database hosting Foundation. All rights
+          reserved.
         </div>
-        <div style={{textAlign:"center",color:"#666666"}}>
-        For web site terms of use, trademark policy and general project policies please see URL.
+        <div style={{ textAlign: "center", color: "#666666" }}>
+          For web site terms of use, trademark policy and general project
+          policies please see URL.
         </div>
       </Container>
     </div>
