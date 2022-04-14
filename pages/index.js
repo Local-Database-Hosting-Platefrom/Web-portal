@@ -1,5 +1,6 @@
 import OurService from "../ReactComponents/HomePage-Body/OurService";
 import OurSupportedFrameWorks from "../ReactComponents/HomePage-Body/OurSupportedFrameWorks";
+import HomePagefooter from "../ReactComponents/HomePage-Footer/HomePagefooter";
 import HomePageHeader from "../ReactComponents/HomePage-Header/HomePageHeader";
 import Navbar from "../ReactComponents/HomePage-Navbar/Navbar";
 
@@ -17,6 +18,7 @@ export default function Home() {
       {/* our supported frameworks */}
       <OurSupportedFrameWorks/>
     {/* Footer */}
+      <HomePagefooter/>
 
   </div>;
 }
