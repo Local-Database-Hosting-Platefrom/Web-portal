@@ -216,6 +216,7 @@ export default function Navbar() {
     <Menu
       elevation={0}
       anchorEl={anchorEl}
+      
       anchorOrigin={{
         vertical: "top",
         horizontal: "right",
@@ -553,7 +554,7 @@ export default function Navbar() {
           //   borderBottom: 1,
           //   borderWidth: 0.1,
           //   borderColor: "#6B6B6B",
-          backdropFilter:"blur(20px)",
+          backdropFilter:"blur(4px)",
           paddingLeft: "10%",
           paddingRight: "10%",
         }}

@@ -1,3 +1,6 @@
+import OurService from "../ReactComponents/HomePage-Body/OurService";
+import OurSupportedFrameWorks from "../ReactComponents/HomePage-Body/OurSupportedFrameWorks";
+import HomePageHeader from "../ReactComponents/HomePage-Header/HomePageHeader";
 import Navbar from "../ReactComponents/HomePage-Navbar/Navbar";
 
 export default function Home() {
@@ -7,7 +10,13 @@ export default function Home() {
     {/* Navbar */}
     <Navbar/>
     {/* Header */} 
+    <HomePageHeader/>
     {/* Body */}
+      {/* Our services */}
+      <OurService/>
+      {/* our supported frameworks */}
+      <OurSupportedFrameWorks/>
     {/* Footer */}
+
   </div>;
 }
