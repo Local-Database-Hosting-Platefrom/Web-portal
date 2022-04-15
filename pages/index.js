@@ -16,9 +16,9 @@ const  Home=()=> {
     <HomePageHeader/>
     {/* Body */}
       {/* Our services */}
-      <OurService/>
+    <OurService/>
       {/* our supported frameworks */}
-      <OurSupportedFrameWorks/>
+    <OurSupportedFrameWorks/>
     {/* Footer */}
       <HomePagefooter/>
   </div>;
