@@ -1,5 +1,14 @@
+import { makeStyles } from "@mui/styles";
+import NavbarWraper from "../../ReactComponents/HomePage-Navbar/NavbarWraper";
+const useStyles=makeStyles({
+    root:{
+        marginTop:"5%"
+    }
+})
+
 const Index = ()=>{
-    return <h1>Service main page</h1>
+    const classes = useStyles();
+    return <div style={classes.root}>Service main page</div>
 }
 
-export default Index;
+export default NavbarWraper(Index);

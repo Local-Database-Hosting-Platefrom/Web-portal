@@ -134,7 +134,7 @@ const OurSupportedFrameWorks = () => {
                                 : classes.frame_work_container_xs
                         }
                     >
-                        <FramworkHolder img="next.png" title="Next JS" details="Next.js is an open-source web development framework built on top of Node.js enabling React based web applications functionalities such as server-side rendering and generating static websites." />
+                        <FramworkHolder img="react_native.png" title="React Native" details="Next.js is an open-source web development framework built on top of Node.js enabling React based web applications functionalities such as server-side rendering and generating static websites." />
                     </div>
                 </Grid>
                 <Grid item md={2}></Grid>

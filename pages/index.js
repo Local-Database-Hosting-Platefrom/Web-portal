@@ -3,14 +3,16 @@ import OurSupportedFrameWorks from "../ReactComponents/HomePage-Body/OurSupporte
 import HomePagefooter from "../ReactComponents/HomePage-Footer/HomePagefooter";
 import HomePageHeader from "../ReactComponents/HomePage-Header/HomePageHeader";
 import Navbar from "../ReactComponents/HomePage-Navbar/Navbar";
+import NavbarWraper from "../ReactComponents/HomePage-Navbar/NavbarWraper";
 
-export default function Home() {
+const  Home=()=> {
   return <div style={{ height: "100%" }}>
     {/* Home screen */}
     {/* We will call the home page components here. */}
     {/* Navbar */}
-    <Navbar/>
+    {/* <Navbar/> */}
     {/* Header */} 
+  
     <HomePageHeader/>
     {/* Body */}
       {/* Our services */}
@@ -19,6 +21,6 @@ export default function Home() {
       <OurSupportedFrameWorks/>
     {/* Footer */}
       <HomePagefooter/>
-
   </div>;
 }
+export default NavbarWraper(Home);

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useRouter } from "next/router";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -7,7 +8,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu";
+import Menu from "@mui/material/Menu"; 
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Button, Card, CardContent } from "@mui/material";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
@@ -72,6 +73,8 @@ const Search = styled("div")(({ theme }) => ({
 // }));
 
 export default function Navbar() {
+  //navigation hook
+  const navigate = useRouter();
   //isMobileScreen
   const isMobileScreenDetected = false;
   //Theme
@@ -140,6 +143,7 @@ export default function Navbar() {
         setContactBtnColorControl(false);
         setHostConnectorBtnColorControl(false);
         setSignInBtnColorControl(false);
+        navigate.push("/Integration")
         break;
         break;
       case 2:
@@ -150,6 +154,7 @@ export default function Navbar() {
         setContactBtnColorControl(false);
         setHostConnectorBtnColorControl(false);
         setSignInBtnColorControl(false);
+        navigate.push("/Documentation")
         break;
 
       case 3:
@@ -161,7 +166,7 @@ export default function Navbar() {
         setHostConnectorBtnColorControl(true);
         setContactBtnColorControl(false);
         setSignInBtnColorControl(false);
-        break;
+        navigate.push("/Downloads")
         break;
       case 4:
         //Contact option
@@ -171,6 +176,7 @@ export default function Navbar() {
         setHostConnectorBtnColorControl(false);
         setContactBtnColorControl(true);
         setSignInBtnColorControl(false);
+        navigate.push("/Contact")
         break;
       case 5:
         //Sign in option
@@ -180,6 +186,8 @@ export default function Navbar() {
         setContactBtnColorControl(false);
         setHostConnectorBtnColorControl(false);
         setSignInBtnColorControl(true);
+        navigate.push("/Authentication/SignIn")
+        
         break;
     }
   };
