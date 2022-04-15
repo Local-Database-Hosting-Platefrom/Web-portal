@@ -1,15 +1,27 @@
 const Strings={
+    NavBar:{
+        SignInBtn:"Login",
+        SignUpBtn:"Create Account",
+        ContactBtn:"Contact",
+        IntegrationBtn:"Integration",
+        DownloadsBtn:"Downloads",
+        DocumentationBtn:"Documentation",
+        Services:{
+            AccessHostUrl:"Host Access Url",
+            RemoteAccessUrl:"Remote Access Url",
+            RenewToken:"Renew token",
+            GetTokenDetails:"Get details",
+            DownloadNpm:"Download Npm"
+        }
+    },
     HomePage:{
-        navBar:{
-            
-        },
         punchLineArea:{
-
         },
         ourServicesArea:{
-
         },
-        
+    },
+    SignInPage:{
+        Heading1:"Sign In"
     }
 }
 

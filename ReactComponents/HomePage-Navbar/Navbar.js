@@ -30,6 +30,7 @@ import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Strings from "../../styles/Strings";
 
 
 const Search = styled("div")(({ theme }) => ({
@@ -301,7 +302,7 @@ export default function Navbar() {
                     style={{ marginLeft: "1.39rem", marginTop: "0.3rem" }}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                      Renew access token
+                    {Strings.NavBar.Services.RenewToken}
                     </div>
                     <div style={{ fontSize: "0.7rem" }}>
                       Send renewal request to admin
@@ -324,7 +325,7 @@ export default function Navbar() {
                     style={{ marginLeft: "1.39rem", marginTop: "0.3rem" }}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                      Get details
+                    {Strings.NavBar.Services.GetTokenDetails}
                     </div>
                     <div style={{ fontSize: "0.7rem" }}>Check token status</div>
                   </Grid>
@@ -349,7 +350,7 @@ export default function Navbar() {
                     style={{ marginLeft: "1rem", marginTop: "0.3rem" }}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                      Host access URL
+                    {Strings.NavBar.Services.AccessHostUrl}
                     </div>
                     <div style={{ fontSize: "0.7rem" }}>
                       Execute quries and view request responses
@@ -370,7 +371,7 @@ export default function Navbar() {
                     style={{ marginLeft: "1rem", marginTop: "0.3rem" }}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                      Remote database access URL
+                    {Strings.NavBar.Services.RemoteAccessUrl}
                     </div>
                     <div style={{ fontSize: "0.7rem" }}>
                       View request responses
@@ -404,7 +405,7 @@ export default function Navbar() {
                     style={{ marginLeft: "1.32rem", marginTop: "0.3rem" }}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                      Npm packages
+                    {Strings.NavBar.Services.DownloadNpm}
                     </div>
                     <div style={{ fontSize: "0.7rem" }}>
                       Download npm packages
@@ -465,7 +466,7 @@ export default function Navbar() {
                   handleOptionSelection(e, 6);
                 }}
               >
-                Sign up
+               {Strings.NavBar.SignUpBtn}
               </Button>
               <Button
                 variant="contained"
@@ -480,7 +481,7 @@ export default function Navbar() {
                   handleOptionSelection(e, 6);
                 }}
               >
-                Sign in
+                 {Strings.NavBar.SignInBtn}
               </Button>
 
             <Container style={{marginTop:"1%"}}>
@@ -509,7 +510,7 @@ export default function Navbar() {
                     </Grid>
                     <Grid item xs={10}>
                       <div style={{ fontSize: "10", marginTop: "3%" }}>
-                        Renew Token
+                      {Strings.NavBar.Services.RenewToken}
                       </div>
                     </Grid>
                   </Grid>
@@ -520,7 +521,7 @@ export default function Navbar() {
                     </Grid>
                     <Grid item xs={10}>
                       <div style={{ fontSize: "10", marginTop: "3%" }}>
-                        Get details
+                      {Strings.NavBar.Services.GetTokenDetails}
                       </div>
                     </Grid>
                   </Grid>
@@ -531,7 +532,7 @@ export default function Navbar() {
                     </Grid>
                     <Grid item xs={10}>
                       <div style={{ fontSize: "10", marginTop: "3%" }}>
-                        Host access URL
+                      {Strings.NavBar.Services.AccessHostUrl}
                       </div>
                     </Grid>
                   </Grid>
@@ -542,7 +543,7 @@ export default function Navbar() {
                     </Grid>
                     <Grid item xs={10}>
                       <div style={{ fontSize: "10", marginTop: "3%" }}>
-                        Remote database access URL
+                      {Strings.NavBar.Services.RemoteAccessUrl}
                       </div>
                     </Grid>
                   </Grid>
@@ -553,7 +554,7 @@ export default function Navbar() {
                     </Grid>
                     <Grid item xs={10}>
                       <div style={{ fontSize: "10", marginTop: "3%" }}>
-                        Npm packages
+                      {Strings.NavBar.Services.DownloadNpm}
                       </div>
                     </Grid>
                   </Grid>
@@ -671,7 +672,7 @@ export default function Navbar() {
                 handleOptionSelection(e, 1);
               }}
             >
-              Integration
+              {Strings.NavBar.IntegrationBtn}
             </Button>
             <Button
               color="secondary"
@@ -687,7 +688,7 @@ export default function Navbar() {
                 handleOptionSelection(e, 2);
               }}
             >
-              Documentation
+               {Strings.NavBar.DocumentationBtn}
             </Button>
             <Button
               color="secondary"
@@ -703,7 +704,7 @@ export default function Navbar() {
                 handleOptionSelection(e, 3);
               }}
             >
-              Downloads
+               {Strings.NavBar.DownloadsBtn}
             </Button>
           </Box>
 
@@ -722,7 +723,7 @@ export default function Navbar() {
                 handleOptionSelection(e, 4);
               }}
             >
-              Contact
+              {Strings.NavBar.ContactBtn}
             </Button>
           </Box>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
@@ -740,7 +741,7 @@ export default function Navbar() {
                 handleOptionSelection(e, 5);
               }}
             >
-              Sign in
+                {Strings.NavBar.SignInBtn}
             </Button>
           </Box>
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
@@ -755,7 +756,7 @@ export default function Navbar() {
                 handleOptionSelection(e, 6);
               }}
             >
-              Sign up
+              {Strings.NavBar.SignUpBtn}
             </Button>
           </Box>
 
