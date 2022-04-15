@@ -94,6 +94,8 @@ export default function Navbar() {
     React.useState(false);
   const [signInBtnColorControl, setSignInBtnColorControl] =
     React.useState(false);
+    const [homeBtnColorControl, sethomeBtnColorControl] =
+    React.useState(false);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -134,6 +136,7 @@ export default function Navbar() {
         setContactBtnColorControl(false);
         setHostConnectorBtnColorControl(false);
         setSignInBtnColorControl(false);
+        sethomeBtnColorControl(false);
         break;
       case 1:
         //Integration option
@@ -143,6 +146,7 @@ export default function Navbar() {
         setContactBtnColorControl(false);
         setHostConnectorBtnColorControl(false);
         setSignInBtnColorControl(false);
+        sethomeBtnColorControl(false);
         navigate.push("/Integration")
         break;
         break;
@@ -154,6 +158,7 @@ export default function Navbar() {
         setContactBtnColorControl(false);
         setHostConnectorBtnColorControl(false);
         setSignInBtnColorControl(false);
+        sethomeBtnColorControl(false);
         navigate.push("/Documentation")
         break;
 
@@ -162,7 +167,7 @@ export default function Navbar() {
         setServiceBtnColorControl(false);
         setIntegrationBtnColorControl(false);
         setDocumentationBtnColorControl(false);
-
+        sethomeBtnColorControl(false);
         setHostConnectorBtnColorControl(true);
         setContactBtnColorControl(false);
         setSignInBtnColorControl(false);
@@ -175,6 +180,7 @@ export default function Navbar() {
         setDocumentationBtnColorControl(false);
         setHostConnectorBtnColorControl(false);
         setContactBtnColorControl(true);
+        sethomeBtnColorControl(false);
         setSignInBtnColorControl(false);
         navigate.push("/Contact")
         break;
@@ -184,6 +190,7 @@ export default function Navbar() {
         setIntegrationBtnColorControl(false);
         setDocumentationBtnColorControl(false);
         setContactBtnColorControl(false);
+        sethomeBtnColorControl(false);
         setHostConnectorBtnColorControl(false);
         setSignInBtnColorControl(true);
         navigate.push("/Authentication/SignIn")
@@ -191,9 +198,25 @@ export default function Navbar() {
         break;
         case 6:
         //Sign up option
-
         navigate.push("/Authentication/SignUp")
-        
+        sethomeBtnColorControl(false);
+        setServiceBtnColorControl(false);
+        setIntegrationBtnColorControl(false);
+        setDocumentationBtnColorControl(false);
+        setContactBtnColorControl(false);
+        sethomeBtnColorControl(false);
+        setHostConnectorBtnColorControl(false);
+        break;
+        case 7:
+        //Home
+        navigate.push("/")
+        sethomeBtnColorControl(true);
+        setServiceBtnColorControl(false);
+        setIntegrationBtnColorControl(false);
+        setDocumentationBtnColorControl(false);
+        setContactBtnColorControl(false);
+        sethomeBtnColorControl(false);
+        setHostConnectorBtnColorControl(false);
         break;
         
     }
@@ -429,6 +452,7 @@ export default function Navbar() {
       <Container style={{marginTop:"1%"}}>
         <Paper elevation={0} sx={{ width: "100%" }}>
           <MenuList>
+         
           <Button
                 variant="contained"
                 fullWidth
@@ -538,6 +562,7 @@ export default function Navbar() {
             </Container>
 
             <Divider />
+            
             <MenuItem>
               <ListItemText>Integration</ListItemText>
             </MenuItem>
@@ -600,6 +625,22 @@ export default function Navbar() {
           <Box sx={{ flexGrow: windSize.width <= 900 ? 1 : 1 }} />
 
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
+          <Button
+              color="secondary"
+              style={{
+                marginLeft: "1%",
+                color: homeBtnColorControl
+                  ? theme.palette.navlinkSelected
+                  : theme.palette.navlinkUnSelected,
+                textTransform: "none",
+                fontSize: 14,
+              }}
+              onClick={(e) => {
+                handleOptionSelection(e, 7);
+              }}
+            >
+              Home
+            </Button>
             <Button
               id="token-button"
               aria-haspopup="true"
