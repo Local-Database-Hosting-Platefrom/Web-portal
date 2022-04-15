@@ -142,7 +142,7 @@ const Index = () => {
                   style={{ marginTop: "2%", textDecoration: "underline",textAlign:"center"}}
                 >
                   <a style={{fontSize: "0.8rem" }} onClick={()=>{navigation.push("/Authentication/SignIn")}}>
-                   Already have an account?
+                   {"Already have an account?"}
                   </a>
                 </Grid>
                 <Grid item md={1} xs={0}></Grid>
