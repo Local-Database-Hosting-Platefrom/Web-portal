@@ -189,6 +189,13 @@ export default function Navbar() {
         navigate.push("/Authentication/SignIn")
         
         break;
+        case 6:
+        //Sign up option
+
+        navigate.push("/Authentication/SignUp")
+        
+        break;
+        
     }
   };
 

@@ -8,7 +8,7 @@ const useStyles=makeStyles({
 
 const Index = ()=>{
     const classes = useStyles();
-    return <div style={classes.root}>Service main page</div>
+    return <div className={classes.root}>Service main page</div>
 }
 
 export default NavbarWraper(Index);
