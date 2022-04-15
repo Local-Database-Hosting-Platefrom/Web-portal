@@ -1,6 +1,7 @@
 import { Google } from "@mui/icons-material";
 import { Card, Container, Grid, Link, useMediaQuery } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import { useRouter } from "next/router";
 import FooterWraper from "../../../ReactComponents/HomePage-Footer/FooterWraper";
 import HomePagefooter from "../../../ReactComponents/HomePage-Footer/HomePagefooter";
 import NavbarWraper from "../../../ReactComponents/HomePage-Navbar/NavbarWraper";
@@ -40,6 +41,7 @@ signInBtnWithOtherBtn_xs:{
 
 const Index = () => {
   const classes = useStyles();
+  const navigation = useRouter();
   const isMediumScreen = useMediaQuery("(min-width:600px)");
   return (
     <div className={classes.root}>
@@ -103,7 +105,7 @@ const Index = () => {
                  xs={12}
                   style={{ marginTop: "2%", textDecoration: "underline",textAlign:"center"}}
                 >
-                  <a style={{fontSize: "0.8rem" }}>
+                  <a style={{fontSize: "0.8rem" }} onClick={()=>{navigation.push("/Authentication/SignUp")}}  >
                     Don't have account? Create one
                   </a>
                 </Grid>

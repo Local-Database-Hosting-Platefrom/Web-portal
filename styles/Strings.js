@@ -22,7 +22,12 @@ const Strings={
     },
     SignInPage:{
         Heading1:"Sign In"
-    }
+    },
+    SignUpPage:{
+        Heading1:"Sign Up",
+    },
+
+    
 }
 
 export default Strings;
