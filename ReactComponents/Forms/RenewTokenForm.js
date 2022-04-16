@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, useMediaQuery } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useState } from "react";
 import DropDownForSelectingTokenType from "../../Support/DropDownForSelectingTokenType";
@@ -12,9 +12,16 @@ const useStyles = makeStyles({
     borderLeft: "1px solid black",
     height: "100%",
   },
+  root_sm:{
+    marginTop: "4%",
+    height: "100%",
+  }
 });
 const RenewTokenForm = () => {
   const classes = useStyles();
+  
+  const isMediumScreen = useMediaQuery("(min-width:600px)");
+
   const [currentSelectedOption, setCurrentSelectedOption] = useState(
     "Host-url Access Token"
   );
@@ -32,14 +39,14 @@ const RenewTokenForm = () => {
     
   }
   return (
-    <div className={classes.root}>
+    <div className={isMediumScreen? classes.root : classes.root_sm}>
       <Grid container>
-        <Grid item xs={7}>
-          <div style={{ marginLeft: "1.5rem" }}>
-            <Heading text={"Rewew Token"} fontSize="2rem" />
+        <Grid item md={7} xs={12}>
+          <div style={{ marginLeft: isMediumScreen?"1.5rem":"" }}>
+            <Heading text={"Rewew Token"} fontSize={isMediumScreen ? "2rem":"1.5rem"} />
           </div>
         </Grid>
-        <Grid item xs={5}>
+        <Grid item md={5} xs={12}>
           <DropDownForSelectingTokenType
             currentSelectedOption={currentSelectedOption}
             setCurrentSelectedOption={setCurrentSelectedOption}

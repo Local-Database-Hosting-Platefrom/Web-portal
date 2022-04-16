@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, useMediaQuery } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useState } from "react";
 import DropDownForSelectingTokenType from "../../Support/DropDownForSelectingTokenType";
@@ -12,12 +12,19 @@ const useStyles = makeStyles({
     borderLeft: "1px solid black",
     height: "100%",
   },
+  root_sm:{
+    marginTop: "4%",
+   
+    height: "100%",
+  }
 });
 const GetTokenDetails = () => {
   const classes = useStyles();
   const [currentSelectedOption, setCurrentSelectedOption] = useState(
     "Host-url Access Token"
   );
+  const isMediumScreen = useMediaQuery("(min-width:600px)");
+
   const [serverResponse,setServerResponse]=useState("");
   const handleRenewToken =()=>{
     setTimeout(()=>{
@@ -35,14 +42,14 @@ const GetTokenDetails = () => {
     
   }
   return (
-    <div className={classes.root}>
-      <Grid container>
-        <Grid item xs={7}>
-          <div style={{ marginLeft: "1.5rem" }}>
-            <Heading text={"Get Token Details"} fontSize="2rem" />
+    <div className={isMediumScreen? classes.root : classes.root_sm}>
+    <Grid container>
+        <Grid item md={7} sm={12}>
+          <div style={{ marginLeft: isMediumScreen?"1.5rem":"" }}>
+            <Heading text={"Get Token Details"} fontSize={isMediumScreen ? "2rem":"1.5rem"}  />
           </div>
         </Grid>
-        <Grid item xs={5}>
+        <Grid item md={5} sm={12}>
           <DropDownForSelectingTokenType
             currentSelectedOption={currentSelectedOption}
             setCurrentSelectedOption={setCurrentSelectedOption}

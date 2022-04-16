@@ -20,7 +20,7 @@ const  Home=()=> {
       {/* our supported frameworks */}
     <OurSupportedFrameWorks/>
     {/* Footer */}
-      <HomePagefooter/>
+    <HomePagefooter/>
   </div>;
 }
 export default NavbarWraper(Home);
