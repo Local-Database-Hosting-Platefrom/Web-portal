@@ -150,7 +150,6 @@ export default function Navbar() {
         sethomeBtnColorControl(false);
         navigate.push("/Integration")
         break;
-        break;
       case 2:
         //Documentation option
         setServiceBtnColorControl(false);
@@ -292,14 +291,15 @@ export default function Navbar() {
             {/* Service 1 */}
             <Card elevation={0}>
               <CardContent>
-                <Grid container>
+                <Grid container style={{cursor:"pointer"}}>
                   <Grid item xs={1}>
                     <ReplayCircleFilledIcon style={{ fontSize: "2.5rem" }} />
                   </Grid>
                   <Grid
                     item
                     xs={10}
-                    style={{ marginLeft: "1.39rem", marginTop: "0.3rem" }}
+                    style={{ marginLeft: "1.39rem", marginTop: "0.3rem"}}
+                    onClick={()=>{navigate.push("/Services/Token")}}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
                     {Strings.NavBar.Services.RenewToken}
@@ -315,7 +315,7 @@ export default function Navbar() {
             {/* Service 2 */}
             <Card elevation={0} style={{ marginTop: "0.5rem" }}>
               <CardContent>
-                <Grid container style={{ marginTop: "0.5rem" }}>
+                <Grid container style={{ marginTop: "0.5rem",cursor:"pointer" }}>
                   <Grid item xs={1}>
                     <InfoIcon style={{ fontSize: "2.5rem" }} />
                   </Grid>
@@ -323,6 +323,7 @@ export default function Navbar() {
                     item
                     xs={10}
                     style={{ marginLeft: "1.39rem", marginTop: "0.3rem" }}
+                    onClick={()=>{navigate.push("/Services/Token")}}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
                     {Strings.NavBar.Services.GetTokenDetails}
@@ -340,7 +341,7 @@ export default function Navbar() {
             {/* Service 1 */}
             <Card elevation={0}>
               <CardContent>
-                <Grid container>
+                <Grid container style={{cursor:"pointer" }}>
                   <Grid item xs={1}>
                     <StorageIcon style={{ fontSize: "2.5rem" }} />
                   </Grid>
@@ -348,6 +349,7 @@ export default function Navbar() {
                     item
                     xs={10}
                     style={{ marginLeft: "1rem", marginTop: "0.3rem" }}
+                    onClick={()=>{navigate.push("/Services/Access-urls/Host-Access-url")}}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
                     {Strings.NavBar.Services.AccessHostUrl}
@@ -361,7 +363,7 @@ export default function Navbar() {
             </Card>
             <Card elevation={0} style={{ marginTop: "0.5rem" }}>
               <CardContent>
-                <Grid container style={{ marginTop: "0.5rem" }}>
+                <Grid container style={{ marginTop: "0.5rem",cursor:"pointer" }}>
                   <Grid item xs={1}>
                     <SatelliteAltIcon style={{ fontSize: "2.5rem" }} />
                   </Grid>
@@ -369,6 +371,7 @@ export default function Navbar() {
                     item
                     xs={10}
                     style={{ marginLeft: "1rem", marginTop: "0.3rem" }}
+                    onClick={()=>{navigate.push("/Services/Access-urls/Remote-data-base-access-url")}}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
                     {Strings.NavBar.Services.RemoteAccessUrl}
@@ -395,7 +398,7 @@ export default function Navbar() {
             {/* Service 1 */}
             <Card elevation={0}>
               <CardContent>
-                <Grid container>
+                <Grid container style={{cursor:"pointer" }}>
                   <Grid item xs={1}>
                     <InstallDesktopIcon style={{ fontSize: "2.5rem" }} />
                   </Grid>
@@ -403,6 +406,7 @@ export default function Navbar() {
                     item
                     xs={10}
                     style={{ marginLeft: "1.32rem", marginTop: "0.3rem" }}
+                    onClick={()=>{navigate.push("/Services/Npm-packages")}}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
                     {Strings.NavBar.Services.DownloadNpm}
@@ -453,7 +457,6 @@ export default function Navbar() {
       <Container style={{marginTop:"1%"}}>
         <Paper elevation={0} sx={{ width: "100%" }}>
           <MenuList>
-         
           <Button
                 variant="contained"
                 fullWidth
@@ -478,7 +481,8 @@ export default function Navbar() {
                   marginTop:"2%"
                 }}
                 onClick={(e) => {
-                  handleOptionSelection(e, 6);
+                  // handleOptionSelection(e, 6);
+                  navigate.push("/Authentication/SignIn");
                 }}
               >
                  {Strings.NavBar.SignInBtn}
@@ -504,7 +508,7 @@ export default function Navbar() {
                 </AccordionSummary>
                 <AccordionDetails>
                   {/* Services */}
-                  <Grid container>
+                  <Grid container onClick={()=>{navigate.push("/Services/Token")}}>
                     <Grid item xs={2}>
                       <RestoreIcon fontSize="large" />
                     </Grid>
@@ -515,7 +519,7 @@ export default function Navbar() {
                     </Grid>
                   </Grid>
                   <Divider />
-                  <Grid container>
+                  <Grid container onClick={()=>{navigate.push("/Services/Token")}}>
                     <Grid item xs={2}>
                       <InfoIcon fontSize="large" />
                     </Grid>
@@ -526,7 +530,7 @@ export default function Navbar() {
                     </Grid>
                   </Grid>
                   <Divider />
-                  <Grid container>
+                  <Grid container onClick={()=>{navigate.push("/Services/Access-urls/Host-Access-url")}}>
                     <Grid item xs={2}>
                       <StorageIcon fontSize="large" />
                     </Grid>
@@ -537,7 +541,7 @@ export default function Navbar() {
                     </Grid>
                   </Grid>
                   <Divider />
-                  <Grid container>
+                  <Grid container onClick={()=>{navigate.push("/Services/Access-urls/Remote-data-base-access-url")}}>
                     <Grid item xs={2}>
                       <SatelliteAltIcon fontSize="large" />
                     </Grid>
@@ -548,7 +552,7 @@ export default function Navbar() {
                     </Grid>
                   </Grid>
                   <Divider />
-                  <Grid container>
+                  <Grid container onClick={()=>{navigate.push("/Services/Npm-packages")}}>
                     <Grid item xs={2}>
                       <InstallDesktopIcon fontSize="large" />
                     </Grid>
@@ -565,19 +569,23 @@ export default function Navbar() {
             <Divider />
             
             <MenuItem>
-              <ListItemText>Integration</ListItemText>
+              <ListItemText onClick={()=>{navigate.push("/Integration")}}>Integration</ListItemText>
             </MenuItem>
             <Divider />
             <MenuItem>
-              <ListItemText>Documentation</ListItemText>
+              <ListItemText onClick={()=>{navigate.push("/Documentation")}}>Documentation</ListItemText>
             </MenuItem>
             <Divider />
             <MenuItem>
-              <ListItemText>Downloads</ListItemText>
+              <ListItemText onClick={()=>{navigate.push("/Downlaods")}}>Downloads</ListItemText>
             </MenuItem>
             <Divider />
             <MenuItem>
-              <ListItemText>Contact</ListItemText>
+              <ListItemText onClick={()=>{navigate.push("/Contact")}}>Contact</ListItemText>
+            </MenuItem>
+             <Divider />
+            <MenuItem>
+              <ListItemText onClick={()=>{navigate.push("/")}}>Home</ListItemText>
             </MenuItem>
           </MenuList>
         </Paper>
