@@ -49,6 +49,10 @@ const Index = ()=>{
                         <Grid item xs={1}></Grid>
                         <Grid item xs={8}>
                             {currentOpenedScreen}
+                            {/* <div style={{borderBottom: "1px solid #7ea69f"}}></div> */}
+                        </Grid>
+                        <Grid item xs={12}>
+                        
                         </Grid>
                     </Grid>
                 </Grid>
@@ -57,4 +61,4 @@ const Index = ()=>{
     </div>
 }
 
-export default NavbarWraper(Index);
+export default  NavbarWraper(Index);

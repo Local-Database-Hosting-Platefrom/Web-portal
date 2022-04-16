@@ -46,7 +46,7 @@ const TestTokenForm = () => {
       <Grid container>
         <Grid item xs={7}>
           <div style={{ marginLeft: "1.5rem" }}>
-            <Heading text={"Rewew Token"} fontSize="2rem" />
+            <Heading text={"Test Token"} fontSize="2rem" />
           </div>
         </Grid>
         <Grid item xs={5}>
