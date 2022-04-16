@@ -67,7 +67,6 @@ const RenewTokenForm = () => {
         <div style={{ marginTop: "2%" }}>
           {serverResponse}
         </div>
-        
       </div>
     </div>
   );
