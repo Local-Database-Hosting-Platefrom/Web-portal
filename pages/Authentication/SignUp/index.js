@@ -7,7 +7,7 @@ import HomePagefooter from "../../../ReactComponents/HomePage-Footer/HomePagefoo
 import NavbarWraper from "../../../ReactComponents/HomePage-Navbar/NavbarWraper";
 import fonts from "../../../styles/Fonts";
 import Strings from "../../../styles/Strings";
-import Button from "../../../Support/Button";
+import CustomButton from "../../../Support/CustomButton";
 import Heading from "../../../Support/Heading";
 import InputField from "../../../Support/InputFields";
 const useStyles = makeStyles({
@@ -123,9 +123,9 @@ const Index = () => {
                 </Grid>
                 <Grid item md={12} xs={12}>
                   <div>
-                    <Button
+                    <CustomButton
                       style={{
-                        marginLeft:isMediumScreen? "40%":"35%",
+                        // marginLeft:isMediumScreen? "40%":"35%",
                         marginTop: isMediumScreen? "3%":"3%",
                         // left: isMediumScreen? "10":"",
                         backgroundColor: "#10365B",
