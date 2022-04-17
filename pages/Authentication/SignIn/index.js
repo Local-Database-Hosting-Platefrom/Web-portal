@@ -94,7 +94,9 @@ const Index = () => {
                         // left: isMediumScreen? "10":"",
                         backgroundColor: "#10365B",
                         fontSize: isMediumScreen? "0.8rem" :"",
+                       
                       }}
+                      onClick={()=>{localStorage.setItem("isLoggedIn",true);navigation.push("/admin-dashboard")}}
                       name="Sin in"
                     />
                   </div>

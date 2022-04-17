@@ -8,13 +8,25 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
 import MenuItem from "@mui/material/MenuItem";
-import Menu from "@mui/material/Menu"; 
+import Menu from "@mui/material/Menu";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import { Button, Card, CardContent } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  Card,
+  CardContent,
+  ListItemIcon,
+  Tooltip,
+} from "@mui/material";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 import RestoreIcon from "@mui/icons-material/Restore";
 import { useState, useEffect } from "react";
-import { KeyboardArrowDownOutlined } from "@mui/icons-material";
+import {
+  KeyboardArrowDownOutlined,
+  Logout,
+  PersonAdd,
+  Settings,
+} from "@mui/icons-material";
 import { Container, Grid, Link } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import ReplayCircleFilledIcon from "@mui/icons-material/ReplayCircleFilled";
@@ -31,7 +43,6 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Strings from "../../styles/Strings";
-
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -95,15 +106,14 @@ export default function Navbar() {
     React.useState(false);
   const [signInBtnColorControl, setSignInBtnColorControl] =
     React.useState(false);
-    const [homeBtnColorControl, sethomeBtnColorControl] =
-    React.useState(false);
+  const [homeBtnColorControl, sethomeBtnColorControl] = React.useState(false);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [expanded, setExpanded] = React.useState(false);
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -122,9 +132,26 @@ export default function Navbar() {
     handleMobileMenuClose();
   };
 
+  // Avatar
+  const [anchorElAvatar, setAnchorElAvatar] = React.useState(null);
+  const openAvatar = Boolean(anchorElAvatar);
+  const handleClickAvatar = (event) => {
+    setAnchorElAvatar(event.currentTarget);
+  };
+  const handleCloseAvatar = () => {
+    setAnchorElAvatar(null);
+  };
+
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
+
+  useEffect(() => {
+    var v = localStorage.getItem("isLoggedIn");
+
+    if (v == "true") setIsLoggedIn(true);
+    else setIsLoggedIn(false);
+  }, []);
 
   const handleOptionSelection = (event, index) => {
     switch (index) {
@@ -148,7 +175,7 @@ export default function Navbar() {
         setHostConnectorBtnColorControl(false);
         setSignInBtnColorControl(false);
         sethomeBtnColorControl(false);
-        navigate.push("/Integration")
+        navigate.push("/Integration");
         break;
       case 2:
         //Documentation option
@@ -159,7 +186,7 @@ export default function Navbar() {
         setHostConnectorBtnColorControl(false);
         setSignInBtnColorControl(false);
         sethomeBtnColorControl(false);
-        navigate.push("/Documentation")
+        navigate.push("/Documentation");
         break;
 
       case 3:
@@ -171,7 +198,7 @@ export default function Navbar() {
         setHostConnectorBtnColorControl(true);
         setContactBtnColorControl(false);
         setSignInBtnColorControl(false);
-        navigate.push("/Downloads")
+        navigate.push("/Downloads");
         break;
       case 4:
         //Contact option
@@ -182,7 +209,7 @@ export default function Navbar() {
         setContactBtnColorControl(true);
         sethomeBtnColorControl(false);
         setSignInBtnColorControl(false);
-        navigate.push("/Contact")
+        navigate.push("/Contact");
         break;
       case 5:
         //Sign in option
@@ -193,12 +220,12 @@ export default function Navbar() {
         sethomeBtnColorControl(false);
         setHostConnectorBtnColorControl(false);
         setSignInBtnColorControl(true);
-        navigate.push("/Authentication/SignIn")
-        
+        navigate.push("/Authentication/SignIn");
+
         break;
-        case 6:
+      case 6:
         //Sign up option
-        navigate.push("/Authentication/SignUp")
+        navigate.push("/Authentication/SignUp");
         sethomeBtnColorControl(false);
         setServiceBtnColorControl(false);
         setIntegrationBtnColorControl(false);
@@ -207,9 +234,9 @@ export default function Navbar() {
         sethomeBtnColorControl(false);
         setHostConnectorBtnColorControl(false);
         break;
-        case 7:
+      case 7:
         //Home
-        navigate.push("/")
+        navigate.push("/");
         sethomeBtnColorControl(true);
         setServiceBtnColorControl(false);
         setIntegrationBtnColorControl(false);
@@ -218,7 +245,6 @@ export default function Navbar() {
         sethomeBtnColorControl(false);
         setHostConnectorBtnColorControl(false);
         break;
-        
     }
   };
 
@@ -254,7 +280,6 @@ export default function Navbar() {
     <Menu
       elevation={0}
       anchorEl={anchorEl}
-      
       anchorOrigin={{
         vertical: "top",
         horizontal: "right",
@@ -291,18 +316,20 @@ export default function Navbar() {
             {/* Service 1 */}
             <Card elevation={0}>
               <CardContent>
-                <Grid container style={{cursor:"pointer"}}>
+                <Grid container style={{ cursor: "pointer" }}>
                   <Grid item xs={1}>
                     <ReplayCircleFilledIcon style={{ fontSize: "2.5rem" }} />
                   </Grid>
                   <Grid
                     item
                     xs={10}
-                    style={{ marginLeft: "1.39rem", marginTop: "0.3rem"}}
-                    onClick={()=>{navigate.push("/Services/Token")}}
+                    style={{ marginLeft: "1.39rem", marginTop: "0.3rem" }}
+                    onClick={() => {
+                      navigate.push("/Services/Token");
+                    }}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                    {Strings.NavBar.Services.RenewToken}
+                      {Strings.NavBar.Services.RenewToken}
                     </div>
                     <div style={{ fontSize: "0.7rem" }}>
                       Send renewal request to admin
@@ -315,7 +342,10 @@ export default function Navbar() {
             {/* Service 2 */}
             <Card elevation={0} style={{ marginTop: "0.5rem" }}>
               <CardContent>
-                <Grid container style={{ marginTop: "0.5rem",cursor:"pointer" }}>
+                <Grid
+                  container
+                  style={{ marginTop: "0.5rem", cursor: "pointer" }}
+                >
                   <Grid item xs={1}>
                     <InfoIcon style={{ fontSize: "2.5rem" }} />
                   </Grid>
@@ -323,10 +353,12 @@ export default function Navbar() {
                     item
                     xs={10}
                     style={{ marginLeft: "1.39rem", marginTop: "0.3rem" }}
-                    onClick={()=>{navigate.push("/Services/Token")}}
+                    onClick={() => {
+                      navigate.push("/Services/Token");
+                    }}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                    {Strings.NavBar.Services.GetTokenDetails}
+                      {Strings.NavBar.Services.GetTokenDetails}
                     </div>
                     <div style={{ fontSize: "0.7rem" }}>Check token status</div>
                   </Grid>
@@ -341,7 +373,7 @@ export default function Navbar() {
             {/* Service 1 */}
             <Card elevation={0}>
               <CardContent>
-                <Grid container style={{cursor:"pointer" }}>
+                <Grid container style={{ cursor: "pointer" }}>
                   <Grid item xs={1}>
                     <StorageIcon style={{ fontSize: "2.5rem" }} />
                   </Grid>
@@ -349,10 +381,12 @@ export default function Navbar() {
                     item
                     xs={10}
                     style={{ marginLeft: "1rem", marginTop: "0.3rem" }}
-                    onClick={()=>{navigate.push("/Services/Access-urls")}}
+                    onClick={() => {
+                      navigate.push("/Services/Access-urls");
+                    }}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                    {Strings.NavBar.Services.AccessHostUrl}
+                      {Strings.NavBar.Services.AccessHostUrl}
                     </div>
                     <div style={{ fontSize: "0.7rem" }}>
                       Execute quries and view request responses
@@ -363,7 +397,10 @@ export default function Navbar() {
             </Card>
             <Card elevation={0} style={{ marginTop: "0.5rem" }}>
               <CardContent>
-                <Grid container style={{ marginTop: "0.5rem",cursor:"pointer" }}>
+                <Grid
+                  container
+                  style={{ marginTop: "0.5rem", cursor: "pointer" }}
+                >
                   <Grid item xs={1}>
                     <SatelliteAltIcon style={{ fontSize: "2.5rem" }} />
                   </Grid>
@@ -371,10 +408,12 @@ export default function Navbar() {
                     item
                     xs={10}
                     style={{ marginLeft: "1rem", marginTop: "0.3rem" }}
-                    onClick={()=>{navigate.push("/Services/Access-urls")}}
+                    onClick={() => {
+                      navigate.push("/Services/Access-urls");
+                    }}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                    {Strings.NavBar.Services.RemoteAccessUrl}
+                      {Strings.NavBar.Services.RemoteAccessUrl}
                     </div>
                     <div style={{ fontSize: "0.7rem" }}>
                       View request responses
@@ -398,7 +437,7 @@ export default function Navbar() {
             {/* Service 1 */}
             <Card elevation={0}>
               <CardContent>
-                <Grid container style={{cursor:"pointer" }}>
+                <Grid container style={{ cursor: "pointer" }}>
                   <Grid item xs={1}>
                     <InstallDesktopIcon style={{ fontSize: "2.5rem" }} />
                   </Grid>
@@ -406,10 +445,12 @@ export default function Navbar() {
                     item
                     xs={10}
                     style={{ marginLeft: "1.32rem", marginTop: "0.3rem" }}
-                    onClick={()=>{window.open("https://www.npmjs.com/search?q=mui")}}
+                    onClick={() => {
+                      window.open("https://www.npmjs.com/search?q=mui");
+                    }}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                    {Strings.NavBar.Services.DownloadNpm}
+                      {Strings.NavBar.Services.DownloadNpm}
                     </div>
                     <div style={{ fontSize: "0.7rem" }}>
                       Download npm packages
@@ -443,53 +484,79 @@ export default function Navbar() {
         style: {
           width: "100%",
           marginTop: "15%",
-          // maxHeight:"100%",
+          maxHeight:"80%",
           borderBottomStyle: "groove",
           borderTopStyle: "groove",
           borderWidth: 1,
           borderColor: "#6B6B6B",
         },
       }}
-      
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <Container style={{marginTop:"1%"}}>
-        <Paper elevation={0} sx={{ width: "100%" }}>
+      <Container style={{ marginTop: "1%" }}>
+        <Paper elevation={0} sx={{ width: "100%",}}>
           <MenuList>
-          <Button
-                variant="contained"
-                fullWidth
-                style={{
-                  color: "white",
-                  backgroundColor: "blue",
-                  fontSize: 10,
-                }}
-                onClick={(e) => {
-                  handleOptionSelection(e, 6);
-                }}
-              >
-               {Strings.NavBar.SignUpBtn}
-              </Button>
-              <Button
-                variant="contained"
-                fullWidth
-                style={{
-                  color: "white",
-                  backgroundColor: "black",
-                  fontSize: 10,
-                  marginTop:"2%"
-                }}
-                onClick={(e) => {
-                  // handleOptionSelection(e, 6);
-                  navigate.push("/Authentication/SignIn");
-                }}
-              >
-                 {Strings.NavBar.SignInBtn}
-              </Button>
+            {!isLoggedIn && (
+              <div>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  style={{
+                    color: "white",
+                    backgroundColor: "blue",
+                    fontSize: 10,
+                  }}
+                  onClick={(e) => {
+                    handleOptionSelection(e, 6);
+                  }}
+                >
+                  {Strings.NavBar.SignUpBtn}
+                </Button>
+                <Button
+                  variant="contained"
+                  fullWidth
+                  style={{
+                    color: "white",
+                    backgroundColor: "black",
+                    fontSize: 10,
+                    marginTop: "2%",
+                  }}
+                  onClick={(e) => {
+                    // handleOptionSelection(e, 6);
+                    navigate.push("/Authentication/SignIn");
+                  }}
+                >
+                  {Strings.NavBar.SignInBtn}
+                </Button>
+              </div>
+            )}
 
-            <Container style={{marginTop:"1%"}}>
-              
+            {isLoggedIn && (
+              <div>
+                <Box
+                  sx={{
+                    display: "block",
+                    alignItems: "center",
+                    textAlign: "center",
+                  }}
+                >
+                  <Tooltip title="Account settings">
+                    <IconButton
+                      onClick={handleClickAvatar}
+                      size="large"
+                      sx={{ ml: 2,textAlign: "center"}}
+                      aria-controls={openAvatar ? "account-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={openAvatar ? "true" : undefined}
+                    >
+                      <Avatar sx={{ width: 40, height: 40 }}>Z</Avatar>
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+               </div>
+            )}
+            <Container style={{ marginTop: "1%" }}>
               <Accordion
                 expanded={expanded === "panel1"}
                 onChange={handleChange("panel1")}
@@ -508,57 +575,82 @@ export default function Navbar() {
                 </AccordionSummary>
                 <AccordionDetails>
                   {/* Services */}
-                  <Grid container onClick={()=>{navigate.push("/Services/Token")}}>
+                  <Grid
+                    container
+                    onClick={() => {
+                      navigate.push("/Services/Token");
+                    }}
+                  >
                     <Grid item xs={2}>
                       <RestoreIcon fontSize="large" />
                     </Grid>
                     <Grid item xs={10}>
                       <div style={{ fontSize: "10", marginTop: "3%" }}>
-                      {Strings.NavBar.Services.RenewToken}
+                        {Strings.NavBar.Services.RenewToken}
                       </div>
                     </Grid>
                   </Grid>
                   <Divider />
-                  <Grid container onClick={()=>{navigate.push("/Services/Token")}}>
+                  <Grid
+                    container
+                    onClick={() => {
+                      navigate.push("/Services/Token");
+                    }}
+                  >
                     <Grid item xs={2}>
                       <InfoIcon fontSize="large" />
                     </Grid>
                     <Grid item xs={10}>
                       <div style={{ fontSize: "10", marginTop: "3%" }}>
-                      {Strings.NavBar.Services.GetTokenDetails}
+                        {Strings.NavBar.Services.GetTokenDetails}
                       </div>
                     </Grid>
                   </Grid>
                   <Divider />
-                  <Grid container onClick={()=>{navigate.push("/Services/Access-urls")}}>
+                  <Grid
+                    container
+                    onClick={() => {
+                      navigate.push("/Services/Access-urls");
+                    }}
+                  >
                     <Grid item xs={2}>
                       <StorageIcon fontSize="large" />
                     </Grid>
                     <Grid item xs={10}>
                       <div style={{ fontSize: "10", marginTop: "3%" }}>
-                      {Strings.NavBar.Services.AccessHostUrl}
+                        {Strings.NavBar.Services.AccessHostUrl}
                       </div>
                     </Grid>
                   </Grid>
                   <Divider />
-                  <Grid container onClick={()=>{navigate.push("/Services/Access-urls")}}>
+                  <Grid
+                    container
+                    onClick={() => {
+                      navigate.push("/Services/Access-urls");
+                    }}
+                  >
                     <Grid item xs={2}>
                       <SatelliteAltIcon fontSize="large" />
                     </Grid>
                     <Grid item xs={10}>
                       <div style={{ fontSize: "10", marginTop: "3%" }}>
-                      {Strings.NavBar.Services.RemoteAccessUrl}
+                        {Strings.NavBar.Services.RemoteAccessUrl}
                       </div>
                     </Grid>
                   </Grid>
                   <Divider />
-                  <Grid container onClick={()=>{window.open("https://www.npmjs.com/search?q=mui")}}>
+                  <Grid
+                    container
+                    onClick={() => {
+                      window.open("https://www.npmjs.com/search?q=mui");
+                    }}
+                  >
                     <Grid item xs={2}>
                       <InstallDesktopIcon fontSize="large" />
                     </Grid>
                     <Grid item xs={10}>
                       <div style={{ fontSize: "10", marginTop: "3%" }}>
-                      {Strings.NavBar.Services.DownloadNpm}
+                        {Strings.NavBar.Services.DownloadNpm}
                       </div>
                     </Grid>
                   </Grid>
@@ -567,26 +659,104 @@ export default function Navbar() {
             </Container>
 
             <Divider />
+            {isLoggedIn && (
+              <div>
+                <Divider />
+            <MenuItem>
+              <ListItemText
+                onClick={() => {
+                  localStorage.setItem("isLoggedIn",false);
+                  // location.reload();
+                  navigate.push("/admin-dashboard")
+                }}
+              >
+                Dashboard
+              </ListItemText>
+            </MenuItem>
+              </div>
+
+            )}
+            <Divider />
+
+            <MenuItem>
+              <ListItemText
+                onClick={() => {
+                  navigate.push("/Integration");
+                }}
+              >
+                Integration
+              </ListItemText>
+            </MenuItem>
+            <Divider />
+            <MenuItem>
+              <ListItemText
+                onClick={() => {
+                  navigate.push("/Documentation");
+                }}
+              >
+                Documentation
+              </ListItemText>
+            </MenuItem>
+            <Divider />
+            <MenuItem>
+              <ListItemText
+                onClick={() => {
+                  navigate.push("/Downlaods");
+                }}
+              >
+                Downloads
+              </ListItemText>
+            </MenuItem>
+            <Divider />
+            <MenuItem>
+              <ListItemText
+                onClick={() => {
+                  navigate.push("/Contact");
+                }}
+              >
+                Contact
+              </ListItemText>
+            </MenuItem>
+            <Divider />
+            <MenuItem>
+              <ListItemText
+                onClick={() => {
+                  navigate.push("/");
+                }}
+              >
+                Home
+              </ListItemText>
+            </MenuItem>
+            <Divider />
+            <MenuItem>
+              <ListItemText
+                onClick={() => {
+                  // localStorage.setItem("isLoggedIn",false);
+                  // location.reload();
+                }}
+              >
+                Settings
+              </ListItemText>
+            </MenuItem>
+            {isLoggedIn && (
+              <div>
+                <Divider />
+            <MenuItem>
+              <ListItemText
+                onClick={() => {
+                  localStorage.setItem("isLoggedIn",false);
+                  // location.reload();
+                  navigate.push("/")
+                }}
+              >
+                Logout
+              </ListItemText>
+            </MenuItem>
+              </div>
+
+            )}
             
-            <MenuItem>
-              <ListItemText onClick={()=>{navigate.push("/Integration")}}>Integration</ListItemText>
-            </MenuItem>
-            <Divider />
-            <MenuItem>
-              <ListItemText onClick={()=>{navigate.push("/Documentation")}}>Documentation</ListItemText>
-            </MenuItem>
-            <Divider />
-            <MenuItem>
-              <ListItemText onClick={()=>{navigate.push("/Downlaods")}}>Downloads</ListItemText>
-            </MenuItem>
-            <Divider />
-            <MenuItem>
-              <ListItemText onClick={()=>{navigate.push("/Contact")}}>Contact</ListItemText>
-            </MenuItem>
-             <Divider />
-            <MenuItem>
-              <ListItemText onClick={()=>{navigate.push("/")}}>Home</ListItemText>
-            </MenuItem>
+           
           </MenuList>
         </Paper>
       </Container>
@@ -603,7 +773,7 @@ export default function Navbar() {
           //   borderBottom: 1,
           //   borderWidth: 0.1,
           //   borderColor: "#6B6B6B",
-          backdropFilter:"blur(4px)",
+          backdropFilter: "blur(4px)",
           paddingLeft: "10%",
           paddingRight: "10%",
         }}
@@ -634,7 +804,7 @@ export default function Navbar() {
           <Box sx={{ flexGrow: windSize.width <= 900 ? 1 : 1 }} />
 
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-          <Button
+            <Button
               color="secondary"
               style={{
                 marginLeft: "1%",
@@ -696,7 +866,7 @@ export default function Navbar() {
                 handleOptionSelection(e, 2);
               }}
             >
-               {Strings.NavBar.DocumentationBtn}
+              {Strings.NavBar.DocumentationBtn}
             </Button>
             <Button
               color="secondary"
@@ -712,7 +882,7 @@ export default function Navbar() {
                 handleOptionSelection(e, 3);
               }}
             >
-               {Strings.NavBar.DownloadsBtn}
+              {Strings.NavBar.DownloadsBtn}
             </Button>
           </Box>
 
@@ -734,40 +904,143 @@ export default function Navbar() {
               {Strings.NavBar.ContactBtn}
             </Button>
           </Box>
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <Button
-              color="secondary"
-              style={{
-                marginRight: "1%",
-                color: signInBtnColorControl
-                  ? theme.palette.navlinkSelected
-                  : theme.palette.navlinkUnSelected,
-                textTransform: "none",
-                fontSize: 14,
-              }}
-              onClick={(e) => {
-                handleOptionSelection(e, 5);
-              }}
-            >
+          {!isLoggedIn && (
+            // when it is logged in
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <Button
+                color="secondary"
+                style={{
+                  marginRight: "1%",
+                  color: signInBtnColorControl
+                    ? theme.palette.navlinkSelected
+                    : theme.palette.navlinkUnSelected,
+                  textTransform: "none",
+                  fontSize: 14,
+                }}
+                onClick={(e) => {
+                  handleOptionSelection(e, 5);
+                }}
+              >
                 {Strings.NavBar.SignInBtn}
-            </Button>
-          </Box>
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <Button
-              variant="contained"
-              style={{
-                color: "white",
-                backgroundColor: "black",
-                fontSize: 10,
-              }}
-              onClick={(e) => {
-                handleOptionSelection(e, 6);
-              }}
-            >
-              {Strings.NavBar.SignUpBtn}
-            </Button>
-          </Box>
+              </Button>
+            </Box>
+          )}
+          {!isLoggedIn && (
+            // when it is logged in
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <Button
+                variant="contained"
+                style={{
+                  color: "white",
+                  backgroundColor: "black",
+                  fontSize: 10,
+                }}
+                onClick={(e) => {
+                  handleOptionSelection(e, 6);
+                }}
+              >
+                {Strings.NavBar.SignUpBtn}
+              </Button>
+            </Box>
+          )}
+          {isLoggedIn && (
+             <Button
+             color="secondary"
+             style={{
+               marginLeft: "1%",
+               color: contactBtnColorControl
+                 ? theme.palette.navlinkSelected
+                 : theme.palette.navlinkUnSelected,
+               textTransform: "none",
+               fontSize: 14,
+             }}
+             onClick={(e) => {
+               navigate.push("/admin-dashboard")
+             }}
+           >
+             {"Dashboard"}
+           </Button>
+          )}
+          {isLoggedIn && (
+            <Box sx={{ display: { xs: "none", md: "block" } }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  textAlign: "center",
+                }}
+              >
+                <Tooltip title="Account settings">
+                  <IconButton
+                    onClick={handleClickAvatar}
+                    size="small"
+                    sx={{ ml: 2 }}
+                    aria-controls={openAvatar ? "account-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={openAvatar ? "true" : undefined}
+                  >
+                    <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                  </IconButton>
+                </Tooltip>
+              </Box>
+              <Menu
+                anchorEl={anchorElAvatar}
+                id="account-menu"
+                open={openAvatar}
+                onClose={handleCloseAvatar}
+                onClick={handleCloseAvatar}
+                PaperProps={{
+                  elevation: 0,
+                  sx: {
+                    overflow: "visible",
+                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                    mt: 1.5,
+                    "& .MuiAvatar-root": {
+                      width: 32,
+                      height: 32,
+                      ml: -0.5,
+                      mr: 1,
+                    },
+                    "&:before": {
+                      content: '""',
+                      display: "block",
+                      position: "absolute",
+                      top: 0,
+                      right: 14,
+                      width: 10,
+                      height: 10,
+                      bgcolor: "background.paper",
+                      transform: "translateY(-50%) rotate(45deg)",
+                      zIndex: 0,
+                    },
+                  },
+                }}
+                transformOrigin={{ horizontal: "right", vertical: "top" }}
+                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+              >
+                <MenuItem>
+                  <Avatar /> Profile
+                </MenuItem>
 
+                <MenuItem>
+                  <ListItemIcon>
+                    <Settings fontSize="small" />
+                  </ListItemIcon>
+                  Settings
+                </MenuItem>
+                <MenuItem onClick={()=>{
+                  localStorage.setItem("isLoggedIn",false);
+                  navigate.push("/")
+                  // location.reload();
+                }}>
+                  <ListItemIcon>
+                    <Logout fontSize="small" />
+                  </ListItemIcon>
+                  Logout
+                </MenuItem>
+              </Menu>
+            </Box>
+          )}
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"

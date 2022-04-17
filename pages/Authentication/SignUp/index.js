@@ -10,6 +10,7 @@ import Strings from "../../../styles/Strings";
 import CustomButton from "../../../Support/CustomButton";
 import Heading from "../../../Support/Heading";
 import InputField from "../../../Support/InputFields";
+
 const useStyles = makeStyles({
   root: {
     marginTop: "5%",
@@ -131,6 +132,7 @@ const Index = () => {
                         backgroundColor: "#10365B",
                         fontSize: isMediumScreen? "0.8rem" :"",
                       }}
+                      onClick={()=>{localStorage.setItem("isLoggedIn",true); navigation.push("/admin-dashboard")}}
                       name="Create"
                     />
                   </div>
