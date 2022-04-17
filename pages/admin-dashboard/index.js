@@ -161,7 +161,9 @@ const Index = () => {
               justifyContent: open ? "initial" : "center",
               px: 2.5,
             }}
-            onClick={()=>{handleScreenChange(0)}}
+            onClick={() => {
+              handleScreenChange(0);
+            }}
           >
             <ListItemIcon
               sx={{
@@ -186,7 +188,9 @@ const Index = () => {
               justifyContent: open ? "initial" : "center",
               px: 2.5,
             }}
-            onClick={()=>{handleScreenChange(1)}}
+            onClick={() => {
+              handleScreenChange(1);
+            }}
           >
             <ListItemIcon
               sx={{
@@ -209,7 +213,9 @@ const Index = () => {
               justifyContent: open ? "initial" : "center",
               px: 2.5,
             }}
-            onClick={()=>{handleScreenChange(2)}}
+            onClick={() => {
+              handleScreenChange(2);
+            }}
           >
             <ListItemIcon
               sx={{
@@ -232,7 +238,9 @@ const Index = () => {
               justifyContent: open ? "initial" : "center",
               px: 2.5,
             }}
-            onClick={()=>{handleScreenChange(3)}}
+            onClick={() => {
+              handleScreenChange(3);
+            }}
           >
             <ListItemIcon
               sx={{
@@ -256,7 +264,9 @@ const Index = () => {
               justifyContent: open ? "initial" : "center",
               px: 2.5,
             }}
-            onClick={()=>{handleScreenChange(4)}}
+            onClick={() => {
+              handleScreenChange(4);
+            }}
           >
             <ListItemIcon
               sx={{
@@ -280,7 +290,9 @@ const Index = () => {
               justifyContent: open ? "initial" : "center",
               px: 2.5,
             }}
-            onClick={()=>{handleScreenChange(5)}}
+            onClick={() => {
+              handleScreenChange(5);
+            }}
           >
             <ListItemIcon
               sx={{
@@ -300,7 +312,9 @@ const Index = () => {
               justifyContent: open ? "initial" : "center",
               px: 2.5,
             }}
-            onClick={()=>{handleScreenChange(6)}}
+            onClick={() => {
+              handleScreenChange(6);
+            }}
           >
             <ListItemIcon
               sx={{
