@@ -349,7 +349,7 @@ export default function Navbar() {
                     item
                     xs={10}
                     style={{ marginLeft: "1rem", marginTop: "0.3rem" }}
-                    onClick={()=>{navigate.push("/Services/Access-urls/Host-Access-url")}}
+                    onClick={()=>{navigate.push("/Services/Access-urls")}}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
                     {Strings.NavBar.Services.AccessHostUrl}
@@ -371,7 +371,7 @@ export default function Navbar() {
                     item
                     xs={10}
                     style={{ marginLeft: "1rem", marginTop: "0.3rem" }}
-                    onClick={()=>{navigate.push("/Services/Access-urls/Remote-data-base-access-url")}}
+                    onClick={()=>{navigate.push("/Services/Access-urls")}}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
                     {Strings.NavBar.Services.RemoteAccessUrl}
@@ -406,7 +406,7 @@ export default function Navbar() {
                     item
                     xs={10}
                     style={{ marginLeft: "1.32rem", marginTop: "0.3rem" }}
-                    onClick={()=>{navigate.push("/Services/Npm-packages")}}
+                    onClick={()=>{window.open("https://www.npmjs.com/search?q=mui")}}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
                     {Strings.NavBar.Services.DownloadNpm}
@@ -530,7 +530,7 @@ export default function Navbar() {
                     </Grid>
                   </Grid>
                   <Divider />
-                  <Grid container onClick={()=>{navigate.push("/Services/Access-urls/Host-Access-url")}}>
+                  <Grid container onClick={()=>{navigate.push("/Services/Access-urls")}}>
                     <Grid item xs={2}>
                       <StorageIcon fontSize="large" />
                     </Grid>
@@ -541,7 +541,7 @@ export default function Navbar() {
                     </Grid>
                   </Grid>
                   <Divider />
-                  <Grid container onClick={()=>{navigate.push("/Services/Access-urls/Remote-data-base-access-url")}}>
+                  <Grid container onClick={()=>{navigate.push("/Services/Access-urls")}}>
                     <Grid item xs={2}>
                       <SatelliteAltIcon fontSize="large" />
                     </Grid>
@@ -552,7 +552,7 @@ export default function Navbar() {
                     </Grid>
                   </Grid>
                   <Divider />
-                  <Grid container onClick={()=>{navigate.push("/Services/Npm-packages")}}>
+                  <Grid container onClick={()=>{window.open("https://www.npmjs.com/search?q=mui")}}>
                     <Grid item xs={2}>
                       <InstallDesktopIcon fontSize="large" />
                     </Grid>

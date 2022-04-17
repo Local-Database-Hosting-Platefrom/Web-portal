@@ -43,7 +43,7 @@ const RenewTokenForm = () => {
       <Grid container>
         <Grid item md={7} xs={12}>
           <div style={{ marginLeft: isMediumScreen?"1.5rem":"" }}>
-            <Heading text={"Rewew Token"} fontSize={isMediumScreen ? "2rem":"1.5rem"} />
+            <Heading text={"Renew Token"} fontSize={isMediumScreen ? "2rem":"1.5rem"} />
           </div>
         </Grid>
         <Grid item md={5} xs={12}>
