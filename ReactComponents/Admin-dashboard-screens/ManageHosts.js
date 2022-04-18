@@ -12,7 +12,7 @@ const ManageHosts = ()=>{
             </Grid>
             <Grid item xs={4} style={{textAlign: "center",borderBottom:"1px solid #7ea69f",borderLeft:"1px solid #7ea69f"}}>
                 {/* Icon and detail */}
-                <img src={"/home-page/hostsIcon.png"} />
+                <img src={"/home-page/hostsIcon.png"} width="20%"/>
             </Grid>
             <Grid item xs={12}>
                 {/* Tabs */}

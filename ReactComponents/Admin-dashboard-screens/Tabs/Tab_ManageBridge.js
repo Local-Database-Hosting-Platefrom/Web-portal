@@ -51,8 +51,6 @@ export default function Tab_ManageBridge() {
     {
       tabLable: "Manage User Roles",
     },
-    
-
   ]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -95,6 +93,7 @@ export default function Tab_ManageBridge() {
       <TabPanel value={value} index={0}>
         {/*Manage Host Access Url */}
         {` Manage Host Access Url `}
+        
       </TabPanel>
       <TabPanel value={value} index={1}>
         {/* Manage Remote Database Access Url  */}
