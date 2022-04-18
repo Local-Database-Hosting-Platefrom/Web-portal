@@ -9,7 +9,6 @@ const ManageHosts = ()=>{
                 {/* Title */}
                 <Heading text={"Manage Host"} fontSize={"2rem"} fontWeight="bold"/>
                 <Heading text={"Here you can create the host accounts and manage the caching and other settings and view all their requests and other statistics "} fontSize={"0.8rem"}/>
-                
             </Grid>
             <Grid item xs={4} style={{textAlign: "center",borderBottom:"1px solid #7ea69f",borderLeft:"1px solid #7ea69f"}}>
                 {/* Icon and detail */}
@@ -22,4 +21,5 @@ const ManageHosts = ()=>{
         </Grid>
     </div>
 }
+
 export default ManageHosts;
