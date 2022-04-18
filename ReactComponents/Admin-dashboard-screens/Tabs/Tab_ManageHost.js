@@ -6,6 +6,12 @@ import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
 
 import Typography from "@mui/material/Typography";
+import ListOfConnectedHosts from '../Lists/ListOfConnectedHosts'
+import CreateHostAccount from '../Forms/CreateHostAccount'
+import ListOfRequestForHost from '../Lists/ListOfRequestForHost'
+import ManageHostConnections from '../Forms/ManageHostConnections'
+import { Divider, Grid } from "@mui/material";
+import Heading from "../../../Support/Heading";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -41,6 +47,8 @@ function a11yProps(index) {
 
 export default function Tab_ManageHost() {
   const [value, setValue] = useState(0);
+  const [currentOpenedScreen, setCurrentOpenedScreen]= useState(<ListOfConnectedHosts/>);
+ 
   const [tabsList, setTabsList] = useState([
     {
       tabLable: "Manage Host Connection",
@@ -56,6 +64,19 @@ export default function Tab_ManageHost() {
     setValue(newValue);
   };
 
+  const handleScreenChangeForHistory=(index)=>{
+    switch(index) {
+      case 0:
+        setCurrentOpenedScreen(<ListOfConnectedHosts/>)
+      break;
+      case 1:
+        setCurrentOpenedScreen(<CreateHostAccount/>)
+      break;
+      
+      
+    }
+  }
+
   return (
     <Box
       sx={{
@@ -63,7 +84,7 @@ export default function Tab_ManageHost() {
         maxWidth: "100%",
         bgcolor: "background.paper",
       }}
-    >
+    > 
       <Tabs
         value={value}
         onChange={handleChange}
@@ -92,15 +113,59 @@ export default function Tab_ManageHost() {
       </Tabs>
       <TabPanel value={value} index={0}>
         {/* Manage Host Connection  */}
-        {` Manage Host Connection `}
+        {/* {` Manage Host Connection `} */}
+        <div>
+          <Grid container>
+            <Grid item xs={12}>
+                <Heading text={"Connect Host"} fontSize="1.5rem" fontWeight="bold"/>
+            </Grid>
+            <Grid item xs={12}>
+                <ManageHostConnections/>
+            </Grid>
+          </Grid>
+        </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
         {/* Manage Host Accounts  */}
-        {`  Manage Host Accounts`}
+        {/* {`  Manage Host Accounts`} */}
+        <div>
+          <Grid container>
+            <Grid item xs={12}>
+                <Heading text={"Connect Host"} fontSize="1.5rem" fontWeight="bold"/>
+            </Grid>
+            <Grid item xs={2} >
+              {/* Sub options 1.List of consumer account and 2.Create new user*/}
+              <div style={{marginTop:"5%",padding:"5%",borderRight: "1px solid #7ea69f"}}>
+                <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForHistory(0)}}>
+                <Heading text={"All Hosts"} fontSize="1rem"/>
+                </div>
+                <Divider/>
+                <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForHistory(1)}}>
+                <Heading text={"Create New Host Account"} fontSize="1rem"/>
+                </div>
+                <Divider/>
+              </div>
+            </Grid>
+            <Grid item xs={10}>
+              {/* Screen of sub options or call them forms and lists */}
+              {currentOpenedScreen}
+            </Grid>
+          </Grid>
+        </div>
       </TabPanel>
       <TabPanel value={value} index={2}>
         {/* Requests history  */}
-        {` Requests history `}
+        {/* {` Requests history `} */}
+        <div>
+          <Grid container>
+            <Grid item xs={12}>
+                <Heading text={"Request History"} fontSize="1.5rem" fontWeight="bold"/>
+            </Grid>
+            <Grid item xs={12}>
+              <ListOfRequestForHost/>
+            </Grid>
+          </Grid>
+        </div>
       </TabPanel>
     </Box>
   );
