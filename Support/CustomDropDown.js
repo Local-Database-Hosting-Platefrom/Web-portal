@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function DropDownForSelectingConsumerRole({currentSelectedOption="Host-url Access Token",setCurrentSelectedOption,label,...props}) {
+export default function CustomDropDown({currentSelectedOption="Host-url Access Token",setCurrentSelectedOption,label,listOfOptions=[],...props}) {
   
   const handleChange = (event) => {
     setCurrentSelectedOption(event.target.value);
@@ -21,10 +21,22 @@ export default function DropDownForSelectingConsumerRole({currentSelectedOption=
           value={currentSelectedOption}
           label="currentSelectedOption"
           onChange={handleChange}
+          defaultValue={currentSelectedOption}
         >
-          <MenuItem value={"readWrite"}>Read/Write</MenuItem>
-          <MenuItem value={"readOnly"}>Read Only</MenuItem>
-          <MenuItem value={"writeOnly"}>Write Only</MenuItem>
+            {/*
+
+            [
+                {
+                    optionTitle:"Read/Only",
+                    optionValue:"readOnly"
+                } 
+            ]
+             */}
+        {
+            listOfOptions.map((item)=>{
+                return  <MenuItem value={item.optionValue}>{item.optionTitle}</MenuItem>
+            }) 
+        }
         </Select>
       </FormControl>
     </Box>

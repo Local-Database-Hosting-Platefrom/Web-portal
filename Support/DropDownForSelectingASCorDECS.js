@@ -12,8 +12,8 @@ export default function DropDownForSelectingConsumerRole({currentSelectedOption=
   };
 
   return (
-    <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth size="small">
+    <Box sx={{ minWidth: 100 }}>
+      <FormControl size="small">
         <InputLabel id="demo-simple-select-label">{label}</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -22,9 +22,8 @@ export default function DropDownForSelectingConsumerRole({currentSelectedOption=
           label="currentSelectedOption"
           onChange={handleChange}
         >
-          <MenuItem value={"readWrite"}>Read/Write</MenuItem>
-          <MenuItem value={"readOnly"}>Read Only</MenuItem>
-          <MenuItem value={"writeOnly"}>Write Only</MenuItem>
+          <MenuItem value={"ASC"}>ASC</MenuItem>
+          <MenuItem value={"DESC"}>DESC</MenuItem>
         </Select>
       </FormControl>
     </Box>

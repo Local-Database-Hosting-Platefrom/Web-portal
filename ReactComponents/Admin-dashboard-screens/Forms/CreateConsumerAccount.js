@@ -4,22 +4,39 @@ import Heading from "../../../Support/Heading";
 import CustomButton from "../../../Support/CustomButton"
 import DropDownForSelectingConsumerRole from "../../../Support/DropDownForSelectingConsumerRole";
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import CustomDropDown from "../../../Support/CustomDropDown";
 import { useState } from "react";
 const CreateConsumerAccount = ()=>{
     const [currentSelectedOption, setCurrentSelectedOption]=useState("Read/Write");
     const [generatedConsumerId,setGeneratedConsumerId]=useState("ryewuor3-434-323");
+    const [listOfOptions_Roles,setListOfOptions_Roles]=useState([
+        {
+            optionTitle: "Read/Write",
+            optionValue: "readWrite"
+        },
+        {
+            optionTitle: "Read Only",
+            optionValue: "readOnly"
+        },
+        {
+            optionTitle: "Write only",
+            optionValue: "writeOnly"
+        },
+        
+    ]);
     const [isIdGenerated,setIdGenerated]=useState(false);
     return <Container>
         <div>
             <Heading text="Create Consumer Account" fontSize="1.5rem"/>
         </div>
-        <Grid container style={{marginTop:"2%"}}>
-            <Grid item xs={5}>
+        <Grid container style={{marginTop:"2%",textAlign:"center"}}>
+            <Grid item xs={4}></Grid>
+            <Grid item xs={4}>
             
-                <div style={{textAlign: 'left'}}>
+                <div>
                     <div>
                   
-                        <Heading text="User Name" fontSize="0.9rem"/>
+                     {/* <Heading text="User Name" fontSize="0.9rem"/> */}
                         <InputField placeholder="User Name"/>
                         {
                             (isIdGenerated) && (
@@ -40,16 +57,19 @@ const CreateConsumerAccount = ()=>{
                     </div>
                 </div>
             </Grid>
-            <Grid item xs={2}>
-                <div style={{textAlign: 'left'}}>
-                    <div>
-                       <Heading text="Select Role" fontSize="0.9rem"/>
-                       <DropDownForSelectingConsumerRole setCurrentSelectedOption={setCurrentSelectedOption} currentSelectedOption={currentSelectedOption} />
+            <Grid item xs={4}></Grid>
+            <Grid item xs={4}></Grid>
+            <Grid item xs={4} style={{textAlign: 'left'}}>
+             
+                    <div style={{marginTop:"5%"}}>
+                       {/* <Heading text="Select Role" fontSize="0.9rem"/> */}
+                       <CustomDropDown  setCurrentSelectedOption={setCurrentSelectedOption} currentSelectedOption={currentSelectedOption} label="Select Role" listOfOptions={listOfOptions_Roles}/> 
                     </div>
-                </div>
+              
             </Grid>
-            <Grid item xs={3}>
-                <div style={{textAlign: 'center',marginTop:"5%"}}>
+            <Grid item xs={4}></Grid>
+            <Grid item xs={12}>
+                <div style={{textAlign: 'center',marginTop:"1%"}}>
                 <CustomButton
                       style={{
                         // marginLeft:isMediumScreen? "40%":"35%",
