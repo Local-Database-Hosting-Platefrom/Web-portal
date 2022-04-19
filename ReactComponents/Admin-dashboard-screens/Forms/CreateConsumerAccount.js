@@ -3,9 +3,12 @@ import InputField from "../../../Support/InputFields"
 import Heading from "../../../Support/Heading";
 import CustomButton from "../../../Support/CustomButton"
 import DropDownForSelectingConsumerRole from "../../../Support/DropDownForSelectingConsumerRole";
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { useState } from "react";
 const CreateConsumerAccount = ()=>{
     const [currentSelectedOption, setCurrentSelectedOption]=useState("Read/Write");
+    const [generatedConsumerId,setGeneratedConsumerId]=useState("ryewuor3-434-323");
+    const [isIdGenerated,setIdGenerated]=useState(false);
     return <Container>
         <div>
             <Heading text="Create Consumer Account" fontSize="1.5rem"/>
@@ -16,8 +19,24 @@ const CreateConsumerAccount = ()=>{
                 <div style={{textAlign: 'left'}}>
                     <div>
                   
-                    <Heading text="User Name" fontSize="0.9rem"/>
+                        <Heading text="User Name" fontSize="0.9rem"/>
                         <InputField placeholder="User Name"/>
+                        {
+                            (isIdGenerated) && (
+                                <div style={{marginTop:"3%"}}>
+                                    <Grid container>
+                                        <Grid item xs={8}>
+                                            {/* Id */}
+                                            {generatedConsumerId}
+                                        </Grid>
+                                        <Grid item xs={4}>
+                                            {/* Copy button */}
+                                            <ContentCopyIcon style={{cursor: "pointer"}} onClick={()=>{alert("Copied")}}/>
+                                        </Grid>
+                                    </Grid>
+                                </div>
+                            )
+                        }
                     </div>
                 </div>
             </Grid>
@@ -40,7 +59,7 @@ const CreateConsumerAccount = ()=>{
                         // fontSize: isMediumScreen? "0.8rem" :"",
                         fontSize:"0.8rem"
                       }}
-                    //   onClick={()=>{localStorage.setItem("isLoggedIn",true); navigation.push("/admin-dashboard")}}
+                      onClick={()=>{setIdGenerated(true)}}
                       name="Create"
                     />
                 </div>
