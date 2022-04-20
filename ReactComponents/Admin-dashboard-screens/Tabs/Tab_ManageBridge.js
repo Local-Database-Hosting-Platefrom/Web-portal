@@ -11,6 +11,7 @@ import ManageConsumerRole from "../Forms/ManageConsumerRole"
 import Heading from "../../../Support/Heading";
 import ListOfRemoteDatabaseAccessUrls from "../Lists/ListOfRemoteDatabaseAccessUrls";
 import CreateRemoteDatabaseAccessUrl from '../Forms/CreateRemoteDatabaseAccessUrl'
+import ListOfRoles from "../Lists/ListOfRoles"
 import Divider from "@mui/material/Divider";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -66,7 +67,7 @@ export default function Tab_ManageBridge() {
     }else if (value==1){
       setCurrentOpenedScreen(<ListOfRemoteDatabaseAccessUrls/>)
     }else{
-     
+      setCurrentOpenedScreen(<ListOfRoles/>)
     }},[value]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -79,6 +80,16 @@ export default function Tab_ManageBridge() {
       break;
       case 1:
         setCurrentOpenedScreen(<CreateRemoteDatabaseAccessUrl/>)
+      break;
+    }
+  }
+  const handleScreenChangeForRoles=(index)=>{
+    switch(index) {
+      case 0:
+        setCurrentOpenedScreen(<ListOfRoles/>)
+      break;
+      case 1:
+        setCurrentOpenedScreen(<ManageConsumerRole/>)
       break;
     }
   }
@@ -167,10 +178,24 @@ export default function Tab_ManageBridge() {
             <Grid item xs={12}>
                 <Heading text={"Manage Consumer Roles"} fontSize="1.5rem" fontWeight="bold"/>
             </Grid>
-            <Grid item xs={12}>
-                <ManageConsumerRole/>
+            <Grid item xs={2} >
+              {/* Sub options 1.List of consumer account and 2.Create new user*/}
+              <div style={{marginTop:"5%",padding:"5%",borderRight: "1px solid #7ea69f"}}>
+                <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForRoles(0)}}>
+                <Heading text={"All Roles"} fontSize="1rem"/>
+                </div>
+                <Divider/>
+                <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForRoles(1)}}>
+                <Heading text={"Create New Role"} fontSize="1rem"/>
+                </div>
+                <Divider/>
+              </div>
             </Grid>
-         </Grid>
+            <Grid item xs={10}>
+              {/* Screen of sub options or call them forms and lists */}
+              {currentOpenedScreen}
+            </Grid>
+          </Grid>
         </div>
       </TabPanel>
     </Box>
