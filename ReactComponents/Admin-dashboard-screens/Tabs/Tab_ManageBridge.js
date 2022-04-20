@@ -67,7 +67,7 @@ export default function Tab_ManageBridge() {
       setCurrentOpenedScreen(<ListOfRemoteDatabaseAccessUrls/>)
     }else{
      
-    }},[]);
+    }},[value]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
