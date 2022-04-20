@@ -73,12 +73,11 @@ const ListOfResolvedRequests = ()=>{
   ]  
   
     return <Container>
-          <div>
+        <div>
           <Grid container>
               <Grid item xs={8}>
                 <Heading text={"Resolved requests"} fontSize="1.5rem" />
               </Grid>
-
               <Grid item xs={2}>
                 <CustomDropDown currentSelectedOption={orderBy} setCurrentSelectedOption={setOrderBy} label="Order By" listOfOptions={listOfOptions_OrderBy}/>
               </Grid>
