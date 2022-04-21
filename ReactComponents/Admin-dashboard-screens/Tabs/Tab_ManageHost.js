@@ -56,9 +56,9 @@ export default function Tab_ManageHost() {
     {
       tabLable: "Manage Host Account",
     },
-    {
-      tabLable: "Request history",
-    },
+    // {
+    //   tabLable: "Request history",
+    // },
   ]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -153,9 +153,8 @@ export default function Tab_ManageHost() {
           </Grid>
         </div>
       </TabPanel>
-      <TabPanel value={value} index={2}>
-        {/* Requests history  */}
-        {/* {` Requests history `} */}
+      {/* <TabPanel value={value} index={2}>
+       
         <div>
           <Grid container>
             <Grid item xs={12}>
@@ -166,7 +165,7 @@ export default function Tab_ManageHost() {
             </Grid>
           </Grid>
         </div>
-      </TabPanel>
+      </TabPanel> */}
     </Box>
   );
 }

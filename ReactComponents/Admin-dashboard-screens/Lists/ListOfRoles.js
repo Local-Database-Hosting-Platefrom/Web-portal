@@ -83,7 +83,7 @@ const ListOfRoles = ()=>{
             //   paddingRight: "5%",
             //   marginTop: "2%",
             marginTop:"1%"
-            }}>
+            }}> 
           <div>
           <Divider/>
           <Grid container>
