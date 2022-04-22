@@ -20,10 +20,15 @@ const Statistics = () => {
           <Grid item xs={3}>
             <States  title="Remote End-points" value="12"/>
           </Grid>
-          <Grid item xs={1}></Grid>
+          <Grid item xs={2}></Grid>
           <Grid item xs={3} style={{marginTop:"2%"}}>
             <States  title="Entertained requests" value="12"/>
           </Grid>
+          <Grid item xs={1}></Grid>
+          <Grid item xs={3} style={{marginTop:"2%"}}>
+            <States  title="Under Process requests" value="12"/>
+          </Grid>
+         
         </Grid>
       </div>
     </Container>
