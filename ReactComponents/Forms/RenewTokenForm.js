@@ -5,6 +5,11 @@ import DropDownForSelectingTokenType from "../../Support/DropDownForSelectingTok
 import Heading from "../../Support/Heading";
 import InputField from "../../Support/InputFields";
 import CustomButton from "../../Support/CustomButton";
+import ModalWrapper from "./ModalWrapper";
+
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
 
 const useStyles = makeStyles({
   root: {
@@ -17,9 +22,28 @@ const useStyles = makeStyles({
     height: "100%",
   }
 });
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid',
+  boxShadow: 24,
+  p: 4,
+};
+
 const RenewTokenForm = () => {
   const classes = useStyles();
-  
+  const Alert = ()=>{
+    return  <div>Alert</div>
+  }
+  const handleClose = () => setOpenModal(false);
+
+  const [openModal,setOpenModal]=useState(false);
+
   const isMediumScreen = useMediaQuery("(min-width:600px)");
 
   const [currentSelectedOption, setCurrentSelectedOption] = useState(
@@ -35,6 +59,7 @@ const RenewTokenForm = () => {
     },3000)
     setTimeout(()=>{
       setServerResponse("Request has been sent successfully.!")
+      setOpenModal(true)
     },6000)
     
   }
@@ -75,6 +100,20 @@ const RenewTokenForm = () => {
           {serverResponse}
         </div>
       </div>
+      
+    <div>
+            <Modal
+              open={openModal}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+                
+              <Box sx={style}>
+                 
+              </Box> 
+            </Modal>
+</div>
     </div>
   );
 };

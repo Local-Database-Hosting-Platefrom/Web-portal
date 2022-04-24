@@ -10,12 +10,15 @@ import InputBase from "@mui/material/InputBase";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import LinearProgress from "@mui/material/LinearProgress";
+
 import {
   Avatar,
   Button,
   Card,
   CardContent,
   ListItemIcon,
+  Stack,
   Tooltip,
 } from "@mui/material";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
@@ -84,7 +87,7 @@ const Search = styled("div")(({ theme }) => ({
 //   },
 // }));
 
-export default function Navbar() {
+export default function Navbar({isProgressBarVisible=false}) {
   //navigation hook
   const navigate = useRouter();
   //isMobileScreen
@@ -93,6 +96,8 @@ export default function Navbar() {
   const theme = useTheme();
   const windSize = useWindowSize();
   //Nav bar options color flags
+  //Progress
+  
   //Color controls
   const [serviceBtnColorControl, setServiceBtnColorControl] =
     React.useState(false);
@@ -115,10 +120,12 @@ export default function Navbar() {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [expanded, setExpanded] = React.useState(false);
+
+
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
-
+  
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -148,7 +155,6 @@ export default function Navbar() {
 
   useEffect(() => {
     var v = localStorage.getItem("isLoggedIn");
-
     if (v == "true") setIsLoggedIn(true);
     else setIsLoggedIn(false);
   }, []);
@@ -484,7 +490,7 @@ export default function Navbar() {
         style: {
           width: "100%",
           marginTop: "15%",
-          maxHeight:"80%",
+          maxHeight: "80%",
           borderBottomStyle: "groove",
           borderTopStyle: "groove",
           borderWidth: 1,
@@ -495,7 +501,7 @@ export default function Navbar() {
       onClose={handleMobileMenuClose}
     >
       <Container style={{ marginTop: "1%" }}>
-        <Paper elevation={0} sx={{ width: "100%",}}>
+        <Paper elevation={0} sx={{ width: "100%" }}>
           <MenuList>
             {!isLoggedIn && (
               <div>
@@ -545,7 +551,7 @@ export default function Navbar() {
                     <IconButton
                       onClick={handleClickAvatar}
                       size="large"
-                      sx={{ ml: 2,textAlign: "center"}}
+                      sx={{ ml: 2, textAlign: "center" }}
                       aria-controls={openAvatar ? "account-menu" : undefined}
                       aria-haspopup="true"
                       aria-expanded={openAvatar ? "true" : undefined}
@@ -554,7 +560,7 @@ export default function Navbar() {
                     </IconButton>
                   </Tooltip>
                 </Box>
-               </div>
+              </div>
             )}
             <Container style={{ marginTop: "1%" }}>
               <Accordion
@@ -662,19 +668,18 @@ export default function Navbar() {
             {isLoggedIn && (
               <div>
                 <Divider />
-            <MenuItem>
-              <ListItemText
-                onClick={() => {
-                  localStorage.setItem("isLoggedIn",false);
-                  // location.reload();
-                  navigate.push("/admin-dashboard")
-                }}
-              >
-                Dashboard
-              </ListItemText>
-            </MenuItem>
+                <MenuItem>
+                  <ListItemText
+                    onClick={() => {
+                      localStorage.setItem("isLoggedIn", false);
+                      // location.reload();
+                      navigate.push("/admin-dashboard");
+                    }}
+                  >
+                    Dashboard
+                  </ListItemText>
+                </MenuItem>
               </div>
-
             )}
             <Divider />
 
@@ -741,22 +746,19 @@ export default function Navbar() {
             {isLoggedIn && (
               <div>
                 <Divider />
-            <MenuItem>
-              <ListItemText
-                onClick={() => {
-                  localStorage.setItem("isLoggedIn",false);
-                  // location.reload();
-                  navigate.push("/")
-                }}
-              >
-                Logout
-              </ListItemText>
-            </MenuItem>
+                <MenuItem>
+                  <ListItemText
+                    onClick={() => {
+                      localStorage.setItem("isLoggedIn", false);
+                      // location.reload();
+                      navigate.push("/");
+                    }}
+                  >
+                    Logout
+                  </ListItemText>
+                </MenuItem>
               </div>
-
             )}
-            
-           
           </MenuList>
         </Paper>
       </Container>
@@ -774,287 +776,299 @@ export default function Navbar() {
           //   borderWidth: 0.1,
           //   borderColor: "#6B6B6B",
           backdropFilter: "blur(4px)",
-          paddingLeft: "10%",
-          paddingRight: "10%",
+
+          // marginTop: "0.5%"
         }}
       >
-        <Toolbar>
-          <ConnectWithoutContactIcon
-            fontSize="large"
-            sx={{ fontSize: 40 }}
-            style={{ color: "black" }}
-          />
-          <Typography
-            variant="h4"
-            noWrap
-            component="div"
-            sx={{
-              display: {
-                xs: "block",
-                sm: "block",
-                marginLeft: "1%",
-                fontWeight: "bold",
-                fontFamily: "Roboto Mono,monospace",
-              },
-            }}
-          >
-            L D H
-          </Typography>
+        {
+          isProgressBarVisible && (
+            <LinearProgress color="success" />
+          )
+        }
+        <Box sx={{ paddingLeft: "10%", paddingRight: "10%" }}>
+          <Toolbar>
+            <ConnectWithoutContactIcon
+              fontSize="large"
+              sx={{ fontSize: 40 }}
+              style={{ color: "black" }}
+            />
+            <Typography
+              variant="h4"
+              noWrap
+              component="div"
+              sx={{
+                display: {
+                  xs: "block",
+                  sm: "block",
+                  marginLeft: "1%",
+                  fontWeight: "bold",
+                  fontFamily: "Roboto Mono,monospace",
+                },
+              }}
+            >
+              L D H
+            </Typography>
 
-          <Box sx={{ flexGrow: windSize.width <= 900 ? 1 : 1 }} />
+            <Box sx={{ flexGrow: windSize.width <= 900 ? 1 : 1 }} />
 
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <Button
-              color="secondary"
-              style={{
-                marginLeft: "1%",
-                color: homeBtnColorControl
-                  ? theme.palette.navlinkSelected
-                  : theme.palette.navlinkUnSelected,
-                textTransform: "none",
-                fontSize: 14,
-              }}
-              onClick={(e) => {
-                handleOptionSelection(e, 7);
-              }}
-            >
-              Home
-            </Button>
-            <Button
-              id="token-button"
-              aria-haspopup="true"
-              size="large"
-              onClick={(e) => handleOptionSelection(e, 0)}
-              style={{
-                color: serviceBtnColorControl
-                  ? theme.palette.navlinkSelected
-                  : theme.palette.navlinkUnSelected,
-                textTransform: "none",
-                fontSize: 14,
-              }}
-              endIcon={<KeyboardArrowDownOutlined fontSize="large" />}
-            >
-              Services
-            </Button>
-            <Button
-              color="secondary"
-              style={{
-                marginLeft: "1%",
-                color: integrationBtnColorControl
-                  ? theme.palette.navlinkSelected
-                  : theme.palette.navlinkUnSelected,
-                textTransform: "none",
-                fontSize: 14,
-              }}
-              onClick={(e) => {
-                handleOptionSelection(e, 1);
-              }}
-            >
-              {Strings.NavBar.IntegrationBtn}
-            </Button>
-            <Button
-              color="secondary"
-              style={{
-                marginLeft: "1%",
-                color: documentationBtnColorControl
-                  ? theme.palette.navlinkSelected
-                  : theme.palette.navlinkUnSelected,
-                textTransform: "none",
-                fontSize: 14,
-              }}
-              onClick={(e) => {
-                handleOptionSelection(e, 2);
-              }}
-            >
-              {Strings.NavBar.DocumentationBtn}
-            </Button>
-            <Button
-              color="secondary"
-              style={{
-                marginLeft: "1%",
-                color: getHostConnectorBtnColorControl
-                  ? theme.palette.navlinkSelected
-                  : theme.palette.navlinkUnSelected,
-                textTransform: "none",
-                fontSize: 14,
-              }}
-              onClick={(e) => {
-                handleOptionSelection(e, 3);
-              }}
-            >
-              {Strings.NavBar.DownloadsBtn}
-            </Button>
-          </Box>
-
-          <Box sx={{ marginLeft: "4rem", display: { xs: "none", md: "flex" } }}>
-            <Button
-              color="secondary"
-              style={{
-                marginLeft: "1%",
-                color: contactBtnColorControl
-                  ? theme.palette.navlinkSelected
-                  : theme.palette.navlinkUnSelected,
-                textTransform: "none",
-                fontSize: 14,
-              }}
-              onClick={(e) => {
-                handleOptionSelection(e, 4);
-              }}
-            >
-              {Strings.NavBar.ContactBtn}
-            </Button>
-          </Box>
-          {!isLoggedIn && (
-            // when it is logged in
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
               <Button
                 color="secondary"
                 style={{
-                  marginRight: "1%",
-                  color: signInBtnColorControl
+                  marginLeft: "1%",
+                  color: homeBtnColorControl
                     ? theme.palette.navlinkSelected
                     : theme.palette.navlinkUnSelected,
                   textTransform: "none",
                   fontSize: 14,
                 }}
                 onClick={(e) => {
-                  handleOptionSelection(e, 5);
+                  handleOptionSelection(e, 7);
                 }}
               >
-                {Strings.NavBar.SignInBtn}
+                Home
               </Button>
-            </Box>
-          )}
-          {!isLoggedIn && (
-            // when it is logged in
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
               <Button
-                variant="contained"
+                id="token-button"
+                aria-haspopup="true"
+                size="large"
+                onClick={(e) => handleOptionSelection(e, 0)}
                 style={{
-                  color: "white",
-                  backgroundColor: "black",
-                  fontSize: 10,
+                  color: serviceBtnColorControl
+                    ? theme.palette.navlinkSelected
+                    : theme.palette.navlinkUnSelected,
+                  textTransform: "none",
+                  fontSize: 14,
+                }}
+                endIcon={<KeyboardArrowDownOutlined fontSize="large" />}
+              >
+                Services
+              </Button>
+              <Button
+                color="secondary"
+                style={{
+                  marginLeft: "1%",
+                  color: integrationBtnColorControl
+                    ? theme.palette.navlinkSelected
+                    : theme.palette.navlinkUnSelected,
+                  textTransform: "none",
+                  fontSize: 14,
                 }}
                 onClick={(e) => {
-                  handleOptionSelection(e, 6);
+                  handleOptionSelection(e, 1);
                 }}
               >
-                {Strings.NavBar.SignUpBtn}
+                {Strings.NavBar.IntegrationBtn}
+              </Button>
+              <Button
+                color="secondary"
+                style={{
+                  marginLeft: "1%",
+                  color: documentationBtnColorControl
+                    ? theme.palette.navlinkSelected
+                    : theme.palette.navlinkUnSelected,
+                  textTransform: "none",
+                  fontSize: 14,
+                }}
+                onClick={(e) => {
+                  handleOptionSelection(e, 2);
+                }}
+              >
+                {Strings.NavBar.DocumentationBtn}
+              </Button>
+              <Button
+                color="secondary"
+                style={{
+                  marginLeft: "1%",
+                  color: getHostConnectorBtnColorControl
+                    ? theme.palette.navlinkSelected
+                    : theme.palette.navlinkUnSelected,
+                  textTransform: "none",
+                  fontSize: 14,
+                }}
+                onClick={(e) => {
+                  handleOptionSelection(e, 3);
+                }}
+              >
+                {Strings.NavBar.DownloadsBtn}
               </Button>
             </Box>
-          )}
-          {isLoggedIn && (
-             <Button
-             color="secondary"
-             style={{
-               marginLeft: "1%",
-               color: contactBtnColorControl
-                 ? theme.palette.navlinkSelected
-                 : theme.palette.navlinkUnSelected,
-               textTransform: "none",
-               fontSize: 14,
-             }}
-             onClick={(e) => {
-               navigate.push("/admin-dashboard")
-             }}
-           >
-             {"Dashboard"}
-           </Button>
-          )}
-          {isLoggedIn && (
-            <Box sx={{ display: { xs: "none", md: "block" } }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  textAlign: "center",
-                }}
-              >
-                <Tooltip title="Account settings">
-                  <IconButton
-                    onClick={handleClickAvatar}
-                    size="small"
-                    sx={{ ml: 2 }}
-                    aria-controls={openAvatar ? "account-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={openAvatar ? "true" : undefined}
-                  >
-                    <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
-                  </IconButton>
-                </Tooltip>
-              </Box>
-              <Menu
-                anchorEl={anchorElAvatar}
-                id="account-menu"
-                open={openAvatar}
-                onClose={handleCloseAvatar}
-                onClick={handleCloseAvatar}
-                PaperProps={{
-                  elevation: 0,
-                  sx: {
-                    overflow: "visible",
-                    filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                    mt: 1.5,
-                    "& .MuiAvatar-root": {
-                      width: 32,
-                      height: 32,
-                      ml: -0.5,
-                      mr: 1,
-                    },
-                    "&:before": {
-                      content: '""',
-                      display: "block",
-                      position: "absolute",
-                      top: 0,
-                      right: 14,
-                      width: 10,
-                      height: 10,
-                      bgcolor: "background.paper",
-                      transform: "translateY(-50%) rotate(45deg)",
-                      zIndex: 0,
-                    },
-                  },
-                }}
-                transformOrigin={{ horizontal: "right", vertical: "top" }}
-                anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-              >
-                <MenuItem>
-                  <Avatar /> Profile
-                </MenuItem>
 
-                <MenuItem>
-                  <ListItemIcon>
-                    <Settings fontSize="small" />
-                  </ListItemIcon>
-                  Settings
-                </MenuItem>
-                <MenuItem onClick={()=>{
-                  localStorage.setItem("isLoggedIn",false);
-                  navigate.push("/")
-                  // location.reload();
-                }}>
-                  <ListItemIcon>
-                    <Logout fontSize="small" />
-                  </ListItemIcon>
-                  Logout
-                </MenuItem>
-              </Menu>
-            </Box>
-          )}
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
+            <Box
+              sx={{ marginLeft: "4rem", display: { xs: "none", md: "flex" } }}
             >
-              <MoreIcon />
-            </IconButton>
-          </Box>
-        </Toolbar>
+              <Button
+                color="secondary"
+                style={{
+                  marginLeft: "1%",
+                  color: contactBtnColorControl
+                    ? theme.palette.navlinkSelected
+                    : theme.palette.navlinkUnSelected,
+                  textTransform: "none",
+                  fontSize: 14,
+                }}
+                onClick={(e) => {
+                  handleOptionSelection(e, 4);
+                }}
+              >
+                {Strings.NavBar.ContactBtn}
+              </Button>
+            </Box>
+            {!isLoggedIn && (
+              // when it is logged in
+              <Box sx={{ display: { xs: "none", md: "flex" } }}>
+                <Button
+                  color="secondary"
+                  style={{
+                    marginRight: "1%",
+                    color: signInBtnColorControl
+                      ? theme.palette.navlinkSelected
+                      : theme.palette.navlinkUnSelected,
+                    textTransform: "none",
+                    fontSize: 14,
+                  }}
+                  onClick={(e) => {
+                    handleOptionSelection(e, 5);
+                  }}
+                >
+                  {Strings.NavBar.SignInBtn}
+                </Button>
+              </Box>
+            )}
+            {!isLoggedIn && (
+              // when it is logged in
+              <Box sx={{ display: { xs: "none", md: "flex" } }}>
+                <Button
+                  variant="contained"
+                  style={{
+                    color: "white",
+                    backgroundColor: "black",
+                    fontSize: 10,
+                  }}
+                  onClick={(e) => {
+                    handleOptionSelection(e, 6);
+                  }}
+                >
+                  {Strings.NavBar.SignUpBtn}
+                </Button>
+              </Box>
+            )}
+            {isLoggedIn && (
+              <Button
+                color="secondary"
+                style={{
+                  marginLeft: "1%",
+                  color: contactBtnColorControl
+                    ? theme.palette.navlinkSelected
+                    : theme.palette.navlinkUnSelected,
+                  textTransform: "none",
+                  fontSize: 14,
+                }}
+                onClick={(e) => {
+                  navigate.push("/admin-dashboard");
+                }}
+              >
+                {"Dashboard"}
+              </Button>
+            )}
+            {isLoggedIn && (
+              <Box sx={{ display: { xs: "none", md: "block" } }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    textAlign: "center",
+                  }}
+                >
+                  <Tooltip title="Account settings">
+                    <IconButton
+                      onClick={handleClickAvatar}
+                      size="small"
+                      sx={{ ml: 2 }}
+                      aria-controls={openAvatar ? "account-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={openAvatar ? "true" : undefined}
+                    >
+                      <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+                <Menu
+                  anchorEl={anchorElAvatar}
+                  id="account-menu"
+                  open={openAvatar}
+                  onClose={handleCloseAvatar}
+                  onClick={handleCloseAvatar}
+                  PaperProps={{
+                    elevation: 0,
+                    sx: {
+                      overflow: "visible",
+                      filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                      mt: 1.5,
+                      "& .MuiAvatar-root": {
+                        width: 32,
+                        height: 32,
+                        ml: -0.5,
+                        mr: 1,
+                      },
+                      "&:before": {
+                        content: '""',
+                        display: "block",
+                        position: "absolute",
+                        top: 0,
+                        right: 14,
+                        width: 10,
+                        height: 10,
+                        bgcolor: "background.paper",
+                        transform: "translateY(-50%) rotate(45deg)",
+                        zIndex: 0,
+                      },
+                    },
+                  }}
+                  transformOrigin={{ horizontal: "right", vertical: "top" }}
+                  anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+                >
+                  <MenuItem>
+                    <Avatar /> Profile
+                  </MenuItem>
+
+                  <MenuItem>
+                    <ListItemIcon>
+                      <Settings fontSize="small" />
+                    </ListItemIcon>
+                    Settings
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      localStorage.setItem("isLoggedIn", false);
+                      navigate.push("/");
+                      // location.reload();
+                    }}
+                  >
+                    <ListItemIcon>
+                      <Logout fontSize="small" />
+                    </ListItemIcon>
+                    Logout
+                  </MenuItem>
+                </Menu>
+              </Box>
+            )}
+            <Box sx={{ display: { xs: "flex", md: "none" } }}>
+              <IconButton
+                size="large"
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                onClick={handleMobileMenuOpen}
+                color="inherit"
+              >
+                <MoreIcon />
+              </IconButton>
+            </Box>
+          </Toolbar>
+        </Box>
       </AppBar>
+
       {renderMobileMenu}
       {renderMenu}
     </Box>

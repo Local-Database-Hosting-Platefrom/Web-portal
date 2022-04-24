@@ -5,7 +5,8 @@ import HomePageHeader from "../ReactComponents/HomePage-Header/HomePageHeader";
 import Navbar from "../ReactComponents/HomePage-Navbar/Navbar";
 import NavbarWraper from "../ReactComponents/HomePage-Navbar/NavbarWraper";
 
-const  Home=()=> {
+const  Home=({handleProgressBarVisiblity,...props})=> {
+ 
   return <div style={{ height: "100%" }}>
     {/* Home screen */}
     {/* We will call the home page components here. */}
@@ -13,7 +14,7 @@ const  Home=()=> {
     {/* <Navbar/> */}
     {/* Header */} 
   
-    <HomePageHeader/>
+    <HomePageHeader />
     {/* Body */}
       {/* Our services */}
     <OurService/>
