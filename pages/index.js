@@ -13,7 +13,6 @@ const  Home=({handleProgressBarVisiblity,...props})=> {
     {/* Navbar */}
     {/* <Navbar/> */}
     {/* Header */} 
-  
     <HomePageHeader />
     {/* Body */}
       {/* Our services */}
