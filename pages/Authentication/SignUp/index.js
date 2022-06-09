@@ -2,6 +2,12 @@ import { Google } from "@mui/icons-material";
 import { Card, Container, Grid, Link, useMediaQuery } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useRouter } from "next/router";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+
 import FooterWraper from "../../../ReactComponents/HomePage-Footer/FooterWraper";
 import HomePagefooter from "../../../ReactComponents/HomePage-Footer/HomePagefooter";
 import NavbarWraper from "../../../ReactComponents/HomePage-Navbar/NavbarWraper";
@@ -10,6 +16,7 @@ import Strings from "../../../styles/Strings";
 import CustomButton from "../../../Support/CustomButton";
 import Heading from "../../../Support/Heading";
 import InputField from "../../../Support/InputFields";
+import { useState } from "react";
 
 const useStyles = makeStyles({
   root: {
@@ -45,6 +52,13 @@ const Index = () => {
   const classes = useStyles();
   const navigation=useRouter();
   const isMediumScreen = useMediaQuery("(min-width:600px)");
+
+  const [value, setValue] = useState('female');
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
   return (
     <div className={classes.root}>
       <Container>
@@ -122,6 +136,30 @@ const Index = () => {
                     />
                   </div>
                 </Grid>
+                <Grid item md={12} xs={12}>
+                <FormControl style={{ marginTop: "3%" }}>
+      <RadioGroup
+         row
+         aria-labelledby="demo-controlled-radio-buttons-group"
+         name="controlled-radio-buttons-group"
+         value={value}
+         onChange={handleChange}
+      >
+        <FormControlLabel   value="admin" control={<Radio sx={{
+    color: "blue",
+    '&.Mui-checked': {
+      color: "red",
+    },
+  }} />} label="Admin" />
+        <FormControlLabel value="developer" control={<Radio sx={{
+    color: "blue",
+    '&.Mui-checked': {
+      color: "red",
+    },
+  }}/>} label="Developer" />
+      </RadioGroup>
+    </FormControl>
+                </Grid>  
                 <Grid item md={12} xs={12}>
                   <div>
                     <CustomButton

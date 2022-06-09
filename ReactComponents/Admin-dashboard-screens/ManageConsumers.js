@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import Tab_ManageConsumer from "./Tabs/Tab_ManageConsumer";
-import Heading from "../../Support/Heading"
+import Heading from "../../Support/Heading";
+
 const ManageConsumers = ()=>{
     return <div>
         <Grid container>

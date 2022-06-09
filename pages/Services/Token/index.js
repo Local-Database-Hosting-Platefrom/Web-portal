@@ -1,9 +1,9 @@
 import { Container, Divider, Grid, useMediaQuery } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useState } from "react";
-import GetTokenDetails from "../../../ReactComponents/Forms/GetTokenDetails";
-import RenewTokenForm from "../../../ReactComponents/Forms/RenewTokenForm";
-import TestTokenForm from "../../../ReactComponents/Forms/TestTokenForm";
+// import GetTokenDetails from "../../../ReactComponents/Forms/GetTokenDetails";
+// import RenewTokenForm from "../../../ReactComponents/Forms/RenewTokenForm";
+// import TestTokenForm from "../../../ReactComponents/Forms/TestTokenForm";
 import NavbarWraper from "../../../ReactComponents/HomePage-Navbar/NavbarWraper";
 import Heading from "../../../Support/Heading";
 import FooterWraper from "../../../ReactComponents/HomePage-Footer/FooterWraper";
@@ -59,7 +59,7 @@ const useStyles = makeStyles({
 const Index = () => {
   const classes = useStyles();
   const [currentOpenedScreen, setCurrentOpenedScreen] = useState(
-    <RenewTokenForm />
+    // <RenewTokenForm />
   );
   const isMediumScreen = useMediaQuery("(min-width:600px)");
 
@@ -72,13 +72,13 @@ const Index = () => {
   const handleScreen = (index) => {
     switch (index) {
       case 0:
-        setCurrentOpenedScreen(<RenewTokenForm />);
+        // setCurrentOpenedScreen(<RenewTokenForm />);
         break;
       case 1:
-        setCurrentOpenedScreen(<GetTokenDetails />);
+        // setCurrentOpenedScreen(<GetTokenDetails />);
         break;
       case 2:
-        setCurrentOpenedScreen(<TestTokenForm />);
+        // setCurrentOpenedScreen(<TestTokenForm />);
         break;
     }
   };
@@ -192,13 +192,13 @@ const Index = () => {
               <Tab style={{ color: "black" }} label="Test token" />
             </Tabs>
             <TabPanel value={value} index={0}>
-              <RenewTokenForm/>
+              {/* <RenewTokenForm/> */}
             </TabPanel>
             <TabPanel value={value} index={1}>
-              <GetTokenDetails/>
+              {/* <GetTokenDetails/> */}
             </TabPanel>
             <TabPanel value={value} index={2}>
-              <TestTokenForm/>
+              {/* <TestTokenForm/> */}
             </TabPanel>
           </Box>
         </Grid>

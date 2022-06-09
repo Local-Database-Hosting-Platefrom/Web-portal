@@ -2,8 +2,8 @@ import { Box, Container, Divider, Grid, Tab, Tabs, useMediaQuery } from "@mui/ma
 import { makeStyles } from "@mui/styles";
 import { useState } from "react";
 import NavbarWraper from "../../../ReactComponents/HomePage-Navbar/NavbarWraper";
-import TestHostAccresUrlForm from "../../../ReactComponents/Forms/TestHostAccresUrlForm"
-import TestRemoteDatabaseAccessUrlForm from "../../../ReactComponents/Forms/TestRemoteDatabaseAccessUrlForm"
+// import TestHostAccresUrlForm from "../../../ReactComponents/Forms/TestHostAccresUrlForm"
+// import TestRemoteDatabaseAccessUrlForm from "../../../ReactComponents/Forms/TestRemoteDatabaseAccessUrlForm"
 import Heading from "../../../Support/Heading";
 import PropTypes from 'prop-types';
 import { Typography } from "@mui/material";
@@ -52,7 +52,7 @@ const useStyles = makeStyles({
 const Index = ()=>{
     const classes = useStyles();
   const [currentOpenedScreen, setCurrentOpenedScreen] = useState(
-    <TestHostAccresUrlForm />
+    // <TestHostAccresUrlForm />
   );
   const isMediumScreen = useMediaQuery("(min-width:600px)");
 
@@ -65,10 +65,10 @@ const Index = ()=>{
   const handleScreen = (index) => {
     switch (index) {
       case 0:
-        setCurrentOpenedScreen(<TestHostAccresUrlForm />);
+        // setCurrentOpenedScreen(<TestHostAccresUrlForm />);
         break;
       case 1:
-        setCurrentOpenedScreen(<TestRemoteDatabaseAccessUrlForm />);
+        // setCurrentOpenedScreen(<TestRemoteDatabaseAccessUrlForm />);
         break;
    
     }
@@ -183,10 +183,10 @@ const Index = ()=>{
             
             </Tabs>
             <TabPanel value={value} index={0}>
-              <TestHostAccresUrlForm/>
+              {/* <TestHostAccresUrlForm/> */}
             </TabPanel>
             <TabPanel value={value} index={1}>
-              <TestRemoteDatabaseAccessUrlForm/>
+              {/* <TestRemoteDatabaseAccessUrlForm/> */}
             </TabPanel>
           
           </Box>
