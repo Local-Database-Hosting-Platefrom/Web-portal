@@ -2,7 +2,9 @@ import { Google } from "@mui/icons-material";
 import { Card, Container, Grid, Link, useMediaQuery } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useRouter } from "next/router";
-import { gapi } from "gapi-script";
+// import { gapi } from "gapi-script";
+// import { useGoogleApi } from 'react-gapi'
+import { useGoogleLogin } from 'react-use-googlelogin'
 
 import FooterWraper from "../../../ReactComponents/HomePage-Footer/FooterWraper";
 import HomePagefooter from "../../../ReactComponents/HomePage-Footer/HomePagefooter";
@@ -66,22 +68,42 @@ const Index = () => {
   const isMediumScreen = useMediaQuery("(min-width:600px)");
 
   console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID)
-  gapi.load("client:auth2", () => {
-    gapi.client.init({
-      clientId:
-        "1021611673334-buf3dq11lnl5hb17jd5ohbvkhhkgh93d.apps.googleusercontent.com",
-      // plugin_name: "chat",
-      scope: "email",
-    });
-  });
+  // gapi.load("client:auth2", () => {
+  //   gapi.client.init({
+  //     clientId:
+  //       "1021611673334-buf3dq11lnl5hb17jd5ohbvkhhkgh93d.apps.googleusercontent.com",
+  //     // plugin_name: "chat",
+  //     scope: "email",
+  //   });
+  // });
+
+  // const gapi = useGoogleApi({
+  //   scopes: [
+  //     'profile',
+  //   ],
+  //   clientId: "1021611673334-buf3dq11lnl5hb17jd5ohbvkhhkgh93d.apps.googleusercontent.com"
+  // })
+  const googleAuth = useGoogleLogin({
+    clientId: "1021611673334-buf3dq11lnl5hb17jd5ohbvkhhkgh93d.apps.googleusercontent.com"
+  })
+
+  // console.log("gapi:",googleAuth)
+  // const auth = gapi?.auth2.getAuthInstance()
 
   const signIn = () => {
-    gapi.auth2
-      .getAuthInstance()
-      .signIn({ prompt: "consent" })
+     
+      
+      googleAuth.signIn({ prompt: "consent" })
       .then(function (response) {
         console.log(response);
       });
+    // gapi.auth2
+    //   .getAuthInstance()
+    //   .signIn({ prompt: "consent" })
+    //   .then(function (response) {
+    //     console.log(response);
+    //   });
+
     // const auth2 = window.gapi.auth2.getAuthInstance()
     // if (auth2 != null) {
     //     alert("Its not null")
