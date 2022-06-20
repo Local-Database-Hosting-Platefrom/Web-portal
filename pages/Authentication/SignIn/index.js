@@ -67,55 +67,18 @@ const Index = () => {
   const navigation = useRouter();
   const isMediumScreen = useMediaQuery("(min-width:600px)");
 
-  console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID)
-  // gapi.load("client:auth2", () => {
-  //   gapi.client.init({
-  //     clientId:
-  //       "1021611673334-buf3dq11lnl5hb17jd5ohbvkhhkgh93d.apps.googleusercontent.com",
-  //     // plugin_name: "chat",
-  //     scope: "email",
-  //   });
-  // });
-
-  // const gapi = useGoogleApi({
-  //   scopes: [
-  //     'profile',
-  //   ],
-  //   clientId: "1021611673334-buf3dq11lnl5hb17jd5ohbvkhhkgh93d.apps.googleusercontent.com"
-  // })
+  
   const googleAuth = useGoogleLogin({
     clientId: "1021611673334-buf3dq11lnl5hb17jd5ohbvkhhkgh93d.apps.googleusercontent.com"
   })
 
-  // console.log("gapi:",googleAuth)
-  // const auth = gapi?.auth2.getAuthInstance()
-
-  const signIn = () => {
-     
-      
-      googleAuth.signIn({ prompt: "consent" })
-      .then(function (response) {
-        console.log(response);
-      });
-    // gapi.auth2
-    //   .getAuthInstance()
-    //   .signIn({ prompt: "consent" })
-    //   .then(function (response) {
-    //     console.log(response);
-    //   });
-
-    // const auth2 = window.gapi.auth2.getAuthInstance()
-    // if (auth2 != null) {
-    //     alert("Its not null")
-    //     auth2.signOut().then(function () {
-    //         alert("Signed out")
-    //         auth2.disconnect();
-    //         // gapi.auth2.getAuthInstance().signIn({
-    //         //     prompt: 'select_account'
-    //         // });
-    //     });
-    // }
+  const googleSignIn = () => {
+      navigation.push("http://localhost:3003/auth-api/googleAuthentication")
   };
+
+  const githubSignIn = ()=>{
+    navigation.push("http://localhost:3003//auth-api/githubAuhentication")
+  }
 
   return (
     <div className={classes.root}>
@@ -188,7 +151,7 @@ const Index = () => {
                       onClick={() => {
                         // localStorage.setItem("isLoggedIn", true);
                         // navigation.push("/admin-dashboard");
-                        signIn();
+                        // signIn();
                       }}
                       name="Sin in"
                     />
@@ -221,6 +184,9 @@ const Index = () => {
                   style={{ paddingLeft: "5%", paddingRight: "5%" }}
                 >
                   <div
+                    onClick={()=>{
+                      githubSignIn()
+                    }}
                     className={isMediumScreen? classes.signInBtnWithOtherBtn_xs:classes.signInBtnWithOtherBtn_xs}
                   >
                   <img src="/home-page/github.png" width={isMediumScreen?"35%":"30%   "} />
@@ -234,7 +200,7 @@ const Index = () => {
                 >
                   <div
                     onClick={() => {
-                      signIn();
+                      googleSignIn()
                     }}
                     className={
                       isMediumScreen
@@ -258,5 +224,17 @@ const Index = () => {
     </div>
   );
 };
+
+// This gets called on every request
+export async function getServerSideProps() {
+  console.log("On server")
+  return { props: 
+    { 
+      payload:{
+        name:"zeeshan"
+      } 
+    } 
+}
+}
 
 export default FooterWraper(NavbarWraper(Index));
