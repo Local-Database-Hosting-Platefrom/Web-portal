@@ -3,6 +3,7 @@ import { Card, Container, Grid, Link, useMediaQuery } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useRouter } from "next/router";
 import { useParams } from "react-router";
+// import useSWR from 'swr';
 
 // import { gapi } from "gapi-script";
 // import { useGoogleApi } from 'react-gapi'
@@ -23,6 +24,8 @@ import { CREATE_ADMIN_ACCOUNT, SERVER_URL } from "../../../request-manager/reque
 import { useEffect, useState } from "react";
 import { COULD_NOT_CREATE_ACCOUNT } from "../../../request-manager/responseCodes";
 import InfoDialog from "../../../ReactComponents/Dialogues/InfoDialog";
+
+// const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
 const useStyles = makeStyles({
   root: {
@@ -78,13 +81,34 @@ const Index = (props) => {
   const [alertMessage_InfoDialog,setAlertMessage_InfoDialog]=useState("");
   const [alertTitle_InfoDialog,setAlertTitle_InfoDialog]=useState("");
 
+  // const { data, error } = useSWR('/api/test_api', fetcher);
+  // console.log(data)
+
+  useEffect(()=>{
+    console.log("I am here meri jan")
+  },[]);
+
   // Getting values from query string.
 
-  let { id } = useParams();
-  useEffect(()=>{
-    console.log("HERE we go for sign in")
-  },[])
-  
+  // let { id } = useParams();
+
+  // const [accounts, setAccounts] = useState([]);
+
+  // useEffect(() => { 
+  //     const fetchData= async () => {
+  //       console.log("Fetching")
+  //       const response = await fetch('/api/test_api')
+  //       const data = await response.json()
+  //       console.log(data)
+  //       setAccounts(data)
+  //     };
+
+  //     fetchData();
+
+  //   },[])
+
+    // console.log("Accounts ",accounts)
+
   // const authentication =  ()=>{
     
   //   sendResquestToCentralAPI("POST", CREATE_ADMIN_ACCOUNT, {
@@ -168,166 +192,184 @@ const Index = (props) => {
     navigation.push("http://localhost:3003//auth-api/githubAuhentication");
   };
 
-  return (
-    <div className={classes.root}>
-      <Container>
-        <Grid container>
-          <Grid item md={8} xs={12}>
-            {/* Image side */}
-            <img
-              src="/home-page/signinvector.png"
-              width={isMediumScreen ? "70%" : "100%"}
-            />
-          </Grid>
-          <Grid item md={4} xs={12}>
-            {/* Form */}
-            <div>
-              <div
-                className={
-                  isMediumScreen
-                    ? classes.headingContainer_md
-                    : classes.headingContainer_xs
-                }
-              >
-                <Heading
-                  text={Strings.SignInPage.Heading1}
-                  fontSize="2.5rem"
-                  fontWeight="bold"
-                  fontFamily={fonts.style1}
-                />
-              </div>
-              <Grid
-                container
-                className={
-                  isMediumScreen
-                    ? classes.formContainer_md
-                    : classes.formContainer_xs
-                }
-              >
-                <Grid item md={12}>
-                  <div>
-                    <InputField
-                      placeholder={"User Name"}
-                      //   value={""}
-                      onChange={(e) => {
-                        console.log(e.target.value);
-                      }}
-                    />
-                  </div>
-                </Grid>
-                <Grid item md={12}>
-                  <div style={{ marginTop: "5%" }}>
-                    <InputField
-                      placeholder={"Password"}
-                      //   value={""}
-                      onChange={(e) => {
-                        console.log(e.target.value);
-                      }}
-                    />
-                  </div>
-                </Grid>
-                <Grid item md={12} xs={12}>
-                  <div>
-                    <CustomButton
-                      style={{
-                        // marginLeft:isMediumScreen? "40%":"35%",
-                        marginTop: isMediumScreen ? "3%" : "3%",
-                        // left: isMediumScreen? "10":"",
-                        backgroundColor: "#10365B",
-                        fontSize: isMediumScreen ? "0.8rem" : "",
-                      }}
-                      onClick={() => {
-                        // localStorage.setItem("isLoggedIn", true);
-                        // navigation.push("/admin-dashboard");
-                        signIn();
-                      }}
-                      name="Sin in"
-                    />
-                  </div>
-                </Grid>
-                <Grid
-                  item
-                  md={12}
-                  xs={12}
-                  style={{
-                    marginTop: "2%",
-                    textDecoration: "underline",
-                    textAlign: "center",
-                  }}
-                >
-                  <a
-                    style={{ fontSize: "0.8rem" }}
-                    onClick={() => {
-                      navigation.push("/Authentication/SignUp");
-                    }}
-                  >
-                    {"Don't have account? Create one"}
-                  </a>
-                </Grid>
-                <Grid item md={1} xs={0}></Grid>
-                <Grid
-                  item
-                  md={5}
-                  xs={12}
-                  style={{ paddingLeft: "5%", paddingRight: "5%" }}
-                >
-                  <div
-                    onClick={() => {
-                      githubSignIn();
-                    }}
-                    className={
-                      isMediumScreen
-                        ? classes.signInBtnWithOtherBtn_xs
-                        : classes.signInBtnWithOtherBtn_xs
-                    }
-                  >
-                    <img
-                      src="/home-page/github.png"
-                      width={isMediumScreen ? "35%" : "30%   "}
-                    />
-                  </div>
-                </Grid>
-                <Grid
-                  item
-                  md={5}
-                  xs={12}
-                  style={{ paddingLeft: "5%", paddingRight: "5%" }}
-                >
-                  <div
-                    onClick={() => {
-                      googleSignIn();
-                    }}
-                    className={
-                      isMediumScreen
-                        ? classes.signInBtnWithOtherBtn_xs
-                        : classes.signInBtnWithOtherBtn_xs
-                    }
-                  >
-                    <img
-                      src="/home-page/google.png"
-                      width={isMediumScreen ? "35%" : "30%   "}
-                    />
-                  </div>
-                </Grid>
-                <Grid item md={1} xs={0}></Grid>
-              </Grid>
-            </div>
-         
-          </Grid>
-        </Grid>
-        <></>
+  // if (error) return <div>failed to load</div>
+  // if (!data) return <div>loading...</div>
 
-        <InfoDialog
-          alertType={alertType}
-          handleClickOpen={handleClickOpen_InfoDialog}
-          handleCloseEvent={handleClose_InfoDialog}
-          open={openInfoDialogDialog}
-          alertMessage={alertMessage_InfoDialog}
-          alertTitle={alertTitle_InfoDialog}
-        />
-      </Container>
-    </div>
-  );
+  if (error) return <div style={{marginTop: "5%" }}>failed to load </div>
+  if (!data) return <div style={{marginTop: "5%" }}>loading...</div>
+
+  // useEffect(()=>{
+  //   console.log("Data",data)
+  // },[data,error]);
+
+  // render data
+  return <div style={{marginTop: "5%" }}>hello {data.name}!</div>
+
+  // return <div style={{marginTop: "5%" }}>
+
+  // </div>
+  // render data
+  // return <div style={{marginTop:"5%"}}>hello {data.name}!</div>
+  // return (
+  //   <div className={classes.root}>
+  //     <Container>
+  //       <Grid container>
+  //         <Grid item md={8} xs={12}>
+            {/* Image side */}
+          //   <img
+          //     src="/home-page/signinvector.png"
+          //     width={isMediumScreen ? "70%" : "100%"}
+          //   />
+          // </Grid>
+          // <Grid item md={4} xs={12}>
+            {/* Form */}
+  //           <div>
+  //             <div
+  //               className={
+  //                 isMediumScreen
+  //                   ? classes.headingContainer_md
+  //                   : classes.headingContainer_xs
+  //               }
+  //             >
+  //               <Heading
+  //                 text={Strings.SignInPage.Heading1}
+  //                 fontSize="2.5rem"
+  //                 fontWeight="bold"
+  //                 fontFamily={fonts.style1}
+  //               />
+  //             </div>
+  //             <Grid
+  //               container
+  //               className={
+  //                 isMediumScreen
+  //                   ? classes.formContainer_md
+  //                   : classes.formContainer_xs
+  //               }
+  //             >
+  //               <Grid item md={12}>
+  //                 <div>
+  //                   <InputField
+  //                     placeholder={"User Name"}
+  //                     //   value={""}
+  //                     onChange={(e) => {
+  //                       console.log(e.target.value);
+  //                     }}
+  //                   />
+  //                 </div>
+  //               </Grid>
+  //               <Grid item md={12}>
+  //                 <div style={{ marginTop: "5%" }}>
+  //                   <InputField
+  //                     placeholder={"Password"}
+  //                     //   value={""}
+  //                     onChange={(e) => {
+  //                       console.log(e.target.value);
+  //                     }}
+  //                   />
+  //                 </div>
+  //               </Grid>
+  //               <Grid item md={12} xs={12}>
+  //                 <div>
+  //                   <CustomButton
+  //                     style={{
+  //                       // marginLeft:isMediumScreen? "40%":"35%",
+  //                       marginTop: isMediumScreen ? "3%" : "3%",
+  //                       // left: isMediumScreen? "10":"",
+  //                       backgroundColor: "#10365B",
+  //                       fontSize: isMediumScreen ? "0.8rem" : "",
+  //                     }}
+  //                     onClick={() => {
+  //                       // localStorage.setItem("isLoggedIn", true);
+  //                       // navigation.push("/admin-dashboard");
+  //                       signIn();
+  //                     }}
+  //                     name="Sin in"
+  //                   />
+  //                 </div>
+  //               </Grid>
+  //               <Grid
+  //                 item
+  //                 md={12}
+  //                 xs={12}
+  //                 style={{
+  //                   marginTop: "2%",
+  //                   textDecoration: "underline",
+  //                   textAlign: "center",
+  //                 }}
+  //               >
+  //                 <a
+  //                   style={{ fontSize: "0.8rem" }}
+  //                   onClick={() => {
+  //                     navigation.push("/Authentication/SignUp");
+  //                   }}
+  //                 >
+  //                   {"Don't have account? Create one"}
+  //                 </a>
+  //               </Grid>
+  //               <Grid item md={1} xs={0}></Grid>
+  //               <Grid
+  //                 item
+  //                 md={5}
+  //                 xs={12}
+  //                 style={{ paddingLeft: "5%", paddingRight: "5%" }}
+  //               >
+  //                 <div
+  //                   onClick={() => {
+  //                     githubSignIn();
+  //                   }}
+  //                   className={
+  //                     isMediumScreen
+  //                       ? classes.signInBtnWithOtherBtn_xs
+  //                       : classes.signInBtnWithOtherBtn_xs
+  //                   }
+  //                 >
+  //                   <img
+  //                     src="/home-page/github.png"
+  //                     width={isMediumScreen ? "35%" : "30%   "}
+  //                   />
+  //                 </div>
+  //               </Grid>
+  //               <Grid
+  //                 item
+  //                 md={5}
+  //                 xs={12}
+  //                 style={{ paddingLeft: "5%", paddingRight: "5%" }}
+  //               >
+  //                 <div
+  //                   onClick={() => {
+  //                     googleSignIn();
+  //                   }}
+  //                   className={
+  //                     isMediumScreen
+  //                       ? classes.signInBtnWithOtherBtn_xs
+  //                       : classes.signInBtnWithOtherBtn_xs
+  //                   }
+  //                 >
+  //                   <img
+  //                     src="/home-page/google.png"
+  //                     width={isMediumScreen ? "35%" : "30%   "}
+  //                   />
+  //                 </div>
+  //               </Grid>
+  //               <Grid item md={1} xs={0}></Grid> 
+  //             </Grid>
+  //           </div>
+         
+  //         </Grid>
+  //       </Grid>
+  //       <></>
+
+  //       <InfoDialog
+  //         alertType={alertType}
+  //         handleClickOpen={handleClickOpen_InfoDialog}
+  //         handleCloseEvent={handleClose_InfoDialog}
+  //         open={openInfoDialogDialog}
+  //         alertMessage={alertMessage_InfoDialog}
+  //         alertTitle={alertTitle_InfoDialog}
+  //       />
+  //     </Container>
+  //   </div>
+  // );
 };
 
 // This gets called on every request
