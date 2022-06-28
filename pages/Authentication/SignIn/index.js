@@ -2,9 +2,11 @@ import { Google } from "@mui/icons-material";
 import { Card, Container, Grid, Link, useMediaQuery } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useRouter } from "next/router";
+import { useParams } from "react-router";
+
 // import { gapi } from "gapi-script";
 // import { useGoogleApi } from 'react-gapi'
-import { useGoogleLogin } from 'react-use-googlelogin'
+import { useGoogleLogin } from "react-use-googlelogin";
 
 import FooterWraper from "../../../ReactComponents/HomePage-Footer/FooterWraper";
 import HomePagefooter from "../../../ReactComponents/HomePage-Footer/HomePagefooter";
@@ -15,8 +17,12 @@ import CustomButton from "../../../Support/CustomButton";
 import Heading from "../../../Support/Heading";
 import InputField from "../../../Support/InputFields";
 
-// Request Manager 
+// Request Manager
 import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
+import { CREATE_ADMIN_ACCOUNT, SERVER_URL } from "../../../request-manager/requestUrls";
+import { useEffect, useState } from "react";
+import { COULD_NOT_CREATE_ACCOUNT } from "../../../request-manager/responseCodes";
+import InfoDialog from "../../../ReactComponents/Dialogues/InfoDialog";
 
 const useStyles = makeStyles({
   root: {
@@ -48,37 +54,119 @@ const useStyles = makeStyles({
     borderWidth: "1px",
     borderRadius: "8%",
     marginTop: "5%",
-    cursor: "pointer"
+    cursor: "pointer",
   },
-  githubButton:{
+  githubButton: {
     borderStyle: "groove",
     borderWidth: "1px",
     borderRadius: "8%",
     marginTop: "5%",
     height: "90%",
     backgroundColor: "black",
-    color:"white",
-    cursor:"pointer"
-  }
+    color: "white",
+    cursor: "pointer",
+  },
 });
 
-const Index = () => {
+const Index = (props) => {
+
   const classes = useStyles();
   const navigation = useRouter();
   const isMediumScreen = useMediaQuery("(min-width:600px)");
+  const [alertType,setAlertType]=useState("Info");
+  const [openInfoDialogDialog, setOpenInfoDialogDialog] = useState(false);
+  const [alertMessage_InfoDialog,setAlertMessage_InfoDialog]=useState("");
+  const [alertTitle_InfoDialog,setAlertTitle_InfoDialog]=useState("");
 
+  // Getting values from query string.
+
+  let { id } = useParams();
+  useEffect(()=>{
+    console.log("HERE we go for sign in")
+  },[])
   
-  const googleAuth = useGoogleLogin({
-    clientId: "1021611673334-buf3dq11lnl5hb17jd5ohbvkhhkgh93d.apps.googleusercontent.com"
-  })
+  // const authentication =  ()=>{
+    
+  //   sendResquestToCentralAPI("POST", CREATE_ADMIN_ACCOUNT, {
+  //     // user_Id: user_Id,
+  //     // authType: authType,
+  //   }).then(async (response) => {
+  //       // console.log("Resp status:",response.status);
+  //       // we have status codes :
+  //       // - 200 for success of request with not server error
+  //       // - 501 for invalid user id [error in decryption];
+  //       console.log(response)
+  //       if (response.status == 200) {
+  //         const data = await response.json();
+  //         console.log(data);
+  //         // check if user is loggged in out not
+          
+  //       } else if (response.status == 501) {
+  //         // problem line failed to encrypt
+  //         console.log("Server error")
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log("Error")
+  //       console.log(error.message)
+  //     }); 
+  // }
 
-  const googleSignIn = () => {
-      navigation.push("http://localhost:3003/auth-api/googleAuthentication")
+
+
+  // authentication();
+
+
+  // Checking if user is authenticated and authorized.  
+  
+  // props.payload //u get the response .
+  // if (props.isThereAnyInternalError === false) 
+  // {    
+    // Request to get jwt token is sent and in payload we have response.
+  //   if (props.payload.responseCode == CREATED_ACCOUNT) {
+  //     // created the account
+  //     console.log(" -------------- Account created ------------");
+
+  //   } else if ((props.payload.responseCode = COULD_NOT_CREATE_ACCOUNT)) {
+  //     // could'nt create account
+
+  //     console.log("Could not create the account");
+  //     setAlertType("Info");
+  //     setAlertTitle_InfoDialog("Server Response");
+  //     setAlertMessage_InfoDialog(" Could Not create account");
+  //     handleClickOpen_InfoDialog();
+
+  //   }
+  // }
+  // else {
+  //   // still no auth request is sent.
+  //   console.log("No auth req is sent")
+  // }
+
+  const googleAuth = useGoogleLogin({
+    clientId:
+      "1021611673334-buf3dq11lnl5hb17jd5ohbvkhhkgh93d.apps.googleusercontent.com",
+  });
+
+  const handleClickOpen_InfoDialog = () => {
+    setOpenInfoDialogDialog(true);
+  };
+  const handleClose_InfoDialog = () => {
+    setOpenInfoDialogDialog(false);
   };
 
-  const githubSignIn = ()=>{
-    navigation.push("http://localhost:3003//auth-api/githubAuhentication")
+
+  const signIn=()=>{
+    handleClickOpen_InfoDialog();
   }
+
+  const googleSignIn = () => {
+    navigation.push("http://localhost:3003/auth-api/googleAuthentication");
+  };
+
+  const githubSignIn = () => {
+    navigation.push("http://localhost:3003//auth-api/githubAuhentication");
+  };
 
   return (
     <div className={classes.root}>
@@ -151,7 +239,7 @@ const Index = () => {
                       onClick={() => {
                         // localStorage.setItem("isLoggedIn", true);
                         // navigation.push("/admin-dashboard");
-                        // signIn();
+                        signIn();
                       }}
                       name="Sin in"
                     />
@@ -184,23 +272,30 @@ const Index = () => {
                   style={{ paddingLeft: "5%", paddingRight: "5%" }}
                 >
                   <div
-                    onClick={()=>{
-                      githubSignIn()
+                    onClick={() => {
+                      githubSignIn();
                     }}
-                    className={isMediumScreen? classes.signInBtnWithOtherBtn_xs:classes.signInBtnWithOtherBtn_xs}
+                    className={
+                      isMediumScreen
+                        ? classes.signInBtnWithOtherBtn_xs
+                        : classes.signInBtnWithOtherBtn_xs
+                    }
                   >
-                  <img src="/home-page/github.png" width={isMediumScreen?"35%":"30%   "} />
+                    <img
+                      src="/home-page/github.png"
+                      width={isMediumScreen ? "35%" : "30%   "}
+                    />
                   </div>
                 </Grid>
                 <Grid
                   item
                   md={5}
                   xs={12}
-                  style={{ paddingLeft: "5%", paddingRight: "5%"}}
+                  style={{ paddingLeft: "5%", paddingRight: "5%" }}
                 >
                   <div
                     onClick={() => {
-                      googleSignIn()
+                      googleSignIn();
                     }}
                     className={
                       isMediumScreen
@@ -217,24 +312,135 @@ const Index = () => {
                 <Grid item md={1} xs={0}></Grid>
               </Grid>
             </div>
+         
           </Grid>
         </Grid>
         <></>
+
+        <InfoDialog
+          alertType={alertType}
+          handleClickOpen={handleClickOpen_InfoDialog}
+          handleCloseEvent={handleClose_InfoDialog}
+          open={openInfoDialogDialog}
+          alertMessage={alertMessage_InfoDialog}
+          alertTitle={alertTitle_InfoDialog}
+        />
       </Container>
     </div>
   );
 };
 
 // This gets called on every request
-export async function getServerSideProps() {
-  console.log("On server")
-  return { props: 
-    { 
-      payload:{
-        name:"zeeshan"
-      } 
-    } 
-}
-}
+
+// export async function getServerSideProps({ query }) {
+
+  // Here we are doing two things. First is to get the encrypted user id and making request again for creating account. Then we  // Second is to get the jwt token for session verification.
+  // const user_Id = query.id;
+  // const authType = query.authType;
+  // let payload = null;
+  // if (user_Id==null) {
+  //   return {
+  //     props: {
+  //       isThereAnyInternalError: false,
+  //       payload: payload,
+  //     },
+  //   };
+  // }
+
+  // const response=null;
+  // console.log("Making post request to create account");
+
+  // await sendResquestToCentralAPI("POST", CREATE_ADMIN_ACCOUNT, {
+  //   user_Id: user_Id,
+  //   authType: authType,
+  // })
+  //   .then(async (response) => {
+  //     // console.log("Resp status:",response.status);
+  //     // we have status codes :
+  //     // - 200 for success of request with not server error
+  //     // - 501 for invalid user id [error in decryption];
+
+  //     if (response.status == 200) {
+  //       const data = await response.json();
+  //       // console.log(data);
+  //       // return {
+  //       //   props: {
+  //       //     isThereAnyInternalError: false,
+  //       //     payload: data,
+  //       //   },
+  //       // };
+        
+  //       response =  {
+  //             isThereAnyInternalError: false,
+  //             payload: data,
+  //       }
+
+  //     } else if (response.status == 501) {
+
+  //       // return {
+  //       //   props: {
+  //       //     isThereAnyInternalError: true,
+  //       //     payload: {
+  //       //       responseMessage: "Could not decrypt the user id",
+  //       //     },
+  //       //   },
+  //       // };
+
+  //       response =  {
+  //         isThereAnyInternalError: true,
+  //         payload: {
+  //           responseMessage: "Could not decrypt the user id",
+  //         },
+  //       };
+
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     // return {
+  //     //   props: {
+  //     //     isThereAnyInternalError: true,
+  //     //     payload: {
+  //     //       responseMessage: error.message,
+  //     //     },
+  //     //   },
+  //     // };
+  //     reesponse= {
+  //           isThereAnyInternalError: true,
+  //           payload: {
+  //             responseMessage: error.message,
+  //           }
+  //     }
+
+  //   }); 
+
+  // console.log("returning the response after making request"+response);
+
+  // console.log("Making account request")  
+  // let response = await fetch(`${SERVER_URL}${CREATE_ADMIN_ACCOUNT}`, {
+  //   method: 'POST', // *GET, POST, PUT, DELETE, etc.
+  //   mode: 'cors', // no-cors, *cors, same-origin
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     Accept: 'application/json',
+  //     // 'Content-Type': 'application/x-www-form-urlencoded',
+  //     'User-Agent': '*',
+  //   },
+  //   body: JSON.stringify({
+  //     user_Id: user_Id,
+  //     authType: authType,
+  //   }) // body data type must match "Content-Type" header
+  // });
+
+  // response = await response.json();
+  // console.log("RESPONSE : ",response);
+  // let data ={
+  //   name:"ze"
+  // }
+
+//   return {
+//     props: {}
+//   }
+
+// }
 
 export default FooterWraper(NavbarWraper(Index));
