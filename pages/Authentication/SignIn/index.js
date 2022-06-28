@@ -102,7 +102,12 @@ const Index = (props) => {
             if(data.responseCode==CREATE_ADMIN_ACCOUNT || ALREADY_CREATED_ACCOUNT)
             {
               // when account is created.
-              console.log("user",data);
+              localStorage.setItem("loggedInUser",JSON.stringify(data))
+              // console.log("user",data);
+              if(localStorage.getItem("authType")=="admin")
+              navigation.push("/admin-dashboard/");
+              else
+              navigation.push("/developer-dashboard/");
             }
             else if(data.responseCode==COULD_NOT_CREATE_ACCOUNT){
               // when coul not create acconut or got an error while creating. 
