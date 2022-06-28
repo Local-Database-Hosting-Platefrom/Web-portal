@@ -60,9 +60,6 @@ const Index = () => {
 
   const [value, setValue] = useState("female");
 
-  useEffect(()=>{
-    console.log("HERE we go")
-  },[])
 
   const handleChange = (event) => {
     setValue(event.target.value);

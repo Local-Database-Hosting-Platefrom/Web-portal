@@ -1,9 +1,7 @@
 import { Google } from "@mui/icons-material";
-import { Card, Container, Grid, Link, useMediaQuery } from "@mui/material";
+import { Card, Container, FormControl, FormControlLabel, Grid, Link, Radio, RadioGroup, useMediaQuery } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useRouter } from "next/router";
-import { useParams } from "react-router";
-
 // import { gapi } from "gapi-script";
 // import { useGoogleApi } from 'react-gapi'
 import { useGoogleLogin } from "react-use-googlelogin";
@@ -21,9 +19,10 @@ import InputField from "../../../Support/InputFields";
 import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
 import { CREATE_ADMIN_ACCOUNT, SERVER_URL } from "../../../request-manager/requestUrls";
 import { useEffect, useState } from "react";
-import { COULD_NOT_CREATE_ACCOUNT } from "../../../request-manager/responseCodes";
-import InfoDialog from "../../../ReactComponents/Dialogues/InfoDialog";
+import { ALREADY_CREATED_ACCOUNT, COULD_NOT_CREATE_ACCOUNT,CREATED_ACCOUNT } from "../../../request-manager/responseCodes";
 
+import CustomDialog from '../../../ReactComponents/Dialogues/CustomDialog'
+import dialogueTypes from '../../../ReactComponents/Dialogues/dialogueTypes'
 const useStyles = makeStyles({
   root: {
     marginTop: "5%",
@@ -73,100 +72,102 @@ const Index = (props) => {
   const classes = useStyles();
   const navigation = useRouter();
   const isMediumScreen = useMediaQuery("(min-width:600px)");
-  const [alertType,setAlertType]=useState("Info");
-  const [openInfoDialogDialog, setOpenInfoDialogDialog] = useState(false);
-  const [alertMessage_InfoDialog,setAlertMessage_InfoDialog]=useState("");
-  const [alertTitle_InfoDialog,setAlertTitle_InfoDialog]=useState("");
+  const [alertType,setAlertType]=useState(null);
+  const [openCustomDialog, setOpenCustomDialog] = useState(false);
+  const [alertMessage_CustomDialog,setAlertMessage_CustomDialog]=useState("");
+  const [alertTitle_CustomDialog,setAlertTitle_CustomDialog]=useState("");
+  const [accountType, setAccountType] = useState(null);
 
-  // Getting values from query string.
+  
 
-  let { id } = useParams();
+  const router = useRouter()
+  let user_Id=null;
+  let authType=null;
+  if(router!=undefined){
+    user_Id = router.query.id;
+    authType = router.query.authType;
+  }
+
   useEffect(()=>{
-    console.log("HERE we go for sign in")
-  },[])
-  
-  // const authentication =  ()=>{
+      if(user_Id!=null || user_Id!=undefined)
+      {
+        sendResquestToCentralAPI("POST", CREATE_ADMIN_ACCOUNT,{
+          user_Id: user_Id,
+          authType: authType,
+          accountType:localStorage.getItem("accountType")
+        }).then(async (success)=>{
+            // Check if account is created or not.
+            const data = await success.json();
+
+            if(data.responseCode==CREATE_ADMIN_ACCOUNT || ALREADY_CREATED_ACCOUNT)
+            {
+              // when account is created.
+              console.log("user",data);
+            }
+            else if(data.responseCode==COULD_NOT_CREATE_ACCOUNT){
+              // when coul not create acconut or got an error while creating. 
+              setAlertType(dialogueTypes.INFO)
+              setAlertTitle_CustomDialog("Something wrong went");
+              setAlertMessage_CustomDialog(data.responseMessage);
+              handleClickOpen_CustomDialog();
+            }
+        },(error)=>{
+          // When 
+          console.log(error);   
+          console.log('hell') 
+       
+        })
+      }
+        
     
-  //   sendResquestToCentralAPI("POST", CREATE_ADMIN_ACCOUNT, {
-  //     // user_Id: user_Id,
-  //     // authType: authType,
-  //   }).then(async (response) => {
-  //       // console.log("Resp status:",response.status);
-  //       // we have status codes :
-  //       // - 200 for success of request with not server error
-  //       // - 501 for invalid user id [error in decryption];
-  //       console.log(response)
-  //       if (response.status == 200) {
-  //         const data = await response.json();
-  //         console.log(data);
-  //         // check if user is loggged in out not
-          
-  //       } else if (response.status == 501) {
-  //         // problem line failed to encrypt
-  //         console.log("Server error")
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log("Error")
-  //       console.log(error.message)
-  //     }); 
-  // }
+  },[user_Id])
 
-
-
-  // authentication();
-
-
-  // Checking if user is authenticated and authorized.  
   
-  // props.payload //u get the response .
-  // if (props.isThereAnyInternalError === false) 
-  // {    
-    // Request to get jwt token is sent and in payload we have response.
-  //   if (props.payload.responseCode == CREATED_ACCOUNT) {
-  //     // created the account
-  //     console.log(" -------------- Account created ------------");
-
-  //   } else if ((props.payload.responseCode = COULD_NOT_CREATE_ACCOUNT)) {
-  //     // could'nt create account
-
-  //     console.log("Could not create the account");
-  //     setAlertType("Info");
-  //     setAlertTitle_InfoDialog("Server Response");
-  //     setAlertMessage_InfoDialog(" Could Not create account");
-  //     handleClickOpen_InfoDialog();
-
-  //   }
-  // }
-  // else {
-  //   // still no auth request is sent.
-  //   console.log("No auth req is sent")
-  // }
-
+  const handleChange = (event) => {
+    setAccountType(event.target.value);
+    localStorage.setItem('accountType',event.target.value);
+  };
   const googleAuth = useGoogleLogin({
     clientId:
       "1021611673334-buf3dq11lnl5hb17jd5ohbvkhhkgh93d.apps.googleusercontent.com",
   });
 
-  const handleClickOpen_InfoDialog = () => {
-    setOpenInfoDialogDialog(true);
+  const handleClickOpen_CustomDialog = () => {
+    setOpenCustomDialog(true);
   };
-  const handleClose_InfoDialog = () => {
-    setOpenInfoDialogDialog(false);
+  const handleClose_CustomDialog = () => {
+    setOpenCustomDialog(false);
   };
 
 
   const signIn=()=>{
-    handleClickOpen_InfoDialog();
+    handleClickOpen_CustomDialog();
   }
 
   const googleSignIn = () => {
-    navigation.push("http://localhost:3003/auth-api/googleAuthentication");
+    if(accountType!=null){
+      navigation.push("http://localhost:3003/auth-api/googleAuthentication");
+    }else {
+      displayDialog(dialogueTypes.INFO,"Invalid Input","Please choose account type")
+    }
   };
 
   const githubSignIn = () => {
+    if(accountType!=null){
     navigation.push("http://localhost:3003//auth-api/githubAuhentication");
+    }else{
+      displayDialog(dialogueTypes.INFO,"Invalid Input","Please choose account type")
+    }
   };
+
+
+  const displayDialog = (dialogType,dialogTitle,dialogMessage) => {
+    setAlertMessage_CustomDialog(dialogMessage);
+    setAlertTitle_CustomDialog(dialogTitle);
+    setAlertType(dialogType);
+    handleClickOpen_CustomDialog();
+  }
+
 
   return (
     <div className={classes.root}>
@@ -208,9 +209,9 @@ const Index = (props) => {
                   <div>
                     <InputField
                       placeholder={"User Name"}
-                      //   value={""}
+                      //   accountType={""}
                       onChange={(e) => {
-                        console.log(e.target.value);
+                        console.log(e.target.accountType);
                       }}
                     />
                   </div>
@@ -219,13 +220,56 @@ const Index = (props) => {
                   <div style={{ marginTop: "5%" }}>
                     <InputField
                       placeholder={"Password"}
-                      //   value={""}
+                      //   accountType={""}
                       onChange={(e) => {
-                        console.log(e.target.value);
+                        console.log(e.target.accountType);
                       }}
                     />
                   </div>
                 </Grid>
+
+              
+                <Grid item md={12} xs={12}>
+                  <FormControl style={{ marginTop: "3%" }}>
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-controlled-radio-buttons-group"
+                      name="controlled-radio-buttons-group"
+                      accountType={accountType}
+                      onChange={handleChange}
+                    >
+                      <FormControlLabel
+                        value="admin"
+                        control={
+                          <Radio
+                            sx={{
+                              color: "blue",
+                              "&.Mui-checked": {
+                                color: "red",
+                              },
+                            }}
+                          />
+                        }
+                        label="Admin"
+                      />
+                      <FormControlLabel
+                        value="developer"
+                        control={
+                          <Radio
+                            sx={{
+                              color: "blue",
+                              "&.Mui-checked": {
+                                color: "red",
+                              },
+                            }}
+                          />
+                        }
+                        label="Developer"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                </Grid>
+
                 <Grid item md={12} xs={12}>
                   <div>
                     <CustomButton
@@ -317,13 +361,13 @@ const Index = (props) => {
         </Grid>
         <></>
 
-        <InfoDialog
+        <CustomDialog
           alertType={alertType}
-          handleClickOpen={handleClickOpen_InfoDialog}
-          handleCloseEvent={handleClose_InfoDialog}
-          open={openInfoDialogDialog}
-          alertMessage={alertMessage_InfoDialog}
-          alertTitle={alertTitle_InfoDialog}
+          handleClickOpen={handleClickOpen_CustomDialog}
+          handleCloseEvent={handleClose_CustomDialog}
+          open={openCustomDialog}
+          alertMessage={alertMessage_CustomDialog}
+          alertTitle={alertTitle_CustomDialog}
         />
       </Container>
     </div>
@@ -438,7 +482,9 @@ const Index = (props) => {
   // }
 
 //   return {
-//     props: {}
+//     props: {
+//       name:"Zeeshan"
+//     }
 //   }
 
 // }
