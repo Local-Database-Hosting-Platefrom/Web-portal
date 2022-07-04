@@ -85,7 +85,7 @@ const ListOfConsumerAccounts = () => {
       <div>
           <Grid container>
               <Grid item xs={8}>
-                <Heading text={"All Consumers"} fontSize="1.5rem" />
+                <Heading text={"All Developers"} fontSize="1.5rem" />
               </Grid>
 
               <Grid item xs={2}>

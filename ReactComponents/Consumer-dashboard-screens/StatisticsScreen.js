@@ -1,10 +1,25 @@
 import { Container, Grid } from "@mui/material";
+import { useEffect, useState } from "react";
 import Heading from "../../Support/Heading";
 import States from "./Cards/States";
 const StatisticsScreen = () => {
+  const [firstName,setFirstName]=useState(null);
+  const [isLoggedIn,setIsLoggedIn]=useState(false);
+  useEffect(()=>{
+    // Access values from localStorage for now , later on we will access values from the redux
+    if(localStorage.getItem("isLoggedIn")=="true") {
+      const data = JSON.parse(localStorage.getItem("loggedInUser"));
+      const {firstName} = data.responsePayload;
+      setFirstName(firstName);
+      setIsLoggedIn(true);
+      console.log("Data for print",data)
+    }
+  },[])
   return (
     <Container>
       <div>
+      
+      {  (isLoggedIn==true) && <Heading text={`Well come ${firstName}`} fontSize="2rem" fontWeight="bold" />   } 
         <Heading text={"Overview"} fontSize="2rem" fontWeight="bold" />
       </div>
       <div style={{paddingLeft:"5%"}}>

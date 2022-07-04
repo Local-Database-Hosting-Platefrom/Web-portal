@@ -1,5 +1,5 @@
 const INFO = "INFO";
 const WARNING="WARNING";
 const LOADING="LOADING";
-
-export default {INFO,WARNING,LOADING };
+const INVALID_LOGIN="INVALID_LOGIN"
+export default {INFO,WARNING,LOADING,INVALID_LOGIN };

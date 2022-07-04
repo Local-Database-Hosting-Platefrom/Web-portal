@@ -97,7 +97,19 @@ export default function Navbar({isProgressBarVisible=false}) {
   const windSize = useWindowSize();
   //Nav bar options color flags
   //Progress
-  
+  const [firstName,setFirstName]=useState(null);
+  const [isLoggedIn,setIsLoggedIn]=useState(false);
+  useEffect(()=>{
+    // Access values from localStorage for now , later on we will access values from the redux
+    if(localStorage.getItem("isLoggedIn")=="true") {
+      const data = JSON.parse(localStorage.getItem("loggedInUser"));
+      const {firstName} = data.responsePayload;
+      setFirstName(firstName);
+      setIsLoggedIn(true);
+      console.log("Data for print",data)
+    }
+  },[])
+
   //Color controls
   const [serviceBtnColorControl, setServiceBtnColorControl] =
     React.useState(false);
@@ -118,7 +130,7 @@ export default function Navbar({isProgressBarVisible=false}) {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [expanded, setExpanded] = React.useState(false);
 
 
@@ -989,7 +1001,7 @@ export default function Navbar({isProgressBarVisible=false}) {
                       aria-haspopup="true"
                       aria-expanded={openAvatar ? "true" : undefined}
                     >
-                      <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                      <Avatar sx={{ width: 32, height: 32 }}>{firstName[0]}</Avatar>
                     </IconButton>
                   </Tooltip>
                 </Box>

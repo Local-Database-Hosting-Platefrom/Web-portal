@@ -55,7 +55,7 @@ export default function Tab_ManageConsumer() {
   const [currentOpenedScreen, setCurrentOpenedScreen]= useState(<ListOfConsumerAccounts/>);
   const [tabsList, setTabsList] = useState([
     {
-      tabLable: "Manage Consumer Accounts",
+      tabLable: "Manage Developer Accounts",
     },
     {
       tabLable: "Manage Access token",
@@ -147,7 +147,7 @@ export default function Tab_ManageConsumer() {
               {/* Sub options 1.List of consumer account and 2.Create new user*/}
               <div style={{marginTop:"5%",padding:"5%",borderRight: "1px solid #7ea69f"}}>
                 <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForAccounts(0)}}>
-                <Heading text={"All Consumers"} fontSize="1rem"/>
+                <Heading text={"All Developers"} fontSize="1rem"/>
                 </div>
                 <Divider/>
                 <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForAccounts(1)}}>

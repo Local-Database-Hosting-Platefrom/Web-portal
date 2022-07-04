@@ -17,7 +17,7 @@ import InputField from "../../../Support/InputFields";
 
 // Request Manager
 import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
-import { CREATE_ADMIN_ACCOUNT, SERVER_URL } from "../../../request-manager/requestUrls";
+import { CREATE_ADMIN_ACCOUNT, GITHUB_AUTH, GOOGLE_AUTH, SERVER_URL } from "../../../request-manager/requestUrls";
 import { useEffect, useState } from "react";
 import { ALREADY_CREATED_ACCOUNT, COULD_NOT_CREATE_ACCOUNT,CREATED_ACCOUNT } from "../../../request-manager/responseCodes";
 
@@ -89,6 +89,7 @@ const Index = (props) => {
   }
 
   useEffect(()=>{
+
       if(user_Id!=null || user_Id!=undefined)
       {
         sendResquestToCentralAPI("POST", CREATE_ADMIN_ACCOUNT,{
@@ -102,12 +103,15 @@ const Index = (props) => {
             if(data.responseCode==CREATE_ADMIN_ACCOUNT || ALREADY_CREATED_ACCOUNT)
             {
               // when account is created.
-              localStorage.setItem("loggedInUser",JSON.stringify(data))
-              // console.log("user",data);
-              if(localStorage.getItem("authType")=="admin")
-              navigation.push("/admin-dashboard/");
-              else
+              localStorage.setItem("loggedInUser",JSON.stringify(data));
+              localStorage.setItem("isLoggedIn",true)
+              if(localStorage.getItem("accountType")=="admin")
+              navigation.push("/admin-dashboard");
+              else  if(localStorage.getItem("accountType")=="developer")
               navigation.push("/developer-dashboard/");
+              else 
+              navigation.push("/Authentication/SignIn");
+
             }
             else if(data.responseCode==COULD_NOT_CREATE_ACCOUNT){
               // when coul not create acconut or got an error while creating. 
@@ -151,7 +155,7 @@ const Index = (props) => {
 
   const googleSignIn = () => {
     if(accountType!=null){
-      navigation.push("http://localhost:3003/auth-api/googleAuthentication");
+      navigation.push(GOOGLE_AUTH);
     }else {
       displayDialog(dialogueTypes.INFO,"Invalid Input","Please choose account type")
     }
@@ -159,12 +163,14 @@ const Index = (props) => {
 
   const githubSignIn = () => {
     if(accountType!=null){
-    navigation.push("http://localhost:3003//auth-api/githubAuhentication");
+    navigation.push(GITHUB_AUTH);
     }else{
       displayDialog(dialogueTypes.INFO,"Invalid Input","Please choose account type")
     }
   };
 
+
+ 
 
   const displayDialog = (dialogType,dialogTitle,dialogMessage) => {
     setAlertMessage_CustomDialog(dialogMessage);
@@ -373,6 +379,7 @@ const Index = (props) => {
           open={openCustomDialog}
           alertMessage={alertMessage_CustomDialog}
           alertTitle={alertTitle_CustomDialog}
+        
         />
       </Container>
     </div>

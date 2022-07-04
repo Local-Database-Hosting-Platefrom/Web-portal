@@ -1,6 +1,6 @@
 const Server_url = "http://localhost:3003";
 
-const sendResquestToCentralAPI = (requestType, requestRoute, requestData) => {
+const sendResquestToCentralAPI = (requestType, requestRoute, requestData,authToken=null) => {
   return new Promise(async function (resolve, reject) {
     if (requestType == "GET") {
       // when request is of GET type
@@ -21,6 +21,7 @@ const sendResquestToCentralAPI = (requestType, requestRoute, requestData) => {
               Accept: 'application/json',
               // 'Content-Type': 'application/x-www-form-urlencoded',
               'User-Agent': '*',
+              'Authorization': `Bearer ${authToken}`,
             },
             body: JSON.stringify(requestData) // body data type must match "Content-Type" header
           });

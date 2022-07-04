@@ -20,6 +20,13 @@ import TestRemoteDatabaseAccessUrlScreen from "../../ReactComponents/Consumer-da
 import TestHostAccresUrlScreen from "../../ReactComponents/Consumer-dashboard-screens/TestHostAccresUrlScreen";
 import SettingsScreen from "../../ReactComponents/Consumer-dashboard-screens/SettingsScreen";
 import StatisticsScreen from "../../ReactComponents/Consumer-dashboard-screens/StatisticsScreen";
+import { useRouter } from "next/router";
+import { AUTH_PAGE, VERIFY_JWT_TOKEN } from "../../request-manager/requestUrls";
+import { TOKEN_NOT_VERIFIED, TOKEN_VERIFIED } from "../../request-manager/responseCodes";
+import dialogueTypes from "../../ReactComponents/Dialogues/dialogueTypes";
+import { useEffect } from "react";
+import CustomDialog from "../../ReactComponents/Dialogues/CustomDialog";
+import { sendResquestToCentralAPI } from "../../request-manager/requestManager";
 
 
 const drawerWidth = 280;
@@ -81,6 +88,69 @@ const Index = () => {
   const [currentOpenedScreen, setCurrentOpenedScreen] = useState(
     <StatisticsScreen  />
   );
+
+  const navigation = useRouter();
+  const [alertType,setAlertType]=useState(null);
+  const [openCustomDialog, setOpenCustomDialog] = useState(false);
+  const [alertMessage_CustomDialog,setAlertMessage_CustomDialog]=useState("");
+  const [alertTitle_CustomDialog,setAlertTitle_CustomDialog]=useState("");
+  const [accountType, setAccountType] = useState(null);
+  
+  // Check if it is authenticated or not?
+  useEffect(()=>{
+   let loggedInUser =  localStorage.getItem("loggedInUser");
+   
+   if(loggedInUser!=undefined) {
+    if(localStorage.getItem("accountType")=="developer" && localStorage.getItem("isLoggedIn")=="true")
+    {
+      loggedInUser = JSON.parse(loggedInUser);
+      console.log(loggedInUser);
+      let token = loggedInUser.responsePayload.jwtToken;
+      sendResquestToCentralAPI  ("POST",VERIFY_JWT_TOKEN,{},token).then(async (response) => {
+        const data =await response.json();
+        console.log("after verfiying the data ",data);
+
+        if(data.responseCode==TOKEN_VERIFIED){
+          // token verified.
+          localStorage.setItem("isLoggedIn", true); 
+        }else if(data.responseCode==TOKEN_NOT_VERIFIED){
+          // token is not verified
+          displayDialog(dialogueTypes.INVALID_LOGIN,"Something went wrong",data.responseMessage);
+        }
+
+      },(error)=>{
+        // when error in verfirication
+      })
+    }else{
+  
+      displayDialog(dialogueTypes.INFO,"Something went wrong","Please login");
+    }
+   }
+  },[]);
+
+
+  const displayDialog = (dialogType,dialogTitle,dialogMessage) => {
+    setAlertMessage_CustomDialog(dialogMessage);
+    setAlertTitle_CustomDialog(dialogTitle);
+    setAlertType(dialogType);
+    handleClickOpen_CustomDialog();
+  }
+
+
+
+  const handleClickOpen_CustomDialog = () => {
+    setOpenCustomDialog(true);
+  };
+  
+  const handleClose_CustomDialog = () => {
+    setOpenCustomDialog(false);
+  };
+
+  const handleOkEvent=(action)=>{
+    if(action=="re-login")
+    localStorage.setItem("isLoggedIn",false);
+    navigation.push(AUTH_PAGE)
+  }
 
   const handleScreenChange = (index) => {
     switch (index) {
@@ -336,6 +406,16 @@ const Index = () => {
         {currentOpenedScreen}
         {/* <HomePagefooter/> */}
       </Box>
+
+      <CustomDialog
+          alertType={alertType}
+          handleClickOpen={handleClickOpen_CustomDialog}
+          handleCloseEvent={handleClose_CustomDialog}
+          open={openCustomDialog}
+          alertMessage={alertMessage_CustomDialog}
+          alertTitle={alertTitle_CustomDialog}
+          handleOkEvent={handleOkEvent}
+        />
     </Box>
   );
 };
