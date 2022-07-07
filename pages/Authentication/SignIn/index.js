@@ -88,7 +88,7 @@ const Index = (props) => {
     authType = router.query.authType;
   }
 
-  useEffect(()=>{
+useEffect(()=>{
 
       if(user_Id!=null || user_Id!=undefined)
       {
@@ -99,7 +99,7 @@ const Index = (props) => {
         }).then(async (success)=>{
             // Check if account is created or not.
             const data = await success.json();
-
+            console.log("login response",data)
             if(data.responseCode==CREATE_ADMIN_ACCOUNT || ALREADY_CREATED_ACCOUNT)
             {
               // when account is created.
@@ -111,7 +111,6 @@ const Index = (props) => {
               navigation.push("/developer-dashboard/");
               else 
               navigation.push("/Authentication/SignIn");
-
             }
             else if(data.responseCode==COULD_NOT_CREATE_ACCOUNT){
               // when coul not create acconut or got an error while creating. 
