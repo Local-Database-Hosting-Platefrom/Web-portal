@@ -1,0 +1,53 @@
+INFO [07-07|22:30:17.384] Maximum peer count                       ETH=50 LES=0 total=50
+INFO [07-07|22:30:17.423] Smartcard socket not found, disabling    err="stat /run/pcscd/pcscd.comm: no such file or directory"
+INFO [07-07|22:30:17.442] Set global gas cap                       cap=50,000,000
+INFO [07-07|22:30:17.460] Allocated trie memory caches             clean=154.00MiB dirty=256.00MiB
+INFO [07-07|22:30:17.461] Allocated cache and file handles         database=/media/zeeshan/4CCC9E6BCC9E4ED8/Dapp/geth/chaindata cache=512.00MiB handles=524,288
+INFO [07-07|22:30:18.189] Opened ancient database                  database=/media/zeeshan/4CCC9E6BCC9E4ED8/Dapp/geth/chaindata/ancient readonly=false
+INFO [07-07|22:30:18.194]  
+INFO [07-07|22:30:18.194] --------------------------------------------------------------------------------------------------------------------------------------------------------- 
+INFO [07-07|22:30:18.195] Chain ID:  4201 (unknown) 
+INFO [07-07|22:30:18.195] Consensus: Ethash (proof-of-work) 
+INFO [07-07|22:30:18.195]  
+INFO [07-07|22:30:18.195] Pre-Merge hard forks: 
+INFO [07-07|22:30:18.195]  - Homestead:                   1        (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/homestead.md) 
+INFO [07-07|22:30:18.195]  - Tangerine Whistle (EIP 150): 2        (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/tangerine-whistle.md) 
+INFO [07-07|22:30:18.196]  - Spurious Dragon/1 (EIP 155): 3        (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/spurious-dragon.md) 
+INFO [07-07|22:30:18.196]  - Spurious Dragon/2 (EIP 158): 3        (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/spurious-dragon.md) 
+INFO [07-07|22:30:18.196]  - Byzantium:                   4        (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/byzantium.md) 
+INFO [07-07|22:30:18.196]  - Constantinople:              5        (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/constantinople.md) 
+INFO [07-07|22:30:18.196]  - Petersburg:                  <nil> (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/petersburg.md) 
+INFO [07-07|22:30:18.197]  - Istanbul:                    <nil> (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/istanbul.md) 
+INFO [07-07|22:30:18.211]  - Berlin:                      <nil> (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/berlin.md) 
+INFO [07-07|22:30:18.211]  - London:                      <nil> (https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/london.md) 
+INFO [07-07|22:30:18.212]  
+INFO [07-07|22:30:18.212] Merge not configured! 
+INFO [07-07|22:30:18.212]  - Hard-fork specification: https://github.com/ethereum/execution-specs/blob/master/network-upgrades/mainnet-upgrades/paris.md) 
+INFO [07-07|22:30:18.212] --------------------------------------------------------------------------------------------------------------------------------------------------------- 
+INFO [07-07|22:30:18.213]  
+INFO [07-07|22:30:18.289] Disk storage enabled for ethash caches   dir=/media/zeeshan/4CCC9E6BCC9E4ED8/Dapp/geth/ethash count=3
+INFO [07-07|22:30:18.289] Disk storage enabled for ethash DAGs     dir=/home/zeeshan/.ethash count=2
+INFO [07-07|22:30:18.290] Initialising Ethereum protocol           network=1 dbversion=8
+INFO [07-07|22:30:18.291] Loaded most recent local header          number=0 hash=d564c0..407bfb td=0 age=7mo5d7h
+INFO [07-07|22:30:18.291] Loaded most recent local full block      number=0 hash=d564c0..407bfb td=0 age=7mo5d7h
+INFO [07-07|22:30:18.292] Loaded most recent local fast block      number=0 hash=d564c0..407bfb td=0 age=7mo5d7h
+WARN [07-07|22:30:18.293] Loaded snapshot journal                  diffs=missing
+INFO [07-07|22:30:18.294] Loaded local transaction journal         transactions=0 dropped=0
+INFO [07-07|22:30:18.308] Regenerated local transaction journal    transactions=0 accounts=0
+INFO [07-07|22:30:18.308] Gasprice oracle is ignoring threshold set threshold=2
+WARN [07-07|22:30:18.309] Unclean shutdown detected                booted=2022-07-07T14:43:38+0500 age=7h46m40s
+INFO [07-07|22:30:18.310] Starting peer-to-peer node               instance=Geth/v1.10.20-stable-8f2416a8/linux-amd64/go1.18.1
+INFO [07-07|22:30:18.668] New local node record                    seq=1,657,187,019,037 id=272425e6cd756208 ip=127.0.0.1 udp=0 tcp=30303
+INFO [07-07|22:30:18.669] Started P2P networking                   self="enode://2dd2fe1b3a5a949e665ef115234bb599cae70154aade15eac0d345b1c68e2f6d843c4814752e3af25547cca2ac615a6df0fddee2be6663817f38ba6c5bbc58b7@127.0.0.1:30303?discport=0"
+INFO [07-07|22:30:18.671] IPC endpoint opened                      url=/media/zeeshan/4CCC9E6BCC9E4ED8/Dapp/geth.ipc
+INFO [07-07|22:30:18.673] HTTP server started                      endpoint=127.0.0.1:8545 auth=false prefix= cors=* vhosts=localhost
+WARN [07-07|22:30:18.809] Served eth_coinbase                      reqid=3 duration="26.883µs" err="etherbase must be explicitly specified"
+INFO [07-07|22:30:22.685] HTTP server stopped                      endpoint=127.0.0.1:8545
+INFO [07-07|22:30:22.686] IPC endpoint closed                      url=/media/zeeshan/4CCC9E6BCC9E4ED8/Dapp/geth.ipc
+INFO [07-07|22:30:22.686] Ethereum protocol stopped 
+INFO [07-07|22:30:22.687] Transaction pool stopped 
+INFO [07-07|22:30:22.688] Writing snapshot state to disk           root=56e81f..63b421
+INFO [07-07|22:30:22.688] Persisted trie from memory database      nodes=0 size=0.00B time="10.07µs" gcnodes=0 gcsize=0.00B gctime=0s livenodes=1 livesize=0.00B
+INFO [07-07|22:30:22.688] Writing clean trie cache to disk         path=/media/zeeshan/4CCC9E6BCC9E4ED8/Dapp/geth/triecache threads=4
+INFO [07-07|22:30:22.737] Persisted the clean trie cache           path=/media/zeeshan/4CCC9E6BCC9E4ED8/Dapp/geth/triecache elapsed=48.706ms
+INFO [07-07|22:30:22.738] Blockchain stopped 

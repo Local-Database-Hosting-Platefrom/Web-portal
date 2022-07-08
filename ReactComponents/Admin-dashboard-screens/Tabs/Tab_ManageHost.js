@@ -12,6 +12,7 @@ import ListOfRequestForHost from '../Lists/ListOfRequestForHost'
 import ManageHostConnections from '../Forms/ManageHostConnections'
 import { Divider, Grid } from "@mui/material";
 import Heading from "../../../Support/Heading";
+import ListOfPendingHosts from "../Lists/ListOfPendingHosts";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -51,15 +52,16 @@ export default function Tab_ManageHost() {
  
   const [tabsList, setTabsList] = useState([
     {
-      tabLable: "Manage Host Connection",
+      tabLable: "Pending Hosts",
     },
     {
-      tabLable: "Manage Host Account",
+      tabLable: "Connected Hosts",
     },
     // {
     //   tabLable: "Request history",
     // },
   ]);
+  
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -116,11 +118,9 @@ export default function Tab_ManageHost() {
         {/* {` Manage Host Connection `} */}
         <div>
           <Grid container>
+         
             <Grid item xs={12}>
-                <Heading text={"Connect Host"} fontSize="1.5rem" fontWeight="bold"/>
-            </Grid>
-            <Grid item xs={12}>
-                <ManageHostConnections/>
+                <ListOfPendingHosts/>
             </Grid>
           </Grid>
         </div>
@@ -130,25 +130,26 @@ export default function Tab_ManageHost() {
         {/* {`  Manage Host Accounts`} */}
         <div>
           <Grid container>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
                 <Heading text={"Connect Host"} fontSize="1.5rem" fontWeight="bold"/>
-            </Grid>
-            <Grid item xs={2} >
+            </Grid> */}
+            {/* <Grid item xs={2} > */}
               {/* Sub options 1.List of consumer account and 2.Create new user*/}
-              <div style={{marginTop:"5%",padding:"5%",borderRight: "1px solid #7ea69f"}}>
+              {/* <div style={{marginTop:"5%",padding:"5%",borderRight: "1px solid #7ea69f"}}>
                 <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForHistory(0)}}>
                 <Heading text={"All Hosts"} fontSize="1rem"/>
                 </div>
-                <Divider/>
-                <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForHistory(1)}}>
+                <Divider/> */}
+                {/* <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForHistory(1)}}>
                 <Heading text={"Create New Host Account"} fontSize="1rem"/>
-                </div>
-                <Divider/>
+                </div> */}
+                {/* <Divider/>
               </div>
-            </Grid>
-            <Grid item xs={10}>
+            </Grid> */}
+            <Grid item xs={12}>
               {/* Screen of sub options or call them forms and lists */}
-              {currentOpenedScreen}
+              {/* {currentOpenedScreen} */}
+              <ListOfConnectedHosts/>
             </Grid>
           </Grid>
         </div>

@@ -1,30 +1,42 @@
 import { Container, Divider, Grid } from "@mui/material";
-import { useEffect, useState } from "react";
+import Head from "next/head";
+import { useEffect } from "react";
+import { useState } from "react";
 import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
-import { LOAD_CONNECTED_HOSTS_LIST } from "../../../request-manager/requestUrls";
+import { LOAD_PENDING_HOSTS_LIST } from "../../../request-manager/requestUrls";
+import { COULD_NOT_FETCH } from "../../../request-manager/responseCodes";
 import CustomDropDown from "../../../Support/CustomDropDown";
 import Heading from "../../../Support/Heading";
 import ItemHolder_ConnectedHost from "./ListItemHolders/ItemHolder_ConnectedHost";
 import ItemHolder_ConsumerDeniedRequest from "./ListItemHolders/ItemHolder_ConsumerDeniedRequest";
 import ItemHolder_ConsumerRole from "./ListItemHolders/ItemHolder_ConsumerRole";
-const ListOfConnectedHosts = ()=>{
-  const [refresh,setRefresh]=useState(false);
-  const [ListOfConnectedHosts,setListOfConnectedHosts] =useState([]);
-    useEffect(()=>{
-      // Make call to load pending list of hosts
-      const useData = JSON.parse(localStorage.getItem("loggedInUser"));
-      const _id = useData.responsePayload._id; 
-      sendResquestToCentralAPI("POST", LOAD_CONNECTED_HOSTS_LIST,{
-        _id: _id,
-      }).then(async (success)=>{
-        const list = await success.json();
-        console.log("Connected hosts",list)
-        setListOfConnectedHosts(list.payload);
-      },(error)=>{
-        console.log("Error",error)
-      })
-    },[refresh])
-    
+import ItemHolder_PendingHost from "./ListItemHolders/ItemHolder_PendingHost";
+const ListOfPendingHosts = ()=>{
+
+    // This will be replaced with redux later on.
+    const [refresh,setRefresh]=useState(false);
+    const [ListOfPendingHosts,setListOfPendingHosts] =useState([])
+
+  useEffect(()=>{
+    // Make call to load pending list of hosts
+    const useData = JSON.parse(localStorage.getItem("loggedInUser"));
+    const _id = useData.responsePayload._id; 
+    sendResquestToCentralAPI("POST", LOAD_PENDING_HOSTS_LIST,{
+      _id: _id,
+    }).then(async (success)=>{
+      const list = await success.json();
+      console.log("Pending hosts",list)
+      if(list.responseCode==COULD_NOT_FETCH){
+        console.log("Error in loading list of pending hosts :",list.payload)
+      }else{
+        setListOfPendingHosts(list.payload);
+      }
+    },(error)=>{
+      console.log("Error",error)
+    })
+  },[refresh])
+
+
   const [orderBy,setOrderBy]=useState("ASC");
   const [numberOfRecrods,setNumberOfRecrods]=useState("All");
   
@@ -68,7 +80,7 @@ const ListOfConnectedHosts = ()=>{
           <div>
           <Grid container>
               <Grid item xs={8}>
-                <Heading text={"Connected Hosts"} fontSize="1.5rem" />
+                <Heading text={"Pending Hosts"} fontSize="1.5rem" />
               </Grid>
 
               <Grid item xs={2}>
@@ -95,17 +107,21 @@ const ListOfConnectedHosts = ()=>{
                 {/* Icon */}
                 {/* <img src="/home-page/consumerIconForList.png" width="25%" /> */}
               </Grid>
-              <Grid item xs={3} >
+              <Grid item xs={2} >
                 {/* Consumer Name */}
                 {`Host Id`}
               </Grid>
-              <Grid item xs={3} >
+              <Grid item xs={2} >
                 {/* Consumer Name */}
                 {`Host Name`}
               </Grid>
-              <Grid item xs={3} >
+              <Grid item xs={2} >
                 {/* Consumer Name */}
                 {`Last Seen`}
+              </Grid>
+              <Grid item xs={2} >
+                {/* Consumer Name */}
+                {`Status`}
               </Grid>
             </Grid>
             </div>
@@ -121,31 +137,29 @@ const ListOfConnectedHosts = ()=>{
             }}
           >
             {/* Items */}
-            
-            {
-              (ListOfConnectedHosts.length > 0) && (<div>
-              {ListOfConnectedHosts.map((item) => {
-              return (
-                <div style={{ marginTop: "1%" }}>
-                  {" "}
-                  <ItemHolder_ConnectedHost item={item} setRefresh={setRefresh}/>
+            {/* {
+              (ListOfPendingHosts.length != 0) && (<div> */}
+                {ListOfPendingHosts.map((item) => {
+                  return (
+                    <div style={{ marginTop: "1%" }}>
+                      {" "}
+                      <ItemHolder_PendingHost item={item} setRefresh={setRefresh}/>
+                    </div>
+                  );
+                })}
+              {/* </div>)
+            } */}
+            {/* {
+              (ListOfPendingHosts.length==0) && (
+                <div>
+                  <Heading text={"No pending hosts..!"} fontSize={"1rem"}/>
                 </div>
-              );
-            })}
-              </div>)
-            }
-
-            {
-              (ListOfConnectedHosts.length==0) && (<div>
-                <Heading text={"Not conected hosts ..!"} fontsize={"1rem"}/>
-              </div>)
-            }
-
-           
+              )
+            } */}
           </div>
         </Grid>
       </Grid>
         
     </Container>
 }
-export default ListOfConnectedHosts;
+export default ListOfPendingHosts;
