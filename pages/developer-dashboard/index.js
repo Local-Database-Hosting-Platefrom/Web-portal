@@ -27,6 +27,7 @@ import dialogueTypes from "../../ReactComponents/Dialogues/dialogueTypes";
 import { useEffect } from "react";
 import CustomDialog from "../../ReactComponents/Dialogues/CustomDialog";
 import { sendResquestToCentralAPI } from "../../request-manager/requestManager";
+import AvaibleServiceProviders from "../../ReactComponents/Consumer-dashboard-screens/AvaibleServiceProviders";
 
 
 const drawerWidth = 280;
@@ -161,24 +162,26 @@ const Index = () => {
       case 1:
         // Renew token screen
         setCurrentOpenedScreen(<RenewTokenScreen />);
-        break;
       case 2:
+        setCurrentOpenedScreen(<AvaibleServiceProviders/>)
+        break;
+      case 3:
         // Manage Bridge
         setCurrentOpenedScreen(<GetTokenDetailsScreen />);
         break;
-      case 3:
+      case 4:
         // Test Token
         setCurrentOpenedScreen(<TestTokenScreen />);
         break;
-      case 4:
+      case 5:
         // Test Host Access Url
         setCurrentOpenedScreen(<TestHostAccresUrlScreen />);
         break;
-      case 5:
+      case 6:
         // TestRemoteDatabaseAccessUrlScreen
         setCurrentOpenedScreen(<TestRemoteDatabaseAccessUrlScreen />);
         break;
-      case 6:
+      case 7:
         // Settings
         setCurrentOpenedScreen(<SettingsScreen />);
         break;
@@ -277,6 +280,7 @@ const Index = () => {
               sx={{ opacity: open ? 1 : 0 }}
             />
           </ListItemButton>
+          
           <ListItemButton
             key={"2"}
             sx={{
@@ -298,10 +302,11 @@ const Index = () => {
               <img src="/home-page/connectionIcon.png" width="50%" />
             </ListItemIcon>
             <ListItemText
-              primary={"Get Token Details"}
+              primary={"Service Providers"}
               sx={{ opacity: open ? 1 : 0 }}
             />
           </ListItemButton>
+
           <ListItemButton
             key={"2"}
             sx={{
@@ -311,6 +316,32 @@ const Index = () => {
             }}
             onClick={() => {
               handleScreenChange(3);
+            }}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+              }}
+            >
+              <img src="/home-page/connectionIcon.png" width="50%" />
+            </ListItemIcon>
+            <ListItemText
+              primary={"Get Token Details"}
+              sx={{ opacity: open ? 1 : 0 }}
+            />
+          </ListItemButton>
+          
+          <ListItemButton
+            key={"2"}
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? "initial" : "center",
+              px: 2.5,
+            }}
+            onClick={() => {
+              handleScreenChange(4);
             }}
           >
             <ListItemIcon
@@ -336,7 +367,7 @@ const Index = () => {
               px: 2.5,
             }}
             onClick={() => {
-              handleScreenChange(4);
+              handleScreenChange(5);
             }}
           >
             <ListItemIcon
@@ -362,7 +393,7 @@ const Index = () => {
               px: 2.5,
             }}
             onClick={() => {
-              handleScreenChange(5);
+              handleScreenChange(6);
             }}
           >
             <ListItemIcon
@@ -385,7 +416,7 @@ const Index = () => {
               px: 2.5,
             }}
             onClick={() => {
-              handleScreenChange(6);
+              handleScreenChange(7);
             }}
           >
             <ListItemIcon

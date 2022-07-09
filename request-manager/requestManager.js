@@ -5,12 +5,10 @@ const sendResquestToCentralAPI = (requestType, requestRoute, requestData,authTok
     if (requestType == "GET") {
       // when request is of GET type
       fetch(`${Server_url}${requestRoute}`)
-        .then((res) => res.json())
-        .then((response) => {
-          resolve(response);
-        });
+        .then((res) => resolve(res))
+        
     } else if (requestType == "POST") {
-     
+      
       // When request is of type post
       // fetch(`${Server_url}${requestRoute}`, {
         const response = await fetch(`${Server_url}${requestRoute}`, {

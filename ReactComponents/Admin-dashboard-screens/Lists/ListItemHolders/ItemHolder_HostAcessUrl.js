@@ -2,10 +2,10 @@ import { Card, Divider, FormControlLabel, Grid, Switch } from "@mui/material";
 import { ContentCopyOutlined } from "@mui/icons-material";
 import { SERVER_URL, SET_STATUS_OF_HOST_ACCESS_URL } from "../../../../request-manager/requestUrls";
 import Heading from "../../../../Support/Heading";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { sendResquestToCentralAPI } from "../../../../request-manager/requestManager";
 const ItemHolder_HostAcessUrl = ({ item,}) => {
-  const [hostStatus,setHostStatus]=useState((item.hostAcessUrl!=undefined) ? item.hostAcessUrl.status : false)
+  const [hostStatus,setHostStatus]=useState(false)
   const handleHostStatucChange=()=>{
     sendResquestToCentralAPI("POST", SET_STATUS_OF_HOST_ACCESS_URL,{
       hostId:item.hostId,
@@ -19,6 +19,10 @@ const ItemHolder_HostAcessUrl = ({ item,}) => {
       setHostStatus(hostStatus)
     });
   };
+
+  useEffect(()=>{
+    setHostStatus((item.hostAcessUrl!=undefined) ? item.hostAcessUrl.status : false)
+  },[item])
 
   return (
     <div>
