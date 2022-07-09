@@ -1,42 +1,16 @@
 import { Container, Divider, Grid } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { LOAD_CONNECTED_HOSTS_LIST } from "../../../request-manager/requestUrls";
 import CustomDropDown from "../../../Support/CustomDropDown";
 import Heading from "../../../Support/Heading";
 import ItemHolder_ConsumerPendingRequest from "./ListItemHolders/ItemHolder_ConsumerPendingRequest";
 import ItemHolder_HostAcessUrl from "./ListItemHolders/ItemHolder_HostAcessUrl";
 
+import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
+
 const ListOfHostAccessUrls = ()=>{
+  const [refresh,setRefresh]=useState(false);
     const [listOfUrls,setlistOfUrls] =useState([
-        {
-            hostId:"43343",
-            hostName: "rfre3",
-            accessUrl: "http://<address>",
-            numberofRequests:"432"
-        },
-        {
-            hostId:"43343",
-            hostName: "rfre3",
-            accessUrl: "http://<address>",
-            numberofRequests:"432"
-        },
-        {
-            hostId:"43343",
-            hostName: "rfre3",
-            accessUrl: "http://<address>",
-            numberofRequests:"432"
-        },
-        {
-            hostId:"43343",
-            hostName: "rfre3",
-            accessUrl: "http://<address>",
-            numberofRequests:"432"
-        },
-        {
-            hostId:"43343",
-            hostName: "rfre3",
-            accessUrl: "http://<address>",
-            numberofRequests:"432"
-        },
         {
             hostId:"43343",
             hostName: "rfre3",
@@ -45,6 +19,23 @@ const ListOfHostAccessUrls = ()=>{
         },
         
     ])
+    
+    useEffect(()=>{
+      // Make call to load pending list of hosts
+      const useData = JSON.parse(localStorage.getItem("loggedInUser"));
+      const _id = useData.responsePayload._id; 
+      sendResquestToCentralAPI("POST", LOAD_CONNECTED_HOSTS_LIST,{
+        _id: _id,
+      }).then(async (success)=>{
+        const list = await success.json();
+        console.log("host accessUrl",list)
+        setlistOfUrls(list.payload);
+      },(error)=>{
+        console.log("Error",error)
+      })
+    },[refresh])
+    
+
   const [orderBy,setOrderBy]=useState("ASC");
   const [numberOfRecrods,setNumberOfRecrods]=useState("All");
   

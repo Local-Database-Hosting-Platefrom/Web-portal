@@ -137,8 +137,8 @@ const ListOfPendingHosts = ()=>{
             }}
           >
             {/* Items */}
-            {/* {
-              (ListOfPendingHosts.length != 0) && (<div> */}
+            {
+              (ListOfPendingHosts.length != 0) && (<div>
                 {ListOfPendingHosts.map((item) => {
                   return (
                     <div style={{ marginTop: "1%" }}>
@@ -147,15 +147,15 @@ const ListOfPendingHosts = ()=>{
                     </div>
                   );
                 })}
-              {/* </div>)
-            } */}
-            {/* {
+              </div>)
+            }
+            {
               (ListOfPendingHosts.length==0) && (
                 <div>
                   <Heading text={"No pending hosts..!"} fontSize={"1rem"}/>
                 </div>
               )
-            } */}
+            }
           </div>
         </Grid>
       </Grid>

@@ -1,6 +1,25 @@
 import { Card, Divider, FormControlLabel, Grid, Switch } from "@mui/material";
 import { ContentCopyOutlined } from "@mui/icons-material";
-const ItemHolder_HostAcessUrl = ({ item }) => {
+import { SERVER_URL, SET_STATUS_OF_HOST_ACCESS_URL } from "../../../../request-manager/requestUrls";
+import Heading from "../../../../Support/Heading";
+import { useState } from "react";
+import { sendResquestToCentralAPI } from "../../../../request-manager/requestManager";
+const ItemHolder_HostAcessUrl = ({ item,}) => {
+  const [hostStatus,setHostStatus]=useState((item.hostAcessUrl!=undefined) ? item.hostAcessUrl.status : false)
+  const handleHostStatucChange=()=>{
+    sendResquestToCentralAPI("POST", SET_STATUS_OF_HOST_ACCESS_URL,{
+      hostId:item.hostId,
+      status:!hostStatus
+    }).then(async (success)=>{
+      const list = await success.json();
+      console.log("host accessUrl",list)
+      setHostStatus(!hostStatus)
+    },(error)=>{
+      console.log("Error",error)
+      setHostStatus(hostStatus)
+    });
+  };
+
   return (
     <div>
       <Divider />
@@ -10,8 +29,9 @@ const ItemHolder_HostAcessUrl = ({ item }) => {
           <img src="/home-page/consumerIconForList.png" width="40%" />
         </Grid>
         <Grid item xs={2} style={{ borderRight: "1px solid #7ea69f" }}>
-          {/* Request ID */}
-          {`${item.hostId}`}
+          {/* Host ID */}
+          {/* {`${item.hostId}`} */}
+          <Heading text={item.hostId} fontSize={"0.8rem"}/>
         </Grid>
         <Grid
           item
@@ -19,7 +39,8 @@ const ItemHolder_HostAcessUrl = ({ item }) => {
           style={{ paddingLeft: "2%", borderRight: "1px solid #7ea69f" }}
         >
           {/* Consumer Id */}
-          {`${item.hostName}`}
+          {/* {`${item.hostName}`} */}
+          <Heading text={`${item.hostName}`} fontSize={"0.9rem"}/>
         </Grid>
         <Grid
           item
@@ -27,7 +48,8 @@ const ItemHolder_HostAcessUrl = ({ item }) => {
           style={{ paddingLeft: "2%", borderRight: "1px solid #7ea69f" }}
         >
           {/* Consumer Role */}
-          {`${item.accessUrl}`}
+          {/* {`${SERVER_URL}/${item.hostAcessUrl.url}`} */}
+          <Heading text={`${SERVER_URL}/${(item.hostAcessUrl!=undefined) ? item.hostAcessUrl.url : '' }`} fontSize={"0.7rem"}/>
           <div
             style={{
               display: "inline-block",
@@ -44,7 +66,7 @@ const ItemHolder_HostAcessUrl = ({ item }) => {
           style={{ paddingLeft: "2%", borderRight: "1px solid #7ea69f" }}
         >
           {/* Consumer Role */}
-          {`${item.numberofRequests}`}
+          {`${(item.hostAcessUrl!=undefined) ? item.hostAcessUrl.numberOfHits : ''}`}
         </Grid>
 
         <Grid item xs={2} style={{ paddingLeft: "2%" }}>
@@ -52,7 +74,10 @@ const ItemHolder_HostAcessUrl = ({ item }) => {
           {/* {`Switch`} */}
           <FormControlLabel
             value="end"
-            control={<Switch color="secondary" defaultChecked />}
+            control={<Switch color="secondary"  checked={hostStatus} />}
+            onChange={(e)=>{
+              handleHostStatucChange();
+            }}
             label="Status"
             labelPlacement="Status"
           />
