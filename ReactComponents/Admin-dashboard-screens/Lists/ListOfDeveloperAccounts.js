@@ -6,6 +6,7 @@ import DropDownForSelectingASCorDECS from "../../../Support/DropDownForSelecting
 import Heading from "../../../Support/Heading";
 import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
 import ItemHolder_DeveloperPendingRequests from "./ListItemHolders/ItemHolder_DeveloperPendingRequests";
+import ItemHolder_DeveloperApprovedAccounts from "./ListItemHolders/ItemHolder_DeveloperApprovedAccounts";
 
 const ListOfDeveloperAccounts = () => {
   // list of consumers
@@ -133,7 +134,7 @@ const ListOfDeveloperAccounts = () => {
               return (
                 <div style={{ marginTop: "1%" }}>
                   {" "}
-                  <ItemHolder_DeveloperPendingRequests item={item} setRefresh={setRefresh}/>
+                  <ItemHolder_DeveloperApprovedAccounts item={item} setRefresh={setRefresh}/>
                 </div>
               );
             })}
