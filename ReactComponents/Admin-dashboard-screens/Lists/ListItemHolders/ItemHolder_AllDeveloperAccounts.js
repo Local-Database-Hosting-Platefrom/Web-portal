@@ -1,6 +1,6 @@
 import { Card, Divider, Grid } from "@mui/material";
 
-const ItemHolder_ConsumerAccounts = ({item})=>{
+const ItemHolder_AllDeveloperAccounts = ({item})=>{
     return <div>
         <Divider/>
         <Grid container style={{padding:"2%"}}>
@@ -24,4 +24,4 @@ const ItemHolder_ConsumerAccounts = ({item})=>{
         <Divider/>
     </div>
 }
-export default ItemHolder_ConsumerAccounts;
+export default ItemHolder_AllDeveloperAccounts;

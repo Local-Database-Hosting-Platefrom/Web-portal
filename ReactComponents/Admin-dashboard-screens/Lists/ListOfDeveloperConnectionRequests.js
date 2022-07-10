@@ -1,40 +1,16 @@
-import { Container, Divider, Grid } from "@mui/material";
-import { useState } from "react";
+import { Card, Container, Divider, Grid } from "@mui/material";
+import { useEffect, useState } from "react";
+import { LOAD_LIST_OF_DEV_CONNECTION_REQ_BY_ADMIN_ID } from "../../../request-manager/requestUrls";
 import CustomDropDown from "../../../Support/CustomDropDown";
+import DropDownForSelectingASCorDECS from "../../../Support/DropDownForSelectingASCorDECS";
 import Heading from "../../../Support/Heading";
-// import ItemHolder_ConsumerPendingRequest from "./ListItemHolders/ItemHolder_ConsumerPendingRequest";
+import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
+import ItemHolder_DeveloperPendingRequests from "./ListItemHolders/ItemHolder_DeveloperPendingRequests";
 
-const ListOfPendingRequests = ()=>{
-    const [listOfRequests,setListOfRequests] =useState([
-        {
-            requestId:"43343",
-            consumerId: "rfre3",
-            consumerRole:"write only",
-            requestTime:"20-3-2022 04:09 PM"
-        },
-        {
-            requestId:"43343",
-            consumerId: "rfre3",
-            consumerRole:"write only",
-            requestTime:"20-3-2022 04:09 PM"
-        },
-        {
-            requestId:"43343",
-            consumerId: "rfre3",
-            consumerRole:"write only",
-            requestTime:"20-3-2022 04:09 PM"
-        },
-        {
-            requestId:"43343",
-            consumerId: "rfre3",
-            consumerRole:"write only",
-            requestTime:"20-3-2022 04:09 PM"
-        },
-        
-    ])
+const ListOfDeveloperConnectionRequests = () => {
+  // list of consumers
   const [orderBy,setOrderBy]=useState("ASC");
   const [numberOfRecrods,setNumberOfRecrods]=useState("All");
-  
   const listOfOptions_OrderBy = [
       {
           optionTitle:"ASC",
@@ -70,12 +46,38 @@ const ListOfPendingRequests = ()=>{
     
     
   ]  
-  
-    return <Container>
-          <div>
+
+  const [refresh,setRefresh]=useState(false);
+  const [listOfConsumers, setListOfConsumers] = useState([
+    {
+      developerName: "Zee",
+      developerEmail: "7890f-43-434hf",
+      listOfRequestedDatabases:[],
+    },
+  ]);
+
+  useEffect(()=>{
+    // Make call to load pending list of hosts
+    const useData = JSON.parse(localStorage.getItem("loggedInUser"));
+    const _id = useData.responsePayload._id; 
+    sendResquestToCentralAPI("POST", LOAD_LIST_OF_DEV_CONNECTION_REQ_BY_ADMIN_ID,{
+      adminId: _id,
+    }).then(async (success)=>{
+      const list = await success.json();
+      console.log("Connection reqeusts",list)
+      setListOfConsumers(list.responsePayload);
+    },(error)=>{
+      console.log("Error",error)
+    })
+  },[refresh])
+
+  return (
+    <Container>
+      {/* Heading */}
+      <div>
           <Grid container>
               <Grid item xs={8}>
-                <Heading text={"Pending requests"} fontSize="1.5rem" />
+                <Heading text={"All Developers"} fontSize="1.5rem" />
               </Grid>
 
               <Grid item xs={2}>
@@ -85,8 +87,8 @@ const ListOfPendingRequests = ()=>{
                 <CustomDropDown currentSelectedOption={numberOfRecrods} setCurrentSelectedOption={setNumberOfRecrods} label="Number Of Recods" listOfOptions={listOfOptions_NumberOfRows}/>
               </Grid>
           </Grid>
-        </div>
-        <Grid container>
+      </div>
+      <Grid container>
         <Grid item xs={12}>
           {/* List */}
           <div  style={{
@@ -98,27 +100,22 @@ const ListOfPendingRequests = ()=>{
           <div>
           <Divider/>
           <Grid container>
-              <Grid item xs={1} style={{ textAlign: "left" }}>
+              <Grid item xs={2} style={{ textAlign: "center" }}>
                 {/* Icon */}
                 {/* <img src="/home-page/consumerIconForList.png" width="25%" /> */}
               </Grid>
-              <Grid item xs={3} >
-                {/* Consumer Name */}
-                {`Request ID`}
+              <Grid item xs={3}>
+                {/* Developer Name */}
+                {`Developer Name`}
               </Grid>
-              <Grid item xs={3} style={{ textAlign: "left" }}>
-                {/* Consumer Id */}
-                {`Consumer Id`}
-              </Grid>
-              <Grid item xs={2}>
-                {/* Consumer Role */}
-                {`Role`}
+              <Grid item xs={4}>
+                {/* Developer Email */}
+                {`Developer email`}
               </Grid>
               <Grid item xs={2}>
                 {/* Consumer Role */}
-                {`Time and date`}
+                {`Action  `}
               </Grid>
-              
             </Grid>
             </div>
             <Divider/>
@@ -134,18 +131,18 @@ const ListOfPendingRequests = ()=>{
           >
             {/* Items */}
             
-            {listOfRequests.map((item) => {
+            {listOfConsumers.map((item) => {
               return (
                 <div style={{ marginTop: "1%" }}>
                   {" "}
-                  {/* <ItemHolder_ConsumerPendingRequest item={item} /> */}
+                  <ItemHolder_DeveloperPendingRequests item={item} setRefresh={setRefresh}/>
                 </div>
               );
             })}
-          </div> 
+          </div>
         </Grid>
       </Grid>
-        
     </Container>
-}
-export default ListOfPendingRequests;
+  );
+};
+export default ListOfDeveloperConnectionRequests;

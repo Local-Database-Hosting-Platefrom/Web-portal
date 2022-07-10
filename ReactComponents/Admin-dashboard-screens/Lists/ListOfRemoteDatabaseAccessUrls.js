@@ -2,7 +2,7 @@ import { Container, Divider, Grid } from "@mui/material";
 import { useState } from "react";
 import CustomDropDown from "../../../Support/CustomDropDown";
 import Heading from "../../../Support/Heading";
-import ItemHolder_ConsumerPendingRequest from "./ListItemHolders/ItemHolder_ConsumerPendingRequest";
+// import ItemHolder_ConsumerPendingRequest from "./ListItemHolders/ItemHolder_ConsumerPendingRequest";
 import ItemHolder_HostAcessUrl from "./ListItemHolders/ItemHolder_HostAcessUrl";
 import ItemHolder_RemoteDatabaeAcessUrl from "./ListItemHolders/ItemHolder_RemoteDatabaeAcessUrl";
 
@@ -156,7 +156,7 @@ const ListOfRemoteDatabaseAccessUrls = ()=>{
               return (
                 <div style={{ marginTop: "1%" }}>
                   {" "}
-                  <ItemHolder_RemoteDatabaeAcessUrl item={item} />
+                  {/* <ItemHolder_RemoteDatabaeAcessUrl item={item} /> */}
                 </div>
               );
             })}

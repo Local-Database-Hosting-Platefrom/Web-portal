@@ -9,13 +9,13 @@ import Heading from '../../../Support/Heading';
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import { Grid } from "@mui/material";
-import ListOfConsumerAccounts from "../Lists/ListOfConsumerAccounts";
+import ListOfDeveloperConnectionRequests from "../Lists/ListOfDeveloperConnectionRequests";
 import ListOfPendingRequests from "../Lists/ListOfPendingRequests";
 import ListOfResolvedRequests from "../Lists/ListOfResolvedRequests";
 import ListOfDeniedRequests from "../Lists/ListOfDeniedRequests";
 
-import CreateConsumerAccount from "../Forms/CreateConsumerAccount";
 import ManageAccessTokens from "../Forms/ManageAccessTokens";
+import ListOfDeveloperAccounts from "../Lists/ListOfDeveloperAccounts";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -52,7 +52,7 @@ function a11yProps(index) {
 
 export default function Tab_ManageConsumer() {
   const [value, setValue] = useState(0);
-  const [currentOpenedScreen, setCurrentOpenedScreen]= useState(<ListOfConsumerAccounts/>);
+  const [currentOpenedScreen, setCurrentOpenedScreen]= useState(<ListOfDeveloperConnectionRequests/>);
   const [tabsList, setTabsList] = useState([
     {
       tabLable: "Manage Developer Accounts",
@@ -66,11 +66,11 @@ export default function Tab_ManageConsumer() {
   ]);
   useEffect(()=>{
     if(value==0){
-      setCurrentOpenedScreen(<ListOfConsumerAccounts/>)
+      setCurrentOpenedScreen(<ListOfDeveloperConnectionRequests/>)
     }else if (value==1){
 
     }else{
-      setCurrentOpenedScreen(<ListOfPendingRequests/>)
+      setCurrentOpenedScreen(<ListOfDeveloperAccounts/>)
     }
 
   },[value])
@@ -80,10 +80,10 @@ export default function Tab_ManageConsumer() {
   const handleScreenChangeForAccounts=(index)=>{
     switch(index) {
       case 0:
-        setCurrentOpenedScreen(<ListOfConsumerAccounts/>)
+        setCurrentOpenedScreen(<ListOfDeveloperConnectionRequests/>)
       break;
       case 1:
-        setCurrentOpenedScreen(<CreateConsumerAccount/>)
+        setCurrentOpenedScreen(<ListOfDeveloperAccounts/>)
       break;
     }
   }
@@ -147,11 +147,11 @@ export default function Tab_ManageConsumer() {
               {/* Sub options 1.List of consumer account and 2.Create new user*/}
               <div style={{marginTop:"5%",padding:"5%",borderRight: "1px solid #7ea69f"}}>
                 <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForAccounts(0)}}>
-                <Heading text={"All Developers"} fontSize="1rem"/>
+                <Heading text={"Connection Requests"} fontSize="1rem"/>
                 </div>
                 <Divider/>
                 <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForAccounts(1)}}>
-                <Heading text={"Create New Account"} fontSize="1rem"/>
+                <Heading text={"All Accounts"} fontSize="1rem"/>
                 </div>
                 <Divider/>
               </div>

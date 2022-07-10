@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { LOAD_CONNECTED_HOSTS_LIST } from "../../../request-manager/requestUrls";
 import CustomDropDown from "../../../Support/CustomDropDown";
 import Heading from "../../../Support/Heading";
-import ItemHolder_ConsumerPendingRequest from "./ListItemHolders/ItemHolder_ConsumerPendingRequest";
 import ItemHolder_HostAcessUrl from "./ListItemHolders/ItemHolder_HostAcessUrl";
 
 import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";

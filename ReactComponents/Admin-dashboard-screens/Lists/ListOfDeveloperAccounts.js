@@ -1,15 +1,16 @@
 import { Card, Container, Divider, Grid } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { LOAD_LIST_OF_DEVELOPER_ACCOUNTS_BY_ADMIN_ID, LOAD_LIST_OF_DEV_CONNECTION_REQ_BY_ADMIN_ID } from "../../../request-manager/requestUrls";
 import CustomDropDown from "../../../Support/CustomDropDown";
 import DropDownForSelectingASCorDECS from "../../../Support/DropDownForSelectingASCorDECS";
 import Heading from "../../../Support/Heading";
-import ItemHolder_ConsumerAccounts from "./ListItemHolders/ItemHolder_ConsumerAccounts";
+import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
+import ItemHolder_DeveloperPendingRequests from "./ListItemHolders/ItemHolder_DeveloperPendingRequests";
 
-const ListOfConsumerAccounts = () => {
+const ListOfDeveloperAccounts = () => {
   // list of consumers
   const [orderBy,setOrderBy]=useState("ASC");
   const [numberOfRecrods,setNumberOfRecrods]=useState("All");
-  
   const listOfOptions_OrderBy = [
       {
           optionTitle:"ASC",
@@ -46,38 +47,29 @@ const ListOfConsumerAccounts = () => {
     
   ]  
 
+  const [refresh,setRefresh]=useState(false);
   const [listOfConsumers, setListOfConsumers] = useState([
     {
-      consumerName: "Zee",
-      consumerId: "7890f-43-434hf",
-      role: "Read/Write",
-    },
-    {
-      consumerName: "Shan",
-      consumerId: "7fj0f-34-3434hf",
-      role: "Write Only",
-    },
-    {
-      consumerName: "Ahmed",
-      consumerId: "ds90f-32-449f",
-      role: "Read Only",
-    },
-    {
-      consumerName: "Zee",
-      consumerId: "7890f-43-434hf",
-      role: "Read/Write",
-    },
-    {
-      consumerName: "Shan",
-      consumerId: "7fj0f-34-3434hf",
-      role: "Write Only",
-    },
-    {
-      consumerName: "Ahmed",
-      consumerId: "ds90f-32-449f",
-      role: "Read Only",
+      developerName: "Zee",
+      developerEmail: "7890f-43-434hf",
+      listOfRequestedDatabases:[],
     },
   ]);
+
+  useEffect(()=>{
+    // Make call to load pending list of hosts
+    const useData = JSON.parse(localStorage.getItem("loggedInUser"));
+    const _id = useData.responsePayload._id; 
+    sendResquestToCentralAPI("POST", LOAD_LIST_OF_DEVELOPER_ACCOUNTS_BY_ADMIN_ID,{
+      adminId: _id, 
+    }).then(async (success)=>{
+      const list = await success.json();
+      console.log("Connection reqeusts",list)
+      setListOfConsumers(list.responsePayload);
+    },(error)=>{
+      console.log("Error",error)
+    })
+  },[refresh])
 
   return (
     <Container>
@@ -113,16 +105,16 @@ const ListOfConsumerAccounts = () => {
                 {/* <img src="/home-page/consumerIconForList.png" width="25%" /> */}
               </Grid>
               <Grid item xs={3}>
-                {/* Consumer Name */}
-                {`Name`}
+                {/* Developer Name */}
+                {`Developer Name`}
               </Grid>
-              <Grid item xs={3}>
-                {/* Consumer Id */}
-                {`Id`}
+              <Grid item xs={4}>
+                {/* Developer Email */}
+                {`Developer email`}
               </Grid>
               <Grid item xs={2}>
                 {/* Consumer Role */}
-                {`Role`}
+                {`Action  `}
               </Grid>
             </Grid>
             </div>
@@ -143,7 +135,7 @@ const ListOfConsumerAccounts = () => {
               return (
                 <div style={{ marginTop: "1%" }}>
                   {" "}
-                  <ItemHolder_ConsumerAccounts item={item} />
+                  <ItemHolder_DeveloperPendingRequests item={item} setRefresh={setRefresh}/>
                 </div>
               );
             })}
@@ -153,4 +145,4 @@ const ListOfConsumerAccounts = () => {
     </Container>
   );
 };
-export default ListOfConsumerAccounts;
+export default ListOfDeveloperAccounts;
