@@ -189,6 +189,7 @@ const AvaibleServiceProviders = () => {
                               value={JSON.stringify({
                                 hostId: host.hostId,
                                 adminId: item.serviceProviderId,
+                                hostName:host.hostName
                               })}
                               label={host.hostName}
                               onChange={(e) => {

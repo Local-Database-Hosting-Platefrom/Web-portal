@@ -48,20 +48,14 @@ const ListOfDeveloperAccounts = () => {
   ]  
 
   const [refresh,setRefresh]=useState(false);
-  const [listOfConsumers, setListOfConsumers] = useState([
-    {
-      developerName: "Zee",
-      developerEmail: "7890f-43-434hf",
-      listOfRequestedDatabases:[],
-    },
-  ]);
+  const [listOfConsumers, setListOfConsumers] = useState([]);
 
   useEffect(()=>{
     // Make call to load pending list of hosts
     const useData = JSON.parse(localStorage.getItem("loggedInUser"));
     const _id = useData.responsePayload._id; 
     sendResquestToCentralAPI("POST", LOAD_LIST_OF_DEVELOPER_ACCOUNTS_BY_ADMIN_ID,{
-      adminId: _id, 
+      adminId: _id,
     }).then(async (success)=>{
       const list = await success.json();
       console.log("Connection reqeusts",list)
@@ -104,13 +98,17 @@ const ListOfDeveloperAccounts = () => {
                 {/* Icon */}
                 {/* <img src="/home-page/consumerIconForList.png" width="25%" /> */}
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={2}>
                 {/* Developer Name */}
                 {`Developer Name`}
               </Grid>
               <Grid item xs={4}>
                 {/* Developer Email */}
                 {`Developer email`}
+              </Grid>
+              <Grid item xs={2}>
+                {/* Consumer Role */}
+                {`Status  `}
               </Grid>
               <Grid item xs={2}>
                 {/* Consumer Role */}

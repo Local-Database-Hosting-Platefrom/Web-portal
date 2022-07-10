@@ -48,13 +48,7 @@ const ListOfDeveloperConnectionRequests = () => {
   ]  
 
   const [refresh,setRefresh]=useState(false);
-  const [listOfConsumers, setListOfConsumers] = useState([
-    {
-      developerName: "Zee",
-      developerEmail: "7890f-43-434hf",
-      listOfRequestedDatabases:[],
-    },
-  ]);
+  const [listOfConsumers, setListOfConsumers] = useState([]);
 
   useEffect(()=>{
     // Make call to load pending list of hosts

@@ -10,13 +10,19 @@ import CustomDialog from "../../../Dialogues/CustomDialog";
 import { sendResquestToCentralAPI } from "../../../../request-manager/requestManager";
 import { UPDATE_DEV_ADMIN_CON_STATUS } from "../../../../request-manager/requestUrls";
 
-const options = ["Accept", "Decline","Un-resolved"];
+// const options = ["Accept", "Decline","Un-resolved"];
+
+const options = ["View Request"];
+
 const ITEM_HEIGHT = 48;
 const ItemHolder_DeveloperPendingRequests = ({ item,setRefresh }) => {
-    const [alertType,setAlertType]=useState(null);
-    const [openCustomDialog, setOpenCustomDialog] = useState(false);
-    const [alertMessage_CustomDialog,setAlertMessage_CustomDialog]=useState("");
-    const [alertTitle_CustomDialog,setAlertTitle_CustomDialog]=useState("");
+
+  
+
+  const [alertType,setAlertType]=useState(null);
+  const [openCustomDialog, setOpenCustomDialog] = useState(false);
+  const [alertMessage_CustomDialog,setAlertMessage_CustomDialog]=useState("");
+  const [alertTitle_CustomDialog,setAlertTitle_CustomDialog]=useState("");
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -24,21 +30,13 @@ const ItemHolder_DeveloperPendingRequests = ({ item,setRefresh }) => {
   };
   const handleClose = (event) => {
     setAnchorEl(null);
-    sendResquestToCentralAPI("POST", UPDATE_DEV_ADMIN_CON_STATUS,{
-        requestId:item._id,requestStatus:event.target.innerText
-      }).then(async (success)=>{
-        const response = await success.json();
-        console.log("Connectioon Status updated",response);
-        setAlertType(dialogueTypes.INFO)
-        setAlertTitle_CustomDialog("Great..!!");
-        setAlertMessage_CustomDialog(response.responseMessage);
-        handleClickOpen_CustomDialog();
-        setRefresh((prev)=>{
-          return !prev
-        });
-      },(error)=>{
-        console.log("Error",error)
-      })
+    if(event.target.innerText=="View Request"){
+          setAlertType(dialogueTypes.VIEW_DEV_CON_REQUEST)
+          setAlertTitle_CustomDialog("Connection Request");
+          // setAlertMessage_CustomDialog(response.responseMessage);
+          handleClickOpen_CustomDialog();
+    }
+    else if(event.target.innerText=="Decline"){}
   };
   const handleClickOpen_CustomDialog = () => {
     setOpenCustomDialog(true);
@@ -46,6 +44,34 @@ const ItemHolder_DeveloperPendingRequests = ({ item,setRefresh }) => {
   const handleClose_CustomDialog = () => {
     setOpenCustomDialog(false);
   };
+
+  const handleAcceptEvent=(value)=>{
+    handleClose_CustomDialog();
+    updateTheRequestStatus("Accept",value.accessRole)
+  }
+  const handleDeclineEvent=(value)=>{
+    handleClose_CustomDialog();
+    updateTheRequestStatus("Decline",value.accessRole) 
+  }
+
+  const updateTheRequestStatus=(value,accessRole)=>{
+    sendResquestToCentralAPI("POST", UPDATE_DEV_ADMIN_CON_STATUS,{
+        requestId:item._id,requestStatus:value,accessRole:accessRole
+      }).then(async (success)=>{
+        const response = await success.json();
+        console.log("Connectioon Status updated",response);
+        // setAlertType(dialogueTypes.INFO)
+        // setAlertTitle_CustomDialog("Great..!!");
+        // setAlertMessage_CustomDialog(response.responseMessage);
+        // handleClickOpen_CustomDialog();
+        setRefresh((prev)=>{
+          return !prev
+        });
+      },(error)=>{
+        console.log("Error",error)
+      })
+  }
+
   return (
     <div>
       <Divider />
@@ -54,19 +80,24 @@ const ItemHolder_DeveloperPendingRequests = ({ item,setRefresh }) => {
           {/* Icon */}
           <img src="/home-page/consumerIconForList.png" width="25%" />
         </Grid>
-        <Grid item xs={3} style={{ borderRight: "1px solid #7ea69f" }}>
+        <Grid item xs={2} style={{ borderRight: "1px solid #7ea69f" }}>
           {/* Consumer Name */}
           {/* {`${item.developerName}`} */}
-          <Heading text={item.developerName} fontSize={"1.2rem"}/>
+          <Heading text={item.developerName} fontSize={"1rem"}/>
         </Grid>
         <Grid
           item
           xs={4}
-          style={{ paddingLeft: "3%", borderRight: "1px solid #7ea69f" }}
+          style={{ paddingLeft: "1%", borderRight: "1px solid #7ea69f" }}
         >
           {/* Consumer Id */}
           {/* {`${item.developerEmail}`} */}
           <Heading text={item.developerEmail} fontSize={"0.8rem"}/>
+        </Grid>
+        <Grid item xs={2} style={{ paddingLeft:"1%",borderRight: "1px solid #7ea69f" }}>
+          {/* Consumer Name */}
+          {/* {`${item.developerName}`} */}
+          <Heading text={item.requestStatus} fontSize={"1rem"}/>
         </Grid>
         <Grid item xs={2} style={{ paddingLeft: "2%", textAlign: "right" }}>
           {/* Consumer Role */}
@@ -109,6 +140,7 @@ const ItemHolder_DeveloperPendingRequests = ({ item,setRefresh }) => {
             </Menu>
           </div>
         </Grid>
+        
       </Grid>
       <Divider />
       <CustomDialog
@@ -116,7 +148,9 @@ const ItemHolder_DeveloperPendingRequests = ({ item,setRefresh }) => {
           handleClickOpen={handleClickOpen_CustomDialog}
           handleCloseEvent={handleClose_CustomDialog}
           open={openCustomDialog}
-          alertMessage={alertMessage_CustomDialog}
+          handleOkEvent={handleAcceptEvent}
+          handleNoEvent={handleDeclineEvent}
+          alertMessage={item}
           alertTitle={alertTitle_CustomDialog}
         />
     </div>
