@@ -1,6 +1,6 @@
 const READ_ONLY=1201;
 const WRITE_ONLY=1202;
 const READ_AND_WRITE=1203;
-module.exports{
+module.exports={
     READ_ONLY, WRITE_ONLY, READ_AND_WRITE
 }

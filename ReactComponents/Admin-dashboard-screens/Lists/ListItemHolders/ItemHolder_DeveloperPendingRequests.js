@@ -41,6 +41,7 @@ const ItemHolder_DeveloperPendingRequests = ({ item,setRefresh }) => {
   const handleClickOpen_CustomDialog = () => {
     setOpenCustomDialog(true);
   };
+  
   const handleClose_CustomDialog = () => {
     setOpenCustomDialog(false);
   };
@@ -49,10 +50,12 @@ const ItemHolder_DeveloperPendingRequests = ({ item,setRefresh }) => {
     handleClose_CustomDialog();
     updateTheRequestStatus("Accept",value.accessRole,value.isAutoAccessUrlTokenGenerationAllowed)
   }
+
   const handleDeclineEvent=(value)=>{
     handleClose_CustomDialog();
     updateTheRequestStatus("Decline",value.accessRole) 
   }
+
   const updateTheRequestStatus=(value,accessRole,isAutoAccessUrlTokenGenerationAllowed)=>{
     if(accessRole=="") accessRole=1201;
     sendResquestToCentralAPI("POST", UPDATE_DEV_ADMIN_CON_STATUS,{

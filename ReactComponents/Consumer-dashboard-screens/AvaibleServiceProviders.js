@@ -29,27 +29,22 @@ import { CREATED_ACCOUNT } from "../../request-manager/responseCodes";
 const AvaibleServiceProviders = () => {
   const isMediumScreen = useMediaQuery("(min-width:600px)");
   const [checkedHostList, setListOfCheckedHost] = useState([]);
-  const [alertType,setAlertType]=useState(null);
+  const [alertType, setAlertType] = useState(null);
   const [openCustomDialog, setOpenCustomDialog] = useState(false);
-  const [alertMessage_CustomDialog,setAlertMessage_CustomDialog]=useState("");
-  const [alertTitle_CustomDialog,setAlertTitle_CustomDialog]=useState("");
-  
-  const [listOfServiceProviders, setListOfServiceProviders] = useState([
-    {
-      serviceProviderName: "Zeeshan",
-      serviceProviderId: "sdkhjflffn",
-      serviceProvider_ConnectedHosts: [
-        {
-          hostName: "Zeeshan",
-          hostId: "fnkbjn",
-        },
-      ],
-    },
-  ]);
+  const [alertMessage_CustomDialog, setAlertMessage_CustomDialog] =
+    useState("");
+  const [alertTitle_CustomDialog, setAlertTitle_CustomDialog] = useState("");
+
+  const [listOfServiceProviders, setListOfServiceProviders] = useState([]);
 
   useEffect(() => {
     // Make call to load  list of service providers
-    sendResquestToCentralAPI("GET", LOAD_LIST_OF_SERVICE_PROVIDERS, {}).then(
+    const userData = JSON.parse(localStorage.getItem("loggedInUser"));
+    const developerId = userData.responsePayload._id;
+
+    sendResquestToCentralAPI("POST", LOAD_LIST_OF_SERVICE_PROVIDERS, {
+      developerId: developerId,
+    }).then(
       async (success) => {
         const list = await success.json();
         console.log("Service providers:", list);
@@ -59,9 +54,14 @@ const AvaibleServiceProviders = () => {
             serviceProviderName: record.firstName + " " + record.lastName,
             serviceProviderId: record.serviceProviderId,
             serviceProvider_ConnectedHosts: record.connectedHostList,
+            connectionRequest: record.connectionRequest,
           };
           temp.push(rec);
         });
+        console.log(
+          "List of service providers after loading",
+          list.responsePayload[0]
+        );
         setListOfServiceProviders(temp);
       },
       (error) => {
@@ -103,24 +103,30 @@ const AvaibleServiceProviders = () => {
       }
     });
 
+    // console.log("Service provider id :", serviceProviderId);
     const userData = JSON.parse(localStorage.getItem("loggedInUser"));
     const developerId = userData.responsePayload._id;
+
     sendResquestToCentralAPI("POST", MAKE_CON_REQUEST_FOR_DEV_TO_ADMIN, {
       listOfDatabases: listOfDatabases,
       adminId: serviceProviderId,
       developerId: developerId,
-      developerName : userData.responsePayload.firstName+" "+userData.responsePayload.lastName,
-      developerEmail:userData.responsePayload.email,
+      developerName:
+        userData.responsePayload.firstName +
+        " " +
+        userData.responsePayload.lastName,
+      developerEmail: userData.responsePayload.email,
     }).then(
       async (success) => {
         const response = await success.json();
-        console.log("Made connection request", response);
-        if(response.responseCode==CREATED_ACCOUNT){
-            setAlertTitle_CustomDialog("Great..!!");
-        }else{
-            setAlertTitle_CustomDialog("Something wrong went");  
+        // console.log("Made connection request", response);
+        if (response.responseCode == CREATED_ACCOUNT) {
+          setAlertTitle_CustomDialog("Great..!!");
+        } else {
+          setAlertTitle_CustomDialog("Something wrong went");
         }
-        setAlertType(dialogueTypes.INFO)
+
+        setAlertType(dialogueTypes.INFO);
         setAlertMessage_CustomDialog(response.responseMessage);
         handleClickOpen_CustomDialog();
       },
@@ -129,14 +135,13 @@ const AvaibleServiceProviders = () => {
       }
     );
   };
+
   const handleClickOpen_CustomDialog = () => {
     setOpenCustomDialog(true);
   };
   const handleClose_CustomDialog = () => {
     setOpenCustomDialog(false);
   };
-
-
 
   return (
     <Container>
@@ -174,58 +179,110 @@ const AvaibleServiceProviders = () => {
                     <div>
                       <FormGroup row>
                         {item.serviceProvider_ConnectedHosts.map((host) => {
-                          return (
-                            <FormControlLabel
-                              control={
-                                <Checkbox
-                                  sx={{
-                                    color: "black",
-                                    "&.Mui-checked": {
-                                      color: "blue",
-                                    },
-                                  }}
-                                />
-                              }
-                              value={JSON.stringify({
-                                hostId: host.hostId,
-                                adminId: item.serviceProviderId,
-                                hostName:host.hostName
-                              })}
-                              label={host.hostName}
-                              onChange={(e) => {
-                                // console.log("Checkbox",JSON.parse(e.target.value))
-                                manageListOfCheckCheckboxes(
-                                  e.target.checked,
-                                  JSON.parse(e.target.value)
-                                );
-                              }}
-                            />
-                          );
+                         
+                            return  (
+                              <FormControlLabel
+                                control={
+                                  <Checkbox
+                                    sx={{
+                                      color: "black",
+                                      "&.Mui-checked": {
+                                        color: "blue",
+                                      },
+                                    }}
+                                  />
+                                }
+                                
+                                value={JSON.stringify({
+                                  hostId: host.hostId,
+                                  adminId: item.serviceProviderId,
+                                  hostName: host.hostName,
+                                })}
+                                label={host.hostName}
+                                onChange={(e) => {
+                                  // console.log("Checkbox",JSON.parse(e.target.value))
+                                  manageListOfCheckCheckboxes(
+                                    e.target.checked,
+                                    JSON.parse(e.target.value)
+                                  );
+                                }}
+                              />
+                            );
+                          
                         })}
                       </FormGroup>
                     </div>
-                    <div
-                      key={item.serviceProviderId}
-                      onClick={(e) => {
-                        handleMakeRegisterRequest(e.target.value);
-                      }}
-                    >
-                      <CustomButton
-                        style={{
-                          // marginLeft:isMediumScreen? "40%":"35%",
-                          marginTop: isMediumScreen ? "3%" : "3%",
-                          // left: isMediumScreen? "10":"",
-                          // position: "absolute",
-                          // right: 5,
-                          // bottom: 10,
 
-                          backgroundColor: "#10365B",
-                          fontSize: isMediumScreen ? "0.8rem" : "",
-                        }}
+                    {/* If request is not already sent. */}
+                    {item.connectionRequest == null && (
+                      <div
                         value={item.serviceProviderId}
-                        name="Get Service"
-                      />
-                    </div>
+                        onClick={(e) => {
+                          // console.log("service provider inner id : ",e.target.value)
+                          handleMakeRegisterRequest(e.target.value);
+                        }}
+                      >
+                        <CustomButton
+                          style={{
+                            // marginLeft:isMediumScreen? "40%":"35%",
+                            marginTop: isMediumScreen ? "3%" : "3%",
+                            // left: isMediumScreen? "10":"",
+                            // position: "absolute",
+                            // right: 5,
+                            // bottom: 10,
+                            backgroundColor: "#10365B",
+                            fontSize: isMediumScreen ? "0.8rem" : "",
+                          }}
+                          value={item.serviceProviderId}
+                          name={`Get Service`}
+                        />
+                      </div>
+                    )}
+                    {/* If request is already sent. */}
+                    {item.connectionRequest != null && (
+                      <div>
+                        <div style={{ borderBottom: "1px solid #7ea69f" }}>
+                          <Heading
+                            text={"Request Status"}
+                            fontWeight={"bold"}
+                            fontSize={"1.2rem"}
+                          />
+                        </div>
+                        <div style={{ marginTop: "1%" }}>
+                          <Heading
+                            text={`Request Status : ${item.connectionRequest.requestStatus}`}
+                            fontSize={"1rem"}
+                          />
+                          <Heading
+                            text={`Assigned Role : ${item.connectionRequest.accessRole}`}
+                            fontSize={"1rem"}
+                          />
+                          <div style={{ borderBottom: "1px solid #7ea69f" }}>
+                            <Heading
+                              text={`Allowed Hosts :`}
+                              fontWeight={"bold"}
+                              fontSize={"1rem"}
+                            />
+                            {item.connectionRequest.listOfDatabases !=
+                              undefined && (
+                              <div>
+                                {item.connectionRequest.listOfDatabases.map(
+                                  (host, index) => {
+                                    return (
+                                      <div>
+                                        {`${index + 1} :  ${
+                                          host != null ? host.hostName : ""
+                                        }`}
+                                      </div>
+                                    );
+                                  }
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </AccordionDetails>
                 </Accordion>
               </div>
@@ -234,14 +291,13 @@ const AvaibleServiceProviders = () => {
         </Grid>
       </Grid>
       <CustomDialog
-          alertType={alertType}
-          handleClickOpen={handleClickOpen_CustomDialog}
-          handleCloseEvent={handleClose_CustomDialog}
-          open={openCustomDialog}
-          alertMessage={alertMessage_CustomDialog}
-          alertTitle={alertTitle_CustomDialog}
-        
-        />
+        alertType={alertType}
+        handleClickOpen={handleClickOpen_CustomDialog}
+        handleCloseEvent={handleClose_CustomDialog}
+        open={openCustomDialog}
+        alertMessage={alertMessage_CustomDialog}
+        alertTitle={alertTitle_CustomDialog}
+      />
     </Container>
   );
 };

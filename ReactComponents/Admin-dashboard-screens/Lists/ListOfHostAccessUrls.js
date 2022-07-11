@@ -6,18 +6,11 @@ import Heading from "../../../Support/Heading";
 import ItemHolder_HostAcessUrl from "./ListItemHolders/ItemHolder_HostAcessUrl";
 
 import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
+import { COULD_NOT_FETCH } from "../../../request-manager/responseCodes";
 
 const ListOfHostAccessUrls = ()=>{
   const [refresh,setRefresh]=useState(false);
-    const [listOfUrls,setlistOfUrls] =useState([
-        {
-            hostId:"43343",
-            hostName: "rfre3",
-            accessUrl: "http://<address>",
-            numberofRequests:"432"
-        },
-        
-    ])
+    const [listOfUrls,setlistOfUrls] =useState([])
     
     useEffect(()=>{
       // Make call to load pending list of hosts
@@ -26,9 +19,15 @@ const ListOfHostAccessUrls = ()=>{
       sendResquestToCentralAPI("POST", LOAD_CONNECTED_HOSTS_LIST,{
         _id: _id,
       }).then(async (success)=>{
-        const list = await success.json();
-        console.log("host accessUrl",list)
-        setlistOfUrls(list.payload);
+        const response = await success.json();
+        console.log("host accessUrl",response)
+        if(response.responseCode==COULD_NOT_FETCH)
+        {
+          setlistOfUrls([])
+        }else{
+          setlistOfUrls(response.payload);
+        }
+        
       },(error)=>{
         console.log("Error",error)
       })
