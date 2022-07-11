@@ -34,7 +34,7 @@ export default function CustomDropDown({currentSelectedOption="Host-url Access T
              */}
         {
             listOfOptions.map((item)=>{
-                return  <MenuItem value={item.optionValue}>{item.optionTitle}</MenuItem>
+                return  <MenuItem value={JSON.stringify(item)}>{item.optionTitle}</MenuItem>
             }) 
         }
         </Select>

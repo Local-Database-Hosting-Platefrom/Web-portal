@@ -45,6 +45,7 @@ const AvaibleServiceProviders = () => {
     sendResquestToCentralAPI("POST", LOAD_LIST_OF_SERVICE_PROVIDERS, {
       developerId: developerId,
     }).then(
+
       async (success) => {
         const list = await success.json();
         console.log("Service providers:", list);
@@ -63,6 +64,7 @@ const AvaibleServiceProviders = () => {
           list.responsePayload[0]
         );
         setListOfServiceProviders(temp);
+
       },
       (error) => {
         console.log("Error", error);
@@ -74,16 +76,21 @@ const AvaibleServiceProviders = () => {
     if (isChecked) {
       // puch in case not in list
       let flag = false;
+
       checkedHostList.forEach((item) => {
         if (item.hostId == value.hostId) {
           flag = true;
         }
       });
+
       if (!flag) {
         checkedHostList.push(value);
       }
+
       setListOfCheckedHost(checkedHostList);
+
     } else {
+
       setListOfCheckedHost(
         checkedHostList.map((item) => {
           if (item.hostId != value.hostId) {
@@ -112,9 +119,9 @@ const AvaibleServiceProviders = () => {
       adminId: serviceProviderId,
       developerId: developerId,
       developerName:
-        userData.responsePayload.firstName +
+      userData.responsePayload.firstName +
         " " +
-        userData.responsePayload.lastName,
+      userData.responsePayload.lastName,
       developerEmail: userData.responsePayload.email,
     }).then(
       async (success) => {
@@ -194,9 +201,8 @@ const AvaibleServiceProviders = () => {
                                 }
                                 
                                 value={JSON.stringify({
-                                  hostId: host.hostId,
+                                  ...host,
                                   adminId: item.serviceProviderId,
-                                  hostName: host.hostName,
                                 })}
                                 label={host.hostName}
                                 onChange={(e) => {

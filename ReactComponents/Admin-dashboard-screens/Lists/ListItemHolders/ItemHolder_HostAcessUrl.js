@@ -7,9 +7,11 @@ import { sendResquestToCentralAPI } from "../../../../request-manager/requestMan
 const ItemHolder_HostAcessUrl = ({ item,}) => {
   const [hostStatus,setHostStatus]=useState(false)
   const handleHostStatucChange=()=>{
+
     sendResquestToCentralAPI("POST", SET_STATUS_OF_HOST_ACCESS_URL,{
       hostId:item.hostId,
       status:!hostStatus
+      
     }).then(async (success)=>{
       const list = await success.json();
       console.log("host accessUrl",list)

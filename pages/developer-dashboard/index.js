@@ -13,7 +13,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import NavbarWraper from "../../ReactComponents/HomePage-Navbar/NavbarWraper";
 
-import RenewTokenScreen from "../../ReactComponents/Consumer-dashboard-screens/RenewTokenScreen"
 import TestTokenScreen from "../../ReactComponents/Consumer-dashboard-screens/TestTokenScreen";
 import GetTokenDetailsScreen from "../../ReactComponents/Consumer-dashboard-screens/GetTokenDetailsScreen";
 import TestRemoteDatabaseAccessUrlScreen from "../../ReactComponents/Consumer-dashboard-screens/TestRemoteDatabaseAccessUrlScreen";
@@ -28,6 +27,7 @@ import { useEffect } from "react";
 import CustomDialog from "../../ReactComponents/Dialogues/CustomDialog";
 import { sendResquestToCentralAPI } from "../../request-manager/requestManager";
 import AvaibleServiceProviders from "../../ReactComponents/Consumer-dashboard-screens/AvaibleServiceProviders";
+import GenerateTokenScreen from "../../ReactComponents/Consumer-dashboard-screens/GenerateTokenScreen";
 
 
 const drawerWidth = 280;
@@ -161,7 +161,8 @@ const Index = () => {
         break;
       case 1:
         // Renew token screen
-        setCurrentOpenedScreen(<RenewTokenScreen />);
+        setCurrentOpenedScreen(<GenerateTokenScreen />);
+        break;
       case 2:
         setCurrentOpenedScreen(<AvaibleServiceProviders/>)
         break;
@@ -276,7 +277,7 @@ const Index = () => {
               <img src="/home-page/manage_connection_icon.png" width="50%" />
             </ListItemIcon>
             <ListItemText
-              primary={"Renew Token"}
+              primary={"Generate Token"}
               sx={{ opacity: open ? 1 : 0 }}
             />
           </ListItemButton>
