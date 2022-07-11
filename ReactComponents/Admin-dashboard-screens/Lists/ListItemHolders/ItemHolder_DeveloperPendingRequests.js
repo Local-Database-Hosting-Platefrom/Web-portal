@@ -47,16 +47,16 @@ const ItemHolder_DeveloperPendingRequests = ({ item,setRefresh }) => {
 
   const handleAcceptEvent=(value)=>{
     handleClose_CustomDialog();
-    updateTheRequestStatus("Accept",value.accessRole)
+    updateTheRequestStatus("Accept",value.accessRole,value.isAutoAccessUrlTokenGenerationAllowed)
   }
   const handleDeclineEvent=(value)=>{
     handleClose_CustomDialog();
     updateTheRequestStatus("Decline",value.accessRole) 
   }
-
-  const updateTheRequestStatus=(value,accessRole)=>{
+  const updateTheRequestStatus=(value,accessRole,isAutoAccessUrlTokenGenerationAllowed)=>{
+    if(accessRole=="") accessRole=1201;
     sendResquestToCentralAPI("POST", UPDATE_DEV_ADMIN_CON_STATUS,{
-        requestId:item._id,requestStatus:value,accessRole:accessRole
+        requestId:item._id,requestStatus:value,accessRole:accessRole,isAutoAccessUrlTokenGenerationAllowed:isAutoAccessUrlTokenGenerationAllowed
       }).then(async (success)=>{
         const response = await success.json();
         console.log("Connectioon Status updated",response);

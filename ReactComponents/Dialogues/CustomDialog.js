@@ -1,22 +1,23 @@
-
 import Button from "@mui/material/Button";
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import CloseIcon from "@mui/icons-material/Close";
-import { Grid, useMediaQuery } from "@mui/material";
+import { FormControlLabel, FormGroup, Grid, useMediaQuery } from "@mui/material";
 import dialogueTypes from "./dialogueTypes";
 import CustomButton from "../../Support/CustomButton";
 import Heading from "../../Support/Heading";
 import { useEffect } from "react";
+import Checkbox from "@mui/material/Checkbox";
+import { CheckBox } from "@mui/icons-material";
 export default function CustomDialog({
   handleClickOpen,
   alertType,
@@ -28,32 +29,37 @@ export default function CustomDialog({
   handleNoEvent = null,
 }) {
   const isMediumScreen = useMediaQuery("(min-width:600px)");
-  const [accessRole, setAccessRole] = React.useState('');
-  const [listOfAccessRole,setListOfAccessRole]=React.useState([
+  const [accessRole, setAccessRole] = React.useState("");
+
+  const [isAutoTokenGeneratingAllowed, setIsAutoTokenGeneratingAllowed] =
+    React.useState(true);
+
+  const handleTokenGeneration = (event) => {
+    setIsAutoTokenGeneratingAllowed(event.target.checked);
+  };
+
+  const [listOfAccessRole, setListOfAccessRole] = React.useState([
     {
-      roleTitle:"Read Only",
-      roleValue:1201
+      roleTitle: "Read Only",
+      roleValue: 1201,
     },
     {
-      roleTitle:"Write Only",
-      roleValue:1202
+      roleTitle: "Write Only",
+      roleValue: 1202,
     },
     {
-      roleTitle:"Read & Write",
-      roleValue:1203
+      roleTitle: "Read & Write",
+      roleValue: 1203,
     },
-    
   ]);
 
   const handleChange = (event) => {
     setAccessRole(event.target.value);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     // Load the acccess roles
-  },[])
-
-
+  }, []);
 
   return (
     <div>
@@ -281,14 +287,33 @@ export default function CustomDialog({
                                 label="Access Role"
                                 onChange={handleChange}
                               >
-                                {
-                                  listOfAccessRole.map((item)=>{
-                                    return   <MenuItem value={item.roleValue}>{item.roleTitle}</MenuItem>
-                                  })
-                                }
+                                {listOfAccessRole.map((item) => {
+                                  return (
+                                    <MenuItem value={item.roleValue}>
+                                      {item.roleTitle}
+                                    </MenuItem>
+                                  );
+                                })}
                               </Select>
                             </FormControl>
-                          </Box>  
+                          </Box>
+                        </div>
+                        <div style={{ borderBottom: "1px solid #7ea69f" }}>
+                         
+                          {/**/}
+                          <FormGroup>
+                            <FormControlLabel control={<Checkbox
+                            
+                            checked={isAutoTokenGeneratingAllowed}
+                            onChange={handleTokenGeneration}
+                            inputProps={{ "aria-label": "controlled" }}
+                            sx={{
+                              color: "blue",
+                              "&.Mui-checked": {
+                                color: "blue",
+                              },
+                            }}
+                          /> } label="Allow auto token generation" /></FormGroup>
                         </div>
                       </Grid>
                       <Grid item xs={8}></Grid>
@@ -326,7 +351,7 @@ export default function CustomDialog({
                             onClick={() => {
                               // localStorage.setItem("isLoggedIn", true);
                               // navigation.push("/admin-dashboard");
-                              handleOkEvent({accessRole:accessRole});
+                              handleOkEvent({ accessRole: accessRole,isAutoAccessUrlTokenGenerationAllowed:isAutoTokenGeneratingAllowed });
                             }}
                             name="Accept"
                           />
@@ -341,8 +366,7 @@ export default function CustomDialog({
         </div>
       )}
 
-
-{alertType == dialogueTypes.VIEW_DEV_CON_DETAILS && (
+      {alertType == dialogueTypes.VIEW_DEV_CON_DETAILS && (
         <div>
           <Dialog
             open={open}
@@ -434,7 +458,6 @@ export default function CustomDialog({
                               </Select>
                             </FormControl>
                           </Box>   */}
-                         
                         </div>
                       </Grid>
                       <Grid item xs={8}></Grid>
@@ -472,7 +495,7 @@ export default function CustomDialog({
                             onClick={() => {
                               // localStorage.setItem("isLoggedIn", true);
                               // navigation.push("/admin-dashboard");
-                              handleOkEvent({accessRole:accessRole});
+                              handleOkEvent({ accessRole: accessRole });
                             }}
                             name="Ok"
                           />
