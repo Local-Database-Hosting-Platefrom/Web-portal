@@ -97,16 +97,19 @@ export default function Navbar({isProgressBarVisible=false}) {
   const windSize = useWindowSize();
   //Nav bar options color flags
   //Progress
-  const [firstName,setFirstName]=useState(null);
+  const [firstName,setFirstName]=useState("");
   const [isLoggedIn,setIsLoggedIn]=useState(false);
   useEffect(()=>{
     // Access values from localStorage for now , later on we will access values from the redux
     if(localStorage.getItem("isLoggedIn")=="true") {
       const data = JSON.parse(localStorage.getItem("loggedInUser"));
-      const {firstName} = data.responsePayload;
+      if(data.responsePayload!=undefined){
+ const {firstName} = data.responsePayload;
       setFirstName(firstName);
       setIsLoggedIn(true);
       console.log("Data for print",data)
+      }
+     
     }
   },[])
 
