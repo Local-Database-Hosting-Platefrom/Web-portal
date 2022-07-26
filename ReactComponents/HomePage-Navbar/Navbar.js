@@ -109,7 +109,7 @@ export default function Navbar({isProgressBarVisible=false}) {
       setIsLoggedIn(true);
       console.log("Data for print",data)
       }
-     
+
     }
   },[])
 
