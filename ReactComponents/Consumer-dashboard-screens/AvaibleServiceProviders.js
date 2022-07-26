@@ -109,7 +109,7 @@ const AvaibleServiceProviders = () => {
         return item;
       }
     });
-
+    console.log("Databases to be sent : ",listOfDatabases)
     // console.log("Service provider id :", serviceProviderId);
     const userData = JSON.parse(localStorage.getItem("loggedInUser"));
     const developerId = userData.responsePayload._id;
@@ -186,7 +186,7 @@ const AvaibleServiceProviders = () => {
                     <div>
                       <FormGroup row>
                         {item.serviceProvider_ConnectedHosts.map((host) => {
-                         
+                         if(host.hostAcessUrl.status==true){
                             return  (
                               <FormControlLabel
                                 control={
@@ -214,7 +214,8 @@ const AvaibleServiceProviders = () => {
                                 }}
                               />
                             );
-                          
+                            }
+                              
                         })}
                       </FormGroup>
                     </div>
@@ -277,7 +278,7 @@ const AvaibleServiceProviders = () => {
                                     return (
                                       <div>
                                         {`${index + 1} :  ${
-                                          host != null ? host.hostName : ""
+                                          (host != null) ? host.hostName : ""
                                         }`}
                                       </div>
                                     );
