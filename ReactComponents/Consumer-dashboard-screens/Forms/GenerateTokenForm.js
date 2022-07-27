@@ -30,12 +30,14 @@ const GenerateTokenForm = () => {
       let temp=[]
       list.responsePayload.forEach((item) => {
           item.listOfDatabases.map((host)=>{
+            if(host.hostAcessUrl.status==true){
             let m = {
               optionTitle:host.hostName,
               optionValue:host.hostId,
               hostUrl:host.hostAcessUrl.url
             }
             temp.push(m);
+          }
           })
       });
       // console.log("ddas",temp)
