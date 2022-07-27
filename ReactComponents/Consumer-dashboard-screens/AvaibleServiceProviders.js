@@ -51,6 +51,7 @@ const AvaibleServiceProviders = () => {
         console.log("Service providers:", list);
         let temp = [];
         list.responsePayload.forEach((record) => {
+          console.log("Host list : ",record.connectedHostList)
           let rec = {
             serviceProviderName: record.firstName + " " + record.lastName,
             serviceProviderId: record.serviceProviderId,
@@ -106,7 +107,7 @@ const AvaibleServiceProviders = () => {
   const handleMakeRegisterRequest = (serviceProviderId) => {
     let listOfDatabases = checkedHostList.map((item) => {
       if (item.adminId == serviceProviderId) {
-        return item;
+        return item.hostId;
       }
     });
     console.log("Databases to be sent : ",listOfDatabases)
@@ -270,10 +271,10 @@ const AvaibleServiceProviders = () => {
                               fontWeight={"bold"}
                               fontSize={"1rem"}
                             />
-                            {item.connectionRequest.listOfDatabases !=
+                            {item.serviceProvider_ConnectedHosts !=
                               undefined && (
                               <div>
-                                {item.connectionRequest.listOfDatabases.map(
+                                {item.serviceProvider_ConnectedHosts.map(
                                   (host, index) => {
                                     return (
                                       <div>

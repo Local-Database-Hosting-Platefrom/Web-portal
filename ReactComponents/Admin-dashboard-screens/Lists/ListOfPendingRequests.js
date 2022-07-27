@@ -138,7 +138,7 @@ const ListOfPendingRequests = ()=>{
               return (
                 <div style={{ marginTop: "1%" }}>
                   {" "}
-                  {/* <ItemHolder_ConsumerPendingRequest item={item} /> */}
+                  <ItemHolder_ConsumerPendingRequest item={item} />
                 </div>
               );
             })}
