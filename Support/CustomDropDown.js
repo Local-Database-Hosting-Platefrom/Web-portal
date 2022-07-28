@@ -5,7 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function CustomDropDown({currentSelectedOption="Host-url Access Token",setCurrentSelectedOption,label,listOfOptions=[],...props}) {
+export default function CustomDropDown({currentSelectedOption={},setCurrentSelectedOption,label,listOfOptions=[],...props}) {
   
   const handleChange = (event) => {
     // console.log("selected options : ",event.target.value)
