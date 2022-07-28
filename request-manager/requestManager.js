@@ -14,7 +14,7 @@ const sendResquestToCentralAPI = (requestType, requestRoute, requestData,authTok
         const response = await fetch(`${Server_url}${requestRoute}`, {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin
-            headers: {
+            headers: {  
               'Content-Type': 'application/json',
               Accept: 'application/json',
               // 'Content-Type': 'application/x-www-form-urlencoded',
