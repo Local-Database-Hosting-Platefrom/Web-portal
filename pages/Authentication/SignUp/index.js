@@ -70,7 +70,7 @@ const Index = () => {
   };
 
   const githubSignIn = () => {
-    navigation.push("http://localhost:3003//auth-api/githubAuhentication");
+    navigation.push("http://localhost:3003/auth-api/githubAuhentication");
   };
   
   return (

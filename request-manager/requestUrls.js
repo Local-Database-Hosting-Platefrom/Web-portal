@@ -3,9 +3,9 @@
 // const GITHUB_AUTH = "http://localhost:3003/auth-api/githubAuhentication";
 // const AUTH_PAGE="http://localhost:3000/Authentication/SignIn";
 
-const SERVER_URL = "hhttps://central-api-ldh.herokuapp.com"
-const GOOGLE_AUTH = "hhttps://central-api-ldh.herokuapp.com/auth-api/googleAuthentication";
-const GITHUB_AUTH = "hhttps://central-api-ldh.herokuapp.com/auth-api/githubAuhentication";
+const SERVER_URL = "https://central-api-ldh.herokuapp.com"
+const GOOGLE_AUTH = "https://central-api-ldh.herokuapp.com/auth-api/googleAuthentication";
+const GITHUB_AUTH = "https://central-api-ldh.herokuapp.com/auth-api/githubAuhentication";
 const AUTH_PAGE="https://central-api-layer-ffipe0k5x-zeeshan-thedeveloper.vercel.app/Authentication/SignIn";
 
   
