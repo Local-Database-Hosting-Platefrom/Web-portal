@@ -6,7 +6,7 @@
 const SERVER_URL = "hhttps://central-api-ldh.herokuapp.com"
 const GOOGLE_AUTH = "hhttps://central-api-ldh.herokuapp.com/auth-api/googleAuthentication";
 const GITHUB_AUTH = "hhttps://central-api-ldh.herokuapp.com/auth-api/githubAuhentication";
-const AUTH_PAGE="https://central-api-ldh.herokuapp.com/Authentication/SignIn";
+const AUTH_PAGE="https://central-api-layer-ffipe0k5x-zeeshan-thedeveloper.vercel.app/Authentication/SignIn";
 
   
 const CREATE_ADMIN_ACCOUNT="/auth-api/createAdminAccount";
