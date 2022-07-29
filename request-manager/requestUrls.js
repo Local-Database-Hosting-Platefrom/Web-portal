@@ -8,7 +8,7 @@ const GOOGLE_AUTH = "hhttps://central-api-ldh.herokuapp.com/auth-api/googleAuthe
 const GITHUB_AUTH = "hhttps://central-api-ldh.herokuapp.com/auth-api/githubAuhentication";
 const AUTH_PAGE="https://central-api-ldh.herokuapp.com/Authentication/SignIn";
 
-
+ 
 const CREATE_ADMIN_ACCOUNT="/auth-api/createAdminAccount";
 const SIGN_IN_ADMIN_ACCOUNT="/auth-api/loginToAdminAccount";
 const VERIFY_JWT_TOKEN="/auth-api/verifyJwtToken";
