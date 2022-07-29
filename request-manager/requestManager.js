@@ -1,5 +1,5 @@
-const Server_url = "http://localhost:3003";
-
+// const Server_url = "http://localhost:3003";
+const Server_url = "https://central-api-ldh.herokuapp.com";
 const sendResquestToCentralAPI = (requestType, requestRoute, requestData,authToken=null) => {
   return new Promise(async function (resolve, reject) {
     if (requestType == "GET") {

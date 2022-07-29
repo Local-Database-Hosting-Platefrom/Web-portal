@@ -1,7 +1,14 @@
-const SERVER_URL = "http://localhost:3003"
-const GOOGLE_AUTH = "http://localhost:3003/auth-api/googleAuthentication";
-const GITHUB_AUTH = "http://localhost:3003/auth-api/githubAuhentication";
-const AUTH_PAGE="http://localhost:3000/Authentication/SignIn";
+// const SERVER_URL = "http://localhost:3003"
+// const GOOGLE_AUTH = "http://localhost:3003/auth-api/googleAuthentication";
+// const GITHUB_AUTH = "http://localhost:3003/auth-api/githubAuhentication";
+// const AUTH_PAGE="http://localhost:3000/Authentication/SignIn";
+
+const SERVER_URL = "hhttps://central-api-ldh.herokuapp.com"
+const GOOGLE_AUTH = "hhttps://central-api-ldh.herokuapp.com/auth-api/googleAuthentication";
+const GITHUB_AUTH = "hhttps://central-api-ldh.herokuapp.com/auth-api/githubAuhentication";
+const AUTH_PAGE="https://central-api-ldh.herokuapp.com/Authentication/SignIn";
+
+
 const CREATE_ADMIN_ACCOUNT="/auth-api/createAdminAccount";
 const SIGN_IN_ADMIN_ACCOUNT="/auth-api/loginToAdminAccount";
 const VERIFY_JWT_TOKEN="/auth-api/verifyJwtToken";
