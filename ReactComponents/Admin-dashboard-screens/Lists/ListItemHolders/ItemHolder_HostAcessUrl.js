@@ -1,9 +1,10 @@
 import { Card, Divider, FormControlLabel, Grid, Switch } from "@mui/material";
 import { ContentCopyOutlined } from "@mui/icons-material";
-import { SERVER_URL, SET_STATUS_OF_HOST_ACCESS_URL } from "../../../../request-manager/requestUrls";
+import { SET_STATUS_OF_HOST_ACCESS_URL } from "../../../../request-manager/requestUrls";
 import Heading from "../../../../Support/Heading";
 import { useEffect, useState } from "react";
 import { sendResquestToCentralAPI } from "../../../../request-manager/requestManager";
+import { BACK_END_BASE_URL } from "../../../../request-manager/urls";
 const ItemHolder_HostAcessUrl = ({ item,}) => {
   const [hostStatus,setHostStatus]=useState(false)
   const handleHostStatucChange=()=>{
@@ -54,8 +55,8 @@ const ItemHolder_HostAcessUrl = ({ item,}) => {
           style={{ paddingLeft: "2%", borderRight: "1px solid #7ea69f" }}
         >
           {/* Consumer Role */}
-          {/* {`${SERVER_URL}/${item.hostAcessUrl.url}`} */}
-          <Heading text={`${SERVER_URL}/${(item.hostAcessUrl!=undefined) ? item.hostAcessUrl.url : '' }`} fontSize={"0.7rem"}/>
+      
+          <Heading text={`${BACK_END_BASE_URL}/${(item.hostAcessUrl!=undefined) ? item.hostAcessUrl.url : '' }`} fontSize={"0.7rem"}/>
           <div
             style={{
               display: "inline-block",

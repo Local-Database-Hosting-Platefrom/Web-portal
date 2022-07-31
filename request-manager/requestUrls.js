@@ -3,12 +3,12 @@
 // const GITHUB_AUTH = "http://localhost:3003/auth-api/githubAuhentication";
 // const AUTH_PAGE="http://localhost:3000/Authentication/SignIn";
 
-const SERVER_URL = "https://central-api-ldh.herokuapp.com"
-const GOOGLE_AUTH = "https://central-api-ldh.herokuapp.com/auth-api/googleAuthentication";
-const GITHUB_AUTH = "https://central-api-ldh.herokuapp.com/auth-api/githubAuhentication";
-const AUTH_PAGE="https://central-api-layer-6saxpkort-zeeshan-thedeveloper.vercel.app/Authentication/SignIn";
+import { BACK_END_BASE_URL,FRONT_END_BASE_URL } from "./urls";
 
-  
+const GOOGLE_AUTH = `${BACK_END_BASE_URL}/auth-api/googleAuthentication`;
+const GITHUB_AUTH = `${BACK_END_BASE_URL}https://central-api-ldh.herokuapp.com/auth-api/githubAuhentication`;
+const AUTH_PAGE=`${FRONT_END_BASE_URL}/Authentication/SignIn`;
+
 const CREATE_ADMIN_ACCOUNT="/auth-api/createAdminAccount";
 const SIGN_IN_ADMIN_ACCOUNT="/auth-api/loginToAdminAccount";
 const VERIFY_JWT_TOKEN="/auth-api/verifyJwtToken";
@@ -28,7 +28,7 @@ const UPDATE_DEV_ADMIN_CON_STATUS="/web-api/updateStatusOfDevConReq";
 
 const GENERATE_HOST_ACCESS_URL_TOKEN="/consumer-api/generateTokenForDeveloper";
 
-export {SERVER_URL,SIGN_IN_ADMIN_ACCOUNT,CREATE_ADMIN_ACCOUNT,VERIFY_JWT_TOKEN,GOOGLE_AUTH,GITHUB_AUTH,AUTH_PAGE,LOAD_PENDING_HOSTS_LIST,
+export {SIGN_IN_ADMIN_ACCOUNT,CREATE_ADMIN_ACCOUNT,VERIFY_JWT_TOKEN,GOOGLE_AUTH,GITHUB_AUTH,AUTH_PAGE,LOAD_PENDING_HOSTS_LIST,
     SET_HOST_STATUS,LOAD_CONNECTED_HOSTS_LIST,SET_STATUS_OF_HOST_ACCESS_URL,LOAD_LIST_OF_SERVICE_PROVIDERS,MAKE_CON_REQUEST_FOR_DEV_TO_ADMIN,
     LOAD_LIST_OF_DEV_CONNECTION_REQ_BY_ADMIN_ID,UPDATE_DEV_ADMIN_CON_STATUS,LOAD_LIST_OF_DEVELOPER_ACCOUNTS_BY_ADMIN_ID,LOAD_LIST_OF_ACTIVE_HOSTS_BY_DEVELOPER_ID,
     GENERATE_HOST_ACCESS_URL_TOKEN

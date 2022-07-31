@@ -17,7 +17,8 @@ import InputField from "../../../Support/InputFields";
 
 // Request Manager
 import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
-import { CREATE_ADMIN_ACCOUNT, GITHUB_AUTH, GOOGLE_AUTH, SERVER_URL } from "../../../request-manager/requestUrls";
+import { CREATE_ADMIN_ACCOUNT, GITHUB_AUTH, GOOGLE_AUTH } from "../../../request-manager/requestUrls";
+
 import { useEffect, useState } from "react";
 import { ALREADY_CREATED_ACCOUNT, COULD_NOT_CREATE_ACCOUNT,CREATED_ACCOUNT } from "../../../request-manager/responseCodes";
 
@@ -471,7 +472,7 @@ useEffect(()=>{
   // console.log("returning the response after making request"+response);
 
   // console.log("Making account request")  
-  // let response = await fetch(`${SERVER_URL}${CREATE_ADMIN_ACCOUNT}`, {
+  // let response = await fetch(`}${CREATE_ADMIN_ACCOUNT}`, {
   //   method: 'POST', // *GET, POST, PUT, DELETE, etc.
   //   mode: 'cors', // no-cors, *cors, same-origin
   //   headers: {

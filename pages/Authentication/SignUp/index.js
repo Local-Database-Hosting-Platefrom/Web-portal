@@ -18,6 +18,7 @@ import Heading from "../../../Support/Heading";
 import InputField from "../../../Support/InputFields";
 import { useState } from "react";
 import { useEffect } from "react";
+import { BACK_END_BASE_URL } from "../../../request-manager/urls";
 
 const useStyles = makeStyles({
   root: {
@@ -66,11 +67,11 @@ const Index = () => {
   };
 
   const googleSignIn = () => {
-    navigation.push("http://localhost:3003/auth-api/googleAuthentication");
+    navigation.push(`${BACK_END_BASE_URL}/auth-api/googleAuthentication`);
   };
 
   const githubSignIn = () => {
-    navigation.push("http://localhost:3003/auth-api/githubAuhentication");
+    navigation.push(`${BACK_END_BASE_URL}/auth-api/githubAuhentication`);
   };
   
   return (

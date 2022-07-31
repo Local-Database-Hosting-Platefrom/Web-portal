@@ -1,17 +1,17 @@
-const Server_url = "http://localhost:3003";
-// const Server_url = "https://central-api-ldh.herokuapp.com";
+import { BACK_END_BASE_URL } from "./urls";
+
 const sendResquestToCentralAPI = (requestType, requestRoute, requestData,authToken=null) => {
   return new Promise(async function (resolve, reject) {
     if (requestType == "GET") {
       // when request is of GET type
-      fetch(`${Server_url}${requestRoute}`)
+      fetch(`${BACK_END_BASE_URL}${requestRoute}`)
         .then((res) => resolve(res))
         
     } else if (requestType == "POST") {
       
       // When request is of type post
-      // fetch(`${Server_url}${requestRoute}`, {
-        const response = await fetch(`${Server_url}${requestRoute}`, {
+      // fetch(`${BACK_END_BASE_URL}${requestRoute}`, {
+        const response = await fetch(`${BACK_END_BASE_URL}${requestRoute}`, {
             method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin
             headers: {  
