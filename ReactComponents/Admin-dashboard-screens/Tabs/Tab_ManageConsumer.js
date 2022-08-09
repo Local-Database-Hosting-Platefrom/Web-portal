@@ -57,9 +57,9 @@ export default function Tab_ManageConsumer() {
     {
       tabLable: "Manage Developer Accounts",
     },
-    {
-      tabLable: "Manage Access token",
-    },
+    // {
+    //   tabLable: "Manage Access token",
+    // },
     {
       tabLable: "Request history",
     },
@@ -90,13 +90,13 @@ export default function Tab_ManageConsumer() {
 
   const handleScreenChangeForHistory=(index)=>{
     switch(index) {
+      // case 0:
+      //   setCurrentOpenedScreen(<ListOfPendingRequests/>)
+      // break;
       case 0:
-        setCurrentOpenedScreen(<ListOfPendingRequests/>)
-      break;
-      case 1:
         setCurrentOpenedScreen(<ListOfResolvedRequests/>)
       break;
-      case 2:
+      case 1:
         setCurrentOpenedScreen(<ListOfDeniedRequests/>)
       break;
       
@@ -163,20 +163,19 @@ export default function Tab_ManageConsumer() {
           </Grid>
         </div>  
       </TabPanel>
-      <TabPanel value={value} index={1}>
-        {/* Manage access tokens  */}
-        {/* {`  Manage access tokens`} */}
+
+      {/* <TabPanel value={value} index={1}>
         <Grid container>
             <Grid item xs={12}>
                 <Heading text={"Access tokens"} fontSize="1.5rem" fontWeight="bold"/>
             </Grid>
             <Grid item xs={12}> 
-              {/* Token managing */}
               <ManageAccessTokens/>
             </Grid>
         </Grid>
-      </TabPanel>
-      <TabPanel value={value} index={2}>
+      </TabPanel> */}
+
+      <TabPanel value={value} index={1}>
         {/* Requests history  */}
         {/* {` Requests history `} */}
         <div>
@@ -187,15 +186,15 @@ export default function Tab_ManageConsumer() {
             <Grid item xs={2} >
               {/* Sub options 1.List of pending,resolved and denied requests*/}
               <div style={{marginTop:"5%",padding:"5%",borderRight: "1px solid #7ea69f"}}>
-                <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForHistory(0)}}>
+                {/* <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForHistory(0)}}>
                 <Heading text={"Pending Requests"} fontSize="1rem"/>
                 </div>
-                <Divider/>
-                <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForHistory(1)}}>
+                <Divider/> */}
+                <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForHistory(0)}}>
                 <Heading text={"Resovled Requests"} fontSize="1rem"/>
                 </div>
                 <Divider/>
-                <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForHistory(2)}}>
+                <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForHistory(1)}}>
                 <Heading text={"Denied Requests"} fontSize="1rem"/>
                 </div>
                 <Divider/>

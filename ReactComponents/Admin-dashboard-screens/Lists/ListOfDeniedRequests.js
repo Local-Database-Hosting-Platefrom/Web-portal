@@ -1,75 +1,85 @@
 import { Container, Divider, Grid } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
+import { LOAD_LIST_OF_DENIED_REQUESTS } from "../../../request-manager/requestUrls";
 import CustomDropDown from "../../../Support/CustomDropDown";
 import Heading from "../../../Support/Heading";
 import ItemHolder_ConsumerDeniedRequest from "./ListItemHolders/ItemHolder_ConsumerDeniedRequest";
 
+const listOfOptions_OrderBy = [
+  {
+      optionTitle:"ASC",
+      optionValue:"asc"
+  },
+  {
+    optionTitle:"DESC",
+    optionValue:"asc"
+  },
+
+]
+const listOfOptions_NumberOfRows=[
+{
+    optionTitle:"5",
+    optionValue:"5"
+},
+{
+    optionTitle:"10",
+    optionValue:"10"
+},
+{
+    optionTitle:"20",
+    optionValue:"20"
+},
+{
+    optionTitle:"30",
+    optionValue:"30"
+},
+{
+    optionTitle:"All",
+    optionValue:"all"
+},
+] 
 const ListOfDeniedRequests = ()=>{
-    const [listOfRequests,setListOfRequests] =useState([
+  const [orderBy,setOrderBy]=useState("ASC");
+  const [numberOfRecrods,setNumberOfRecrods]=useState("All");  
+  const [listOfRequests,setListOfRequests] =useState([
         {
             requestId:"43343",
             consumerId: "rfre3",
             consumerRole:"write only",
             requestTime:"20-3-2022 04:09 PM"
-        },
-        {
-            requestId:"43343",
-            consumerId: "rfre3",
-            consumerRole:"write only",
-            requestTime:"20-3-2022 04:09 PM"
-        },
-        {
-            requestId:"43343",
-            consumerId: "rfre3",
-            consumerRole:"write only",
-            requestTime:"20-3-2022 04:09 PM"
-        },
-        {
-            requestId:"43343",
-            consumerId: "rfre3",
-            consumerRole:"write only",
-            requestTime:"20-3-2022 04:09 PM"
-        },
+        }
         
     ])
-  const [orderBy,setOrderBy]=useState("ASC");
-  const [numberOfRecrods,setNumberOfRecrods]=useState("All");
   
-  const listOfOptions_OrderBy = [
-      {
-          optionTitle:"ASC",
-          optionValue:"asc"
-      },
-      {
-        optionTitle:"DESC",
-        optionValue:"asc"
-      },
-    
-    ]
-  const listOfOptions_NumberOfRows=[
-    {
-        optionTitle:"5",
-        optionValue:"5"
-    },
-    {
-        optionTitle:"10",
-        optionValue:"10"
-    },
-    {
-        optionTitle:"20",
-        optionValue:"20"
-    },
-    {
-        optionTitle:"30",
-        optionValue:"30"
-    },
-    {
-        optionTitle:"All",
-        optionValue:"all"
-    },
-    
-    
-  ]  
+    useEffect(()=>{
+      // Make call to load pending list of hosts
+      const useData = JSON.parse(localStorage.getItem("loggedInUser"));
+      const _id = useData.responsePayload._id; 
+      sendResquestToCentralAPI("POST", LOAD_LIST_OF_DENIED_REQUESTS,{
+        adminId: _id,
+      }).then(async (success)=>{
+        const list = await success.json();
+
+        const listToSet=list.responsePayload.map(request => {
+          const reason =  JSON.parse(request.request.requestStatus).statusMessage
+          const request = {
+            requestId:request.request.requestId,
+            developerName:request.requestSenderName,
+            requestTime:request.request.requestDateAndTime,
+            denialReason:reason
+          }  
+          console.log(request)
+          return request
+        });
+        // console.log("listTOSet",listToSet)
+        setListOfRequests(listToSet)
+      },(error)=>{
+        console.log("Error",error)
+      })
+    },[])
+  
+ 
   
     return <Container>
           <div>
@@ -77,7 +87,6 @@ const ListOfDeniedRequests = ()=>{
               <Grid item xs={8}>
                 <Heading text={"Denied requests"} fontSize="1.5rem" />
               </Grid>
-
               <Grid item xs={2}>
                 <CustomDropDown currentSelectedOption={orderBy} setCurrentSelectedOption={setOrderBy} label="Order By" listOfOptions={listOfOptions_OrderBy}/>
               </Grid>
@@ -108,12 +117,9 @@ const ListOfDeniedRequests = ()=>{
               </Grid>
               <Grid item xs={3} style={{ textAlign: "left" }}>
                 {/* Consumer Id */}
-                {`Consumer Id`}
+                {`Developer`}
               </Grid>
-              <Grid item xs={2}>
-                {/* Consumer Role */}
-                {`Role`}
-              </Grid>
+            
               <Grid item xs={2}>
                 {/* Consumer Role */}
                 {`Time and date`}
