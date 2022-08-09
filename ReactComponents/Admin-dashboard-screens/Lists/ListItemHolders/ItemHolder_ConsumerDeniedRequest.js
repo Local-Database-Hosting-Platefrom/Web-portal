@@ -6,6 +6,7 @@ import CustomDialog from "../../../Dialogues/CustomDialog";
 import dialogueTypes from "../../../Dialogues/dialogueTypes";
 
 const ItemHolder_ConsumerDeniedRequest = ({ item }) => {
+  console.log("item",item)
   const [alertType, setAlertType] = useState(null);
   const [openCustomDialog, setOpenCustomDialog] = useState(false);
   const [alertMessage_CustomDialog, setAlertMessage_CustomDialog] =
@@ -68,9 +69,9 @@ const ItemHolder_ConsumerDeniedRequest = ({ item }) => {
             }}
             onClick={() => {
               displayDialog(
-                dialogueTypes.INFO,
+                dialogueTypes.VIEW_DENIAL_REASON,
                 "Here is the reason why the request was denied",
-                "Reason"
+                item.denialReason
               );
             }}
             name="Reason"

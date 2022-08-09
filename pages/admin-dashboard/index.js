@@ -151,6 +151,7 @@ const Index = () => {
     localStorage.setItem("isLoggedIn",false);
     navigation.push(AUTH_PAGE)
   }
+  
   const handleScreenChange = (index) => {
     switch (index) {
       case 0:
