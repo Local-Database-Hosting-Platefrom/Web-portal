@@ -68,9 +68,9 @@ export default function Tab_ManageConsumer() {
     if(value==0){
       setCurrentOpenedScreen(<ListOfDeveloperConnectionRequests/>)
     }else if (value==1){
-
+      setCurrentOpenedScreen(<ListOfResolvedRequests/>)
     }else{
-      setCurrentOpenedScreen(<ListOfDeveloperAccounts/>)
+      
     }
 
   },[value])

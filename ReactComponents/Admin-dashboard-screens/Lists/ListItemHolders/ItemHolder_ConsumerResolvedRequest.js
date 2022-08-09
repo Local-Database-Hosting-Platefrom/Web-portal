@@ -74,7 +74,7 @@ const ItemHolder_ConsumerDeniedRequest = ({ item }) => {
                 item
               );
             }}
-            name="Reason"
+            name="View"
           />
         </Grid>
       </Grid>

@@ -57,9 +57,9 @@ export default function Tab_ManageBridge() {
     {
       tabLable: "Manage Remote Database Access Url",
     },
-    {
-      tabLable: "Manage User Roles",
-    },
+    // {
+    //   tabLable: "Manage User Roles",
+    // },
   ]);
   useEffect(()=>{
     if(value==0){
@@ -175,11 +175,10 @@ export default function Tab_ManageBridge() {
         {/* {` Manage User Roles `} */}
         <div>
           <Grid container>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
                 <Heading text={"Manage Consumer Roles"} fontSize="1.5rem" fontWeight="bold"/>
-            </Grid>
-            <Grid item xs={2} >
-              {/* Sub options 1.List of consumer account and 2.Create new user*/}
+            </Grid> */}
+            {/* <Grid item xs={2} >
               <div style={{marginTop:"5%",padding:"5%",borderRight: "1px solid #7ea69f"}}>
                 <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForRoles(0)}}>
                 <Heading text={"All Roles"} fontSize="1rem"/>
@@ -190,7 +189,7 @@ export default function Tab_ManageBridge() {
                 </div>
                 <Divider/>
               </div>
-            </Grid>
+            </Grid> */}
             <Grid item xs={10}>
               {/* Screen of sub options or call them forms and lists */}
               {currentOpenedScreen}
