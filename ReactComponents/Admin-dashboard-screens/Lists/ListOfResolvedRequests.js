@@ -55,7 +55,7 @@ const ListOfResolvedRequests = () => {
         const list = await success.json();
 
         const listToSet = list.responsePayload.map((request) => {
-          const request = {
+          const r = {
             requestId: request.request.requestId,
             developerName: request.requestSenderName,
             requestTime: request.request.requestDateAndTime,
@@ -64,8 +64,8 @@ const ListOfResolvedRequests = () => {
               request.request.requestResolvedPayload
             ),
           };
-          console.log(request);
-          return request;
+          console.log(r);
+          return r;
         });
         // console.log("listTOSet",listToSet)
         setListOfRequests(listToSet);

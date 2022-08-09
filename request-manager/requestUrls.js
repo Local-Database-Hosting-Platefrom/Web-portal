@@ -39,6 +39,9 @@ const LOAD_LIST_OF_DENIED_REQUESTS =
   "/web-api/getListOfDeniedRequestsByAdminId";
 const LOAD_LIST_OF_RESOLVED_REQUESTS =
   "/web-api/getListOfResolvedRequestsByAdminId";
+const LOAD_LIST_OF_ALL_HOSTS="/web-api/getHostsByAdminId";
+
+const TEST_HOST_ACCESS_URL="/web-api/testHostAccessUrl"
 
 export {
   SIGN_IN_ADMIN_ACCOUNT,
@@ -59,5 +62,7 @@ export {
   LOAD_LIST_OF_ACTIVE_HOSTS_BY_DEVELOPER_ID,
   GENERATE_HOST_ACCESS_URL_TOKEN,
   LOAD_LIST_OF_DENIED_REQUESTS,
-  LOAD_LIST_OF_RESOLVED_REQUESTS
+  LOAD_LIST_OF_RESOLVED_REQUESTS,
+  LOAD_LIST_OF_ALL_HOSTS,
+  TEST_HOST_ACCESS_URL
 };

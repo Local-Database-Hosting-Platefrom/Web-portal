@@ -48,14 +48,14 @@ const Settings = ()=>{
                 <Heading text={"Reset Passowrd"} fontSize="1rem"/>
                 </div>
                 <Divider/>
-                <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChange(2)}}>
+                {/* <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChange(2)}}>
                 <Heading text={"Manage Connection"} fontSize="1rem"/>
                 </div>
                 <Divider/>
                 <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChange(3)}}>
                 <Heading text={"Manage Responses"} fontSize="1rem"/>
                 </div>
-                <Divider/>
+                <Divider/> */}
                 <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChange(4)}}>
                 <Heading text={"Master Controls"} fontSize="1rem"/>
                 </div>
