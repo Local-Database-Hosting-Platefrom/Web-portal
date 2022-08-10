@@ -1,89 +1,79 @@
 import { Container, Divider, Grid } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
+import { LOAD_LIST_OF_REMOTE_DATABASE_URLS } from "../../../request-manager/requestUrls";
 import CustomDropDown from "../../../Support/CustomDropDown";
 import Heading from "../../../Support/Heading";
 // import ItemHolder_ConsumerPendingRequest from "./ListItemHolders/ItemHolder_ConsumerPendingRequest";
 import ItemHolder_HostAcessUrl from "./ListItemHolders/ItemHolder_HostAcessUrl";
 import ItemHolder_RemoteDatabaeAcessUrl from "./ListItemHolders/ItemHolder_RemoteDatabaeAcessUrl";
 
+  
+const listOfOptions_OrderBy = [
+  {
+      optionTitle:"ASC",
+      optionValue:"asc"
+  },
+  {
+    optionTitle:"DESC",
+    optionValue:"asc"
+  },
+
+]
+const listOfOptions_NumberOfRows=[
+{
+    optionTitle:"5",
+    optionValue:"5"
+},
+{
+    optionTitle:"10",
+    optionValue:"10"
+},
+{
+    optionTitle:"20",
+    optionValue:"20"
+},
+{
+    optionTitle:"30",
+    optionValue:"30"
+},
+{
+    optionTitle:"All",
+    optionValue:"all"
+},
+
+
+]  
+
 const ListOfRemoteDatabaseAccessUrls = ()=>{
-    const [listOfUrls,setlistOfUrls] =useState([
-        {
-            hostId:"43343",
-            hostName: "rfre3",
-            accessUrl: "http://<address>",
-            numberofRequests:"432"
-        },
-        {
-            hostId:"43343",
-            hostName: "rfre3",
-            accessUrl: "http://<address>",
-            numberofRequests:"432"
-        },
-        {
-            hostId:"43343",
-            hostName: "rfre3",
-            accessUrl: "http://<address>",
-            numberofRequests:"432"
-        },
-        {
-            hostId:"43343",
-            hostName: "rfre3",
-            accessUrl: "http://<address>",
-            numberofRequests:"432"
-        },
-        {
-            hostId:"43343",
-            hostName: "rfre3",
-            accessUrl: "http://<address>",
-            numberofRequests:"432"
-        },
-        {
-            hostId:"43343",
-            hostName: "rfre3",
-            accessUrl: "http://<address>",
-            numberofRequests:"432"
-        },
-        
-    ])
   const [orderBy,setOrderBy]=useState("ASC");
   const [numberOfRecrods,setNumberOfRecrods]=useState("All");
+  const [listOfUrls,setlistOfUrls] =useState([])
   
-  const listOfOptions_OrderBy = [
-      {
-          optionTitle:"ASC",
-          optionValue:"asc"
-      },
-      {
-        optionTitle:"DESC",
-        optionValue:"asc"
-      },
-    
-    ]
-  const listOfOptions_NumberOfRows=[
-    {
-        optionTitle:"5",
-        optionValue:"5"
-    },
-    {
-        optionTitle:"10",
-        optionValue:"10"
-    },
-    {
-        optionTitle:"20",
-        optionValue:"20"
-    },
-    {
-        optionTitle:"30",
-        optionValue:"30"
-    },
-    {
-        optionTitle:"All",
-        optionValue:"all"
-    },
-    
-    
-  ]  
+    useEffect(()=>{
+      // Make call to load pending list of hosts
+      const useData = JSON.parse(localStorage.getItem("loggedInUser"));
+      const _id = useData.responsePayload._id; 
+      sendResquestToCentralAPI("POST", LOAD_LIST_OF_REMOTE_DATABASE_URLS,{
+        adminId: _id,
+      }).then(async (success)=>{
+        const response = await success.json();
+          console.log(response.responsePayload)
+          let listOfUrlsToSet = response.responsePayload.map((url)=>{
+            return {
+              hostId:url.urlId,
+              hostName:url.sourceHostName,
+              accessUrl:url.endPointUrlAddress,
+              numberofRequests:url.numberOfHits,
+              isEnabled:url.isEnabled
+            }
+          })
+          console.log(listOfUrlsToSet)
+          setlistOfUrls(listOfUrlsToSet);  
+      },(error)=>{
+        console.log("Error",error)
+      })
+    },[])
   
     return <Container>
           <div>
@@ -156,7 +146,7 @@ const ListOfRemoteDatabaseAccessUrls = ()=>{
               return (
                 <div style={{ marginTop: "1%" }}>
                   {" "}
-                  {/* <ItemHolder_RemoteDatabaeAcessUrl item={item} /> */}
+                  <ItemHolder_RemoteDatabaeAcessUrl item={item} />
                 </div>
               );
             })}
