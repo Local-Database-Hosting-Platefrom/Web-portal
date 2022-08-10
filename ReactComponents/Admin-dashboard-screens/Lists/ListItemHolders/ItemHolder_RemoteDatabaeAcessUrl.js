@@ -8,26 +8,60 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CustomDialog from "../../../Dialogues/CustomDialog";
 import { useState } from "react";
 import dialogueTypes from "../../../Dialogues/dialogueTypes";
-const options = ["Test", "Details"];
+import { useEffect } from "react";
+import { sendResquestToCentralAPI } from "../../../../request-manager/requestManager";
+import { DELETE_REMOTE_DATABASE_ENDPOINT, SET_STATUS_OF_REMOTE_DATABASE_HOST_ACCESS_URL } from "../../../../request-manager/requestUrls";
+import { DATA_UPDATED } from "../../../../request-manager/responseCodes";
+const options = ["Remove"];
 
 const ITEM_HEIGHT = 48;
-const ItemHolder_RemoteDatabaeAcessUrl = ({ item }) => {
+const ItemHolder_RemoteDatabaeAcessUrl = ({ item,setRefresh,refresh }) => {
+  const [hostStatus,setHostStatus]=useState(false);
+ 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [alertType, setAlertType] = useState(null);
   const [openCustomDialog, setOpenCustomDialog] = useState(false);
+  
   const [alertMessage_CustomDialog, setAlertMessage_CustomDialog] =
     useState("");
   const [alertTitle_CustomDialog, setAlertTitle_CustomDialog] = useState("");
 
+  useEffect(()=>{
+    setHostStatus(
+      item.isEnabled =="true" ? item.isEnabled : false
+    );
+  },[item])
+
+  const handleHostStatucChange=()=>{
+    console.log("urlId",item.urlId)
+    sendResquestToCentralAPI("POST", SET_STATUS_OF_REMOTE_DATABASE_HOST_ACCESS_URL,{
+      urlId:item.urlId,
+      status:!hostStatus
+    }).then(async (success)=>{
+      const response = await success.json();
+      console.log("host accessUrl",response)
+      setHostStatus(!hostStatus)
+    },(error)=>{
+      console.log("Error",error)
+      setHostStatus(!hostStatus)
+    });
+  };
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+  const handleClose = (event) => {
+  
+    if(event.target.innerText=="Remove"){
+      //remove it from db
+     
+      displayDialog(dialogueTypes.WARNING,"Deletion","Are sure you want to remove");
+    }
     setAnchorEl(null);
   };
 
-  
+
   const displayDialog = (dialogType, dialogTitle, dialogMessage) => {
     setAlertMessage_CustomDialog(dialogMessage);
     setAlertTitle_CustomDialog(dialogTitle);
@@ -42,6 +76,24 @@ const ItemHolder_RemoteDatabaeAcessUrl = ({ item }) => {
   const handleClose_CustomDialog = () => {
     setOpenCustomDialog(false);
   };
+
+  const handleNoEvent=(event)=>{
+    handleClose_CustomDialog()
+  }
+  const handleOkEvent=(event)=>{
+    //make post request to delete it
+    sendResquestToCentralAPI("POST", DELETE_REMOTE_DATABASE_ENDPOINT,{
+      urlId:item.urlId,
+    }).then(async (success)=>{
+      const response = await success.json();
+      console.log("response",response)
+      handleClose_CustomDialog()  
+      setRefresh(!refresh)
+    },(error)=>{
+      handleClose_CustomDialog()
+      alert(JSON.stringify(error))
+    }); 
+  }
   return (
     <div>
       <Divider />
@@ -52,7 +104,7 @@ const ItemHolder_RemoteDatabaeAcessUrl = ({ item }) => {
         </Grid>
         <Grid item xs={2} style={{ borderRight: "1px solid #7ea69f" }}>
           {/* Request ID */}
-          {`${item.hostId}`}
+          {`${item.url}`}
         </Grid>
         <Grid
           item
@@ -109,9 +161,12 @@ const ItemHolder_RemoteDatabaeAcessUrl = ({ item }) => {
           {/* {`Switch`} */}
           <FormControlLabel
             value="end"
-            control={<Switch color="secondary" checked={item.isEnabled=="true"?true:false} />}
+            control={<Switch color="secondary" checked={hostStatus}  />}
             label="Status"
             labelPlacement="Status"
+            onChange={(e)=>{
+              handleHostStatucChange();
+            }}
           />
         </Grid>
         <Grid item xs={1} style={{ paddingLeft: "2%" }}>
@@ -160,6 +215,8 @@ const ItemHolder_RemoteDatabaeAcessUrl = ({ item }) => {
         handleClickOpen={handleClickOpen_CustomDialog}
         handleCloseEvent={handleClose_CustomDialog}
         open={openCustomDialog}
+        handleOkEvent={handleOkEvent}
+        handleNoEvent={handleNoEvent}
         alertMessage={alertMessage_CustomDialog}
         alertTitle={alertTitle_CustomDialog}
       />

@@ -49,7 +49,8 @@ const ListOfRemoteDatabaseAccessUrls = ()=>{
   const [orderBy,setOrderBy]=useState("ASC");
   const [numberOfRecrods,setNumberOfRecrods]=useState("All");
   const [listOfUrls,setlistOfUrls] =useState([])
-  
+  const [refresh,setRefresh]=useState(false);
+
     useEffect(()=>{
       // Make call to load pending list of hosts
       const useData = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -65,7 +66,9 @@ const ListOfRemoteDatabaseAccessUrls = ()=>{
               hostName:url.sourceHostName,
               accessUrl:url.endPointUrlAddress,
               numberofRequests:url.numberOfHits,
-              isEnabled:url.isEnabled
+              isEnabled:url.isEnabled,
+              urlId:url.urlId,
+              url:url.url
             }
           })
           console.log(listOfUrlsToSet)
@@ -73,7 +76,7 @@ const ListOfRemoteDatabaseAccessUrls = ()=>{
       },(error)=>{
         console.log("Error",error)
       })
-    },[])
+    },[refresh])
   
     return <Container>
           <div>
@@ -108,7 +111,7 @@ const ListOfRemoteDatabaseAccessUrls = ()=>{
               </Grid>
               <Grid item xs={2} style={{ paddingLeft:"3%" }} >
                 {/* Host Id */}
-                {`Host ID`}
+                {`Url`}
               </Grid>
               <Grid item xs={2} style={{ paddingLeft:"3%" }} >
                 {/*Host Name */}
@@ -146,7 +149,7 @@ const ListOfRemoteDatabaseAccessUrls = ()=>{
               return (
                 <div style={{ marginTop: "1%" }}>
                   {" "}
-                  <ItemHolder_RemoteDatabaeAcessUrl item={item} />
+                  <ItemHolder_RemoteDatabaeAcessUrl item={item} setRefresh={setRefresh} refresh={refresh}/>
                 </div>
               );
             })}
