@@ -379,7 +379,7 @@ export default function Navbar({isProgressBarVisible=false}) {
                     }}
                   >
                     <div style={{ fontSize: "1rem", fontWeight: "bold" }}>
-                      {Strings.NavBar.Services.GetTokenDetails}
+                      {Strings.NavBar.Services.GenerateAPIKey}
                     </div>
                     <div style={{ fontSize: "0.7rem" }}>Check token status</div>
                   </Grid>
@@ -623,7 +623,7 @@ export default function Navbar({isProgressBarVisible=false}) {
                     </Grid>
                     <Grid item xs={10}>
                       <div style={{ fontSize: "10", marginTop: "3%" }}>
-                        {Strings.NavBar.Services.GetTokenDetails}
+                        {Strings.NavBar.Services.GenerateAPIKey}
                       </div>
                     </Grid>
                   </Grid>

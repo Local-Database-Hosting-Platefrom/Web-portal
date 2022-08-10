@@ -14,7 +14,7 @@ import ListItemText from "@mui/material/ListItemText";
 import NavbarWraper from "../../ReactComponents/HomePage-Navbar/NavbarWraper";
 
 import TestTokenScreen from "../../ReactComponents/Consumer-dashboard-screens/TestTokenScreen";
-import GetTokenDetailsScreen from "../../ReactComponents/Consumer-dashboard-screens/GetTokenDetailsScreen";
+import GetAPIKeyScreen from "../../ReactComponents/Consumer-dashboard-screens/GetAPIKeyScreen";
 import TestRemoteDatabaseAccessUrlScreen from "../../ReactComponents/Consumer-dashboard-screens/TestRemoteDatabaseAccessUrlScreen";
 import TestHostAccresUrlScreen from "../../ReactComponents/Consumer-dashboard-screens/TestHostAccresUrlScreen";
 import SettingsScreen from "../../ReactComponents/Consumer-dashboard-screens/SettingsScreen";
@@ -168,7 +168,7 @@ const Index = () => {
         break;
       case 3:
         // Manage Bridge
-        setCurrentOpenedScreen(<GetTokenDetailsScreen />);
+        setCurrentOpenedScreen(<GetAPIKeyScreen />);
         break;
       case 4:
         // Test Token
@@ -329,7 +329,7 @@ const Index = () => {
               <img src="/home-page/connectionIcon.png" width="50%" />
             </ListItemIcon>
             <ListItemText
-              primary={"Get Token Details"}
+              primary={"Get API Key"}
               sx={{ opacity: open ? 1 : 0 }}
             />
           </ListItemButton>

@@ -1,7 +1,7 @@
 import { Container, Divider, Grid, useMediaQuery } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useState } from "react";
-// import GetTokenDetails from "../../../ReactComponents/Forms/GetTokenDetails";
+// import GenerateAPIKey from "../../../ReactComponents/Forms/GenerateAPIKey";
 // import RenewTokenForm from "../../../ReactComponents/Forms/RenewTokenForm";
 // import TestTokenForm from "../../../ReactComponents/Forms/TestTokenForm";
 import NavbarWraper from "../../../ReactComponents/HomePage-Navbar/NavbarWraper";
@@ -75,7 +75,7 @@ const Index = () => {
         // setCurrentOpenedScreen(<RenewTokenForm />);
         break;
       case 1:
-        // setCurrentOpenedScreen(<GetTokenDetails />);
+        // setCurrentOpenedScreen(<GenerateAPIKey />);
         break;
       case 2:
         // setCurrentOpenedScreen(<TestTokenForm />);
@@ -195,7 +195,7 @@ const Index = () => {
               {/* <RenewTokenForm/> */}
             </TabPanel>
             <TabPanel value={value} index={1}>
-              {/* <GetTokenDetails/> */}
+              {/* <GenerateAPIKey/> */}
             </TabPanel>
             <TabPanel value={value} index={2}>
               {/* <TestTokenForm/> */}

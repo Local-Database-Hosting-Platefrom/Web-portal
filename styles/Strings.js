@@ -10,7 +10,7 @@ const Strings={
             AccessHostUrl:"Host Access Url",
             RemoteAccessUrl:"Remote Access Url",
             RenewToken:"Renew token",
-            GetTokenDetails:"Get details",
+            GenerateAPIKey:"Get details",
             DownloadNpm:"Download Npm"
         }
     },

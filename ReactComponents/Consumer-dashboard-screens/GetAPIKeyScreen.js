@@ -1,17 +1,17 @@
 import { Grid } from "@mui/material"
 import Heading from "../../Support/Heading"
-import GetTokenDetails from "./Forms/GetTokenDetails"
-const GetTokenDetailsScreen = ()=>{
+import GenerateAPIKey from "./Forms/GenerateAPIKey"
+const GetAPIKeyScreen = ()=>{
     return <div>
        <div>
-            <Heading text="Get token details" fontSize="2rem" fontWeight="bold"/>
+            <Heading text="Get API Key" fontSize="2rem" fontWeight="bold"/>
         </div>
         <div>
             <Grid container style={{marginTop:"2%"}}>
-                <GetTokenDetails/>
+                <GenerateAPIKey/>
             </Grid>
         </div>
     </div>
 }
 
-export default GetTokenDetailsScreen
+export default GetAPIKeyScreen

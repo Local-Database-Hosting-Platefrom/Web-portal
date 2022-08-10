@@ -1,4 +1,4 @@
-import { Google } from "@mui/icons-material";
+import { Google, UndoRounded } from "@mui/icons-material";
 import { Card, Container, FormControl, FormControlLabel, Grid, Link, Radio, RadioGroup, useMediaQuery } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useRouter } from "next/router";
@@ -106,6 +106,8 @@ useEffect(()=>{
             {
               // when account is created.
               localStorage.setItem("loggedInUser",JSON.stringify(data));
+              if(data.responsePayload.apiKey!=undefined)
+              localStorage.setItem("apiKey",data.responsePayload.apiKey)
               localStorage.setItem("isLoggedIn",true)
               if(localStorage.getItem("accountType")=="admin")
               navigation.push("/admin-dashboard");
