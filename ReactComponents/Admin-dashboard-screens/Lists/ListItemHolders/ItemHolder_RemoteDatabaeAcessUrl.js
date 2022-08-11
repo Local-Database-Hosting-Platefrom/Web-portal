@@ -55,7 +55,6 @@ const ItemHolder_RemoteDatabaeAcessUrl = ({ item,setRefresh,refresh }) => {
   
     if(event.target.innerText=="Remove"){
       //remove it from db
-     
       displayDialog(dialogueTypes.WARNING,"Deletion","Are sure you want to remove");
     }
     setAnchorEl(null);
@@ -138,7 +137,7 @@ const ItemHolder_RemoteDatabaeAcessUrl = ({ item,setRefresh,refresh }) => {
               onClick={() => {
                 navigator.clipboard.writeText(item.accessUrl);
                 displayDialog(
-                  dialogueTypes.INFO,
+                  dialogueTypes.INFO_WITHOUT_OK,
                   "Url Copied",
                   "Successfully copied access url to clip board"
                 );   

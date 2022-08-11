@@ -360,7 +360,7 @@ const Index = () => {
             />
           </ListItemButton>
           <Divider />
-          <ListItemButton
+          {/* <ListItemButton
             key={"2"}
             sx={{
               minHeight: 48,
@@ -407,7 +407,7 @@ const Index = () => {
               <img src="/home-page/settingsIcon.png" width="50%" />
             </ListItemIcon>
             <ListItemText  primary={"Test Remote database access urls"} sx={{ opacity: open ? 1 : 0 }} />
-          </ListItemButton>
+          </ListItemButton> */}
           <Divider/>
           <ListItemButton
             key={"2"}

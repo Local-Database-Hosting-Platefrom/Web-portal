@@ -4,6 +4,7 @@ import CustomButton from "../../../Support/CustomButton";
 import Heading from "../../../Support/Heading";
 
 const PlanHolder = ({title,listOfOptions,...props})=>{
+    
     return <Container>
         <Card elevation={0} style={{padding:"5%",border: "1px solid #7ea69f",minheight:"15rem"}}>
             <div style={{textAlign: "center",padding:"3%"}}>

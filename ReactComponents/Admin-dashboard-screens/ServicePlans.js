@@ -2,6 +2,7 @@ import { Container, Grid } from "@mui/material";
 import { useState } from "react";
 import Heading from "../../Support/Heading";
 import PlanHolder from "./Cards/PlanHolder";
+import StripeContainer from "./Stripe/StripeContainer";
 
 const ServicePlans = ()=>{
     const [listOfOptions_FreePlanFeatures,setListOfOptions_FreePlanFeatures]=useState([
@@ -44,8 +45,8 @@ const ServicePlans = ()=>{
         </div>
         <div>
             <Grid container style={{marginTop:"2%"}}>
-             
-                <Grid item xs={4}>
+                <StripeContainer/> 
+                {/* <Grid item xs={4}>
                     <PlanHolder title="Free" listOfOptions={listOfOptions_FreePlanFeatures} />
                 </Grid>
                 <Grid item xs={4}>
@@ -53,7 +54,7 @@ const ServicePlans = ()=>{
                 </Grid>
                 <Grid item xs={4}>
                     <PlanHolder title="Pro [20$/month]" listOfOptions={listOfOptions_ProPlanFeatures}/>
-                </Grid>
+                </Grid> */}
             
             </Grid>
         </div>
