@@ -31,7 +31,6 @@ const ItemHolder_RemoteDatabaeAcessUrl = ({ item, setRefresh, refresh }) => {
   const [alertTitle_CustomDialog, setAlertTitle_CustomDialog] = useState("");
 
   useEffect(() => {
-    console.log("item.isPublic", item.isPublic);
     setHostStatus(item.isEnabled == "true" ? item.isEnabled : false);
     setOptions([
       "Remove",
@@ -73,32 +72,38 @@ const ItemHolder_RemoteDatabaeAcessUrl = ({ item, setRefresh, refresh }) => {
         "Are sure you want to remove"
       );
     } else if (event.target.innerText == "Make Private") {
-      sendResquestToCentralAPI("POST",UPDATE_REMOTE_DB_URL_VISIBILITY,{
-        urlId:item.urlId,
-        visibility:false
-      }).then(async(resp)=>{
+      sendResquestToCentralAPI("POST", UPDATE_REMOTE_DB_URL_VISIBILITY, {
+        urlId: item.urlId,
+        visibility: false,
+      }).then(async (resp) => {
         const response = await resp.json();
         displayDialog(
           dialogueTypes.INFO_WITHOUT_OK,
           "Visibility Changed",
           response.responseMessage
         );
-        setRefresh(!refresh)
-      })
+        setRefresh(!refresh);
+      });
     } else if (event.target.innerText == "Make Public") {
-      sendResquestToCentralAPI("POST",UPDATE_REMOTE_DB_URL_VISIBILITY,{
-        urlId:item.urlId,
-        visibility:true
-      }).then(async(resp)=>{
+      sendResquestToCentralAPI("POST", UPDATE_REMOTE_DB_URL_VISIBILITY, {
+        urlId: item.urlId,
+        visibility: true,
+      }).then(async (resp) => {
         const response = await resp.json();
         displayDialog(
           dialogueTypes.INFO_WITHOUT_OK,
           "Visibility Changed",
           response.responseMessage
         );
-        setRefresh(!refresh)
-      })
+        setRefresh(!refresh);
+      });
     } else if (event.target.innerText == "Test in browser") {
+      const useData = JSON.parse(localStorage.getItem("loggedInUser"));
+      let apiKey = null;
+      if (useData) {
+        apiKey = useData.responsePayload.apiKey;
+      }
+      window.open(item.accessUrl + apiKey, "_blank").focus();
     }
     setAnchorEl(null);
   };
@@ -122,6 +127,7 @@ const ItemHolder_RemoteDatabaeAcessUrl = ({ item, setRefresh, refresh }) => {
   };
   const handleOkEvent = (event) => {
     //make post request to delete it
+
     sendResquestToCentralAPI("POST", DELETE_REMOTE_DATABASE_ENDPOINT, {
       urlId: item.urlId,
     }).then(
