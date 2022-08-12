@@ -10,56 +10,98 @@ import { useState } from "react";
 import dialogueTypes from "../../../Dialogues/dialogueTypes";
 import { useEffect } from "react";
 import { sendResquestToCentralAPI } from "../../../../request-manager/requestManager";
-import { DELETE_REMOTE_DATABASE_ENDPOINT, SET_STATUS_OF_REMOTE_DATABASE_HOST_ACCESS_URL } from "../../../../request-manager/requestUrls";
+import {
+  DELETE_REMOTE_DATABASE_ENDPOINT,
+  SET_STATUS_OF_REMOTE_DATABASE_HOST_ACCESS_URL,
+  UPDATE_REMOTE_DB_URL_VISIBILITY,
+} from "../../../../request-manager/requestUrls";
 import { DATA_UPDATED } from "../../../../request-manager/responseCodes";
-const options = ["Remove"];
 
 const ITEM_HEIGHT = 48;
-const ItemHolder_RemoteDatabaeAcessUrl = ({ item,setRefresh,refresh }) => {
-  const [hostStatus,setHostStatus]=useState(false);
- 
+const ItemHolder_RemoteDatabaeAcessUrl = ({ item, setRefresh, refresh }) => {
+  const [hostStatus, setHostStatus] = useState(false);
+  const [options, setOptions] = useState([]);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [alertType, setAlertType] = useState(null);
   const [openCustomDialog, setOpenCustomDialog] = useState(false);
-  
+
   const [alertMessage_CustomDialog, setAlertMessage_CustomDialog] =
     useState("");
   const [alertTitle_CustomDialog, setAlertTitle_CustomDialog] = useState("");
 
-  useEffect(()=>{
-    setHostStatus(
-      item.isEnabled =="true" ? item.isEnabled : false
-    );
-  },[item])
+  useEffect(() => {
+    console.log("item.isPublic", item.isPublic);
+    setHostStatus(item.isEnabled == "true" ? item.isEnabled : false);
+    setOptions([
+      "Remove",
+      item.isPublic == true ? "Make Private" : "Make Public",
+      "Test in browser",
+    ]);
+  }, [item]);
 
-  const handleHostStatucChange=()=>{
-    console.log("urlId",item.urlId)
-    sendResquestToCentralAPI("POST", SET_STATUS_OF_REMOTE_DATABASE_HOST_ACCESS_URL,{
-      urlId:item.urlId,
-      status:!hostStatus
-    }).then(async (success)=>{
-      const response = await success.json();
-      console.log("host accessUrl",response)
-      setHostStatus(!hostStatus)
-    },(error)=>{
-      console.log("Error",error)
-      setHostStatus(!hostStatus)
-    });
+  const handleHostStatucChange = () => {
+    console.log("urlId", item.urlId);
+    sendResquestToCentralAPI(
+      "POST",
+      SET_STATUS_OF_REMOTE_DATABASE_HOST_ACCESS_URL,
+      {
+        urlId: item.urlId,
+        status: !hostStatus,
+      }
+    ).then(
+      async (success) => {
+        const response = await success.json();
+        console.log("host accessUrl", response);
+        setHostStatus(!hostStatus);
+      },
+      (error) => {
+        console.log("Error", error);
+        setHostStatus(!hostStatus);
+      }
+    );
   };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = (event) => {
-  
-    if(event.target.innerText=="Remove"){
-      //remove it from db
-      displayDialog(dialogueTypes.WARNING,"Deletion","Are sure you want to remove");
+    if (event.target.innerText == "Remove") {
+      displayDialog(
+        dialogueTypes.WARNING,
+        "Deletion",
+        "Are sure you want to remove"
+      );
+    } else if (event.target.innerText == "Make Private") {
+      sendResquestToCentralAPI("POST",UPDATE_REMOTE_DB_URL_VISIBILITY,{
+        urlId:item.urlId,
+        visibility:false
+      }).then(async(resp)=>{
+        const response = await resp.json();
+        displayDialog(
+          dialogueTypes.INFO_WITHOUT_OK,
+          "Visibility Changed",
+          response.responseMessage
+        );
+        setRefresh(!refresh)
+      })
+    } else if (event.target.innerText == "Make Public") {
+      sendResquestToCentralAPI("POST",UPDATE_REMOTE_DB_URL_VISIBILITY,{
+        urlId:item.urlId,
+        visibility:true
+      }).then(async(resp)=>{
+        const response = await resp.json();
+        displayDialog(
+          dialogueTypes.INFO_WITHOUT_OK,
+          "Visibility Changed",
+          response.responseMessage
+        );
+        setRefresh(!refresh)
+      })
+    } else if (event.target.innerText == "Test in browser") {
     }
     setAnchorEl(null);
   };
-
 
   const displayDialog = (dialogType, dialogTitle, dialogMessage) => {
     setAlertMessage_CustomDialog(dialogMessage);
@@ -68,7 +110,6 @@ const ItemHolder_RemoteDatabaeAcessUrl = ({ item,setRefresh,refresh }) => {
     handleClickOpen_CustomDialog();
   };
 
-  
   const handleClickOpen_CustomDialog = () => {
     setOpenCustomDialog(true);
   };
@@ -76,23 +117,26 @@ const ItemHolder_RemoteDatabaeAcessUrl = ({ item,setRefresh,refresh }) => {
     setOpenCustomDialog(false);
   };
 
-  const handleNoEvent=(event)=>{
-    handleClose_CustomDialog()
-  }
-  const handleOkEvent=(event)=>{
+  const handleNoEvent = (event) => {
+    handleClose_CustomDialog();
+  };
+  const handleOkEvent = (event) => {
     //make post request to delete it
-    sendResquestToCentralAPI("POST", DELETE_REMOTE_DATABASE_ENDPOINT,{
-      urlId:item.urlId,
-    }).then(async (success)=>{
-      const response = await success.json();
-      console.log("response",response)
-      handleClose_CustomDialog()  
-      setRefresh(!refresh)
-    },(error)=>{
-      handleClose_CustomDialog()
-      alert(JSON.stringify(error))
-    }); 
-  }
+    sendResquestToCentralAPI("POST", DELETE_REMOTE_DATABASE_ENDPOINT, {
+      urlId: item.urlId,
+    }).then(
+      async (success) => {
+        const response = await success.json();
+        console.log("response", response);
+        handleClose_CustomDialog();
+        setRefresh(!refresh);
+      },
+      (error) => {
+        handleClose_CustomDialog();
+        alert(JSON.stringify(error));
+      }
+    );
+  };
   return (
     <div>
       <Divider />
@@ -140,7 +184,7 @@ const ItemHolder_RemoteDatabaeAcessUrl = ({ item,setRefresh,refresh }) => {
                   dialogueTypes.INFO_WITHOUT_OK,
                   "Url Copied",
                   "Successfully copied access url to clip board"
-                );   
+                );
               }}
               size="small"
             />
@@ -160,10 +204,10 @@ const ItemHolder_RemoteDatabaeAcessUrl = ({ item,setRefresh,refresh }) => {
           {/* {`Switch`} */}
           <FormControlLabel
             value="end"
-            control={<Switch color="secondary" checked={hostStatus}  />}
+            control={<Switch color="secondary" checked={hostStatus} />}
             label="Status"
             labelPlacement="Status"
-            onChange={(e)=>{
+            onChange={(e) => {
               handleHostStatucChange();
             }}
           />

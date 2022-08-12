@@ -2,7 +2,10 @@ import { BACK_END_BASE_URL } from "./urls";
 
 const sendResquestToCentralAPI = (requestType, requestRoute, requestData,authToken=null) => {
   const useData = JSON.parse(localStorage.getItem("loggedInUser"));
-  const jwtToken = useData.responsePayload.jwtToken;
+  let jwtToken=null
+  if(useData){
+  jwtToken = useData.responsePayload.jwtToken;
+  }
   return new Promise(async function (resolve, reject) {
     if (requestType == "GET") {
       // when request is of GET type

@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 const TestTokenForm = () => {
   const classes = useStyles();
   const [currentSelectedOption, setCurrentSelectedOption] = useState(
-    "Host-url Access Token"
+    "Host access url"
   );
   const isMediumScreen = useMediaQuery("(min-width:600px)");
 
@@ -34,20 +34,7 @@ const TestTokenForm = () => {
     "{Response,Response,Response,Response,Response,Response,Response,Response,Response,Response,Response,Response,Response,Response,Response,Response,Response,Response,Response,Response,Response,Response,Response,}"
   );
   const handleRenewToken = () => {
-    setShowTestResult(false);
-    setTimeout(() => {
-      setServerResponse("Verifying token");
-    }, 1000);
-    setTimeout(() => {
-      setServerResponse("Verifying consumer id");
-    }, 3000);
-    setTimeout(() => {
-      setServerResponse("Request has been sent successfully.!");
-    }, 6000);
-
-    setTimeout(() => {
-      setShowTestResult(true);
-    }, 6000);
+   
   };
   return (
     <div className={isMediumScreen? classes.root : classes.root_sm}>
@@ -69,16 +56,8 @@ const TestTokenForm = () => {
         </Grid>
       </Grid>
       <div style={{ textAlign: "center", marginTop: "3%" }}>
-        <div>
-          <InputField placeholder="Token" />
-        </div>
-        <div style={{ marginTop: "2%" }}>
-          <InputField placeholder="Consumer Id" />
-        </div>
-        <div style={{ marginTop: "2%" }}>
-          <InputField placeholder="Url" />
-        </div>
-        {currentSelectedOption == "Host-url Access Token" && (
+        
+        {currentSelectedOption == "Host access url" && (
           <div style={{ marginTop: "5%" }}>
             <CustomMultilineInputField
               rows={4}
@@ -89,33 +68,21 @@ const TestTokenForm = () => {
               label="Qurey"
             />
           </div>
+
         )}
        
         <div style={{ marginTop: "2%", textAlign: "center" }}>
           <CustomButton
-            onClick={handleRenewToken}
+            // onClick={handleRenewToken}
             style={{
               // marginTop: isMediumScreen? "3%":"3%",
               backgroundColor: "#10365B",
               // fontSize: isMediumScreen? "0.8rem" :"",
             }}
-            name="Start "
+            name="Test"
           />
         </div>
-        <div style={{ marginTop: "2%" }}>{serverResponse}</div>
-     
-        {showTestResult && (
-          <div style={{ marginTop: "5%", textAlign: "center" }}>
-            <CustomMultilineInputField
-              rows={5}
-              value={queryResponse}
-              handleChange={(e) => {
-                setQueryResponse(e.target.value);
-              }}
-              label="Result"
-            />
-          </div>
-        )}
+       
     </div>
     </div>
   );

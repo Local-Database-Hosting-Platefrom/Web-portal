@@ -68,7 +68,8 @@ const ListOfRemoteDatabaseAccessUrls = ()=>{
               numberofRequests:url.numberOfHits,
               isEnabled:url.isEnabled,
               urlId:url.urlId,
-              url:url.url
+              url:url.url,
+              isPublic:url.isPublic
             }
           })
           console.log(listOfUrlsToSet)

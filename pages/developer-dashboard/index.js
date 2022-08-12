@@ -13,7 +13,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import NavbarWraper from "../../ReactComponents/HomePage-Navbar/NavbarWraper";
 
-import TestTokenScreen from "../../ReactComponents/Consumer-dashboard-screens/TestTokenScreen";
+import OpenAPIs from "../../ReactComponents/Consumer-dashboard-screens/OpenAPIs";
 import GetAPIKeyScreen from "../../ReactComponents/Consumer-dashboard-screens/GetAPIKeyScreen";
 import TestRemoteDatabaseAccessUrlScreen from "../../ReactComponents/Consumer-dashboard-screens/TestRemoteDatabaseAccessUrlScreen";
 import TestHostAccresUrlScreen from "../../ReactComponents/Consumer-dashboard-screens/TestHostAccresUrlScreen";
@@ -172,7 +172,7 @@ const Index = () => {
         break;
       case 4:
         // Test Token
-        setCurrentOpenedScreen(<TestTokenScreen />);
+        setCurrentOpenedScreen(<OpenAPIs />);
         break;
       case 5:
         // Test Host Access Url
@@ -355,7 +355,7 @@ const Index = () => {
               <img src="/home-page/hostIcon.png" width="50%" />
             </ListItemIcon>
             <ListItemText
-              primary={"Test Token"}
+              primary={"Open APIs"}
               sx={{ opacity: open ? 1 : 0 }}
             />
           </ListItemButton>
