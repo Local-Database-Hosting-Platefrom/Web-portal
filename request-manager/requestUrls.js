@@ -6,7 +6,7 @@
 import { BACK_END_BASE_URL, FRONT_END_BASE_URL } from "./urls";
 
 const GOOGLE_AUTH = `${BACK_END_BASE_URL}/auth-api/googleAuthentication`;
-const GITHUB_AUTH = `${BACK_END_BASE_URL}https://central-api-ldh.herokuapp.com/auth-api/githubAuhentication`;
+const GITHUB_AUTH = `${BACK_END_BASE_URL}/auth-api/githubAuhentication`;
 const AUTH_PAGE = `${FRONT_END_BASE_URL}/Authentication/SignIn`;
 
 const CREATE_ADMIN_ACCOUNT = "/auth-api/createAdminAccount";

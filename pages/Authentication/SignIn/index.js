@@ -77,12 +77,9 @@ const Index = (props) => {
   const [openCustomDialog, setOpenCustomDialog] = useState(false);
   const [alertMessage_CustomDialog,setAlertMessage_CustomDialog]=useState("");
   const [alertTitle_CustomDialog,setAlertTitle_CustomDialog]=useState("");
- 
   const [accountType, setAccountType] = useState(null);
+  const router = useRouter();
 
-  
-
-  const router = useRouter()
   let user_Id=null;
   let authType=null;
   if(router!=undefined){
@@ -91,9 +88,10 @@ const Index = (props) => {
   }
 
 useEffect(()=>{
-
+  console.log("Query",router.query)
       if(user_Id!=null || user_Id!=undefined)
       {
+        
         sendResquestToCentralAPI("POST", CREATE_ADMIN_ACCOUNT,{
           user_Id: user_Id,
           authType: authType,
