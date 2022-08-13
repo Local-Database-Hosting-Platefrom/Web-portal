@@ -20,6 +20,7 @@ const ResetPassword = ()=>{
         }
       })
     }
+    
     return <Container>
         <div>
             <Heading text="Reset Password" fontSize="1.5rem"/>

@@ -57,13 +57,15 @@ const MAKE_PAYMENT_REQUEST="/web-api/makePayment"
 
 const LOAD_LIST_OF_REMOTE_ENDPOINTS="/consumer-api/getListOfAllRemoteDatabaseEndpointsByDeveloperId"
 
-const UPDATE_REMOTE_DB_URL_VISIBILITY="/web-api/updateRemoteDbAccessUrlVisibility"
+const UPDATE_REMOTE_DB_URL_VISIBILITY="/web-api/updateRemoteDbAccessUrlVisibility";
 
-const LOGIN_TO_ACCOUNT="/auth-api/loginToAccount"
+const LOGIN_TO_ACCOUNT="/auth-api/loginToAccount";
 
-const GET_UNIQUE_ID="/auth-api/getUniqueId"
+const GET_UNIQUE_ID="/auth-api/getUniqueId";
 
-const SEND_PASSWORD_RESET_LINK="/auth-api/resetMyAccountPassword"
+const SEND_PASSWORD_RESET_LINK="/auth-api/resetMyAccountPassword";
+
+const DELETE_ACCOUNT="/auth-api/deleteAccount";
 
 export {
   SIGN_IN_ADMIN_ACCOUNT,
@@ -97,5 +99,6 @@ export {
   UPDATE_REMOTE_DB_URL_VISIBILITY,
   GET_UNIQUE_ID,
   LOGIN_TO_ACCOUNT,
-  SEND_PASSWORD_RESET_LINK
+  SEND_PASSWORD_RESET_LINK,
+  DELETE_ACCOUNT
 };
