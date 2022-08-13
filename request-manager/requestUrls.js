@@ -62,6 +62,9 @@ const UPDATE_REMOTE_DB_URL_VISIBILITY="/web-api/updateRemoteDbAccessUrlVisibilit
 const LOGIN_TO_ACCOUNT="/auth-api/loginToAccount"
 
 const GET_UNIQUE_ID="/auth-api/getUniqueId"
+
+const SEND_PASSWORD_RESET_LINK="/auth-api/resetMyAccountPassword"
+
 export {
   SIGN_IN_ADMIN_ACCOUNT,
   CREATE_ADMIN_ACCOUNT,
@@ -93,5 +96,6 @@ export {
   LOAD_LIST_OF_REMOTE_ENDPOINTS,
   UPDATE_REMOTE_DB_URL_VISIBILITY,
   GET_UNIQUE_ID,
-  LOGIN_TO_ACCOUNT
+  LOGIN_TO_ACCOUNT,
+  SEND_PASSWORD_RESET_LINK
 };

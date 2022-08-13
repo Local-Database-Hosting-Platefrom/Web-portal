@@ -1,11 +1,27 @@
 import { Container } from "@mui/material";
 import { useState } from "react";
+import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
+import { SEND_PASSWORD_RESET_LINK } from "../../../request-manager/requestUrls";
+import { FETCHED } from "../../../request-manager/responseCodes";
 import CustomButton from "../../../Support/CustomButton";
 import Heading from "../../../Support/Heading";
 import InputField from "../../../Support/InputFields";
 
 const ResetPassword = ()=>{
     const [isLinkSent,setIsLinkSent]=useState(false);
+    const [email,setEmail]=useState(null);
+    const handleSendingPasswordLink=()=>{
+      sendResquestToCentralAPI("POST",SEND_PASSWORD_RESET_LINK,{email}).then((resp)=>resp.json()).then((data)=>{
+        if(data.responseCode==FETCHED){
+          alert("Link sent")
+          setIsLinkSent(true);
+        }
+          else{
+            console.log(data)
+          }
+        
+      })
+    }
     return <Container>
         <div>
             <Heading text="Reset Password" fontSize="1.5rem"/>
@@ -14,9 +30,9 @@ const ResetPassword = ()=>{
             <div>
             <InputField
                       placeholder={"Type your Email"}
-                      //   value={""}
+                        value={email}
                       onChange={(e) => {
-                        console.log(e.target.value);
+                        setEmail(e.target.value);
                       }}
                     />
             </div>
@@ -30,7 +46,9 @@ const ResetPassword = ()=>{
                         // fontSize: isMediumScreen? "0.8rem" :"",
                        
                       }}
-                      onClick={()=>{setIsLinkSent(true)}}
+                      onClick={()=>{
+                        handleSendingPasswordLink();
+                      }}
                       name="Send Me Reset Link"
                     />
             </div>

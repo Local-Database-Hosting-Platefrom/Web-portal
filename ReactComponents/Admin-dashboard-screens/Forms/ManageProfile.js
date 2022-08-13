@@ -19,8 +19,7 @@ const ManageProfile = ()=>{
             <Grid container>
                 <Grid item xs={5}></Grid>
                 <Grid item xs={2} style={{border: "1px solid #7ea69f",borderRadius:"60%",height:"10rem",display: "flex",alignItems: "center",justifyContent: "center"}}>
-                <img src={"https://lh3.googleusercontent.com/a/AItbvmn-5aTlj4Y4JJiRp2fznk-m_BkdMjgiwECujor9=s96-c"} width={150} height={150}/>
-              
+                  {/* <img src={"https://lh3.googleusercontent.com/a/AItbvmn-5aTlj4Y4JJiRp2fznk-m_BkdMjgiwECujor9=s96-c"} width={150} height={150}/> */}
                 </Grid>
                 <Grid item xs={5}></Grid>
                 <Grid item xs={4}></Grid>
