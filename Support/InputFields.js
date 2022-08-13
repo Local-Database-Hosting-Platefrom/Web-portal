@@ -62,7 +62,7 @@ import Box from '@mui/material/Box';
 
 const ariaLabel = { 'aria-label': 'description' };
 
-const InputField = ({placeholder,...props})=>{
-  return <Input  placeholder={placeholder} inputProps={ariaLabel} />
+const InputField = ({placeholder,onChange,...props})=>{
+  return <Input  placeholder={placeholder} onChange={onChange} inputProps={ariaLabel} />
 }
 export default InputField

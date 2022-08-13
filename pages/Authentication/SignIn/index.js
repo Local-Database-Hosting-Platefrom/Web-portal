@@ -88,7 +88,7 @@ const Index = (props) => {
   }
 
 useEffect(()=>{
-  console.log("Query",router.query)
+ 
       if(user_Id!=null || user_Id!=undefined)
       {
         

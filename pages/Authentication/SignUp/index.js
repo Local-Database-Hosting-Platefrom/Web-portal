@@ -7,7 +7,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
-
+import { useFormik } from "formik";
 import FooterWraper from "../../../ReactComponents/HomePage-Footer/FooterWraper";
 import HomePagefooter from "../../../ReactComponents/HomePage-Footer/HomePagefooter";
 import NavbarWraper from "../../../ReactComponents/HomePage-Navbar/NavbarWraper";
@@ -19,6 +19,8 @@ import InputField from "../../../Support/InputFields";
 import { useState } from "react";
 import { useEffect } from "react";
 import { BACK_END_BASE_URL } from "../../../request-manager/urls";
+import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
+import { CREATE_ADMIN_ACCOUNT, GET_UNIQUE_ID } from "../../../request-manager/requestUrls";
 
 const useStyles = makeStyles({
   root: {
@@ -58,12 +60,60 @@ const Index = () => {
   const classes = useStyles();
   const navigation = useRouter();
   const isMediumScreen = useMediaQuery("(min-width:600px)");
-
+  const [firstName, setFirstName] = useState(null);
+  const [lastName, setLastName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [mobileNumber,setMobileNumber]=useState(null);
   const [value, setValue] = useState("female");
 
+  
+  // const formik = useFormik({
+  //   initialValues: {
+  //     firstName:"",
+  //     lastName:"",
+  //     email:"",
+  //     password:"",
+  //   },
+  //   onSubmit: (values) => {
+
+  //   },
+  // });
 
   const handleChange = (event) => {
     setValue(event.target.value);
+  };
+
+  const handleSignUp =async () => {
+    if (
+      firstName != null &&
+      lastName != null &&
+      email != null &&
+      password != null &&
+      mobileNumber!=null
+    ) {
+
+      sendResquestToCentralAPI("GET",GET_UNIQUE_ID,{}).then((resp)=> resp.json()).then((response)=>{
+        // console.log()
+        const user_Id = response.payload;
+        sendResquestToCentralAPI("POST", CREATE_ADMIN_ACCOUNT,{
+        firstName,
+        lastName,
+        email,
+        password,
+        mobileNumber,
+        accountType: value,
+        authType: "userName&Password",
+        user_Id:user_Id
+        }).then((resp)=>resp.json()).then((data)=>{
+          alert(JSON.stringify(data))
+        })
+      }) 
+
+      
+    } else {
+      alert("Please do not provide any empty field");
+    }
   };
 
   const googleSignIn = () => {
@@ -73,7 +123,7 @@ const Index = () => {
   const githubSignIn = () => {
     navigation.push(`${BACK_END_BASE_URL}/auth-api/githubAuhentication`);
   };
-  
+
   return (
     <div className={classes.root}>
       <Container>
@@ -114,9 +164,10 @@ const Index = () => {
                   <div>
                     <InputField
                       placeholder={"First Name"}
-                      //   value={""}
+                      value={firstName}
                       onChange={(e) => {
-                        console.log(e.target.value);
+                        setFirstName(e.target.value);
+                        // console.log(e.target.value)
                       }}
                     />
                   </div>
@@ -125,9 +176,9 @@ const Index = () => {
                   <div style={{ marginTop: "3%" }}>
                     <InputField
                       placeholder={"Last Name"}
-                      //   value={""}
+                      value={lastName}
                       onChange={(e) => {
-                        console.log(e.target.value);
+                        setLastName(e.target.value);
                       }}
                     />
                   </div>
@@ -136,9 +187,9 @@ const Index = () => {
                   <div style={{ marginTop: "3%" }}>
                     <InputField
                       placeholder={"Mobile Number"}
-                      //   value={""}
+                        value={mobileNumber}
                       onChange={(e) => {
-                        console.log(e.target.value);
+                        setMobileNumber(e.target.value);
                       }}
                     />
                   </div>
@@ -147,9 +198,9 @@ const Index = () => {
                   <div style={{ marginTop: "3%" }}>
                     <InputField
                       placeholder={"Email"}
-                      //   value={""}
+                      value={email}
                       onChange={(e) => {
-                        console.log(e.target.value);
+                        setEmail(e.target.value);
                       }}
                     />
                   </div>
@@ -159,9 +210,9 @@ const Index = () => {
                   <div style={{ marginTop: "3%" }}>
                     <InputField
                       placeholder={"Password"}
-                      //   value={""}
+                      value={password}
                       onChange={(e) => {
-                        console.log(e.target.value);
+                        setPassword(e.target.value);
                       }}
                     />
                   </div>
@@ -217,8 +268,10 @@ const Index = () => {
                         fontSize: isMediumScreen ? "0.8rem" : "",
                       }}
                       onClick={() => {
-                        localStorage.setItem("isLoggedIn", true);
-                        navigation.push("/admin-dashboard");
+                        //TODO:set is loggedin true when you are using bearer method ..
+                        // localStorage.setItem("isLoggedIn", true);
+                        // navigation.push("/admin-dashboard");
+                        handleSignUp();
                       }}
                       name="Create"
                     />
@@ -244,7 +297,7 @@ const Index = () => {
                   </a>
                 </Grid>
                 <Grid item md={1} xs={0}></Grid>
-                <Grid
+                {/* <Grid
                   item
                   md={5}
                   xs={6}
@@ -282,7 +335,7 @@ const Index = () => {
                     />
                   </div>
                 </Grid>
-                <Grid item md={1} xs={0}></Grid>
+                <Grid item md={1} xs={0}></Grid> */}
               </Grid>
             </div>
           </Grid>

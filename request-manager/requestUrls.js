@@ -58,6 +58,8 @@ const MAKE_PAYMENT_REQUEST="/web-api/makePayment"
 const LOAD_LIST_OF_REMOTE_ENDPOINTS="/consumer-api/getListOfAllRemoteDatabaseEndpointsByDeveloperId"
 
 const UPDATE_REMOTE_DB_URL_VISIBILITY="/web-api/updateRemoteDbAccessUrlVisibility"
+
+const GET_UNIQUE_ID="/auth-api/getUniqueId"
 export {
   SIGN_IN_ADMIN_ACCOUNT,
   CREATE_ADMIN_ACCOUNT,
@@ -87,5 +89,6 @@ export {
   GENERATE_AND_UPDATE_APIKEY,
   MAKE_PAYMENT_REQUEST,
   LOAD_LIST_OF_REMOTE_ENDPOINTS,
-  UPDATE_REMOTE_DB_URL_VISIBILITY
+  UPDATE_REMOTE_DB_URL_VISIBILITY,
+  GET_UNIQUE_ID
 };
