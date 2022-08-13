@@ -6,10 +6,11 @@ import ResetPassword from "./Forms/ResetPassword";
 import ManageCaching from "./Forms/ManageCaching";
 import ManageResponsesFormate from "./Forms/ManageResponsesFormate";
 import MasterControls from "./Forms/MasterControls";
+import DeleteAccount from "./Forms/DeleteAccount";
 const Settings = () => {
   const [value, setValue] = useState(0);
   const [currentOpenedScreen, setCurrentOpenedScreen] = useState(
-    <ManageProfile />
+    <MasterControls />
   );
   const useData = JSON.parse(localStorage.getItem("loggedInUser"));
   const authType = useData.responsePayload.authType;
@@ -31,6 +32,10 @@ const Settings = () => {
       case 4:
         setCurrentOpenedScreen(<MasterControls />);
         break;
+      case 5:
+          setCurrentOpenedScreen(<DeleteAccount />);
+          break;
+          
     }
   };
   return (
@@ -50,14 +55,14 @@ const Settings = () => {
                 borderRight: "1px solid #7ea69f",
               }}
             >
-              <div
+              {/* <div
                 style={{ margin: "5%", cursor: "pointer" }}
                 onClick={() => {
                   handleScreenChange(0);
                 }}
               >
                 <Heading text={"Profile"} fontSize="1rem" />
-              </div>
+              </div> */}
               <Divider />
               {authType == "userName&Password" && (
                 <div>
@@ -88,6 +93,15 @@ const Settings = () => {
                 }}
               >
                 <Heading text={"Master Controls"} fontSize="1rem" />
+              </div>
+              <Divider />
+              <div
+                style={{ margin: "5%", cursor: "pointer" }}
+                onClick={() => {
+                  handleScreenChange(5);
+                }}
+              >
+                <Heading text={"Delete account"} fontSize="1rem" />
               </div>
               <Divider />
             </div>

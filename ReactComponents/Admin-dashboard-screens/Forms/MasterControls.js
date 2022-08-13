@@ -14,12 +14,12 @@ const MasterControls = () => {
         <Heading text="Master Controls" fontSize="1.5rem" />
         <Divider />
       </div>
-      <div style={{ marginTop: "2%" }}>
+      <div style={{ marginTop: "2%",textAlign:'center' }}>
         <Grid container >
          
           <Grid
             item
-            xs={3}
+            xs={5}
             style={{
               border: "1px solid #7ea69f",
               padding: "2%",
@@ -45,7 +45,7 @@ const MasterControls = () => {
 
           <Grid
             item
-            xs={3}
+            xs={5}
             style={{
               border: "1px solid #7ea69f",
               padding: "2%",
@@ -68,8 +68,8 @@ const MasterControls = () => {
             </div>
           </Grid>
 
-          <Grid item xs={1}></Grid>
-          <Grid
+          {/* <Grid item xs={1}></Grid> */}
+          {/* <Grid
             item
             xs={3}
             style={{
@@ -92,7 +92,7 @@ const MasterControls = () => {
                 // labelPlacement="Status"
               />
             </div>
-          </Grid>
+          </Grid> */}
         </Grid>
       </div>
     </Container>

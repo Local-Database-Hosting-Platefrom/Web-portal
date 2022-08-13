@@ -7,7 +7,7 @@ import DeleteAccount from "./Forms/DeleteAccount";
 const SettingsScreen = () => {
   const [value, setValue] = useState(0);
   const [currentOpenedScreen, setCurrentOpenedScreen] = useState(
-    <ManageProfile />
+    <DeleteAccount />
   );
   const useData = JSON.parse(localStorage.getItem("loggedInUser"));
   const authType = useData.responsePayload.authType;
@@ -42,14 +42,14 @@ const SettingsScreen = () => {
                 borderRight: "1px solid #7ea69f",
               }}
             >
-              <div
+              {/* <div
                 style={{ margin: "5%", cursor: "pointer" }}
                 onClick={() => {
                   handleScreenChange(0);
                 }}
               >
                 <Heading text={"Profile"} fontSize="1rem" />
-              </div>
+              </div> */}
               {authType == "userName&Password" && (
                 <div>
                   <Divider />
