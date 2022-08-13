@@ -59,6 +59,8 @@ const LOAD_LIST_OF_REMOTE_ENDPOINTS="/consumer-api/getListOfAllRemoteDatabaseEnd
 
 const UPDATE_REMOTE_DB_URL_VISIBILITY="/web-api/updateRemoteDbAccessUrlVisibility"
 
+const LOGIN_TO_ACCOUNT="/auth-api/loginToAccount"
+
 const GET_UNIQUE_ID="/auth-api/getUniqueId"
 export {
   SIGN_IN_ADMIN_ACCOUNT,
@@ -90,5 +92,6 @@ export {
   MAKE_PAYMENT_REQUEST,
   LOAD_LIST_OF_REMOTE_ENDPOINTS,
   UPDATE_REMOTE_DB_URL_VISIBILITY,
-  GET_UNIQUE_ID
+  GET_UNIQUE_ID,
+  LOGIN_TO_ACCOUNT
 };

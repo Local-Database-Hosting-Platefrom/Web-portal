@@ -17,10 +17,10 @@ import InputField from "../../../Support/InputFields";
 
 // Request Manager
 import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
-import { CREATE_ADMIN_ACCOUNT, GITHUB_AUTH, GOOGLE_AUTH } from "../../../request-manager/requestUrls";
+import { CREATE_ADMIN_ACCOUNT, GITHUB_AUTH, GOOGLE_AUTH, LOGIN_TO_ACCOUNT } from "../../../request-manager/requestUrls";
 
 import { useEffect, useState } from "react";
-import { ALREADY_CREATED_ACCOUNT, COULD_NOT_CREATE_ACCOUNT,CREATED_ACCOUNT } from "../../../request-manager/responseCodes";
+import { ALREADY_CREATED_ACCOUNT, COULD_NOT_CREATE_ACCOUNT,COULD_NOT_LOGIN,CREATED_ACCOUNT } from "../../../request-manager/responseCodes";
 
 import CustomDialog from '../../../ReactComponents/Dialogues/CustomDialog'
 import dialogueTypes from '../../../ReactComponents/Dialogues/dialogueTypes'
@@ -69,6 +69,9 @@ const useStyles = makeStyles({
 });
 
 const Index = (props) => {
+
+  const [email,setEmail]=useState(null);
+  const [password,setPassword]=useState(null);
 
   const classes = useStyles();
   const navigation = useRouter();
@@ -122,10 +125,7 @@ useEffect(()=>{
               handleClickOpen_CustomDialog();
             }
         },(error)=>{
-          // When 
-          console.log(error);   
-          console.log('hell') 
-       
+          console.log(error);     
         })
       }
         
@@ -151,7 +151,30 @@ useEffect(()=>{
 
 
   const signIn=()=>{
-    handleClickOpen_CustomDialog();
+    console.log("accountType",accountType)
+    console.log(password)
+    if(email !=null && password !=null && accountType !=null ){
+      sendResquestToCentralAPI("POST",LOGIN_TO_ACCOUNT,{
+        email:email,password:password,accountType:accountType
+      }).then((resp)=>resp.json()).then((data)=>{
+        if(data.responseCode==COULD_NOT_LOGIN){
+        displayDialog(dialogueTypes.INFO_WITHOUT_OK,"Login response",JSON.stringify(data.responseMessage))  
+        }else{
+              localStorage.setItem("loggedInUser",JSON.stringify(data));
+              if(data.responsePayload.apiKey!=undefined)
+              localStorage.setItem("apiKey",data.responsePayload.apiKey)
+              localStorage.setItem("isLoggedIn",true)
+              if(localStorage.getItem("accountType")=="admin")
+              navigation.push("/admin-dashboard");
+              else  if(localStorage.getItem("accountType")=="developer")
+              navigation.push("/developer-dashboard/");
+              else 
+              navigation.push("/Authentication/SignIn");
+        }    
+      })
+    }else{
+      displayDialog(dialogueTypes.INFO_WITHOUT_OK,"Invalid Input","Please fill all the fileds")
+    }
   }
 
   const googleSignIn = () => {
@@ -220,10 +243,10 @@ useEffect(()=>{
                 <Grid item md={12}>
                   <div>
                     <InputField
-                      placeholder={"User Name"}
-                      //   accountType={""}
+                      placeholder={"Email"}
+                     value={email}
                       onChange={(e) => {
-                        console.log(e.target.accountType);
+                        setEmail(e.target.value);
                       }}
                     />
                   </div>
@@ -232,9 +255,9 @@ useEffect(()=>{
                   <div style={{ marginTop: "5%" }}>
                     <InputField
                       placeholder={"Password"}
-                      //   accountType={""}
+                      value={password}
                       onChange={(e) => {
-                        console.log(e.target.accountType);
+                        setPassword(e.target.value);
                       }}
                     />
                   </div>
@@ -293,8 +316,6 @@ useEffect(()=>{
                         fontSize: isMediumScreen ? "0.8rem" : "",
                       }}
                       onClick={() => {
-                        // localStorage.setItem("isLoggedIn", true);
-                        // navigation.push("/admin-dashboard");
                         signIn();
                       }}
                       name="Sin in"

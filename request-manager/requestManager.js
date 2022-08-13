@@ -6,6 +6,7 @@ const sendResquestToCentralAPI = (requestType, requestRoute, requestData,authTok
   if(useData){
   jwtToken = useData.responsePayload.jwtToken;
   }
+  
   return new Promise(async function (resolve, reject) {
     if (requestType == "GET") {
       // when request is of GET type
