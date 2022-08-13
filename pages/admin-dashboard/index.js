@@ -98,14 +98,13 @@ const Index = () => {
   // Check if it is authenticated or not?
   useEffect(()=>{
    let loggedInUser =  localStorage.getItem("loggedInUser");
-   
    if(loggedInUser!=undefined) {
     if(localStorage.getItem("accountType")=="admin" && localStorage.getItem("isLoggedIn")=="true")
     {
       loggedInUser = JSON.parse(loggedInUser);
       console.log(loggedInUser);
       let token = loggedInUser.responsePayload.jwtToken;
-      sendResquestToCentralAPI("POST",VERIFY_JWT_TOKEN,{},token).then(async (response) => {
+      sendResquestToCentralAPI("POST",VERIFY_JWT_TOKEN,{_id:loggedInUser.responsePayload._id,accountType:"admin"}).then(async (response) => {
         const data =await response.json();
         console.log("after verfiying the data ",data);
 

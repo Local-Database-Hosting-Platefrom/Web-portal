@@ -1,19 +1,20 @@
 import { Container } from "@mui/material";
 import { useState } from "react";
 import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
-import { DELETE_ACCOUNT } from "../../../request-manager/requestUrls";
+import { AUTH_PAGE, DELETE_ACCOUNT } from "../../../request-manager/requestUrls";
 import { DELETED } from "../../../request-manager/responseCodes";
 import CustomButton from "../../../Support/CustomButton";
 import Heading from "../../../Support/Heading";
 import InputField from "../../../Support/InputFields";
 import CustomDialog from "../../Dialogues/CustomDialog";
 import dialogueTypes from "../../Dialogues/dialogueTypes";
-
+import { useRouter } from "next/router";
 const DeleteAccount = () => {
+  
+  const navigation = useRouter();
   const [isLinkSent, setIsLinkSent] = useState(false);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-
   const [alertType, setAlertType] = useState(null);
   const [openCustomDialog, setOpenCustomDialog] = useState(false);
   const [alertMessage_CustomDialog, setAlertMessage_CustomDialog] =
@@ -82,6 +83,8 @@ const DeleteAccount = () => {
               "Server response",
               data.responseMessage
             );
+            localStorage.setItem("isLoggedIn",false);
+            navigation.push(AUTH_PAGE)
           } else {
           }
         });

@@ -107,7 +107,7 @@ const Index = () => {
       loggedInUser = JSON.parse(loggedInUser);
       console.log(loggedInUser);
       let token = loggedInUser.responsePayload.jwtToken;
-      sendResquestToCentralAPI  ("POST",VERIFY_JWT_TOKEN,{},token).then(async (response) => {
+      sendResquestToCentralAPI("POST",VERIFY_JWT_TOKEN,{_id:loggedInUser.responsePayload._id,accountType:"developer"}).then(async (response) => {
         const data =await response.json();
         console.log("after verfiying the data ",data);
 
