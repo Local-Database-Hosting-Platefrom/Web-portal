@@ -47,7 +47,7 @@ const CreateRemoteDatabaseAccessUrl = () => {
       }
     );
   }, []);
-
+ 
   const makeUrlTestRequest = () => {
 
     if (currentSelectedOption != null) {
@@ -55,6 +55,7 @@ const CreateRemoteDatabaseAccessUrl = () => {
         if (query != null) {
           if(description!=null){
             if(url!=null){
+          
           const host = JSON.parse(currentSelectedOption);
           const useData = JSON.parse(localStorage.getItem("loggedInUser"));
           const _id = useData.responsePayload._id;
@@ -124,13 +125,13 @@ const storeEndpointInDatabase = () => {
           if(description!=null){
             if(url!=null && url[0]!="/" && url[url.length-1]!="/"){
           const host = JSON.parse(currentSelectedOption);
+         
           const useData = JSON.parse(localStorage.getItem("loggedInUser"));
           const _id = useData.responsePayload._id;
           const userUid = useData.responsePayload.userUid;
           const hostAccessUrl = host.optionValue.hostAcessUrl.url;
           const hostName = host.optionValue.hostName;
           const email = useData.responsePayload.email;
-          console.log(userUid)
           sendResquestToCentralAPI("POST", STORE_REMOTE_DATABASE_ENDPOINT, {
             userUid: userUid,
             hostAccessUrl: hostAccessUrl,

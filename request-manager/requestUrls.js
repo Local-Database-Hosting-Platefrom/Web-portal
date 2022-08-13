@@ -67,6 +67,7 @@ const SEND_PASSWORD_RESET_LINK="/auth-api/resetMyAccountPassword";
 
 const DELETE_ACCOUNT="/auth-api/deleteAccount";
 
+const TERMITE_ALL_URLS="/auth-api/terminateAllUrlByAdminId"
 export {
   SIGN_IN_ADMIN_ACCOUNT,
   CREATE_ADMIN_ACCOUNT,
@@ -100,5 +101,6 @@ export {
   GET_UNIQUE_ID,
   LOGIN_TO_ACCOUNT,
   SEND_PASSWORD_RESET_LINK,
-  DELETE_ACCOUNT
+  DELETE_ACCOUNT,
+  TERMITE_ALL_URLS
 };
