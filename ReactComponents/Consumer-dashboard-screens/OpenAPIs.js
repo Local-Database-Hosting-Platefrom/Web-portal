@@ -22,8 +22,8 @@ const OpenAPIs = () => {
       token
     ).then(
       async (response) => {
-        const response = await response.json();
-        let list = response.responsePayload.map((url) => {
+        const r = await response.json();
+        let list = r.responsePayload.map((url) => {
           return {
             urlProvider:url.adminData.adminName,
             urlTitle:url.url.url,
