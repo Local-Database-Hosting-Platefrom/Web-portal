@@ -63,14 +63,14 @@ const ListOfDeniedRequests = ()=>{
 
         const listToSet=list.responsePayload.map(request => {
           const reason =  JSON.parse(request.request.requestStatus).statusMessage
-          const request = {
+          const r = {
             requestId:request.request.requestId,
             developerName:request.requestSenderName,
             requestTime:request.request.requestDateAndTime,
             denialReason:reason
           }  
-          console.log(request)
-          return request
+          // console.log(request)
+          return r
         });
         // console.log("listTOSet",listToSet)
         setListOfRequests(listToSet)
