@@ -39,35 +39,63 @@ const LOAD_LIST_OF_DENIED_REQUESTS =
   "/web-api/getListOfDeniedRequestsByAdminId";
 const LOAD_LIST_OF_RESOLVED_REQUESTS =
   "/web-api/getListOfResolvedRequestsByAdminId";
-const LOAD_LIST_OF_ALL_HOSTS="/web-api/getHostsByAdminId";
+const LOAD_LIST_OF_ALL_HOSTS = "/web-api/getHostsByAdminId";
 
-const TEST_HOST_ACCESS_URL="/web-api/testHostAccessUrl"
+const TEST_HOST_ACCESS_URL = "/web-api/testHostAccessUrl";
 
-const STORE_REMOTE_DATABASE_ENDPOINT="/web-api/createRemoteDatabaseEndpoint";
+const STORE_REMOTE_DATABASE_ENDPOINT = "/web-api/createRemoteDatabaseEndpoint";
 
-const LOAD_LIST_OF_REMOTE_DATABASE_URLS="/web-api/getListOfRemoteDatabaseAccessUrlsByAdminId"
+const LOAD_LIST_OF_REMOTE_DATABASE_URLS =
+  "/web-api/getListOfRemoteDatabaseAccessUrlsByAdminId";
 
-const SET_STATUS_OF_REMOTE_DATABASE_HOST_ACCESS_URL="/web-api/updateRemoteDbAccessUrlStatus"
+const SET_STATUS_OF_REMOTE_DATABASE_HOST_ACCESS_URL =
+  "/web-api/updateRemoteDbAccessUrlStatus";
 
-const DELETE_REMOTE_DATABASE_ENDPOINT="/web-api/removeRemoteDatabaseQuery";
+const DELETE_REMOTE_DATABASE_ENDPOINT = "/web-api/removeRemoteDatabaseQuery";
 
-const GENERATE_AND_UPDATE_APIKEY="/consumer-api/generateAndUpdateAPIKey"
+const GENERATE_AND_UPDATE_APIKEY = "/consumer-api/generateAndUpdateAPIKey";
 
-const MAKE_PAYMENT_REQUEST="/web-api/makePayment"
+const MAKE_PAYMENT_REQUEST = "/web-api/makePayment";
 
-const LOAD_LIST_OF_REMOTE_ENDPOINTS="/consumer-api/getListOfAllRemoteDatabaseEndpointsByDeveloperId"
+const LOAD_LIST_OF_REMOTE_ENDPOINTS =
+  "/consumer-api/getListOfAllRemoteDatabaseEndpointsByDeveloperId";
 
-const UPDATE_REMOTE_DB_URL_VISIBILITY="/web-api/updateRemoteDbAccessUrlVisibility";
+const UPDATE_REMOTE_DB_URL_VISIBILITY =
+  "/web-api/updateRemoteDbAccessUrlVisibility";
 
-const LOGIN_TO_ACCOUNT="/auth-api/loginToAccount";
+const LOGIN_TO_ACCOUNT = "/auth-api/loginToAccount";
 
-const GET_UNIQUE_ID="/auth-api/getUniqueId";
+const GET_UNIQUE_ID = "/auth-api/getUniqueId";
 
-const SEND_PASSWORD_RESET_LINK="/auth-api/resetMyAccountPassword";
+const SEND_PASSWORD_RESET_LINK = "/auth-api/resetMyAccountPassword";
 
-const DELETE_ACCOUNT="/auth-api/deleteAccount";
+const DELETE_ACCOUNT = "/auth-api/deleteAccount";
 
-const TERMITE_ALL_URLS="/auth-api/terminateAllUrlByAdminId"
+const TERMITE_ALL_URLS = "/auth-api/terminateAllUrlByAdminId";
+
+const GET_TOTAL_NUMBER_OF_DEVELOPERS_ADMIN =
+  "/web-api/getTotalNumberOfConnectedDevelopersByAdminId";
+const GET_TOTAL_NUMBER_OF_HOSTS_ADMIN =
+  "/web-api/getTotalNumberOfConnectedHostsByAdminId";
+const GET_TOTAL_NUMBER_OF_OPEN_APIS_ADMIN =
+  "/web-api/getTotalNumberOfRemoteAccessUrlsByAdminId";
+const GET_TOTAL_NUMBER_OF_ENTERTAINED_REQUESTS_ADMIN =
+  "/web-api/getTotalNumberOfEntertainedRequestsByAdminId";
+const GET_TOTAL_NUMBER_OF_DENIED_REQUESTS_ADMIN =
+  "/web-api/getTotalNumberOfDeniedRequestsByAdminId";
+
+const GET_TOTAL_NUMBER_OF_CONNECTED_HOSTS_DEVELOPER =
+  "/consumer-api/getTotalNumberOfConnectedHostsByDeveloperId";
+
+const GET_TOTAL_NUMBER_OF_OPEN_APIS_DEVELOPER =
+  "/consumer-api/getTotalNumberOfAllowedRemoteDatabaseAccessUrlsByDeveloperId";
+
+const GET_TOTAL_NUMBER_OF_ENTERTAINED_REQUESTS_DEVELOPER =
+  "/consumer-api/getTotalNumberOfEntertainedRequestsByDeveloperEmail";
+
+const GET_TOTAL_NUMBER_OF_DENED_REQUESTS_DEVELOPER =
+  "/consumer-api/getTotalNumberOfDeniedRequestsByDeveloperEmail";
+
 export {
   SIGN_IN_ADMIN_ACCOUNT,
   CREATE_ADMIN_ACCOUNT,
@@ -102,5 +130,14 @@ export {
   LOGIN_TO_ACCOUNT,
   SEND_PASSWORD_RESET_LINK,
   DELETE_ACCOUNT,
-  TERMITE_ALL_URLS
+  TERMITE_ALL_URLS,
+  GET_TOTAL_NUMBER_OF_DEVELOPERS_ADMIN,
+  GET_TOTAL_NUMBER_OF_HOSTS_ADMIN,
+  GET_TOTAL_NUMBER_OF_OPEN_APIS_ADMIN,
+  GET_TOTAL_NUMBER_OF_ENTERTAINED_REQUESTS_ADMIN,
+  GET_TOTAL_NUMBER_OF_DENIED_REQUESTS_ADMIN,
+  GET_TOTAL_NUMBER_OF_CONNECTED_HOSTS_DEVELOPER,
+  GET_TOTAL_NUMBER_OF_OPEN_APIS_DEVELOPER,
+  GET_TOTAL_NUMBER_OF_ENTERTAINED_REQUESTS_DEVELOPER,
+  GET_TOTAL_NUMBER_OF_DENED_REQUESTS_DEVELOPER,
 };
