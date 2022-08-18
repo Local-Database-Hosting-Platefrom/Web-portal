@@ -14,25 +14,17 @@ const Statistics = () => {
   const [firstName, setFirstName] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const [totalNumberOfDevelopers, setTotalNumberOfDevelopers] = useState(0);
-  const [totalNumberOfHosts, setTotalNumberOfHosts] = useState(0);
-  const [totalNumberOfOpenAPIs, setTotalNumberOfOpenAPIs] = useState(0);
+  const [totalNumberOfDevelopers, setTotalNumberOfDevelopers] = useState(null);
+  const [totalNumberOfHosts, setTotalNumberOfHosts] = useState(null);
+  const [totalNumberOfOpenAPIs, setTotalNumberOfOpenAPIs] = useState(null);
   const [
     totalNumberOfEntertainedRequests,
     setTotalNumberOfEntertainedRequests,
-  ] = useState(0);
+  ] = useState(null);
   const [totalNumberOfDeniedRequests, setTotalNumberOfDeniedRequests] =
-    useState(0);
-
-  //
-
-  // const intervalId = setInterval(()=>{
-  //   fetchAndSetTotalNumberOfDevelopers();
-  //   fetchAndSetTotalNumberOHosts();
-  // },10000)
+    useState(null);
 
   useEffect(() => {
-    // Access values from localStorage for now , later on we will access values from the redux
     if (localStorage.getItem("isLoggedIn") == "true") {
       const data = JSON.parse(localStorage.getItem("loggedInUser"));
       const { firstName } = data.responsePayload;
@@ -58,8 +50,11 @@ const Statistics = () => {
       .then((resp) => resp.json())
       .then((data) => {
         if(data.responsePayload!=null)
-        setTotalNumberOfDevelopers(data.responsePayload);
-        
+        {
+          setTotalNumberOfDevelopers(data.responsePayload);
+        }else{
+          setTotalNumberOfDevelopers(0)
+        }
       });
   };
 
@@ -70,11 +65,15 @@ const Statistics = () => {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        if(data.responsePayload!=null)
-        setTotalNumberOfHosts(data.responsePayload);
+        if(data.responsePayload!=null){
+          setTotalNumberOfHosts(data.responsePayload);
+        }else{
+          setTotalNumberOfHosts(0)
+        }
         
       });
   };
+
   const fetchAndSetTotalNumberOfRemoteDatabaseAccessUrls = () => {
     const data = JSON.parse(localStorage.getItem("loggedInUser"));
     sendResquestToCentralAPI("POST", GET_TOTAL_NUMBER_OF_OPEN_APIS_ADMIN, {
@@ -82,8 +81,11 @@ const Statistics = () => {
     })
       .then((resp) => resp.json())
       .then((data) => {
-        if(data.responsePayload!=null)
-        setTotalNumberOfOpenAPIs(data.responsePayload);
+        if(data.responsePayload!=null){
+          setTotalNumberOfOpenAPIs(data.responsePayload);
+        }else{
+          setTotalNumberOfOpenAPIs(0);
+        }
         
       });
   };
@@ -98,8 +100,11 @@ const Statistics = () => {
     )
       .then((resp) => resp.json())
       .then((data) => {
-        if(data.responsePayload!=null)
+        if(data.responsePayload!=null){
         setTotalNumberOfEntertainedRequests(data.responsePayload);
+        }else{
+          setTotalNumberOfEntertainedRequests(0)
+        }
         
       });
   };
@@ -114,8 +119,11 @@ const Statistics = () => {
     )
       .then((resp) => resp.json())
       .then((data) => {
-        if(data.responsePayload!=null)
-        setTotalNumberOfDeniedRequests(data.responsePayload);
+        if(data.responsePayload!=null){
+          setTotalNumberOfDeniedRequests(data.responsePayload);
+        }else{
+          setTotalNumberOfDeniedRequests(0);
+        }
         
       });
   };
@@ -133,27 +141,33 @@ const Statistics = () => {
         <Heading text={"Overview"} fontSize="1.5rem" fontWeight="bold" />
       </div>
       <div style={{ paddingLeft: "5%" }}>
-        <Grid container style={{ marginTop: "2%" }}>
-          <Grid item xs={3}>
+        <Grid container style={{ marginTop: "2%",paddingLeft:"15%",paddingRight:"15%"}}>
+
+          {/* <Grid item xs={1}></Grid> */}
+          <Grid item xs={5} style={{marginTop:"1%"}}>
             <States title="Developers" value={totalNumberOfDevelopers} />
           </Grid>
-          <Grid item xs={1}></Grid>
-          <Grid item xs={3}>
+          <Grid item xs={2}></Grid>
+          <Grid item xs={5} style={{marginTop:"1%"}}>
             <States title="Hosts" value={totalNumberOfHosts} />
           </Grid>
-          <Grid item xs={1}></Grid>
-          <Grid item xs={3}>
+          {/* <Grid item xs={1}></Grid> */}
+
+
+          {/* <Grid item xs={1}></Grid> */}
+          <Grid item xs={5} style={{marginTop:"1%"}}>
             <States title="Open APIs" value={totalNumberOfOpenAPIs} />
           </Grid>
           <Grid item xs={2}></Grid>
-          <Grid item xs={3} style={{ marginTop: "2%" }}>
+          <Grid item xs={5} style={{marginTop:"1%"}}>
             <States
               title="Entertained Requests"
               value={totalNumberOfEntertainedRequests}
             />
           </Grid>
-          <Grid item xs={1}></Grid>
-          <Grid item xs={3} style={{ marginTop: "2%" }}>
+          {/* <Grid item xs={1}></Grid> */}
+
+          <Grid item xs={12} style={{paddingLeft:"35%",paddingRight:"35%",marginTop:"5%"}}>
             <States
               title="Denied Requests"
               value={totalNumberOfDeniedRequests}

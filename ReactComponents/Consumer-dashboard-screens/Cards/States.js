@@ -6,8 +6,14 @@ const States = ({title,value})=>{
             <Heading text={title} fontSize="1.3rem"/>
             <Divider/>
         </div>
-        <div style={{textAlign: "center",padding:"3%"}}>
-            <Heading text={value} fontSize="4rem"/>
+        <div style={{textAlign: "center",padding:"1%",height:"150px"}}>
+            {
+                (value==null) ? <div>
+                      <img src="/setting-up-enviroment-1.gif" width="150px" height="150px" />
+                </div> : <div>
+                    <Heading text={value} fontSize="4rem"/>
+                </div>
+            }
         </div>
     </Card>
 }

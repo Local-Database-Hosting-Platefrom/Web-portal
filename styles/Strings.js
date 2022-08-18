@@ -24,7 +24,7 @@ const Strings={
         Heading1:"Sign In"
     },
     SignUpPage:{
-        Heading1:"Sign Up",
+        Heading1:"Create Account",
     },
 
     

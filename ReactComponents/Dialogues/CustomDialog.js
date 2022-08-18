@@ -1,4 +1,4 @@
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
@@ -11,13 +11,21 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import CloseIcon from "@mui/icons-material/Close";
-import { FormControlLabel, FormGroup, Grid, useMediaQuery } from "@mui/material";
+import {
+  FormControlLabel,
+  FormGroup,
+  Grid,
+  useMediaQuery,
+} from "@mui/material";
 import dialogueTypes from "./dialogueTypes";
 import CustomButton from "../../Support/CustomButton";
 import Heading from "../../Support/Heading";
 import { useEffect } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import { CheckBox } from "@mui/icons-material";
+
+import { Button, Modal } from "antd";
+
 export default function CustomDialog({
   handleClickOpen,
   alertType,
@@ -59,11 +67,59 @@ export default function CustomDialog({
 
   useEffect(() => {
     // Load the acccess roles
-   
   }, []);
 
   return (
     <div>
+      {alertType == dialogueTypes.SETTING_UP_ENVIRONMENT && (
+        <div>
+          <Modal
+            visible={open}
+            closable={false}
+            footer={null}
+            // title="Title"
+            // onOk={handleOkEvent}
+            // onCancel={handleNoEvent}
+            // footer={[
+            //   <Button key="back" onClick={handleCloseEvent}>
+            //     Return
+            //   </Button>,
+            //   <Button
+            //     key="submit"
+            //     type="primary"
+            //     // loading={loading}
+            //     onClick={handleOkEvent}
+            //   >
+            //     Submit
+            //   </Button>,
+            //   <Button
+            //     key="link"
+            //     href="https://google.com"
+            //     type="primary"
+            //     // loading={loading}
+            //     onClick={handleOkEvent}
+            //   >
+            //     Search on Google
+            //   </Button>,
+            // ]}
+          >
+           <Grid container>
+            <Grid item xs={4}>
+            <img src="/setting-up-enviroment-1.gif" width="200px" height="200px" />
+            </Grid>
+            <Grid item xs={8} style={{padding:"1.5rem"}}>
+              <div >
+                <Heading text={alertTitle} fontSize={"1.5rem"} fontWeight="bold"/>
+              </div>
+              <div style={{marginTop:"5%"}}>
+                <Heading text={alertMessage} fontSize={"0.8rem"}/>
+              </div>
+            </Grid>
+           </Grid>
+          </Modal>
+        </div>
+      )}
+
       {alertType == dialogueTypes.INFO && (
         <div>
           <Dialog
@@ -137,7 +193,7 @@ export default function CustomDialog({
           </Dialog>
         </div>
       )}
-       {alertType == dialogueTypes.INFO_WITHOUT_OK && (
+      {alertType == dialogueTypes.INFO_WITHOUT_OK && (
         <div>
           <Dialog
             open={open}
@@ -183,7 +239,6 @@ export default function CustomDialog({
                           {alertMessage}
                         </div>
                       </Grid>
-                     
                     </Grid>
                   </div>
                 </DialogContentText>
@@ -192,7 +247,7 @@ export default function CustomDialog({
           </Dialog>
         </div>
       )}
- {alertType == dialogueTypes.VIEW_DENIAL_REASON && (
+      {alertType == dialogueTypes.VIEW_DENIAL_REASON && (
         <div>
           <Dialog
             open={open}
@@ -266,7 +321,7 @@ export default function CustomDialog({
         </div>
       )}
 
-{alertType == dialogueTypes.VIEW_COMPLETE_REQUEST && (
+      {alertType == dialogueTypes.VIEW_COMPLETE_REQUEST && (
         <div>
           <Dialog
             open={open}
@@ -309,16 +364,24 @@ export default function CustomDialog({
                           <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/000000/external-failure-factory-flaticons-flat-flat-icons-3.png" />
                         </div> */}
                         <div style={{ fontSize: "1rem", textAlign: "center" }}>
-                            <div>
-                             Query : {(alertMessage.requestPlayload!=undefined) ? alertMessage.requestPlayload.query : "" }
-                            </div>
-                            <div>
-                             Database Name : {(alertMessage.requestPlayload!=undefined) ? alertMessage.requestPlayload.databaseName : "" }
-                            </div>
-                            <div>
-                             Response : {(alertMessage.requestResolvedPayload!=undefined) ? alertMessage.requestResolvedPayload.response : "" }
-                            </div>
-                            
+                          <div>
+                            Query :{" "}
+                            {alertMessage.requestPlayload != undefined
+                              ? alertMessage.requestPlayload.query
+                              : ""}
+                          </div>
+                          <div>
+                            Database Name :{" "}
+                            {alertMessage.requestPlayload != undefined
+                              ? alertMessage.requestPlayload.databaseName
+                              : ""}
+                          </div>
+                          <div>
+                            Response :{" "}
+                            {alertMessage.requestResolvedPayload != undefined
+                              ? alertMessage.requestResolvedPayload.response
+                              : ""}
+                          </div>
                         </div>
                       </Grid>
                       <Grid item xs={12}>
@@ -511,21 +574,25 @@ export default function CustomDialog({
                           </Box>
                         </div>
                         <div style={{ borderBottom: "1px solid #7ea69f" }}>
-                         
                           {/**/}
                           <FormGroup>
-                            <FormControlLabel control={<Checkbox
-                            
-                            checked={isAutoTokenGeneratingAllowed}
-                            onChange={handleTokenGeneration}
-                            inputProps={{ "aria-label": "controlled" }}
-                            sx={{
-                              color: "blue",
-                              "&.Mui-checked": {
-                                color: "blue",
-                              },
-                            }}
-                          /> } label="Allow auto token generation" /></FormGroup>
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  checked={isAutoTokenGeneratingAllowed}
+                                  onChange={handleTokenGeneration}
+                                  inputProps={{ "aria-label": "controlled" }}
+                                  sx={{
+                                    color: "blue",
+                                    "&.Mui-checked": {
+                                      color: "blue",
+                                    },
+                                  }}
+                                />
+                              }
+                              label="Allow auto token generation"
+                            />
+                          </FormGroup>
                         </div>
                       </Grid>
                       <Grid item xs={8}></Grid>
@@ -563,7 +630,11 @@ export default function CustomDialog({
                             onClick={() => {
                               // localStorage.setItem("isLoggedIn", true);
                               // navigation.push("/admin-dashboard");
-                              handleOkEvent({ accessRole: accessRole,isAutoAccessUrlTokenGenerationAllowed:isAutoTokenGeneratingAllowed });
+                              handleOkEvent({
+                                accessRole: accessRole,
+                                isAutoAccessUrlTokenGenerationAllowed:
+                                  isAutoTokenGeneratingAllowed,
+                              });
                             }}
                             name="Accept"
                           />
@@ -722,7 +793,7 @@ export default function CustomDialog({
         </div>
       )}
 
-{alertType == dialogueTypes.WARNING && (
+      {alertType == dialogueTypes.WARNING && (
         <div>
           <Dialog
             open={open}
@@ -761,11 +832,11 @@ export default function CustomDialog({
                         >
                           {alertTitle}
                         </div>
-                        <div style={{textAlign:"center"}}>
-                    <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/000000/external-failure-factory-flaticons-flat-flat-icons-3.png"/>
-                    </div>
+                        <div style={{ textAlign: "center" }}>
+                          <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/000000/external-failure-factory-flaticons-flat-flat-icons-3.png" />
+                        </div>
                         <div style={{ fontSize: "1rem", textAlign: "center" }}>
-                        {alertMessage} 
+                          {alertMessage}
                         </div>
                       </Grid>
                       <Grid item xs={8}></Grid>
@@ -815,7 +886,6 @@ export default function CustomDialog({
           </Dialog>
         </div>
       )}
-
     </div>
   );
 }

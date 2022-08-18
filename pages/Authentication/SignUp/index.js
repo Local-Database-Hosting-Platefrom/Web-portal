@@ -20,7 +20,15 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { BACK_END_BASE_URL } from "../../../request-manager/urls";
 import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
-import { CREATE_ADMIN_ACCOUNT, GET_UNIQUE_ID } from "../../../request-manager/requestUrls";
+import {
+  CREATE_ADMIN_ACCOUNT,
+  GET_UNIQUE_ID,
+} from "../../../request-manager/requestUrls";
+import "antd/dist/antd.css";
+import { Button, Input, Switch, Tooltip } from "antd";
+import CountryPhoneInput, { ConfigProvider } from "antd-country-phone-input";
+import en from "world_countries_lists/data/countries/en/world.json";
+import "antd-country-phone-input/dist/index.css";
 
 const useStyles = makeStyles({
   root: {
@@ -29,14 +37,14 @@ const useStyles = makeStyles({
   },
   headingContainer_md: {
     textAlign: "center",
-    marginTop: "15%",
+    marginTop: "8%",
   },
   headingContainer_xs: {
     textAlign: "left",
     marginTop: "0%",
   },
   formContainer_md: {
-    marginTop: "10%",
+    marginTop: "8%",
     textAlign: "center",
   },
   formContainer_xs: {
@@ -56,6 +64,8 @@ const useStyles = makeStyles({
   },
 });
 
+const regex = /\S+@\S+\.\S+/;
+
 const Index = () => {
   const classes = useStyles();
   const navigation = useRouter();
@@ -64,10 +74,15 @@ const Index = () => {
   const [lastName, setLastName] = useState(null);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const [mobileNumber,setMobileNumber]=useState(null);
+  const [mobileNumber, setMobileNumber] = useState(null);
   const [value, setValue] = useState("female");
+  const [isMobileNumberInvalid, setIsMobileNumberInvalid] = useState(false);
+  const [isEmailInvalid, setIsEmailInvalid] = useState(false);
+  const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
+  const [isAllInputsInvalid, setIsAllInputsInvalid] = useState(false);
 
-  
+  const [loadingsForSignIn, setLoadingsForSignIn] = useState([]);
+
   // const formik = useFormik({
   //   initialValues: {
   //     firstName:"",
@@ -84,37 +99,7 @@ const Index = () => {
     setValue(event.target.value);
   };
 
-  const handleSignUp =async () => {
-    if (
-      firstName != null &&
-      lastName != null &&
-      email != null &&
-      password != null &&
-      mobileNumber!=null
-    ) {
-
-      sendResquestToCentralAPI("GET",GET_UNIQUE_ID,{}).then((resp)=> resp.json()).then((response)=>{
-        // console.log()
-        const user_Id = response.payload;
-        sendResquestToCentralAPI("POST", CREATE_ADMIN_ACCOUNT,{
-        firstName,
-        lastName,
-        email,
-        password,
-        mobileNumber,
-        accountType: value,
-        authType: "userName&Password",
-        user_Id:user_Id
-        }).then((resp)=>resp.json()).then((data)=>{
-          alert(JSON.stringify(data))
-        })
-      }) 
-
-      
-    } else {
-      alert("Please do not provide any empty field");
-    }
-  };
+  const handleSignUp = async () => {};
 
   const googleSignIn = () => {
     navigation.push(`${BACK_END_BASE_URL}/auth-api/googleAuthentication`);
@@ -124,6 +109,61 @@ const Index = () => {
     navigation.push(`${BACK_END_BASE_URL}/auth-api/githubAuhentication`);
   };
 
+  const enterLoading_signInBtn = (index) => {
+    if (
+      firstName != null &&
+      lastName != null &&
+      email != null &&
+      password != null &&
+      mobileNumber != null
+    ) {
+      setLoadingsForSignIn((prevLoadings) => {
+        const newLoadings = [...prevLoadings];
+        newLoadings[index] = true;
+        return newLoadings;
+      });
+      alert(mobileNumber)
+      sendResquestToCentralAPI("GET", GET_UNIQUE_ID, {})
+        .then((resp) => resp.json())
+        .then((response) => {
+          // console.log()
+          const user_Id = response.payload;
+          sendResquestToCentralAPI("POST", CREATE_ADMIN_ACCOUNT, {
+            firstName,
+            lastName,
+            email,
+            password,
+            mobileNumber,
+            accountType: value,
+            authType: "userName&Password",
+            user_Id: user_Id,
+          })
+            .then((resp) => resp.json())
+            .then((data) => {
+              setLoadingsForSignIn((prevLoadings) => {
+                const newLoadings = [...prevLoadings];
+                newLoadings[index] = false;
+                return newLoadings;
+              });
+              alert(JSON.stringify(data));
+            });
+        });
+    } else {
+      // alert("Please do not provide any empty field");
+      setIsAllInputsInvalid(true);
+      setTimeout(() => {
+        setIsAllInputsInvalid(false);
+      }, 3000);
+    }
+
+    // setTimeout(() => {
+    //   // setLoadings((prevLoadings) => {
+    //   //   const newLoadings = [...prevLoadings];
+    //   //   newLoadings[index] = false;
+    //   //   return newLoadings;
+    //   // });
+    // }, 3000);
+  };
   return (
     <div className={classes.root}>
       <Container>
@@ -147,7 +187,7 @@ const Index = () => {
               >
                 <Heading
                   text={Strings.SignUpPage.Heading1}
-                  fontSize="2.5rem"
+                  fontSize="2.2rem"
                   fontWeight="bold"
                   fontFamily={fonts.style1}
                 />
@@ -161,64 +201,234 @@ const Index = () => {
                 }
               >
                 <Grid item md={12}>
-                  <div>
-                    <InputField
+                  <div style={{ paddingLeft: "10%", paddingRight: "10%" }}>
+                    {/* <InputField
                       placeholder={"First Name"}
                       value={firstName}
                       onChange={(e) => {
                         setFirstName(e.target.value);
                         // console.log(e.target.value)
+                      }} */}
+                    <Input
+                      style={{
+                        fontSize: "1rem",
+                        padding: "0.7rem",
+                        borderRadius: "5rem",
                       }}
+                      autoSize={true}
+                      type="text"
+                      bordered={true}
+                      size="large"
+                      // prefix={<UserOutlined />}
+                      // showCount={true}
+                      onChange={(e) => {
+                        setFirstName(e.target.value);
+                      }}
+                      value={firstName}
+                      placeholder="First Name"
                     />
                   </div>
                 </Grid>
                 <Grid item md={12}>
-                  <div style={{ marginTop: "3%" }}>
-                    <InputField
+                  <div
+                    style={{
+                      marginTop: "3%",
+                      paddingLeft: "10%",
+                      paddingRight: "10%",
+                    }}
+                  >
+                    {/* <InputField
                       placeholder={"Last Name"}
                       value={lastName}
                       onChange={(e) => {
                         setLastName(e.target.value);
                       }}
+                    /> */}
+                    <Input
+                      style={{
+                        fontSize: "1rem",
+                        padding: "0.7rem",
+                        borderRadius: "5rem",
+                      }}
+                      autoSize={true}
+                      type="text"
+                      bordered={true}
+                      size="large"
+                      // prefix={<UserOutlined />}
+                      // showCount={true}
+                      onChange={(e) => {
+                        setLastName(e.target.value);
+                      }}
+                      value={lastName}
+                      placeholder="Last Name"
                     />
                   </div>
                 </Grid>
                 <Grid item md={12}>
-                  <div style={{ marginTop: "3%" }}>
-                    <InputField
+                  <div
+                    style={{
+                      marginTop: "3%",
+                      paddingLeft: "10%",
+                      paddingRight: "10%",
+                    }}
+                  >
+                    {/* <InputField
                       placeholder={"Mobile Number"}
-                        value={mobileNumber}
+                      value={mobileNumber}
                       onChange={(e) => {
                         setMobileNumber(e.target.value);
                       }}
-                    />
+                    /> */}
+                    <Tooltip
+                      title="Invalid input"
+                      placement="right"
+                      visible={isMobileNumberInvalid}
+                    >
+                      <ConfigProvider locale={en}>
+                        <CountryPhoneInput
+                          style={{
+                            fontSize: "1rem",
+                            padding: "0.7rem",
+                            borderRadius: "5rem",
+                          }}
+                          autoSize={true}
+                          type="text"
+                          bordered={true}
+                          size="large"
+                          placeholder="3053206009"
+                          maxLength={10}
+                          onChange={(e) => {
+                            if (!isNaN(e.phone)) {
+                              setIsMobileNumberInvalid(false);
+                            } else {
+                              setIsMobileNumberInvalid(true);
+                            }
+
+                            setMobileNumber("+"+e.code + e.phone);
+                          }}
+                        />
+                      </ConfigProvider>
+                    </Tooltip>
+                    {/* <Input
+                      style={{
+                        fontSize: "1rem",
+                        padding: "0.7rem",
+                        borderRadius: "5rem",
+                      }}
+                      autoSize={true}
+                      type="number"
+                      bordered={true}
+                      size="large"
+                      // prefix={<UserOutlined />}
+                      // showCount={true}
+                      onChange={(e) => {
+                        setMobileNumber(e.target.value);
+                      }}
+                      value={mobileNumber}
+                      placeholder="Mobile Number"
+                    /> */}
                   </div>
                 </Grid>
                 <Grid item md={12}>
-                  <div style={{ marginTop: "3%" }}>
-                    <InputField
+                  <div
+                    style={{
+                      marginTop: "3%",
+                      paddingLeft: "10%",
+                      paddingRight: "10%",
+                    }}
+                  >
+                    {/* <InputField
                       placeholder={"Email"}
                       value={email}
                       onChange={(e) => {
                         setEmail(e.target.value);
                       }}
-                    />
+                    /> */}
+                    <Tooltip
+                      title="Invalid email"
+                      placement="right"
+                      visible={isEmailInvalid}
+                    >
+                      <Input
+                        style={{
+                          fontSize: "1rem",
+                          padding: "0.7rem",
+                          borderRadius: "5rem",
+                        }}
+                        autoSize={true}
+                        type="text"
+                        bordered={true}
+                        size="large"
+                        // prefix={<UserOutlined />}
+                        // showCount={true}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                        }}
+                        onBlur={() => {
+                          if (!regex.test(email)) {
+                            setIsEmailInvalid(true);
+                          } else {
+                            setIsEmailInvalid(false);
+                          }
+                        }}
+                        value={email}
+                        placeholder="Email"
+                      />
+                    </Tooltip>
                   </div>
                 </Grid>
 
                 <Grid item md={12}>
-                  <div style={{ marginTop: "3%" }}>
-                    <InputField
+                  <div
+                    style={{
+                      marginTop: "3%",
+                      paddingLeft: "10%",
+                      paddingRight: "10%",
+                    }}
+                  >
+                    {/* <InputField
                       placeholder={"Password"}
                       value={password}
                       onChange={(e) => {
                         setPassword(e.target.value);
                       }}
-                    />
+                    /> */}
+
+                    <Tooltip
+                      title="Must be at least 6 characters"
+                      placement="right"
+                      visible={isPasswordInvalid}
+                    >
+                      <Input.Password
+                        style={{
+                          fontSize: "1rem",
+                          padding: "0.7rem",
+                          borderRadius: "5rem",
+                        }}
+                        autoSize={true}
+                        minLength={6}
+                        size="large"
+                        placeholder="password"
+                        value={password}
+                        onChange={(e) => {
+                          setPassword(e.target.value);
+                          setIsPasswordInvalid(false);
+                        }}
+                        onBlur={() => {
+                          if (password != null) {
+                            if (password.length >= 6) {
+                              setIsPasswordInvalid(false);
+                            } else {
+                              setIsPasswordInvalid(true);
+                            }
+                          }
+                        }}
+                      />
+                    </Tooltip>
                   </div>
                 </Grid>
                 <Grid item md={12} xs={12}>
-                  <FormControl style={{ marginTop: "3%" }}>
+                  {/* <FormControl style={{ marginTop: "3%",paddingLeft: "10%", paddingRight: "10%" }}>
                     <RadioGroup
                       row
                       aria-labelledby="demo-controlled-radio-buttons-group"
@@ -255,11 +465,30 @@ const Index = () => {
                         label="Developer"
                       />
                     </RadioGroup>
-                  </FormControl>
+                  </FormControl> */}
+                  <div style={{ marginTop: "4%" }}>
+                    <h5>Select account type</h5>
+                    <Switch
+                      checkedChildren="I am admin"
+                      unCheckedChildren="I am developer"
+                      defaultChecked
+                      onChange={(e) => {
+                        if (e) {
+                          //admin
+                          localStorage.setItem("accountType", "admin");
+                          setValue("admin");
+                        } else {
+                          //developer
+                          localStorage.setItem("accountType", "developer");
+                          setValue("developer");
+                        }
+                      }}
+                    />
+                  </div>
                 </Grid>
                 <Grid item md={12} xs={12}>
-                  <div>
-                    <CustomButton
+                  <div style={{marginTop:"2%"}}>
+                    {/* <CustomButton
                       style={{
                         // marginLeft:isMediumScreen? "40%":"35%",
                         marginTop: isMediumScreen ? "3%" : "3%",
@@ -274,7 +503,23 @@ const Index = () => {
                         handleSignUp();
                       }}
                       name="Create"
-                    />
+                    /> */}
+                      <Tooltip
+                      title="Please fill all fields"
+                      placement="right"
+                      visible={isAllInputsInvalid}
+                    >
+                     <Button
+                      type="secondary"
+                      style={{ color: "black" }}
+                      size="large"
+                      shape="round"
+                      loading={loadingsForSignIn[0]}
+                      onClick={() => enterLoading_signInBtn(0)}
+                    >
+                      Sign In
+                    </Button>
+                    </Tooltip>
                   </div>
                 </Grid>
                 <Grid

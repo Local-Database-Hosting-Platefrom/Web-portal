@@ -5,7 +5,7 @@ import Tab from "@mui/material/Tab";
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
 import Heading from '../../../Support/Heading';
-
+import 'antd/dist/antd.css';
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import { Grid } from "@mui/material";
@@ -16,6 +16,7 @@ import ListOfDeniedRequests from "../Lists/ListOfDeniedRequests";
 
 import ManageAccessTokens from "../Forms/ManageAccessTokens";
 import ListOfDeveloperAccounts from "../Lists/ListOfDeveloperAccounts";
+import { Button } from "antd";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -143,20 +144,22 @@ export default function Tab_ManageConsumer() {
             <Grid item xs={12}>
                 <Heading text={"Accounts"} fontSize="1.5rem" fontWeight="bold"/>
             </Grid>
-            <Grid item xs={2} >
+            <Grid item xs={3} >
               {/* Sub options 1.List of consumer account and 2.Create new user*/}
               <div style={{marginTop:"5%",padding:"5%",borderRight: "1px solid #7ea69f"}}>
                 <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForAccounts(0)}}>
-                <Heading text={"Connection Requests"} fontSize="1rem"/>
+                {/* <Heading text={"Connection Requests"} fontSize="1rem"/> */}
+                <Button type="secondary" shape="round" style={{width:"180px"}} size={"middle"} >Connection Requests</Button>
                 </div>
                 <Divider/>
                 <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForAccounts(1)}}>
-                <Heading text={"All Accounts"} fontSize="1rem"/>
+                {/* <Heading text={"All Accounts"} fontSize="1rem"/> */}
+                <Button type="secondary" shape="round"  style={{width:"180px"}} size={"middle"} >All Accounts</Button>
                 </div>
-                <Divider/>
+                {/* <Divider/> */}
               </div>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={9}>
               {/* Screen of sub options or call them forms and lists */}
               {currentOpenedScreen}
             </Grid>

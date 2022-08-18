@@ -248,7 +248,7 @@ const Index = () => {
             </ListItemIcon>
             <ListItemText
               primary={"Statistics"}
-              sx={{ marginLeft: -4, opacity: open ? 1 : 0 }}
+              sx={{ marginLeft: -4.5, opacity: open ? 1 : 0 }}
             />
           </ListItemButton>
           <ListItemButton
@@ -272,7 +272,7 @@ const Index = () => {
               <img src="/home-page/manage_connection_icon.png" width="50%" />
             </ListItemIcon>
             <ListItemText
-              primary={"Manage Consumers"}
+              primary={"Developers"}
               sx={{ opacity: open ? 1 : 0 }}
             />
           </ListItemButton>
@@ -297,7 +297,7 @@ const Index = () => {
               <img src="/home-page/connectionIcon.png" width="50%" />
             </ListItemIcon>
             <ListItemText
-              primary={"Manage Bridge"}
+              primary={"Bridge"}
               sx={{ opacity: open ? 1 : 0 }}
             />
           </ListItemButton>
@@ -322,7 +322,7 @@ const Index = () => {
               <img src="/home-page/hostIcon.png" width="50%" />
             </ListItemIcon>
             <ListItemText
-              primary={"Manage Hosts"}
+              primary={"Hosts"}
               sx={{ opacity: open ? 1 : 0 }}
             />
           </ListItemButton>
