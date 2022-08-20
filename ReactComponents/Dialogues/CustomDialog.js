@@ -11,7 +11,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import CloseIcon from "@mui/icons-material/Close";
-import { Radio, Space,Checkbox ,Typography, Switch } from "antd";
+import { Radio, Space,Checkbox ,Typography, Switch, Divider } from "antd";
 const { Text, Title, Link } = Typography;
 import {
   FormControlLabel,
@@ -46,6 +46,9 @@ export default function CustomDialog({
     React.useState(true);
 
   const [isLdUrlEnabled,setIsLdUrlEnabled]=React.useState(false);  
+  const [isOpenAPIEnabled,setIsOpenAPIEnabled]=React.useState(false);  
+  const [isOpenAPIPublic,setIsOpenAPIPublic]=React.useState(false);  
+  
   const handleTokenGeneration = (event) => {
     setIsAutoTokenGeneratingAllowed(event.target.checked);
   };
@@ -73,7 +76,15 @@ export default function CustomDialog({
     // Load the acccess roles
     if(alertMessage.status)
     setIsLdUrlEnabled(alertMessage.status);
+    if(alertMessage.status)
+    setIsOpenAPIEnabled(alertMessage.status);
+    if(alertMessage.isPublic)
+    setIsOpenAPIPublic(alertMessage.isPublic)
+
   }, []);
+
+ 
+
 
   return (
     <div>
@@ -382,6 +393,74 @@ export default function CustomDialog({
         </div>
       )}
 
+{alertType == dialogueTypes.VIEW_OPEN_API && (
+        <div>
+          <Modal
+            visible={open}
+            closable={false}
+            footer={null}
+            title={"Open API Settings"}
+          >
+            <Grid container>
+              <Grid item xs={12}>
+                <div style={{ textAlign: "center" }}>
+                    <Switch
+                      checkedChildren="Enabled"
+                      unCheckedChildren="Disabled"
+                      // defaultChecked
+                      style={{width:"30%"}}
+                      checked={isOpenAPIEnabled}
+                      onChange={(e) => {
+                        console.log(e)
+                        setIsOpenAPIEnabled(e)
+                      }}
+                    />
+                </div>
+                <div style={{ textAlign: "center",marginTop:"3%" }}>
+                    <Switch
+                      checkedChildren="Public"
+                      unCheckedChildren="Private"
+                      // defaultChecked
+                      style={{width:"30%"}}
+                      checked={isOpenAPIPublic}
+                      onChange={(e) => {
+                        console.log(e)
+                        setIsOpenAPIPublic(e)
+                      }}
+                    />
+                </div>
+                <Divider/>
+                <div style={{ textAlign: "center", marginTop: "2%" }}>
+                  <Button
+                    type="primary"
+                    shape="round"
+                    style={{ width: "30%",marginTop:"5%" }}
+                    size={"middle"}
+                    onClick={() => {
+                      // handleOkEvent({setedStatus:isLdUrlEnabled});
+                    }}
+                  >
+                    Save Changes
+                  </Button>
+                </div>
+                <div style={{ textAlign: "center", marginTop: "1%" }}>
+                  <Button
+                    type="danger"
+                    shape="round"
+                    style={{ width: "30%",marginTop:"1%" }}
+                    size={"middle"}
+                    onClick={() => {
+                      // handleOkEvent({setedStatus:isLdUrlEnabled});S
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              </Grid>
+            </Grid>
+          </Modal>
+        </div>
+      )}
 
       {alertType == dialogueTypes.INFO && (
         <div>

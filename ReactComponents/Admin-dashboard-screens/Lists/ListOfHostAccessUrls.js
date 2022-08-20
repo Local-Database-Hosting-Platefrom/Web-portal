@@ -45,12 +45,13 @@ const ListOfHostAccessUrls = () => {
     useState("");
   const [alertTitle_CustomDialog, setAlertTitle_CustomDialog] = useState("");
 
-  const [isDataLoading, setIsLoading] = useState(false);
+  const [isDataLoading, setIsDataLoading] = useState(false);
 
   useEffect(() => {
     // Make call to load pending list of hosts
     const useData = JSON.parse(localStorage.getItem("loggedInUser"));
     const _id = useData.responsePayload._id;
+    setIsDataLoading(true);
     sendResquestToCentralAPI("POST", LOAD_CONNECTED_HOSTS_LIST, {
       _id: _id,
     }).then(
@@ -71,8 +72,8 @@ const ListOfHostAccessUrls = () => {
               status: element.hostAcessUrl.status ? "Enabled" : "Disabled",
             });
           });
+          setIsDataLoading(false);
           setlistOfUrls(tempList);
-         
         }
       },
       (error) => {

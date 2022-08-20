@@ -61,6 +61,7 @@ const ListOfDeveloperAccounts = () => {
     // Make call to load pending list of hosts
     const useData = JSON.parse(localStorage.getItem("loggedInUser"));
     const _id = useData.responsePayload._id;
+    setIsLoading(true);
     sendResquestToCentralAPI(
       "POST",
       LOAD_LIST_OF_DEVELOPER_ACCOUNTS_BY_ADMIN_ID,
