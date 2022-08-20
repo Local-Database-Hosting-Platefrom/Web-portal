@@ -79,16 +79,16 @@ const ListOfPendingHosts = ()=>{
     return <Container>
           <div>
           <Grid container>
-              <Grid item xs={8}>
-                <Heading text={"Pending Hosts"} fontSize="1.5rem" />
-              </Grid>
+                {/* <Grid item xs={8}>
+                  <Heading text={"Pending Hosts"} fontSize="1.5rem" />
+                </Grid>
 
-              <Grid item xs={2}>
-                <CustomDropDown currentSelectedOption={orderBy} setCurrentSelectedOption={setOrderBy} label="Order By" listOfOptions={listOfOptions_OrderBy}/>
-              </Grid>
-              <Grid item xs={2} style={{paddingLeft:"1%"}}>
-                <CustomDropDown currentSelectedOption={numberOfRecrods} setCurrentSelectedOption={setNumberOfRecrods} label="Number Of Recods" listOfOptions={listOfOptions_NumberOfRows}/>
-              </Grid>
+                <Grid item xs={2}>
+                  <CustomDropDown currentSelectedOption={orderBy} setCurrentSelectedOption={setOrderBy} label="Order By" listOfOptions={listOfOptions_OrderBy}/>
+                </Grid>
+                <Grid item xs={2} style={{paddingLeft:"1%"}}>
+                  <CustomDropDown currentSelectedOption={numberOfRecrods} setCurrentSelectedOption={setNumberOfRecrods} label="Number Of Recods" listOfOptions={listOfOptions_NumberOfRows}/>
+                </Grid> */}
           </Grid>
         </div>
         <Grid container>

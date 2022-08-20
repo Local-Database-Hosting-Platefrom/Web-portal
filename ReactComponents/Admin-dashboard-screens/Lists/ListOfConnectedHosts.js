@@ -67,7 +67,7 @@ const ListOfConnectedHosts = ()=>{
     return <Container>
           <div>
           <Grid container>
-              <Grid item xs={8}>
+              {/* <Grid item xs={8}>
                 <Heading text={"Connected Hosts"} fontSize="1.5rem" />
               </Grid>
 
@@ -76,7 +76,7 @@ const ListOfConnectedHosts = ()=>{
               </Grid>
               <Grid item xs={2} style={{paddingLeft:"1%"}}>
                 <CustomDropDown currentSelectedOption={numberOfRecrods} setCurrentSelectedOption={setNumberOfRecrods} label="Number Of Recods" listOfOptions={listOfOptions_NumberOfRows}/>
-              </Grid>
+              </Grid> */}
           </Grid>
         </div>
         <Grid container>

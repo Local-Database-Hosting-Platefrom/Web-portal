@@ -52,7 +52,7 @@ export default function Tab_ManageHost() {
  
   const [tabsList, setTabsList] = useState([
     {
-      tabLable: "Pending Hosts",
+      tabLable: "Pending Hosts Requests",
     },
     {
       tabLable: "Connected Hosts",

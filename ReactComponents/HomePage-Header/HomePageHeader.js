@@ -76,7 +76,7 @@ const HomePageHeader = () => {
   const isMediumScreen = useMediaQuery("(min-width:600px)");
   console.log(isMediumScreen);
   return (
-    <div className={classes.root}>
+    <div  className={classes.root}>
       {/* <Box sx={{ display: { xs: "none", md: "flex" } }}> */}
       <Grid container>
         <Grid item md={1} xs={0}></Grid>

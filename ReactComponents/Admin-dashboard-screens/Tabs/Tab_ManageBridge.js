@@ -13,6 +13,7 @@ import ListOfRemoteDatabaseAccessUrls from "../Lists/ListOfRemoteDatabaseAccessU
 import CreateRemoteDatabaseAccessUrl from '../Forms/CreateRemoteDatabaseAccessUrl'
 import ListOfRoles from "../Lists/ListOfRoles"
 import Divider from "@mui/material/Divider";
+import { Button } from "antd";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -52,10 +53,10 @@ export default function Tab_ManageBridge() {
  
   const [tabsList, setTabsList] = useState([
     {
-      tabLable: "Manage Host Access Url",
+      tabLable: "Local database access urls",
     },
     {
-      tabLable: "Manage Remote Database Access Url",
+      tabLable: "Open APIs",
     },
     // {
     //   tabLable: "Manage User Roles",
@@ -133,9 +134,9 @@ export default function Tab_ManageBridge() {
         {/* {` Manage Host Access Url `} */}
         <div>
           <Grid container>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
                 <Heading text={"Host Access Urls"} fontSize="1.5rem" fontWeight="bold"/>
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
                 <ListOfHostAccessUrl/>
             </Grid>
@@ -147,19 +148,21 @@ export default function Tab_ManageBridge() {
         {/* {`  Manage Remote Database Access Url`} */}
         <div>
           <Grid container>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
                 <Heading text={"Remote Database Access Urls"} fontSize="1.5rem" fontWeight="bold"/>
-            </Grid>
+            </Grid> */}
             <Grid item xs={2} >
               {/* Sub options 1.List of consumer account and 2.Create new user*/}
               <div style={{marginTop:"5%",padding:"5%",borderRight: "1px solid #7ea69f"}}>
                 <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChange(0)}}>
-                <Heading text={"All Remote Database Access Urls"} fontSize="1rem"/>
+                {/* <Heading text={"All Open APIs"} fontSize="1rem"/> */}
+                <Button type="secondary" shape="round" style={{width:"100%"}} size={"middle"} >View Open APIs</Button>
+  
                 </div>
                 <Divider/>
                 <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChange(1)}}>
-                <Heading text={"Create New Remote Database Account Url"} fontSize="1rem"/>
-                </div>
+                <Button type="secondary" shape="round" style={{width:"100%"}} size={"middle"} >Create Open APIs</Button>
+    </div>
                 <Divider/>
               </div>
             </Grid>

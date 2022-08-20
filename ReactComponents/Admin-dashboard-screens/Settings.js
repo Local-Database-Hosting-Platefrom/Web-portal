@@ -7,6 +7,7 @@ import ManageCaching from "./Forms/ManageCaching";
 import ManageResponsesFormate from "./Forms/ManageResponsesFormate";
 import MasterControls from "./Forms/MasterControls";
 import DeleteAccount from "./Forms/DeleteAccount";
+import { Button } from "antd";
 const Settings = () => {
   const [value, setValue] = useState(0);
   const [currentOpenedScreen, setCurrentOpenedScreen] = useState(
@@ -63,16 +64,19 @@ const Settings = () => {
               >
                 <Heading text={"Profile"} fontSize="1rem" />
               </div> */}
-              <Divider />
+            
               {authType == "userName&Password" && (
                 <div>
+                    <Divider />
                   <div
                     style={{ margin: "5%", cursor: "pointer" }}
                     onClick={() => {
                       handleScreenChange(1);
                     }}
                   >
-                    <Heading text={"Reset Passowrd"} fontSize="1rem" />
+                    {/* <Heading text={"Reset Passowrd"} fontSize="1rem" /> */}
+                    <Button type="secondary" shape="round" style={{width:"100%"}} size={"middle"} >Reset Password</Button>
+
                   </div>
                   <Divider />
                 </div>
@@ -92,7 +96,9 @@ const Settings = () => {
                   handleScreenChange(4);
                 }}
               >
-                <Heading text={"Master Controls"} fontSize="1rem" />
+                {/* <Heading text={"Master Controls"} fontSize="1rem" /> */}
+                <Button type="secondary" shape="round" style={{width:"100%"}} size={"middle"} >Master Controls</Button>
+
               </div>
               <Divider />
               <div
@@ -101,9 +107,11 @@ const Settings = () => {
                   handleScreenChange(5);
                 }}
               >
-                <Heading text={"Delete account"} fontSize="1rem" />
+                {/* <Heading text={"Delete account"} fontSize="1rem" /> */}
+                <Button type="secondary" shape="round" style={{width:"100%"}} size={"middle"} >Delete Account</Button>
+
               </div>
-              <Divider />
+              {/* <Divider /> */}
             </div>
           </Grid>
           <Grid item xs={10}>

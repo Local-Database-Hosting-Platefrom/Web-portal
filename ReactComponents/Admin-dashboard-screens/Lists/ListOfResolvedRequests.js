@@ -82,7 +82,7 @@ const ListOfResolvedRequests = () => {
           <Grid item xs={8}>
             <Heading text={"Resolved requests"} fontSize="1.5rem" />
           </Grid>
-          <Grid item xs={2}>
+          {/* <Grid item xs={2}>
             <CustomDropDown
               currentSelectedOption={orderBy}
               setCurrentSelectedOption={setOrderBy}
@@ -97,7 +97,7 @@ const ListOfResolvedRequests = () => {
               label="Number Of Recods"
               listOfOptions={listOfOptions_NumberOfRows}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
       </div>
       <Grid container>
@@ -128,11 +128,11 @@ const ListOfResolvedRequests = () => {
                 </Grid>
                 <Grid item xs={2}>
                   {/* Consumer Role */}
-                  {`Role`}
+                  {`Time and date`}
                 </Grid>
                 <Grid item xs={2}>
                   {/* Consumer Role */}
-                  {`Time and date`}
+                  {/* {`Time and date`} */}
                 </Grid>
               </Grid>
             </div>

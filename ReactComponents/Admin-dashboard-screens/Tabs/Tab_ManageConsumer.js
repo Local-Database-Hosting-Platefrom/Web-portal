@@ -56,7 +56,7 @@ export default function Tab_ManageConsumer() {
   const [currentOpenedScreen, setCurrentOpenedScreen]= useState(<ListOfDeveloperConnectionRequests/>);
   const [tabsList, setTabsList] = useState([
     {
-      tabLable: "Manage Developer Accounts",
+      tabLable: "Accounts",
     },
     // {
     //   tabLable: "Manage Access token",
@@ -142,19 +142,19 @@ export default function Tab_ManageConsumer() {
         <div>
           <Grid container>
             <Grid item xs={12}>
-                <Heading text={"Accounts"} fontSize="1.5rem" fontWeight="bold"/>
+                {/* <Heading text={"Accounts"} fontSize="1.5rem" fontWeight="bold"/> */}
             </Grid>
             <Grid item xs={3} >
               {/* Sub options 1.List of consumer account and 2.Create new user*/}
               <div style={{marginTop:"5%",padding:"5%",borderRight: "1px solid #7ea69f"}}>
                 <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForAccounts(0)}}>
                 {/* <Heading text={"Connection Requests"} fontSize="1rem"/> */}
-                <Button type="secondary" shape="round" style={{width:"180px"}} size={"middle"} >Connection Requests</Button>
+                <Button type="secondary" shape="round" style={{width:"100%",fontSize:"80%"}} size={"middle"} >Connection Requests</Button>
                 </div>
                 <Divider/>
                 <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForAccounts(1)}}>
                 {/* <Heading text={"All Accounts"} fontSize="1rem"/> */}
-                <Button type="secondary" shape="round"  style={{width:"180px"}} size={"middle"} >All Accounts</Button>
+                <Button type="secondary" shape="round"  style={{width:"100%",fontSize:"80%"}} size={"middle"} >All Accounts</Button>
                 </div>
                 {/* <Divider/> */}
               </div>
@@ -183,10 +183,10 @@ export default function Tab_ManageConsumer() {
         {/* {` Requests history `} */}
         <div>
           <Grid container>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
                 <Heading text={"History"} fontSize="1.5rem" fontWeight="bold"/>
-            </Grid>
-            <Grid item xs={2} >
+            </Grid> */}
+            <Grid item xs={3} >
               {/* Sub options 1.List of pending,resolved and denied requests*/}
               <div style={{marginTop:"5%",padding:"5%",borderRight: "1px solid #7ea69f"}}>
                 {/* <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForHistory(0)}}>
@@ -194,16 +194,19 @@ export default function Tab_ManageConsumer() {
                 </div>
                 <Divider/> */}
                 <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForHistory(0)}}>
-                <Heading text={"Resovled Requests"} fontSize="1rem"/>
+                {/* <Heading text={"Resovled Requests"} fontSize="1rem"/> */}
+                <Button type="secondary" shape="round" style={{width:"100%"}} size={"middle"} >Resolved</Button>
                 </div>
                 <Divider/>
                 <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChangeForHistory(1)}}>
-                <Heading text={"Denied Requests"} fontSize="1rem"/>
+                {/* <Heading text={"Denied Requests"} fontSize="1rem"/> */}
+                <Button type="secondary" shape="round" style={{width:"100%"}} size={"middle"} >Denied</Button>
+             
                 </div>
                 <Divider/>
               </div>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={9}>
               {/* Screen of sub options or call them forms and lists */}
               {currentOpenedScreen}
             </Grid>

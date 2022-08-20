@@ -42,15 +42,7 @@ const listOfOptions_NumberOfRows=[
 const ListOfDeniedRequests = ()=>{
   const [orderBy,setOrderBy]=useState("ASC");
   const [numberOfRecrods,setNumberOfRecrods]=useState("All");  
-  const [listOfRequests,setListOfRequests] =useState([
-        {
-            requestId:"43343",
-            consumerId: "rfre3",
-            consumerRole:"write only",
-            requestTime:"20-3-2022 04:09 PM"
-        }
-        
-    ])
+  const [listOfRequests,setListOfRequests] =useState([])
   
     useEffect(()=>{
       // Make call to load pending list of hosts
@@ -65,7 +57,7 @@ const ListOfDeniedRequests = ()=>{
           const reason =  JSON.parse(request.request.requestStatus).statusMessage
           const r = {
             requestId:request.request.requestId,
-            developerName:request.requestSenderName,
+            developerName:request.request.requestSenderName,
             requestTime:request.request.requestDateAndTime,
             denialReason:reason
           }  
@@ -77,6 +69,7 @@ const ListOfDeniedRequests = ()=>{
       },(error)=>{
         console.log("Error",error)
       })
+
     },[])
   
  
