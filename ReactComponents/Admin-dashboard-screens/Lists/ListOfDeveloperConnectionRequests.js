@@ -80,27 +80,16 @@ const ListOfDeveloperConnectionRequests = () => {
     );
   }, [refresh]);
 
- 
-
   const displayDialog = (dialogType, dialogTitle, dialogMessage) => {
     setAlertMessage_CustomDialog(dialogMessage);
     setAlertTitle_CustomDialog(dialogTitle);
     setAlertType(dialogType);
     handleClickOpen_CustomDialog();
   };
-  const handleOkEvent = (action) => {
-    handleClose_CustomDialog();
-    if(action!=null){
-      const {value,accessRole,isAutoAccessUrlTokenGenerationAllowed}=action;
-      updateTheRequestStatus(value,accessRole,isAutoAccessUrlTokenGenerationAllowed);
-    }
-  };
 
   const updateTheRequestStatus=(value,accessRole,isAutoAccessUrlTokenGenerationAllowed)=>{
     if(accessRole=="") accessRole=1201;
     const item = currentSelectedRow[0].key;
-    console.log(item)
-
     sendResquestToCentralAPI("POST", UPDATE_DEV_ADMIN_CON_STATUS,{
         requestId:item._id,requestStatus:value,accessRole:accessRole,isAutoAccessUrlTokenGenerationAllowed:isAutoAccessUrlTokenGenerationAllowed
       }).then(async (success)=>{
@@ -120,6 +109,14 @@ const ListOfDeveloperConnectionRequests = () => {
 
   const handleClose_CustomDialog = () => {
     setOpenCustomDialog(false);
+  };
+
+  const handleOkEvent = (action) => {
+    handleClose_CustomDialog();
+    if(action!=null){
+      const {value,accessRole,isAutoAccessUrlTokenGenerationAllowed}=action;
+      updateTheRequestStatus(value,accessRole,isAutoAccessUrlTokenGenerationAllowed);
+    }
   };
 
   const rowSelection = {

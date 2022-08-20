@@ -1,146 +1,200 @@
 import { Card, Container, Divider, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
-import { LOAD_LIST_OF_DEVELOPER_ACCOUNTS_BY_ADMIN_ID, LOAD_LIST_OF_DEV_CONNECTION_REQ_BY_ADMIN_ID } from "../../../request-manager/requestUrls";
+import {
+  LOAD_LIST_OF_DEVELOPER_ACCOUNTS_BY_ADMIN_ID,
+  LOAD_LIST_OF_DEV_CONNECTION_REQ_BY_ADMIN_ID,
+  UPDATE_DEV_ADMIN_CON_STATUS,
+} from "../../../request-manager/requestUrls";
 import CustomDropDown from "../../../Support/CustomDropDown";
 import DropDownForSelectingASCorDECS from "../../../Support/DropDownForSelectingASCorDECS";
 import Heading from "../../../Support/Heading";
 import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
 import ItemHolder_DeveloperPendingRequests from "./ListItemHolders/ItemHolder_DeveloperPendingRequests";
 import ItemHolder_DeveloperApprovedAccounts from "./ListItemHolders/ItemHolder_DeveloperApprovedAccounts";
+import CustomDialog from "../../Dialogues/CustomDialog";
+import { Table } from "antd";
+import Spinner from "../../../Support/Spinner";
+import dialogueTypes from "../../Dialogues/dialogueTypes";
+import openNotificationWithIcon from "../../Dialogues/Notification";
+
+const columns = [
+  {
+    title: "Developer Name",
+    dataIndex: "developerName",
+    render: (text) => <a>{text}</a>,
+  },
+  {
+    title: "Developer Email",
+    dataIndex: "developerEmail",
+  },
+  {
+    title: "Requested Hosts",
+    dataIndex: "requestedHosts",
+  },
+  {
+    title: "Request Status",
+    dataIndex: "requestStatus",
+  },
+  {
+    title: "Assigned Role",
+    dataIndex: "assignedRole",
+  },
+];
 
 const ListOfDeveloperAccounts = () => {
   // list of consumers
-  const [orderBy,setOrderBy]=useState("ASC");
-  const [numberOfRecrods,setNumberOfRecrods]=useState("All");
-  const listOfOptions_OrderBy = [
-      {
-          optionTitle:"ASC",
-          optionValue:"asc"
-      },
-      {
-        optionTitle:"DESC",
-        optionValue:"asc"
-      },
-    
-    ]
-  const listOfOptions_NumberOfRows=[
-    {
-        optionTitle:"5",
-        optionValue:"5"
-    },
-    {
-        optionTitle:"10",
-        optionValue:"10"
-    },
-    {
-        optionTitle:"20",
-        optionValue:"20"
-    },
-    {
-        optionTitle:"30",
-        optionValue:"30"
-    },
-    {
-        optionTitle:"All",
-        optionValue:"all"
-    },
-    
-    
-  ]  
 
-  const [refresh,setRefresh]=useState(false);
+  const [refresh, setRefresh] = useState(false);
   const [listOfConsumers, setListOfConsumers] = useState([]);
 
-  useEffect(()=>{
+  const [currentSelectedRow, setCurrentSelectRow] = useState(null);
+
+  const [alertType, setAlertType] = useState(null);
+  const [openCustomDialog, setOpenCustomDialog] = useState(false);
+  const [alertMessage_CustomDialog, setAlertMessage_CustomDialog] =
+    useState("");
+  const [alertTitle_CustomDialog, setAlertTitle_CustomDialog] = useState("");
+
+  const [isDataLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
     // Make call to load pending list of hosts
     const useData = JSON.parse(localStorage.getItem("loggedInUser"));
-    const _id = useData.responsePayload._id; 
-    sendResquestToCentralAPI("POST", LOAD_LIST_OF_DEVELOPER_ACCOUNTS_BY_ADMIN_ID,{
-      adminId: _id,
-    }).then(async (success)=>{
-      const list = await success.json();
-      console.log("Connection reqeusts",list)
-      setListOfConsumers(list.responsePayload);
-    },(error)=>{
-      console.log("Error",error)
-    })
-  },[refresh])
+    const _id = useData.responsePayload._id;
+    sendResquestToCentralAPI(
+      "POST",
+      LOAD_LIST_OF_DEVELOPER_ACCOUNTS_BY_ADMIN_ID,
+      {
+        adminId: _id,
+      }
+    ).then(
+      async (success) => {
+        const list = await success.json();
+        console.log("Connection reqeusts", list);
+        // setListOfConsumers(list.responsePayload);
+        let tempList = [];
+        list.responsePayload.forEach((item) => {
+          tempList.push({
+            key: item,
+            developerName: item.developerName,
+            developerEmail: item.developerEmail,
+            requestedHosts: item.listOfDatabases.map((host) => host.hostName),
+            requestStatus: item.requestStatus,
+            assignedRole: item.accessRole,
+          });
+        });
+        setIsLoading(false);
+        setListOfConsumers(tempList);
+      },
+      (error) => {
+        console.log("Error", error);
+      }
+    );
+  }, [refresh]);
+
+  const displayDialog = (dialogType, dialogTitle, dialogMessage) => {
+    setAlertMessage_CustomDialog(dialogMessage);
+    setAlertTitle_CustomDialog(dialogTitle);
+    setAlertType(dialogType);
+    handleClickOpen_CustomDialog();
+  };
+
+  const updateTheRequestStatus = (
+    value,
+    accessRole,
+    isAutoAccessUrlTokenGenerationAllowed
+  ) => {
+    if (accessRole == "") accessRole = 1201;
+    const item = currentSelectedRow[0].key;
+    sendResquestToCentralAPI("POST", UPDATE_DEV_ADMIN_CON_STATUS, {
+      requestId: item._id,
+      requestStatus: value,
+      accessRole: accessRole,
+      isAutoAccessUrlTokenGenerationAllowed:
+        isAutoAccessUrlTokenGenerationAllowed,
+    }).then(
+      async (success) => {
+        const response = await success.json();
+        console.log("Connectioon Status updated", response);
+        openNotificationWithIcon(
+          "info",
+          "Server Response",
+          response.responseMessage,
+          "bottom"
+        );
+        setRefresh((prev) => {
+          return !prev;
+        });
+      },
+      (error) => {
+        console.log("Error", error);
+      }
+    );
+  };
+  const handleClickOpen_CustomDialog = () => {
+    setOpenCustomDialog(true);
+  };
+
+  const handleClose_CustomDialog = () => {
+    setOpenCustomDialog(false);
+  };
+
+  const handleOkEvent = (action) => {
+    handleClose_CustomDialog();
+    if (action != null) {
+      const { value, accessRole, isAutoAccessUrlTokenGenerationAllowed } =
+        action;
+      updateTheRequestStatus(
+        value,
+        accessRole,
+        isAutoAccessUrlTokenGenerationAllowed
+      );
+    }
+  };
+
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(
+        `selectedRowKeys: ${selectedRowKeys}`,
+        "selectedRows: ",
+        selectedRows
+      );
+
+      setCurrentSelectRow(selectedRows);
+      console.log(selectedRows[0].accessRole);
+      displayDialog(dialogueTypes.VIEW_DEV_CON_DETAILS, "", selectedRows[0]);
+    },
+  };
 
   return (
     <Container>
       {/* Heading */}
       <div>
-          <Grid container>
-              <Grid item xs={8}>
-                <Heading text={"All Developers"} fontSize="1.5rem" />
-              </Grid>
-
-              {/* <Grid item xs={2}>
-                <CustomDropDown currentSelectedOption={orderBy} setCurrentSelectedOption={setOrderBy} label="Order By" listOfOptions={listOfOptions_OrderBy}/>
-              </Grid>
-              <Grid item xs={2} style={{paddingLeft:"1%"}}>
-                <CustomDropDown currentSelectedOption={numberOfRecrods} setCurrentSelectedOption={setNumberOfRecrods} label="Number Of Recods" listOfOptions={listOfOptions_NumberOfRows}/>
-              </Grid> */}
+        <Grid container>
+          <Grid item xs={8}>
+            <Heading text={"All Developers"} fontSize="1.5rem" />
           </Grid>
-      </div>
-      <Grid container>
-        <Grid item xs={12}>
-          {/* List */}
-          <div  style={{
-              paddingLeft: "5%",
-            //   paddingRight: "5%",
-            //   marginTop: "2%",
-            marginTop:"1%"
-            }}>
-          <div>
-          <Divider/>
-          <Grid container>
-              <Grid item xs={2} style={{ textAlign: "center" }}>
-                {/* Icon */}
-                {/* <img src="/home-page/consumerIconForList.png" width="25%" /> */}
-              </Grid>
-              <Grid item xs={2}>
-                {/* Developer Name */}
-                {`Developer Name`}
-              </Grid>
-              <Grid item xs={4}>
-                {/* Developer Email */}
-                {`Developer email`}
-              </Grid>
-              <Grid item xs={2}>
-                {/* Consumer Role */}
-                {`Status  `}
-              </Grid>
-              <Grid item xs={2}>
-                {/* Consumer Role */}
-                {`Action  `}
-              </Grid>
-            </Grid>
-            </div>
-            <Divider/>
-            </div>
-          <div
-            style={{
-              paddingLeft: "8%",
-              paddingRight: "5%",
-              marginTop: "2%",
-              overflowY: "scroll",
-              height: "12rem",
-            }}
-          >
-            {/* Items */}
-            
-            {listOfConsumers.map((item) => {
-              return (
-                <div style={{ marginTop: "1%" }}>
-                  {" "}
-                  <ItemHolder_DeveloperApprovedAccounts item={item} setRefresh={setRefresh}/>
-                </div>
-              );
-            })}
-          </div>
         </Grid>
-      </Grid>
+      </div>
+      <Table
+        loading={{ indicator: <Spinner />, spinning: isDataLoading }}
+        rowSelection={{
+          type: "radio",
+          ...rowSelection,
+        }}
+        columns={columns}
+        dataSource={listOfConsumers}
+      />
+
+      <CustomDialog
+        alertType={alertType}
+        handleClickOpen={handleClickOpen_CustomDialog}
+        handleCloseEvent={handleClose_CustomDialog}
+        open={openCustomDialog}
+        alertMessage={alertMessage_CustomDialog}
+        alertTitle={alertTitle_CustomDialog}
+        handleOkEvent={handleOkEvent}
+      />
     </Container>
   );
 };

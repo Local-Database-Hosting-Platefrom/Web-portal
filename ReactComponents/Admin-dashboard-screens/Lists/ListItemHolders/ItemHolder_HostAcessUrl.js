@@ -7,6 +7,7 @@ import { sendResquestToCentralAPI } from "../../../../request-manager/requestMan
 import { BACK_END_BASE_URL } from "../../../../request-manager/urls";
 const ItemHolder_HostAcessUrl = ({ item }) => {
   const [hostStatus, setHostStatus] = useState(false);
+  
   const handleHostStatucChange = () => {
     sendResquestToCentralAPI("POST", SET_STATUS_OF_HOST_ACCESS_URL, {
       hostId: item.hostId,
