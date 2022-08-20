@@ -6,8 +6,39 @@ import CustomButton from "../../Support/CustomButton";
 import Heading from "../../Support/Heading";
 import TestTokenForm from "./Forms/TestTokenForm";
 import { OpenApisListItemHolder } from "./itemHolders/OpenApisListItemHolder";
+// import TableForListOfAPIs from "./tables/tableForListOfAPIs";
+import { Button, Table } from "antd";
+import CustomDialog from "../Dialogues/CustomDialog";
+import dialogueTypes from "../Dialogues/dialogueTypes";
+
+const columns = [
+  {
+    title: "Provider",
+    dataIndex: "urlProvider",
+    render: (text) => <a>{text}</a>,
+  },
+  {
+    title: "Number Of Hits",
+    dataIndex: "numberOfHits",
+  },
+  {
+    title: "URl Title",
+    dataIndex: "urlTitle",
+  },
+  {
+    title: "URl Address",
+    dataIndex: "urlAddress",
+  },
+];
+
 const OpenAPIs = () => {
   const [listOfUrls, setListOfUrls] = useState([]);
+
+  const [alertType, setAlertType] = useState(null);
+  const [openCustomDialog, setOpenCustomDialog] = useState(false);
+  const [alertMessage_CustomDialog, setAlertMessage_CustomDialog] =
+    useState("");
+  const [alertTitle_CustomDialog, setAlertTitle_CustomDialog] = useState("");
 
   useEffect(() => {
     let loggedInUser = localStorage.getItem("loggedInUser");
@@ -18,21 +49,23 @@ const OpenAPIs = () => {
     sendResquestToCentralAPI(
       "POST",
       LOAD_LIST_OF_REMOTE_ENDPOINTS,
-      {developerId:developerId},
+      { developerId: developerId },
       token
     ).then(
       async (response) => {
         const r = await response.json();
-        let list = r.responsePayload.map((url) => {
+        let list = r.responsePayload.map((url, index) => {
           return {
-            urlProvider:url.adminData.adminName,
-            urlTitle:url.url.url,
-            url: `${url.host}${url.url.endPointUrlAddress}`,
+            key: index,
+            urlProvider: url.adminData.adminName,
+            urlTitle: url.url.url,
+            urlAddress: `${url.host}${url.url.endPointUrlAddress}`,
             urlCompleteInfo: url,
+            numberOfHits: url.url.numberOfHits,
           };
         });
         // console.log(response)
-        setListOfUrls(list)
+        setListOfUrls(list);
       },
       (error) => {
         console.log(error);
@@ -40,38 +73,62 @@ const OpenAPIs = () => {
     );
   }, []);
 
+  const [currentSelectedRow, setCurrentSelectRow] = useState(null);
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(
+        `selectedRowKeys: ${selectedRowKeys}`,
+        "selectedRows: ",
+        selectedRows
+      );
+      setCurrentSelectRow(selectedRows);
+      displayDialog(
+        dialogueTypes.OPEN_API_SELECTION_OPTIONS_DEV,
+        null,
+        selectedRows
+      );
+    },
+  };
+
+  const handleOkEvent = (action) => {
+    handleClose_CustomDialog();
+  };
+
+  const displayDialog = (dialogType, dialogTitle, dialogMessage) => {
+    setAlertMessage_CustomDialog(dialogMessage);
+    setAlertTitle_CustomDialog(dialogTitle);
+    setAlertType(dialogType);
+    handleClickOpen_CustomDialog();
+  };
+
+  const handleClickOpen_CustomDialog = () => {
+    setOpenCustomDialog(true);
+  };
+
+  const handleClose_CustomDialog = () => {
+    setOpenCustomDialog(false);
+  };
+
   return (
     <div>
-      <div>
-        <Heading text="Open APIs" fontSize="2rem" fontWeight="bold" />
-      </div>
-      <div style={{ padding: "5%" }}>
-        <Grid container style={{ borderBottom: "1px solid #7ea69f" }}>
-          <Grid item xs={2} style={{ textAlign: "center" }}>
-            <Heading text={"Provider"} fontSize={"1rem"} fontWeight={"bold"} />
-          </Grid>
-          <Grid item xs={2} style={{ textAlign: "center" }}>
-            <Heading text={"Title"} fontSize={"1rem"} fontWeight={"bold"} />
-          </Grid>
-          <Grid item xs={5} style={{ textAlign: "left" }}>
-            <Heading text={"Url"} fontSize={"1rem"} fontWeight={"bold"} />
-          </Grid>
-          <Grid item xs={3} style={{ textAlign: "center" }}>
-            <Heading text={"Execute"} fontSize={"1rem"} fontWeight={"bold"} />
-          </Grid>
-        </Grid>
-        <div style={{ padding: "1%" }}>
-          {listOfUrls.length > 0 && (
-            <div>
-              {listOfUrls.map((url) => {
-                return (
-                 <OpenApisListItemHolder url={url}/>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </div>
+      <Table
+        rowSelection={{
+          type: "radio",
+          ...rowSelection,
+        }}
+        columns={columns}
+        dataSource={listOfUrls}
+      />
+
+      <CustomDialog
+        alertType={alertType}
+        handleClickOpen={handleClickOpen_CustomDialog}
+        handleCloseEvent={handleClose_CustomDialog}
+        open={openCustomDialog}
+        alertMessage={alertMessage_CustomDialog}
+        alertTitle={alertTitle_CustomDialog}
+        handleOkEvent={handleOkEvent}
+      />
     </div>
   );
 };

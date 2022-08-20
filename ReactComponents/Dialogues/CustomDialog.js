@@ -11,6 +11,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import CloseIcon from "@mui/icons-material/Close";
+import { Radio, Space,Checkbox ,Typography } from "antd";
+const { Text, Title, Link } = Typography;
 import {
   FormControlLabel,
   FormGroup,
@@ -21,10 +23,11 @@ import dialogueTypes from "./dialogueTypes";
 import CustomButton from "../../Support/CustomButton";
 import Heading from "../../Support/Heading";
 import { useEffect } from "react";
-import Checkbox from "@mui/material/Checkbox";
-import { CheckBox } from "@mui/icons-material";
+// import Checkbox from "@mui/material/Checkbox";
+// import { CheckBox } from "@mui/icons-material";
 
 import { Button, Modal } from "antd";
+import openNotificationWithIcon from "./Notification";
 
 export default function CustomDialog({
   handleClickOpen,
@@ -73,49 +76,167 @@ export default function CustomDialog({
     <div>
       {alertType == dialogueTypes.SETTING_UP_ENVIRONMENT && (
         <div>
+          <Modal visible={open} closable={false} footer={null}>
+            <Grid container>
+              <Grid item xs={4}>
+                <img
+                  src="/setting-up-enviroment-1.gif"
+                  width="200px"
+                  height="200px"
+                />
+              </Grid>
+              <Grid item xs={8} style={{ padding: "1.5rem" }}>
+                <div>
+                  <Heading
+                    text={alertTitle}
+                    fontSize={"1.5rem"}
+                    fontWeight="bold"
+                  />
+                </div>
+                <div style={{ marginTop: "5%" }}>
+                  <Heading text={alertMessage} fontSize={"0.8rem"} />
+                </div>
+              </Grid>
+            </Grid>
+          </Modal>
+        </div>
+      )}
+
+      {alertType == dialogueTypes.OPEN_API_SELECTION_OPTIONS_DEV && (
+        <div>
           <Modal
             visible={open}
             closable={false}
             footer={null}
-            // title="Title"
-            // onOk={handleOkEvent}
-            // onCancel={handleNoEvent}
-            // footer={[
-            //   <Button key="back" onClick={handleCloseEvent}>
-            //     Return
-            //   </Button>,
-            //   <Button
-            //     key="submit"
-            //     type="primary"
-            //     // loading={loading}
-            //     onClick={handleOkEvent}
-            //   >
-            //     Submit
-            //   </Button>,
-            //   <Button
-            //     key="link"
-            //     href="https://google.com"
-            //     type="primary"
-            //     // loading={loading}
-            //     onClick={handleOkEvent}
-            //   >
-            //     Search on Google
-            //   </Button>,
-            // ]}
+            title={"Perform action on selected url"}
           >
-           <Grid container>
-            <Grid item xs={4}>
-            <img src="/setting-up-enviroment-1.gif" width="200px" height="200px" />
+            <Grid container>
+              <Grid item xs={12}>
+                <div style={{ textAlign: "center" }}>
+                  <Button
+                    type="secondary"
+                    shape="round"
+                    style={{ width: "50%" }}
+                    size={"middle"}
+                    onClick={() => {
+                      handleOkEvent();
+                      // console.log(alertMessage[0].)
+                      const useData = JSON.parse(
+                        localStorage.getItem("loggedInUser")
+                      );
+                      let apiKey = "GENERATE_NEW_KEY";
+                      if (useData) apiKey = useData.responsePayload.apiKey;
+                      window
+                        .open(alertMessage[0].urlAddress + apiKey, "_blank")
+                        .focus();
+                    }}
+                  >
+                    Open Url In Browser
+                  </Button>
+                </div>
+                <div style={{ textAlign: "center", marginTop: "2%" }}>
+                  <Button
+                    type="secondary"
+                    shape="round"
+                    style={{ width: "50%" }}
+                    size={"middle"}
+                    onClick={() => {
+                      openNotificationWithIcon(
+                        "info",
+                        "Note",
+                        "Url address is  copied to clip board",
+                        "bottom"
+                      );
+                      navigator.clipboard.writeText(alertMessage[0].urlAddress);
+                      handleOkEvent();
+                    }}
+                  >
+                    Copy url address
+                  </Button>
+                </div>
+              </Grid>
             </Grid>
-            <Grid item xs={8} style={{padding:"1.5rem"}}>
-              <div >
-                <Heading text={alertTitle} fontSize={"1.5rem"} fontWeight="bold"/>
-              </div>
-              <div style={{marginTop:"5%"}}>
-                <Heading text={alertMessage} fontSize={"0.8rem"}/>
-              </div>
-            </Grid>
-           </Grid>
+          </Modal>
+        </div>
+      )}
+
+      {alertType == dialogueTypes.VIEW_DEV_CON_REQUEST && (
+        <div>
+          <Modal
+            visible={open}
+            closable={false}
+            footer={null}
+            title={"Connection Request"}
+          >
+            <div>
+              {/* list of databases */}
+              {/* selection of role */}
+              {/* allow auto generating token */}
+              {/* Accept/decline */}
+
+              <Grid container>
+                <Grid item xs={12}>
+                  <Text keyboard style={{ fontSize: "1.2rem" }}>
+                    Developer Name : {alertMessage.developerName}
+                  </Text>
+                </Grid>
+                <Grid item xs={12} style={{ marginTop: "2%" }}>
+                  <Text keyboard style={{ fontSize: "1.2rem" }}>
+                    Requested Databases : {alertMessage.requestedHosts}
+                  </Text>
+                </Grid>
+                <Grid item xs={12} style={{ marginTop: "2%" }}>
+               
+                  <Radio.Group
+                    defaultValue="a"
+                    buttonStyle="solid"
+                    style={{ marginLeft: "1%" }}
+                    onChange={(e) => {
+                      // console.log(e);
+                      setAccessRole(e.target.value);
+                    }}
+                  >
+                    <Radio.Button value="1201">Read Only</Radio.Button>
+                    <Radio.Button value="1202">Write Only</Radio.Button>
+                    <Radio.Button value="1203">Read & Write</Radio.Button>
+                  </Radio.Group>
+                </Grid>
+                <Grid item xs={12} style={{marginTop:"2%",marginLeft:"1%"}}>
+                <Checkbox checked={isAutoTokenGeneratingAllowed} onChange={handleTokenGeneration}>Is generating tokens allowed ?</Checkbox>
+                </Grid>
+                <Grid
+                  item
+                  xs={6}
+                  style={{ textAlign: "center", marginTop: "4%" }}
+                >
+                  <Button
+                    type="secondary"
+                    shape="round"
+                    style={{ width: "70%" }}
+                    size={"middle"}
+                  >
+                    Decline
+                  </Button>
+                </Grid>
+                <Grid item xs={6} style={{ textAlign: "center",marginTop:"4%" }}>
+                  <Button
+                    type="secondary"
+                    shape="round"
+                    style={{ width: "70%" }}
+                    size={"middle"}
+                    onClick={()=>{
+                      handleOkEvent({
+                        value:"Accept",
+                        accessRole:accessRole,
+                        isAutoTokenGeneratingAllowed:isAutoTokenGeneratingAllowed
+                      })
+                    }}
+                  >
+                    Accept
+                  </Button>
+                </Grid>
+              </Grid>
+            </div>
           </Modal>
         </div>
       )}
@@ -464,177 +585,6 @@ export default function CustomDialog({
                               // localStorage.setItem("isLoggedIn", true);
                               // navigation.push("/admin-dashboard");
                               handleOkEvent("re-login");
-                            }}
-                            name="Accept"
-                          />
-                        )}
-                      </Grid>
-                    </Grid>
-                  </div>
-                </DialogContentText>
-              </div>
-            </DialogContent>
-          </Dialog>
-        </div>
-      )}
-
-      {alertType == dialogueTypes.VIEW_DEV_CON_REQUEST && (
-        <div>
-          <Dialog
-            open={open}
-            onClose={handleCloseEvent}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-            fullWidth
-            maxWidth="sm"
-          >
-            {/* <DialogTitle id="alert-dialog-title">{alertTitle}</DialogTitle> */}
-            <DialogContent>
-              <div>
-                <Grid container>
-                  <Grid item md={8}>
-                    <div style={{ fontSize: "1.7rem" }}>
-                      {/* {alertTitle} */}
-                    </div>
-                  </Grid>
-                  <Grid item md={4} style={{ textAlign: "right" }}>
-                    <div
-                      style={{ cursor: "pointer" }}
-                      onClick={handleCloseEvent}
-                    >
-                      <CloseIcon />
-                    </div>
-                  </Grid>
-                </Grid>
-              </div>
-              <div>
-                <DialogContentText id="alert-dialog-description">
-                  <div>
-                    <Grid container>
-                      <Grid item xs={12}>
-                        <div
-                          style={{ fontSize: "1.7rem", textAlign: "center" }}
-                        >
-                          {alertTitle}
-                        </div>
-                        {/* <div style={{textAlign:"center"}}>
-                    <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/000000/external-failure-factory-flaticons-flat-flat-icons-3.png"/>
-                    </div> */}
-                        <div style={{ fontSize: "1rem", textAlign: "left" }}>
-                          <div style={{ borderBottom: "1px solid #7ea69f" }}>
-                            <Heading
-                              text={"Requested Host Access"}
-                              fontWeight={"bold"}
-                              fontSize={"1.2rem"}
-                            />
-                          </div>
-                          <div style={{ marginTop: "1%" }}>
-                            {alertMessage.listOfDatabases.map((item, index) => {
-                              return (
-                                <div>
-                                  <Heading
-                                    text={`${index + 1} : ${item.hostName} ( ${
-                                      item.hostId
-                                    } )`}
-                                  />
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                        <div style={{ borderBottom: "1px solid #7ea69f" }}>
-                          <Heading
-                            text={"Access Role"}
-                            fontWeight={"bold"}
-                            fontSize={"1.2rem"}
-                          />
-                        </div>
-                        <div style={{ marginTop: "2%" }}>
-                          <Box sx={{ minWidth: 120 }}>
-                            <FormControl fullWidth>
-                              <InputLabel id="demo-simple-select-label">
-                                Access Role
-                              </InputLabel>
-                              <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={accessRole}
-                                label="Access Role"
-                                onChange={handleChange}
-                              >
-                                {listOfAccessRole.map((item) => {
-                                  return (
-                                    <MenuItem value={item.roleValue}>
-                                      {item.roleTitle}
-                                    </MenuItem>
-                                  );
-                                })}
-                              </Select>
-                            </FormControl>
-                          </Box>
-                        </div>
-                        <div style={{ borderBottom: "1px solid #7ea69f" }}>
-                          {/**/}
-                          <FormGroup>
-                            <FormControlLabel
-                              control={
-                                <Checkbox
-                                  checked={isAutoTokenGeneratingAllowed}
-                                  onChange={handleTokenGeneration}
-                                  inputProps={{ "aria-label": "controlled" }}
-                                  sx={{
-                                    color: "blue",
-                                    "&.Mui-checked": {
-                                      color: "blue",
-                                    },
-                                  }}
-                                />
-                              }
-                              label="Allow auto token generation"
-                            />
-                          </FormGroup>
-                        </div>
-                      </Grid>
-                      <Grid item xs={8}></Grid>
-                      <Grid item xs={2} style={{ textAlign: "right" }}>
-                        {handleOkEvent != null && (
-                          <CustomButton
-                            style={{
-                              // marginLeft:isMediumScreen? "40%":"35%",
-                              marginTop: isMediumScreen ? "3%" : "3%",
-                              // left: isMediumScreen? "10":"",
-                              backgroundColor: "red",
-                              fontSize: isMediumScreen ? "0.8rem" : "",
-                              marginTop: "1rem",
-                            }}
-                            onClick={() => {
-                              // localStorage.setItem("isLoggedIn", true);
-                              // navigation.push("/admin-dashboard");
-                              handleNoEvent("Decline");
-                            }}
-                            name="Decline"
-                          />
-                        )}
-                      </Grid>
-                      <Grid item xs={2} style={{ textAlign: "right" }}>
-                        {handleNoEvent != null && (
-                          <CustomButton
-                            style={{
-                              // marginLeft:isMediumScreen? "40%":"35%",
-                              marginTop: isMediumScreen ? "3%" : "3%",
-                              // left: isMediumScreen? "10":"",
-                              backgroundColor: "#10365B",
-                              fontSize: isMediumScreen ? "0.8rem" : "",
-                              marginTop: "1rem",
-                            }}
-                            onClick={() => {
-                              // localStorage.setItem("isLoggedIn", true);
-                              // navigation.push("/admin-dashboard");
-                              handleOkEvent({
-                                accessRole: accessRole,
-                                isAutoAccessUrlTokenGenerationAllowed:
-                                  isAutoTokenGeneratingAllowed,
-                              });
                             }}
                             name="Accept"
                           />
