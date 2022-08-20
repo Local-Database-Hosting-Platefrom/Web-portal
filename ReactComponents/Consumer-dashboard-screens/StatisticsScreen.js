@@ -97,7 +97,7 @@ const StatisticsScreen = () => {
       <div>
       
       {  (isLoggedIn==true) && <Heading text={`Well come ${firstName}`} fontSize="2rem" fontWeight="bold" />   } 
-        <Heading text={"Overview"} fontSize="2rem" fontWeight="bold" />
+        {/* <Heading text={"Overview"} fontSize="2rem" fontWeight="bold" /> */}
       </div>
       <div style={{paddingLeft:"5%"}}>
       <Grid container style={{ marginTop: "2%",paddingLeft:"15%",paddingRight:"15%"}}>
@@ -106,7 +106,7 @@ const StatisticsScreen = () => {
           </Grid>
           <Grid item xs={2}></Grid>
           <Grid item xs={5}  style={{marginTop:"2%"}}>
-            <States  title="LD Urls" value={totalNumberOfAllowedOLDUrls}/>
+            <States  title="Local database access Urls" value={totalNumberOfAllowedOLDUrls}/>
           </Grid>
           {/* <Grid item xs={1}></Grid> */}
           <Grid item xs={5}  style={{marginTop:"2%"}}>

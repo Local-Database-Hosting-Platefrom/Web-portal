@@ -247,13 +247,13 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <div style={{ width: "80%" }}>
-                <img src="/home-page/overviewIcon.png" width="50%" />
-              </div>
+              
+                <img src="/statistics.png" width="40" height="40" />
+              
             </ListItemIcon>
             <ListItemText
-              primary={"Profile"}
-              sx={{ marginLeft: -4, opacity: open ? 1 : 0 }}
+              primary={"Statistics"}
+              sx={{ marginLeft: 0, opacity: open ? 1 : 0 }}
             />
           </ListItemButton>
           <ListItemButton
@@ -274,10 +274,10 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <img src="/home-page/manage_connection_icon.png" width="50%" />
+              <img src="/home-page/manage_connection_icon.png" width="40" height='40' />
             </ListItemIcon>
             <ListItemText
-              primary={"Generate Token"}
+              primary={"Access Tokens"}
               sx={{ opacity: open ? 1 : 0 }}
             />
           </ListItemButton>
@@ -300,10 +300,10 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <img src="/home-page/connectionIcon.png" width="50%" />
+              <img src="/home-page/connectionIcon.png" width="40" height='40'  />
             </ListItemIcon>
             <ListItemText
-              primary={"Service Providers"}
+              primary={"Service Managers"}
               sx={{ opacity: open ? 1 : 0 }}
             />
           </ListItemButton>
@@ -326,10 +326,10 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <img src="/home-page/connectionIcon.png" width="50%" />
+              <img src="/api-key.png" width="40" height='40'  />
             </ListItemIcon>
             <ListItemText
-              primary={"Get API Key"}
+              primary={"API Key"}
               sx={{ opacity: open ? 1 : 0 }}
             />
           </ListItemButton>
@@ -352,7 +352,7 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <img src="/home-page/hostIcon.png" width="50%" />
+              <img src="/home-page/hostIcon.png" width="40" height='40'  />
             </ListItemIcon>
             <ListItemText
               primary={"Open APIs"}
@@ -427,7 +427,7 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <img src="/home-page/helpIcon.png" width="50%" />
+              <img src="/settings.png" width="40" height='40'  />
             </ListItemIcon>
             <ListItemText primary={"Settings"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>

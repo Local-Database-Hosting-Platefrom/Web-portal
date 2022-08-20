@@ -242,13 +242,12 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <div style={{ width: "80%" }}>
-                <img src="/home-page/overviewIcon.png" width="50%" />
-              </div>
+                <img src="/statistics.png" width="40" height="40" />
+              
             </ListItemIcon>
             <ListItemText
               primary={"Statistics"}
-              sx={{ marginLeft: -4.5, opacity: open ? 1 : 0 }}
+              sx={{ marginLeft: 0, opacity: open ? 1 : 0 }}
             />
           </ListItemButton>
           <ListItemButton
@@ -269,7 +268,7 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <img src="/home-page/manage_connection_icon.png" width="50%" />
+              <img src="/developers.png" width="40" height='40'  />
             </ListItemIcon>
             <ListItemText
               primary={"Developers"}
@@ -294,7 +293,7 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <img src="/home-page/connectionIcon.png" width="50%" />
+              <img src="/manageBridge.png" width="40" height='40'  />
             </ListItemIcon>
             <ListItemText
               primary={"Bridge"}
@@ -319,7 +318,7 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <img src="/home-page/hostIcon.png" width="50%" />
+              <img src="/home-page/hostIcon.png" width="40" height='40' />
             </ListItemIcon>
             <ListItemText
               primary={"Hosts"}
@@ -345,7 +344,7 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <img src="/home-page/plansIcon.png" width="50%" />
+              <img src="/home-page/plansIcon.png" width="40" height='40' />
             </ListItemIcon>
             <ListItemText
               primary={"Service Plans"}
@@ -371,7 +370,7 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <img src="/home-page/settingsIcon.png" width="50%" />
+              <img src="/settings.png" width="40" height='40' />
             </ListItemIcon>
             <ListItemText primary={"Settings"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
@@ -393,7 +392,7 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <img src="/home-page/helpIcon.png" width="50%" />
+              <img src="/home-page/helpIcon.png" width="40" height='40' />
             </ListItemIcon>
             <ListItemText primary={"Help"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>

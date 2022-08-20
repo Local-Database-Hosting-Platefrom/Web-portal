@@ -138,7 +138,7 @@ const Statistics = () => {
             fontWeight="bold"
           />
         )}
-        <Heading text={"Overview"} fontSize="1.5rem" fontWeight="bold" />
+        {/* <Heading text={"Overview"} fontSize="1.5rem" fontWeight="bold" /> */}
       </div>
       <div style={{ paddingLeft: "5%" }}>
         <Grid container style={{ marginTop: "2%",paddingLeft:"15%",paddingRight:"15%"}}>

@@ -4,6 +4,7 @@ import { useState } from "react";
 import ManageProfile from "./Forms/ManageProfile";
 import ResetPassword from "./Forms/ResetPassword";
 import DeleteAccount from "./Forms/DeleteAccount";
+import { Button } from "antd";
 const SettingsScreen = () => {
   const [value, setValue] = useState(0);
   const [currentOpenedScreen, setCurrentOpenedScreen] = useState(
@@ -59,19 +60,24 @@ const SettingsScreen = () => {
                       handleScreenChange(1);
                     }}
                   >
-                    <Heading text={"Reset Passowrd"} fontSize="1rem" />
+                    {/* <Heading text={"Reset Passowrd"} fontSize="1rem" /> */}
+                    <Button type="secondary" shape="round" style={{width:"100%"}} size={"middle"} >Reset Password</Button>
+
                   </div>
+                  <Divider />
                 </div>
               )}
 
-              <Divider />
+             
               <div
                 style={{ margin: "5%", cursor: "pointer" }}
                 onClick={() => {
                   handleScreenChange(2);
                 }}
               >
-                <Heading text={"Delete Account"} fontSize="1rem" />
+                {/* <Heading text={"Delete Account"} fontSize="1rem" /> */}
+                <Button type="secondary" shape="round" style={{width:"100%"}} size={"middle"} >Delete Account</Button>
+
               </div>
             </div>
           </Grid>
