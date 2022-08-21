@@ -538,72 +538,64 @@ export default function CustomDialog({
 
       {alertType == dialogueTypes.VIEW_COMPLETE_REQUEST && (
         <div>
-          <Modal
-            visible={open}
-            closable={false}
-            footer={null}
-            title={null}
-          >
+          <Modal visible={open} closable={false} footer={null} title={null}>
             <div>
              
-                {/* <Grid item xs={12}>
-                  <Text keyboard style={{ fontSize: "1.2rem" }}>
-                    Developer Name : {alertMessage.developerName}
-                  </Text>
-                </Grid>
-                <Grid item xs={12} style={{ marginTop: "2%" }}>
-                  <Text keyboard style={{ fontSize: "1.2rem" }}>
-                    Requested Databases : {alertMessage.requestedHosts}
-                  </Text>
-                </Grid> */}
-
-                {/* Developer Name,Host Name,Request Query,Response */}
-                <Card title="Request details">
-                  <Card.Grid style={gridStyle}>
-                    <Text keyboard style={{ fontSize: "1rem" }}>
-                      Developer Name
-                    </Text>{" "}
-                    <Divider /> {alertMessage.developerName}
-                  </Card.Grid>
-                  <Card.Grid style={gridStyle}>
+              {/* Developer Name,Host Name,Request Query,Response */}
+              <Card title="Request details">
+                <Card.Grid style={gridStyle}>
                   <Text keyboard style={{ fontSize: "1rem" }}>
-                      Host Name
-                    </Text>{" "}
-                    <Divider /> {alertMessage.hostName}
-                  </Card.Grid>
-                  <Card.Grid style={gridStyle}>
-                    <Text keyboard  style={{ fontSize: "1rem" }}>
-                     Query
+                    Developer Name
+                  </Text>{" "}
+                  <Divider /> {alertMessage.developerName}
+                </Card.Grid>
+                <Card.Grid style={gridStyle}>
+                  <Text keyboard style={{ fontSize: "1rem" }}>
+                    Host Name
+                  </Text>{" "}
+                  <Divider /> {alertMessage.hostName}
+                </Card.Grid>
+                <Card.Grid style={gridStyle}>
+                  <Text keyboard style={{ fontSize: "1rem" }}>
+                    Query
+                  </Text>
+                  <Divider />
+                  <div style={{ height: "8rem", overflowY: "scroll" }}>
+                    <Text style={{ fontSize: "1rem" }}>
+                      <b> Query String : </b>{" "}
+                      {
+                        JSON.parse(alertMessage.key.request.requestPayload)
+                          .query
+                      }
                     </Text>
-                    <Divider/>
-                    <div style={{height:"8rem",overflowY:"scroll"}}>
-         
-                    <Text  style={{ fontSize: "1rem" }}>
-                      <b> Query String : </b>  {JSON.parse(alertMessage.key.request.requestPayload).query}
-                    </Text>
-                    <Divider/>
-                    <Text  style={{ fontSize: "1rem" }}>
-                     <b> Database Name : </b>  {JSON.parse(alertMessage.key.request.requestPayload).databaseName} 
+                    <Divider />
+                    <Text style={{ fontSize: "1rem" }}>
+                      <b> Database Name : </b>{" "}
+                      {
+                        JSON.parse(alertMessage.key.request.requestPayload)
+                          .databaseName
+                      }
                     </Text>
                   </div>
-                   
-                  </Card.Grid>
-                  <Card.Grid style={gridStyle}>
-                  <Text keyboard  style={{ fontSize: "1rem" }}>
+                </Card.Grid>
+                <Card.Grid style={gridStyle}>
+                  <Text keyboard style={{ fontSize: "1rem" }}>
                     <b> Host Response </b>
+                  </Text>
+                  <Divider />
+                  <div style={{ height: "8rem", overflowY: "scroll" }}>
+                    <Text style={{ fontSize: "1rem" }}>
+                      <b> Response : </b>{" "}
+                      {
+                        JSON.parse(
+                          alertMessage.key.request.requestResolvedPayload
+                        ).response
+                      }
                     </Text>
-                    <Divider/>
-                    <div style={{height:"8rem",overflowY:"scroll"}}>
-                    <Text  style={{ fontSize: "1rem" }}>
-                     <b> Response : </b> {JSON.parse(alertMessage.key.request.requestResolvedPayload).response} 
-                    </Text>
-                    </div>
-                    
-                  </Card.Grid>
-                </Card>
-                <Grid container>
-
-              
+                  </div>
+                </Card.Grid>
+              </Card>
+              <Grid container>
                 <Grid
                   item
                   xs={12}
@@ -621,7 +613,7 @@ export default function CustomDialog({
                     Close
                   </Button>
                 </Grid>
-                </Grid>
+              </Grid>
             </div>
           </Modal>
         </div>
@@ -756,64 +748,63 @@ export default function CustomDialog({
         </div>
       )}
 
-       {alertType == dialogueTypes.VIEW_DENIAL_REASON && (
+      {alertType == dialogueTypes.VIEW_DENIAL_REASON && (
         <div>
-          <Modal
-            visible={open}
-            closable={false}
-            footer={null}
-            title={null}
-          >
+          <Modal visible={open} closable={false} footer={null} title={null}>
             <div>
-             
-               
-                {/* Developer Name,Host Name,Request Query,Response */}
-                <Card title="Request details">
-                  <Card.Grid style={gridStyle}>
-                    <Text keyboard style={{ fontSize: "1rem" }}>
-                      Developer Name
-                    </Text>{" "}
-                    <Divider /> {alertMessage.developerName}
-                  </Card.Grid>
-                  <Card.Grid style={gridStyle}>
+              {/* Developer Name,Host Name,Request Query,Response */}
+              <Card title="Request details">
+                <Card.Grid style={gridStyle}>
                   <Text keyboard style={{ fontSize: "1rem" }}>
-                      Host Name
-                    </Text>{" "}
-                    <Divider /> {alertMessage.hostName}
-                  </Card.Grid>
-                  <Card.Grid style={gridStyle}>
-                    <Text keyboard  style={{ fontSize: "1rem" }}>
-                     Query
+                    Developer Name
+                  </Text>{" "}
+                  <Divider /> {alertMessage.developerName}
+                </Card.Grid>
+                <Card.Grid style={gridStyle}>
+                  <Text keyboard style={{ fontSize: "1rem" }}>
+                    Host Name
+                  </Text>{" "}
+                  <Divider /> {alertMessage.hostName}
+                </Card.Grid>
+                <Card.Grid style={gridStyle}>
+                  <Text keyboard style={{ fontSize: "1rem" }}>
+                    Query
+                  </Text>
+                  <Divider />
+                  <div style={{ height: "8rem", overflowY: "scroll" }}>
+                    <Text style={{ fontSize: "1rem" }}>
+                      <b> Query String : </b>{" "}
+                      {
+                        JSON.parse(alertMessage.key.request.requestPayload)
+                          .query
+                      }
                     </Text>
-                    <Divider/>
-                    <div style={{height:"8rem",overflowY:"scroll"}}>
-         
-                    <Text  style={{ fontSize: "1rem" }}>
-                      <b> Query String : </b>  {JSON.parse(alertMessage.key.request.requestPayload).query}
-                    </Text>
-                    <Divider/>
-                    <Text  style={{ fontSize: "1rem" }}>
-                     <b> Database Name : </b>  {JSON.parse(alertMessage.key.request.requestPayload).databaseName} 
+                    <Divider />
+                    <Text style={{ fontSize: "1rem" }}>
+                      <b> Database Name : </b>{" "}
+                      {
+                        JSON.parse(alertMessage.key.request.requestPayload)
+                          .databaseName
+                      }
                     </Text>
                   </div>
-                   
-                  </Card.Grid>
-                  <Card.Grid style={gridStyle}>
-                  <Text keyboard  style={{ fontSize: "1rem" }}>
+                </Card.Grid>
+                <Card.Grid style={gridStyle}>
+                  <Text keyboard style={{ fontSize: "1rem" }}>
                     <b> Denial Reason </b>
+                  </Text>
+                  <Divider />
+                  <div style={{ height: "8rem", overflowY: "scroll" }}>
+                    <Text style={{ fontSize: "1rem" }}>
+                      {
+                        JSON.parse(alertMessage.key.request.requestStatus)
+                          .statusMessage
+                      }
                     </Text>
-                    <Divider/>
-                    <div style={{height:"8rem",overflowY:"scroll"}}>
-                    <Text  style={{ fontSize: "1rem" }}>
-                     {JSON.parse(alertMessage.key.request.requestStatus).statusMessage} 
-                    </Text>
-                    </div>
-                    
-                  </Card.Grid>
-                </Card>
-                <Grid container>
-
-              
+                  </div>
+                </Card.Grid>
+              </Card>
+              <Grid container>
                 <Grid
                   item
                   xs={12}
@@ -831,24 +822,23 @@ export default function CustomDialog({
                     Close
                   </Button>
                 </Grid>
-                </Grid>
+              </Grid>
             </div>
           </Modal>
         </div>
       )}
 
-{alertType == dialogueTypes.VIEW_HOST_PENDING_REQUEST && (
+      {alertType == dialogueTypes.VIEW_HOST_PENDING_REQUEST && (
         <div>
           <Modal
             visible={open}
             closable={true}
             footer={null}
             title={"Host Connection Request"}
-            onCancel={()=>{
+            onCancel={() => {
               handleNoEvent();
             }}
           >
-
             <Grid container>
               <Grid item xs={12}>
                 <div style={{ textAlign: "center" }}>
@@ -858,7 +848,7 @@ export default function CustomDialog({
                     style={{ width: "50%" }}
                     size={"middle"}
                     onClick={() => {
-                      handleOkEvent({payload:"Connect"});
+                      handleOkEvent({ payload: "Connect" });
                     }}
                   >
                     Connect
@@ -871,10 +861,10 @@ export default function CustomDialog({
                     style={{ width: "50%" }}
                     size={"middle"}
                     onClick={() => {
-                     handleOkEvent({payload:"Decline"});
+                      handleOkEvent({ payload: "Decline" });
                     }}
                   >
-                    Decline
+                    Remove Permanently
                   </Button>
                 </div>
               </Grid>
@@ -882,6 +872,52 @@ export default function CustomDialog({
           </Modal>
         </div>
       )}
+
+{alertType == dialogueTypes.VIEW_HOST_CONNECTION && (
+        <div>
+          <Modal
+            visible={open}
+            closable={true}
+            footer={null}
+            title={"Set up the connection status"}
+            onCancel={() => {
+              handleNoEvent();
+            }}
+          >
+            <Grid container>
+              <Grid item xs={12}>
+                <div style={{ textAlign: "center" }}>
+                  <Button
+                    type="primary"
+                    shape="round"
+                    style={{ width: "50%" }}
+                    size={"middle"}
+                    onClick={() => {
+                      handleOkEvent({ payload: "Dis-connect" });
+                    }}
+                  >
+                    Dis-connect
+                  </Button>
+                </div>
+                <div style={{ textAlign: "center", marginTop: "2%" }}>
+                  <Button
+                    type="danger"
+                    shape="round"
+                    style={{ width: "50%" }}
+                    size={"middle"}
+                    onClick={() => {
+                      handleOkEvent({ payload: "Decline" });
+                    }}
+                  >
+                    Remove Permanently 
+                  </Button>
+                </div>
+              </Grid>
+            </Grid>
+          </Modal>
+        </div>
+      )}
+
 
       {alertType == dialogueTypes.INVALID_LOGIN && (
         <div>

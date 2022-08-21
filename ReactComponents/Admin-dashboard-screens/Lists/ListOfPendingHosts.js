@@ -4,7 +4,10 @@ import Head from "next/head";
 import { useEffect } from "react";
 import { useState } from "react";
 import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
-import { LOAD_PENDING_HOSTS_LIST, SET_HOST_STATUS } from "../../../request-manager/requestUrls";
+import {
+  LOAD_PENDING_HOSTS_LIST,
+  SET_HOST_STATUS,
+} from "../../../request-manager/requestUrls";
 import { COULD_NOT_FETCH } from "../../../request-manager/responseCodes";
 import CustomDropDown from "../../../Support/CustomDropDown";
 import Heading from "../../../Support/Heading";
@@ -28,7 +31,7 @@ const columns = [
   },
   {
     title: "Last Seen",
-    dataIndex : "lastSeen",
+    dataIndex: "lastSeen",
   },
   {
     title: "Request Status",
@@ -55,6 +58,7 @@ const ListOfPendingHosts = () => {
     // Make call to load pending list of hosts
     const useData = JSON.parse(localStorage.getItem("loggedInUser"));
     const _id = useData.responsePayload._id;
+    setIsDataLoading(true)
     sendResquestToCentralAPI("POST", LOAD_PENDING_HOSTS_LIST, {
       _id: _id,
     }).then(
@@ -65,26 +69,28 @@ const ListOfPendingHosts = () => {
           console.log("Error in loading list of pending hosts :", list.payload);
         } else {
           console.log(list.payload);
-          let tempList=[];
-          setListOfPendingHosts(list.payload.map((host)=>{
-            return {
-              key:host,
-              hostId:host.hostId,
-              hostName:host.hostName,
-              lastSeen:host.lastSeenDateAndTime,
-              requestStatus:host.isConnected, 
-            }
-          }));
+          let tempList = [];
+          setListOfPendingHosts(
+            list.payload.map((host) => {
+              return {
+                key: host,
+                hostId: host.hostId,
+                hostName: host.hostName,
+                lastSeen: host.lastSeenDateAndTime,
+                requestStatus: host.isConnected,
+              };
+            })
+          );
+          setIsDataLoading(false)
         }
       },
       (error) => {
         console.log("Error", error);
+        setIsDataLoading(false)
       }
     );
   }, [refresh]);
 
-
-  
   const displayDialog = (dialogType, dialogTitle, dialogMessage) => {
     setAlertMessage_CustomDialog(dialogMessage);
     setAlertTitle_CustomDialog(dialogTitle);
@@ -102,26 +108,40 @@ const ListOfPendingHosts = () => {
 
   const handleOkEvent = (action) => {
     handleClose_CustomDialog();
-    if(action){
-    const userData = JSON.parse(localStorage.getItem("loggedInUser"));
-    const adminId = userData.responsePayload._id; 
-    const hostId=currentSelectedRow.hostId;
-    const status = action.payload;
-    sendResquestToCentralAPI("POST", SET_HOST_STATUS,{
-      adminId,hostId,status
-    }).then(async (success)=>{
-      const response = await success.json();
-  
-      setRefresh((prev)=>{
-        return !prev
-      });
+    if (action) {
+      const userData = JSON.parse(localStorage.getItem("loggedInUser"));
+      const adminId = userData.responsePayload._id;
+      const hostId = currentSelectedRow.hostId;
+      const status = action.payload;
+      sendResquestToCentralAPI("POST", SET_HOST_STATUS, {
+        adminId,
+        hostId,
+        status,
+      }).then(
+        async (success) => {
+          const response = await success.json();
 
-      openNotificationWithIcon("info","Server Response",response.responseMessage,"bottom")
+          setRefresh((prev) => {
+            return !prev;
+          });
 
-    },(error)=>{
-      console.log("Error",error)
-      openNotificationWithIcon("info","Server Response",JSON.stringify(error),"bottom")
-    })
+          openNotificationWithIcon(
+            "info",
+            "Server Response",
+            response.responseMessage,
+            "bottom"
+          );
+        },
+        (error) => {
+          console.log("Error", error);
+          openNotificationWithIcon(
+            "info",
+            "Server Response",
+            JSON.stringify(error),
+            "bottom"
+          );
+        }
+      );
     }
   };
   const handleNoEvent = (action) => {
@@ -137,11 +157,18 @@ const ListOfPendingHosts = () => {
       );
 
       setCurrentSelectRow(selectedRows[0].key);
-      displayDialog(dialogueTypes.VIEW_HOST_PENDING_REQUEST, "", selectedRows[0]);
+      displayDialog(
+        dialogueTypes.VIEW_HOST_PENDING_REQUEST,
+        "",
+        selectedRows[0]
+      );
     },
   };
-  return <Container>
-         <Table
+
+
+  return (
+    <Container>
+      <Table
         loading={{ indicator: <Spinner />, spinning: isDataLoading }}
         rowSelection={{
           type: "radio",
@@ -161,6 +188,8 @@ const ListOfPendingHosts = () => {
         handleOkEvent={handleOkEvent}
         handleNoEvent={handleNoEvent}
       />
-  </Container>;
+
+    </Container>
+  );
 };
 export default ListOfPendingHosts;

@@ -1,15 +1,58 @@
 import { Container, Divider, Grid } from "@mui/material";
+import { Table } from "antd";
 import { useEffect, useState } from "react";
 import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
-import { LOAD_CONNECTED_HOSTS_LIST } from "../../../request-manager/requestUrls";
+import { LOAD_CONNECTED_HOSTS_LIST, SET_HOST_STATUS } from "../../../request-manager/requestUrls";
 import CustomDropDown from "../../../Support/CustomDropDown";
 import Heading from "../../../Support/Heading";
+import Spinner from "../../../Support/Spinner";
+import CustomDialog from "../../Dialogues/CustomDialog";
+import dialogueTypes from "../../Dialogues/dialogueTypes";
+import openNotificationWithIcon from "../../Dialogues/Notification";
 import ItemHolder_ConnectedHost from "./ListItemHolders/ItemHolder_ConnectedHost";
 import ItemHolder_ConsumerDeniedRequest from "./ListItemHolders/ItemHolder_ConsumerDeniedRequest";
 import ItemHolder_ConsumerRole from "./ListItemHolders/ItemHolder_ConsumerRole";
+
+
+const columns = [
+  {
+    title: "Host Id",
+    dataIndex: "hostId",
+  },
+  {
+    title: "Host Name",
+    dataIndex: "hostName",
+  },
+  {
+    title: "Number Of Hits",
+    dataIndex: "numberOfHits",
+  },
+  {
+    title: "Last Seen",
+    dataIndex: "lastSeen",
+  },
+  
+  {
+    title: "Request Status",
+    dataIndex: "requestStatus",
+  },
+];
+
+
 const ListOfConnectedHosts = ()=>{
   const [refresh,setRefresh]=useState(false);
   const [ListOfConnectedHosts,setListOfConnectedHosts] =useState([]);
+
+  const [currentSelectedRow, setCurrentSelectRow] = useState(null);
+
+  const [alertType, setAlertType] = useState(null);
+  const [openCustomDialog, setOpenCustomDialog] = useState(false);
+  const [alertMessage_CustomDialog, setAlertMessage_CustomDialog] =
+    useState("");
+  const [alertTitle_CustomDialog, setAlertTitle_CustomDialog] = useState("");
+
+  const [isDataLoading, setIsDataLoading] = useState(false);
+
     useEffect(()=>{
       // Make call to load pending list of hosts
       const useData = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -18,133 +61,117 @@ const ListOfConnectedHosts = ()=>{
         _id: _id,
       }).then(async (success)=>{
         const list = await success.json();
-        console.log("Connected hosts",list)
-        setListOfConnectedHosts(list.payload);
+        setListOfConnectedHosts(
+          list.payload.map((host) => {
+            return {
+              key: host,
+              hostId: host.hostId,
+              hostName: host.hostName,
+              lastSeen: host.lastSeenDateAndTime,
+              requestStatus: host.isConnected,
+              numberOfHits:host.hostAcessUrl.numberOfHits
+            };
+          })
+        );
       },(error)=>{
         console.log("Error",error)
       })
     },[refresh])
     
-  const [orderBy,setOrderBy]=useState("ASC");
-  const [numberOfRecrods,setNumberOfRecrods]=useState("All");
+  const displayDialog = (dialogType, dialogTitle, dialogMessage) => {
+    setAlertMessage_CustomDialog(dialogMessage);
+    setAlertTitle_CustomDialog(dialogTitle);
+    setAlertType(dialogType);
+    handleClickOpen_CustomDialog();
+  };
+
+  const handleClickOpen_CustomDialog = () => {
+    setOpenCustomDialog(true);
+  };
+
+  const handleClose_CustomDialog = () => {
+    setOpenCustomDialog(false);
+  };
+    const handleOkEvent = (action) => {
+      handleClose_CustomDialog();
+      if (action) {
+        const userData = JSON.parse(localStorage.getItem("loggedInUser"));
+        const adminId = userData.responsePayload._id;
+        const hostId = currentSelectedRow.hostId;
+        const status = action.payload;
+        sendResquestToCentralAPI("POST", SET_HOST_STATUS, {
+          adminId,
+          hostId,
+          status,
+        }).then(
+          async (success) => {
+            const response = await success.json();
+            setRefresh((prev) => {
+              return !prev;
+            });
   
-  const listOfOptions_OrderBy = [
-      {
-          optionTitle:"ASC",
-          optionValue:"asc"
+            openNotificationWithIcon(
+              "info",
+              "Server Response",
+              response.responseMessage,
+              "bottom"
+            );
+          },
+          (error) => {
+            console.log("Error", error);
+            openNotificationWithIcon(
+              "info",
+              "Server Response",
+              JSON.stringify(error),
+              "bottom"
+            );
+          }
+        );
+      }
+    };
+    const handleNoEvent = (action) => {
+      handleClose_CustomDialog();
+    };
+  
+    const rowSelection = {
+      onChange: (selectedRowKeys, selectedRows) => {
+        console.log(
+          `selectedRowKeys: ${selectedRowKeys}`,
+          "selectedRows: ",
+          selectedRows
+        );
+  
+        setCurrentSelectRow(selectedRows[0].key);
+        displayDialog(
+          dialogueTypes.VIEW_HOST_CONNECTION,
+          "",
+          selectedRows[0]
+        );
       },
-      {
-        optionTitle:"DESC",
-        optionValue:"asc"
-      },
-    
-    ]
-  const listOfOptions_NumberOfRows=[
-    {
-        optionTitle:"5",
-        optionValue:"5"
-    },
-    {
-        optionTitle:"10",
-        optionValue:"10"
-    },
-    {
-        optionTitle:"20",
-        optionValue:"20"
-    },
-    {
-        optionTitle:"30",
-        optionValue:"30"
-    },
-    {
-        optionTitle:"All",
-        optionValue:"all"
-    },
-    
-    
-  ]  
+    };
   
     return <Container>
-          <div>
-          <Grid container>
-              {/* <Grid item xs={8}>
-                <Heading text={"Connected Hosts"} fontSize="1.5rem" />
-              </Grid>
+        <Table
+        loading={{ indicator: <Spinner />, spinning: isDataLoading }}
+        rowSelection={{
+          type: "radio",
+          ...rowSelection,
+        }}
+        columns={columns}
+        dataSource={ListOfConnectedHosts}
+      />
 
-              <Grid item xs={2}>
-                <CustomDropDown currentSelectedOption={orderBy} setCurrentSelectedOption={setOrderBy} label="Order By" listOfOptions={listOfOptions_OrderBy}/>
-              </Grid>
-              <Grid item xs={2} style={{paddingLeft:"1%"}}>
-                <CustomDropDown currentSelectedOption={numberOfRecrods} setCurrentSelectedOption={setNumberOfRecrods} label="Number Of Recods" listOfOptions={listOfOptions_NumberOfRows}/>
-              </Grid> */}
-          </Grid>
-        </div>
-        <Grid container>
-        <Grid item xs={12}>
-          {/* List */}
-          <div  style={{
-              paddingLeft: "5%",
-            //   paddingRight: "5%",
-            //   marginTop: "2%",
-            marginTop:"1%"
-            }}>
-          <div>
-          <Divider/>
-          <Grid container>
-              <Grid item xs={1} style={{ marginLeft:"4%" }}>
-                {/* Icon */}
-                {/* <img src="/home-page/consumerIconForList.png" width="25%" /> */}
-              </Grid>
-              <Grid item xs={3} >
-                {/* Consumer Name */}
-                {`Host Id`}
-              </Grid>
-              <Grid item xs={3} >
-                {/* Consumer Name */}
-                {`Host Name`}
-              </Grid>
-              <Grid item xs={3} >
-                {/* Consumer Name */}
-                {`Last Seen`}
-              </Grid>
-            </Grid>
-            </div>
-            <Divider/>
-            </div>
-          <div
-            style={{
-              paddingLeft: "8%",
-              paddingRight: "5%",
-              marginTop: "2%",
-              overflowY: "scroll",
-              height: "12rem",
-            }}
-          >
-            {/* Items */}
-            
-            {
-              (ListOfConnectedHosts.length > 0) && (<div>
-              {ListOfConnectedHosts.map((item) => {
-              return (
-                <div style={{ marginTop: "1%" }}>
-                  {" "}
-                  <ItemHolder_ConnectedHost item={item} setRefresh={setRefresh}/>
-                </div>
-              );
-            })}
-              </div>)
-            }
-
-            {
-              (ListOfConnectedHosts.length==0) && (<div>
-                <Heading text={"Not conected hosts ..!"} fontsize={"1rem"}/>
-              </div>)
-            }
-
-           
-          </div>
-        </Grid>
-      </Grid>
+      <CustomDialog
+        alertType={alertType}
+        handleClickOpen={handleClickOpen_CustomDialog}
+        handleCloseEvent={handleClose_CustomDialog}
+        open={openCustomDialog}
+        alertMessage={alertMessage_CustomDialog}
+        alertTitle={alertTitle_CustomDialog}
+        handleOkEvent={handleOkEvent}
+        handleNoEvent={handleNoEvent}
+      />
+       
         
     </Container>
 }
