@@ -26,8 +26,12 @@ import {
 } from "../../../request-manager/requestUrls";
 import "antd/dist/antd.css";
 import { Button, Input, Switch, Tooltip } from "antd";
-import CountryPhoneInput, { ConfigProvider } from "antd-country-phone-input";
-import en from "world_countries_lists/data/countries/en/world.json";
+
+// import CountryPhoneInput, { ConfigProvider } from "antd-country-phone-input";
+
+
+// import en from "world_countries_lists/data/countries/en/world.json";
+
 import "antd-country-phone-input/dist/index.css";
 
 const useStyles = makeStyles({
@@ -284,7 +288,7 @@ const Index = () => {
                       placement="right"
                       visible={isMobileNumberInvalid}
                     >
-                      <ConfigProvider locale={en}>
+                      {/* <ConfigProvider locale={en}>
                         <CountryPhoneInput
                           style={{
                             fontSize: "1rem",
@@ -308,6 +312,7 @@ const Index = () => {
                           }}
                         />
                       </ConfigProvider>
+                       */}
                     </Tooltip>
                     {/* <Input
                       style={{
