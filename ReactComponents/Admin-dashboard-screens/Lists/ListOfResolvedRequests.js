@@ -106,6 +106,7 @@ const ListOfResolvedRequests = () => {
       displayDialog(dialogueTypes.VIEW_COMPLETE_REQUEST, "", selectedRows[0]);
     },
   };
+  
   return (
     <Container>
       <div>
