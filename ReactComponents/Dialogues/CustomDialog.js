@@ -11,7 +11,15 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import CloseIcon from "@mui/icons-material/Close";
-import { Radio, Space, Checkbox, Typography, Switch, Divider } from "antd";
+import {
+  Radio,
+  Space,
+  Checkbox,
+  Typography,
+  Switch,
+  Divider,
+  Card,
+} from "antd";
 const { Text, Title, Link } = Typography;
 import {
   FormControlLabel,
@@ -28,6 +36,11 @@ import { useEffect } from "react";
 
 import { Button, Modal } from "antd";
 import openNotificationWithIcon from "./Notification";
+
+const gridStyle = {
+  width: "50%",
+  textAlign: "left",
+};
 
 export default function CustomDialog({
   handleClickOpen,
@@ -432,7 +445,13 @@ export default function CustomDialog({
                     unCheckedChildren="Disabled"
                     // defaultChecked
                     style={{ width: "30%" }}
-                    checked={isOpenAPIEnabled==null ? alertMessage.status == "Enabled" ? true : false : isOpenAPIEnabled }
+                    checked={
+                      isOpenAPIEnabled == null
+                        ? alertMessage.status == "Enabled"
+                          ? true
+                          : false
+                        : isOpenAPIEnabled
+                    }
                     onChange={(e) => {
                       console.log(e);
                       setIsOpenAPIEnabled(e);
@@ -445,9 +464,15 @@ export default function CustomDialog({
                     checkedChildren="Public"
                     unCheckedChildren="Private"
                     // defaultChecked
-                    
+
                     style={{ width: "30%" }}
-                    checked={isOpenAPIPublic==null ? alertMessage.isPublic == "Public" ? true : false : isOpenAPIPublic }
+                    checked={
+                      isOpenAPIPublic == null
+                        ? alertMessage.isPublic == "Public"
+                          ? true
+                          : false
+                        : isOpenAPIPublic
+                    }
                     onChange={(e) => {
                       console.log(e);
                       setIsOpenAPIPublic(e);
@@ -493,9 +518,13 @@ export default function CustomDialog({
                     style={{ width: "50%" }}
                     size={"middle"}
                     onClick={() => {
-                      handleOkEvent({action:"updateStates",payload:{
-                        isOpenAPIEnabled:isOpenAPIEnabled,isOpenAPIPublic:isOpenAPIPublic
-                      }});
+                      handleOkEvent({
+                        action: "updateStates",
+                        payload: {
+                          isOpenAPIEnabled: isOpenAPIEnabled,
+                          isOpenAPIPublic: isOpenAPIPublic,
+                        },
+                      });
                     }}
                   >
                     Save Changes
@@ -503,6 +532,97 @@ export default function CustomDialog({
                 </div>
               </Grid>
             </Grid>
+          </Modal>
+        </div>
+      )}
+
+      {alertType == dialogueTypes.VIEW_COMPLETE_REQUEST && (
+        <div>
+          <Modal
+            visible={open}
+            closable={false}
+            footer={null}
+            title={null}
+          >
+            <div>
+             
+                {/* <Grid item xs={12}>
+                  <Text keyboard style={{ fontSize: "1.2rem" }}>
+                    Developer Name : {alertMessage.developerName}
+                  </Text>
+                </Grid>
+                <Grid item xs={12} style={{ marginTop: "2%" }}>
+                  <Text keyboard style={{ fontSize: "1.2rem" }}>
+                    Requested Databases : {alertMessage.requestedHosts}
+                  </Text>
+                </Grid> */}
+
+                {/* Developer Name,Host Name,Request Query,Response */}
+                <Card title="Request details">
+                  <Card.Grid style={gridStyle}>
+                    <Text keyboard style={{ fontSize: "1rem" }}>
+                      Developer Name
+                    </Text>{" "}
+                    <Divider /> {alertMessage.developerName}
+                  </Card.Grid>
+                  <Card.Grid style={gridStyle}>
+                  <Text keyboard style={{ fontSize: "1rem" }}>
+                      Host Name
+                    </Text>{" "}
+                    <Divider /> {alertMessage.hostName}
+                  </Card.Grid>
+                  <Card.Grid style={gridStyle}>
+                    <Text keyboard  style={{ fontSize: "1rem" }}>
+                     Query
+                    </Text>
+                    <Divider/>
+                    <div style={{height:"8rem",overflowY:"scroll"}}>
+         
+                    <Text  style={{ fontSize: "1rem" }}>
+                      <b> Query String : </b>  {JSON.parse(alertMessage.key.request.requestPayload).query}
+                    </Text>
+                    <Divider/>
+                    <Text  style={{ fontSize: "1rem" }}>
+                     <b> Database Name : </b>  {JSON.parse(alertMessage.key.request.requestPayload).databaseName} 
+                    </Text>
+                  </div>
+                   
+                  </Card.Grid>
+                  <Card.Grid style={gridStyle}>
+                  <Text keyboard  style={{ fontSize: "1rem" }}>
+                    <b> Host Response </b>
+                    </Text>
+                    <Divider/>
+                    <div style={{height:"8rem",overflowY:"scroll"}}>
+                    <Text  style={{ fontSize: "1rem" }}>
+                     <b> Response : </b> {JSON.parse(alertMessage.key.request.requestResolvedPayload).response} 
+                    </Text>
+                    </div>
+                    
+                  </Card.Grid>
+                </Card>
+                <Grid container>
+
+              
+                <Grid
+                  item
+                  xs={12}
+                  style={{ textAlign: "center", marginTop: "4%" }}
+                >
+                  <Button
+                    type="primary"
+                    shape="round"
+                    style={{ width: "20%" }}
+                    size={"middle"}
+                    onClick={() => {
+                      handleOkEvent(null);
+                    }}
+                  >
+                    Close
+                  </Button>
+                </Grid>
+                </Grid>
+            </div>
           </Modal>
         </div>
       )}
@@ -679,97 +799,6 @@ export default function CustomDialog({
                         </div> */}
                         <div style={{ fontSize: "1rem", textAlign: "center" }}>
                           {alertMessage}
-                        </div>
-                      </Grid>
-                      <Grid item xs={12}>
-                        {handleOkEvent != null && (
-                          <CustomButton
-                            style={{
-                              // marginLeft:isMediumScreen? "40%":"35%",
-                              marginTop: isMediumScreen ? "3%" : "3%",
-                              // left: isMediumScreen? "10":"",
-                              backgroundColor: "#10365B",
-                              fontSize: isMediumScreen ? "0.8rem" : "",
-                            }}
-                            onClick={() => {
-                              // localStorage.setItem("isLoggedIn", true);
-                              // navigation.push("/admin-dashboard");
-                              handleOkEvent("re-login");
-                            }}
-                            name="Ok"
-                          />
-                        )}
-                      </Grid>
-                    </Grid>
-                  </div>
-                </DialogContentText>
-              </div>
-            </DialogContent>
-          </Dialog>
-        </div>
-      )}
-
-      {alertType == dialogueTypes.VIEW_COMPLETE_REQUEST && (
-        <div>
-          <Dialog
-            open={open}
-            onClose={handleCloseEvent}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-            fullWidth
-            maxWidth="sm"
-          >
-            {/* <DialogTitle id="alert-dialog-title">{alertTitle}</DialogTitle> */}
-            <DialogContent>
-              <div>
-                <Grid container>
-                  <Grid item md={8}>
-                    <div style={{ fontSize: "1.7rem" }}>
-                      {/* {alertTitle} */}
-                    </div>
-                  </Grid>
-                  <Grid item md={4} style={{ textAlign: "right" }}>
-                    <div
-                      style={{ cursor: "pointer" }}
-                      onClick={handleCloseEvent}
-                    >
-                      <CloseIcon />
-                    </div>
-                  </Grid>
-                </Grid>
-              </div>
-              <div>
-                <DialogContentText id="alert-dialog-description">
-                  <div>
-                    <Grid container>
-                      <Grid item xs={12}>
-                        <div
-                          style={{ fontSize: "1.7rem", textAlign: "center" }}
-                        >
-                          {alertTitle}
-                        </div>
-                        {/* <div style={{ textAlign: "center" }}>
-                          <img src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/000000/external-failure-factory-flaticons-flat-flat-icons-3.png" />
-                        </div> */}
-                        <div style={{ fontSize: "1rem", textAlign: "center" }}>
-                          <div>
-                            Query :{" "}
-                            {alertMessage.requestPlayload != undefined
-                              ? alertMessage.requestPlayload.query
-                              : ""}
-                          </div>
-                          <div>
-                            Database Name :{" "}
-                            {alertMessage.requestPlayload != undefined
-                              ? alertMessage.requestPlayload.databaseName
-                              : ""}
-                          </div>
-                          <div>
-                            Response :{" "}
-                            {alertMessage.requestResolvedPayload != undefined
-                              ? alertMessage.requestResolvedPayload.response
-                              : ""}
-                          </div>
                         </div>
                       </Grid>
                       <Grid item xs={12}>

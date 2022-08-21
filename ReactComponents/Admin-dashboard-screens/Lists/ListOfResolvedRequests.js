@@ -1,80 +1,111 @@
 import { Container, Divider, Grid } from "@mui/material";
+import { Table } from "antd";
 import { useEffect, useState } from "react";
 import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
 import { LOAD_LIST_OF_RESOLVED_REQUESTS } from "../../../request-manager/requestUrls";
 import CustomDropDown from "../../../Support/CustomDropDown";
 import Heading from "../../../Support/Heading";
+import Spinner from "../../../Support/Spinner";
+import CustomDialog from "../../Dialogues/CustomDialog";
+import dialogueTypes from "../../Dialogues/dialogueTypes";
 import ItemHolder_ConsumerDeniedRequest from "./ListItemHolders/ItemHolder_ConsumerDeniedRequest";
 import ItemHolder_ConsumerResolvedRequest from "./ListItemHolders/ItemHolder_ConsumerResolvedRequest";
 
-const listOfOptions_OrderBy = [
+const columns = [
   {
-    optionTitle: "ASC",
-    optionValue: "asc",
+    title: "Request Id",
+    dataIndex: "requestId",
   },
   {
-    optionTitle: "DESC",
-    optionValue: "asc",
-  },
-];
-const listOfOptions_NumberOfRows = [
-  {
-    optionTitle: "5",
-    optionValue: "5",
+    title: "Developer Name",
+    dataIndex: "developerName",
+    // render: (text) => <a>{text}</a>,
   },
   {
-    optionTitle: "10",
-    optionValue: "10",
+    title: "Host Name",
+    dataIndex: "hostName",
   },
   {
-    optionTitle: "20",
-    optionValue: "20",
-  },
-  {
-    optionTitle: "30",
-    optionValue: "30",
-  },
-  {
-    optionTitle: "All",
-    optionValue: "all",
+    title: "Request Time And Date",
+    dataIndex: "requestTimeAndDate",
   },
 ];
+
 const ListOfResolvedRequests = () => {
   const [listOfRequests, setListOfRequests] = useState([]);
-  const [orderBy, setOrderBy] = useState("ASC");
-  const [numberOfRecrods, setNumberOfRecrods] = useState("All");
+  const [currentSelectedRow, setCurrentSelectRow] = useState(null);
+
+  const [alertType, setAlertType] = useState(null);
+  const [openCustomDialog, setOpenCustomDialog] = useState(false);
+  const [alertMessage_CustomDialog, setAlertMessage_CustomDialog] =
+    useState("");
+  const [alertTitle_CustomDialog, setAlertTitle_CustomDialog] = useState("");
+
+  const [isDataLoading, setIsDataLoading] = useState(false);
 
   useEffect(() => {
     // Make call to load pending list of hosts
     const useData = JSON.parse(localStorage.getItem("loggedInUser"));
     const _id = useData.responsePayload._id;
+    setIsDataLoading(true);
     sendResquestToCentralAPI("POST", LOAD_LIST_OF_RESOLVED_REQUESTS, {
       adminId: _id,
     }).then(
       async (success) => {
         const list = await success.json();
-
+        console.log(list.responsePayload);
         const listToSet = list.responsePayload.map((request) => {
           const r = {
-            requestId: request.request.requestId,
+            key:request,
+            requestId:request.request.requestId,
             developerName: request.requestSenderName,
-            requestTime: request.request.requestDateAndTime,
-            requestPlayload: JSON.parse(request.request.requestPayload),
-            requestResolvedPayload: JSON.parse(
-              request.request.requestResolvedPayload
-            ),
+            hostName: request.hostData.hostName,
+            requestTimeAndDate: request.request.requestDateAndTime,
           };
-          console.log(r);
-          return r;
+             return r;
         });
-        // console.log("listTOSet",listToSet)
         setListOfRequests(listToSet);
+        setIsDataLoading(false);
       },
       (error) => {
         console.log("Error", error);
+        setIsDataLoading(false);
       }
     );
   }, []);
+
+  const displayDialog = (dialogType, dialogTitle, dialogMessage) => {
+    setAlertMessage_CustomDialog(dialogMessage);
+    setAlertTitle_CustomDialog(dialogTitle);
+    setAlertType(dialogType);
+    handleClickOpen_CustomDialog();
+  };
+
+  const handleClickOpen_CustomDialog = () => {
+    setOpenCustomDialog(true);
+  };
+
+  const handleClose_CustomDialog = () => {
+    setOpenCustomDialog(false);
+  };
+
+  const handleOkEvent = (action) => {
+    handleClose_CustomDialog();
+  };
+
+  const rowSelection = {
+    onChange: (selectedRowKeys, selectedRows) => {
+      console.log(
+        `selectedRowKeys: ${selectedRowKeys}`,
+        "selectedRows: ",
+        selectedRows
+      );
+
+      setCurrentSelectRow(selectedRows[0].key);
+      // console.log(selectedRows[0].accessRole);
+      displayDialog(dialogueTypes.VIEW_COMPLETE_REQUEST, "", selectedRows[0]);
+    },
+  };
   return (
     <Container>
       <div>
@@ -82,84 +113,27 @@ const ListOfResolvedRequests = () => {
           <Grid item xs={8}>
             <Heading text={"Resolved requests"} fontSize="1.5rem" />
           </Grid>
-          {/* <Grid item xs={2}>
-            <CustomDropDown
-              currentSelectedOption={orderBy}
-              setCurrentSelectedOption={setOrderBy}
-              label="Order By"
-              listOfOptions={listOfOptions_OrderBy}
-            />
-          </Grid>
-          <Grid item xs={2} style={{ paddingLeft: "1%" }}>
-            <CustomDropDown
-              currentSelectedOption={numberOfRecrods}
-              setCurrentSelectedOption={setNumberOfRecrods}
-              label="Number Of Recods"
-              listOfOptions={listOfOptions_NumberOfRows}
-            />
-          </Grid> */}
         </Grid>
       </div>
-      <Grid container>
-        <Grid item xs={12}>
-          {/* List */}
-          <div
-            style={{
-              paddingLeft: "5%",
-              //   paddingRight: "5%",
-              //   marginTop: "2%",
-              marginTop: "1%",
-            }}
-          >
-            <div>
-              <Divider />
-              <Grid container>
-                <Grid item xs={1} style={{ textAlign: "left" }}>
-                  {/* Icon */}
-                  {/* <img src="/home-page/consumerIconForList.png" width="25%" /> */}
-                </Grid>
-                <Grid item xs={3}>
-                  {/* Consumer Name */}
-                  {`Request ID`}
-                </Grid>
-                <Grid item xs={3} style={{ textAlign: "left" }}>
-                  {/* Consumer Id */}
-                  {`Consumer Id`}
-                </Grid>
-                <Grid item xs={2}>
-                  {/* Consumer Role */}
-                  {`Time and date`}
-                </Grid>
-                <Grid item xs={2}>
-                  {/* Consumer Role */}
-                  {/* {`Time and date`} */}
-                </Grid>
-              </Grid>
-            </div>
-            <Divider />
-          </div>
-          <div
-            style={{
-              paddingLeft: "8%",
-              paddingRight: "5%",
-              marginTop: "2%",
-              overflowY: "scroll",
-              height: "12rem",
-            }}
-          >
-            {/* Items */}
+      <Table
+        loading={{ indicator: <Spinner />, spinning: isDataLoading }}
+        rowSelection={{
+          type: "radio",
+          ...rowSelection,
+        }}
+        columns={columns}
+        dataSource={listOfRequests}
+      />
 
-            {listOfRequests.map((item) => {
-              return (
-                <div style={{ marginTop: "1%" }}>
-                  {" "}
-                  <ItemHolder_ConsumerResolvedRequest item={item} />
-                </div>
-              );
-            })}
-          </div>
-        </Grid>
-      </Grid>
+      <CustomDialog
+        alertType={alertType}
+        handleClickOpen={handleClickOpen_CustomDialog}
+        handleCloseEvent={handleClose_CustomDialog}
+        open={openCustomDialog}
+        alertMessage={alertMessage_CustomDialog}
+        alertTitle={alertTitle_CustomDialog}
+        handleOkEvent={handleOkEvent}
+      />
     </Container>
   );
 };
