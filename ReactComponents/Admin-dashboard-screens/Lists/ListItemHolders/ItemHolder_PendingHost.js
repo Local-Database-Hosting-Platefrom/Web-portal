@@ -36,10 +36,12 @@ const ItemHolder_PendingHost = ({ item,setRefresh}) => {
     console.log(event.target.innerText);
     // Connect
     // Reject
+    
     const userData = JSON.parse(localStorage.getItem("loggedInUser"));
     const adminId = userData.responsePayload._id; 
     const hostId=item.hostId;
     const status = event.target.innerText;
+
     sendResquestToCentralAPI("POST", SET_HOST_STATUS,{
       adminId,hostId,status
     }).then(async (success)=>{

@@ -88,10 +88,10 @@ export default function CustomDialog({
   useEffect(() => {
     // Load the acccess roles
     if (alertMessage.status) setIsLdUrlEnabled(alertMessage.status);
-    if (alertMessage.status)
-      setIsOpenAPIEnabled(alertMessage.status == "Enabled" ? true : false);
-    if (alertMessage.isPublic)
-      setIsOpenAPIPublic(alertMessage.isPublic == "Public" ? true : false);
+    // if (alertMessage.status)
+    //   setIsOpenAPIEnabled(alertMessage.status == "Enabled" ? true : false);
+    // if (alertMessage.isPublic)
+    //   setIsOpenAPIPublic(alertMessage.isPublic == "Public" ? true : false);
   }, []);
 
   return (
@@ -833,6 +833,52 @@ export default function CustomDialog({
                 </Grid>
                 </Grid>
             </div>
+          </Modal>
+        </div>
+      )}
+
+{alertType == dialogueTypes.VIEW_HOST_PENDING_REQUEST && (
+        <div>
+          <Modal
+            visible={open}
+            closable={true}
+            footer={null}
+            title={"Host Connection Request"}
+            onCancel={()=>{
+              handleNoEvent();
+            }}
+          >
+
+            <Grid container>
+              <Grid item xs={12}>
+                <div style={{ textAlign: "center" }}>
+                  <Button
+                    type="primary"
+                    shape="round"
+                    style={{ width: "50%" }}
+                    size={"middle"}
+                    onClick={() => {
+                      handleOkEvent({payload:"Connect"});
+                    }}
+                  >
+                    Connect
+                  </Button>
+                </div>
+                <div style={{ textAlign: "center", marginTop: "2%" }}>
+                  <Button
+                    type="danger"
+                    shape="round"
+                    style={{ width: "50%" }}
+                    size={"middle"}
+                    onClick={() => {
+                     handleOkEvent({payload:"Decline"});
+                    }}
+                  >
+                    Decline
+                  </Button>
+                </div>
+              </Grid>
+            </Grid>
           </Modal>
         </div>
       )}
