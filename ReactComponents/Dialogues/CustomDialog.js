@@ -11,7 +11,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import CloseIcon from "@mui/icons-material/Close";
-import { Radio, Space,Checkbox ,Typography, Switch, Divider } from "antd";
+import { Radio, Space, Checkbox, Typography, Switch, Divider } from "antd";
 const { Text, Title, Link } = Typography;
 import {
   FormControlLabel,
@@ -45,10 +45,10 @@ export default function CustomDialog({
   const [isAutoTokenGeneratingAllowed, setIsAutoTokenGeneratingAllowed] =
     React.useState(true);
 
-  const [isLdUrlEnabled,setIsLdUrlEnabled]=React.useState(false);  
-  const [isOpenAPIEnabled,setIsOpenAPIEnabled]=React.useState(false);  
-  const [isOpenAPIPublic,setIsOpenAPIPublic]=React.useState(false);  
-  
+  const [isLdUrlEnabled, setIsLdUrlEnabled] = React.useState(false);
+  const [isOpenAPIEnabled, setIsOpenAPIEnabled] = React.useState(null);
+  const [isOpenAPIPublic, setIsOpenAPIPublic] = React.useState(null);
+
   const handleTokenGeneration = (event) => {
     setIsAutoTokenGeneratingAllowed(event.target.checked);
   };
@@ -74,17 +74,12 @@ export default function CustomDialog({
 
   useEffect(() => {
     // Load the acccess roles
-    if(alertMessage.status)
-    setIsLdUrlEnabled(alertMessage.status);
-    if(alertMessage.status)
-    setIsOpenAPIEnabled(alertMessage.status);
-    if(alertMessage.isPublic)
-    setIsOpenAPIPublic(alertMessage.isPublic)
-
+    if (alertMessage.status) setIsLdUrlEnabled(alertMessage.status);
+    if (alertMessage.status)
+      setIsOpenAPIEnabled(alertMessage.status == "Enabled" ? true : false);
+    if (alertMessage.isPublic)
+      setIsOpenAPIPublic(alertMessage.isPublic == "Public" ? true : false);
   }, []);
-
- 
-
 
   return (
     <div>
@@ -200,7 +195,6 @@ export default function CustomDialog({
                   </Text>
                 </Grid>
                 <Grid item xs={12} style={{ marginTop: "2%" }}>
-               
                   <Radio.Group
                     defaultValue="a"
                     buttonStyle="solid"
@@ -215,8 +209,17 @@ export default function CustomDialog({
                     <Radio.Button value="1203">Read & Write</Radio.Button>
                   </Radio.Group>
                 </Grid>
-                <Grid item xs={12} style={{marginTop:"2%",marginLeft:"1%"}}>
-                <Checkbox checked={isAutoTokenGeneratingAllowed} onChange={handleTokenGeneration}>Is generating tokens allowed ?</Checkbox>
+                <Grid
+                  item
+                  xs={12}
+                  style={{ marginTop: "2%", marginLeft: "1%" }}
+                >
+                  <Checkbox
+                    checked={isAutoTokenGeneratingAllowed}
+                    onChange={handleTokenGeneration}
+                  >
+                    Is generating tokens allowed ?
+                  </Checkbox>
                 </Grid>
                 <Grid
                   item
@@ -228,29 +231,35 @@ export default function CustomDialog({
                     shape="round"
                     style={{ width: "70%" }}
                     size={"middle"}
-                    onClick={()=>{
+                    onClick={() => {
                       handleOkEvent({
-                        value:"Decline",
-                        accessRole:accessRole,
-                        isAutoTokenGeneratingAllowed:isAutoTokenGeneratingAllowed
-                      })
+                        value: "Decline",
+                        accessRole: accessRole,
+                        isAutoTokenGeneratingAllowed:
+                          isAutoTokenGeneratingAllowed,
+                      });
                     }}
                   >
                     Decline
                   </Button>
                 </Grid>
-                <Grid item xs={6} style={{ textAlign: "center",marginTop:"4%" }}>
+                <Grid
+                  item
+                  xs={6}
+                  style={{ textAlign: "center", marginTop: "4%" }}
+                >
                   <Button
                     type="secondary"
                     shape="round"
                     style={{ width: "70%" }}
                     size={"middle"}
-                    onClick={()=>{
+                    onClick={() => {
                       handleOkEvent({
-                        value:"Accept",
-                        accessRole:accessRole,
-                        isAutoTokenGeneratingAllowed:isAutoTokenGeneratingAllowed
-                      })
+                        value: "Accept",
+                        accessRole: accessRole,
+                        isAutoTokenGeneratingAllowed:
+                          isAutoTokenGeneratingAllowed,
+                      });
                     }}
                   >
                     Accept
@@ -262,7 +271,7 @@ export default function CustomDialog({
         </div>
       )}
 
-{alertType == dialogueTypes.VIEW_DEV_CON_DETAILS && (
+      {alertType == dialogueTypes.VIEW_DEV_CON_DETAILS && (
         <div>
           <Modal
             visible={open}
@@ -288,7 +297,6 @@ export default function CustomDialog({
                   </Text>
                 </Grid> */}
                 <Grid item xs={12} style={{ marginTop: "2%" }}>
-               
                   <Radio.Group
                     defaultValue={alertMessage.assignedRole}
                     buttonStyle="solid"
@@ -304,8 +312,17 @@ export default function CustomDialog({
                     <Radio.Button value="1203">Read & Write</Radio.Button>
                   </Radio.Group>
                 </Grid>
-                <Grid item xs={12} style={{marginTop:"2%",marginLeft:"1%"}}>
-                <Checkbox checked={isAutoTokenGeneratingAllowed} onChange={handleTokenGeneration}>Is generating tokens allowed ?</Checkbox>
+                <Grid
+                  item
+                  xs={12}
+                  style={{ marginTop: "2%", marginLeft: "1%" }}
+                >
+                  <Checkbox
+                    checked={isAutoTokenGeneratingAllowed}
+                    onChange={handleTokenGeneration}
+                  >
+                    Is generating tokens allowed ?
+                  </Checkbox>
                 </Grid>
                 <Grid
                   item
@@ -317,29 +334,35 @@ export default function CustomDialog({
                     shape="round"
                     style={{ width: "70%" }}
                     size={"middle"}
-                    onClick={()=>{
+                    onClick={() => {
                       handleOkEvent({
-                        value:"Decline",
-                        accessRole:accessRole,
-                        isAutoTokenGeneratingAllowed:isAutoTokenGeneratingAllowed
-                      })
+                        value: "Decline",
+                        accessRole: accessRole,
+                        isAutoTokenGeneratingAllowed:
+                          isAutoTokenGeneratingAllowed,
+                      });
                     }}
                   >
                     Decline
                   </Button>
                 </Grid>
-                <Grid item xs={6} style={{ textAlign: "center",marginTop:"4%" }}>
+                <Grid
+                  item
+                  xs={6}
+                  style={{ textAlign: "center", marginTop: "4%" }}
+                >
                   <Button
                     type="secondary"
                     shape="round"
                     style={{ width: "70%" }}
                     size={"middle"}
-                    onClick={()=>{
+                    onClick={() => {
                       handleOkEvent({
-                        value:"Accept",
-                        accessRole:accessRole,
-                        isAutoTokenGeneratingAllowed:isAutoTokenGeneratingAllowed
-                      })
+                        value: "Accept",
+                        accessRole: accessRole,
+                        isAutoTokenGeneratingAllowed:
+                          isAutoTokenGeneratingAllowed,
+                      });
                     }}
                   >
                     Accept
@@ -351,7 +374,7 @@ export default function CustomDialog({
         </div>
       )}
 
-{alertType == dialogueTypes.VIEW_LD_ACCESS_URL && (
+      {alertType == dialogueTypes.VIEW_LD_ACCESS_URL && (
         <div>
           <Modal
             visible={open}
@@ -362,26 +385,25 @@ export default function CustomDialog({
             <Grid container>
               <Grid item xs={12}>
                 <div style={{ textAlign: "center" }}>
-              
-                    <Switch
-                      checkedChildren="Enabled"
-                      unCheckedChildren="Disabled"
-                      // defaultChecked
-                      checked={isLdUrlEnabled}
-                      onChange={(e) => {
-                        console.log(e)
-                        setIsLdUrlEnabled(e)
-                      }}
-                    />
+                  <Switch
+                    checkedChildren="Enabled"
+                    unCheckedChildren="Disabled"
+                    // defaultChecked
+                    checked={isLdUrlEnabled}
+                    onChange={(e) => {
+                      console.log(e);
+                      setIsLdUrlEnabled(e);
+                    }}
+                  />
                 </div>
                 <div style={{ textAlign: "center", marginTop: "2%" }}>
                   <Button
                     type="secondary"
                     shape="round"
-                    style={{ width: "30%",marginTop:"5%" }}
+                    style={{ width: "30%", marginTop: "5%" }}
                     size={"middle"}
                     onClick={() => {
-                      handleOkEvent({setedStatus:isLdUrlEnabled});
+                      handleOkEvent({ setedStatus: isLdUrlEnabled });
                     }}
                   >
                     Update
@@ -393,7 +415,7 @@ export default function CustomDialog({
         </div>
       )}
 
-{alertType == dialogueTypes.VIEW_OPEN_API && (
+      {alertType == dialogueTypes.VIEW_OPEN_API && (
         <div>
           <Modal
             visible={open}
@@ -404,56 +426,79 @@ export default function CustomDialog({
             <Grid container>
               <Grid item xs={12}>
                 <div style={{ textAlign: "center" }}>
-                    <Switch
-                      checkedChildren="Enabled"
-                      unCheckedChildren="Disabled"
-                      // defaultChecked
-                      style={{width:"30%"}}
-                      checked={isOpenAPIEnabled}
-                      onChange={(e) => {
-                        console.log(e)
-                        setIsOpenAPIEnabled(e)
-                      }}
-                    />
-                </div>
-                <div style={{ textAlign: "center",marginTop:"3%" }}>
-                    <Switch
-                      checkedChildren="Public"
-                      unCheckedChildren="Private"
-                      // defaultChecked
-                      style={{width:"30%"}}
-                      checked={isOpenAPIPublic}
-                      onChange={(e) => {
-                        console.log(e)
-                        setIsOpenAPIPublic(e)
-                      }}
-                    />
-                </div>
-                <Divider/>
-                <div style={{ textAlign: "center", marginTop: "2%" }}>
-                  <Button
-                    type="primary"
-                    shape="round"
-                    style={{ width: "30%",marginTop:"5%" }}
-                    size={"middle"}
-                    onClick={() => {
-                      // handleOkEvent({setedStatus:isLdUrlEnabled});
+                  <Switch
+                    id="isEnable"
+                    checkedChildren="Enabled"
+                    unCheckedChildren="Disabled"
+                    // defaultChecked
+                    style={{ width: "30%" }}
+                    checked={isOpenAPIEnabled==null ? alertMessage.status == "Enabled" ? true : false : isOpenAPIEnabled }
+                    onChange={(e) => {
+                      console.log(e);
+                      setIsOpenAPIEnabled(e);
                     }}
-                  >
-                    Save Changes
-                  </Button>
+                  />
                 </div>
+                <div style={{ textAlign: "center", marginTop: "3%" }}>
+                  <Switch
+                    id="isPublic"
+                    checkedChildren="Public"
+                    unCheckedChildren="Private"
+                    // defaultChecked
+                    
+                    style={{ width: "30%" }}
+                    checked={isOpenAPIPublic==null ? alertMessage.isPublic == "Public" ? true : false : isOpenAPIPublic }
+                    onChange={(e) => {
+                      console.log(e);
+                      setIsOpenAPIPublic(e);
+                    }}
+                  />
+                </div>
+                <Divider />
                 <div style={{ textAlign: "center", marginTop: "1%" }}>
                   <Button
                     type="danger"
                     shape="round"
-                    style={{ width: "30%",marginTop:"1%" }}
+                    style={{ width: "30%", marginTop: "1%" }}
                     size={"middle"}
                     onClick={() => {
-                      // handleOkEvent({setedStatus:isLdUrlEnabled});S
+                      handleOkEvent({ action: "delete", payload: null });
                     }}
                   >
                     Delete
+                  </Button>
+                </div>
+                <Divider />
+              </Grid>
+              <Grid item xs={6}>
+                <div style={{ textAlign: "center" }}>
+                  <Button
+                    type="secondary"
+                    shape="round"
+                    style={{ width: "50%" }}
+                    size={"middle"}
+                    onClick={() => {
+                      handleOkEvent(null);
+                    }}
+                  >
+                    Close
+                  </Button>
+                </div>
+              </Grid>
+              <Grid item xs={6}>
+                <div style={{ textAlign: "center" }}>
+                  <Button
+                    type="primary"
+                    shape="round"
+                    style={{ width: "50%" }}
+                    size={"middle"}
+                    onClick={() => {
+                      handleOkEvent({action:"updateStates",payload:{
+                        isOpenAPIEnabled:isOpenAPIEnabled,isOpenAPIPublic:isOpenAPIPublic
+                      }});
+                    }}
+                  >
+                    Save Changes
                   </Button>
                 </div>
               </Grid>
@@ -820,8 +865,6 @@ export default function CustomDialog({
           </Dialog>
         </div>
       )}
-
-      
 
       {alertType == dialogueTypes.WARNING && (
         <div>

@@ -2,12 +2,18 @@ import { Container, Divider, Grid } from "@mui/material";
 import { Table } from "antd";
 import { useEffect, useState } from "react";
 import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
-import { LOAD_LIST_OF_REMOTE_DATABASE_URLS } from "../../../request-manager/requestUrls";
+import {
+  DELETE_REMOTE_DATABASE_ENDPOINT,
+  LOAD_LIST_OF_REMOTE_DATABASE_URLS,
+  SET_STATUS_OF_REMOTE_DATABASE_HOST_ACCESS_URL,
+  UPDATE_REMOTE_DB_URL_VISIBILITY,
+} from "../../../request-manager/requestUrls";
 import CustomDropDown from "../../../Support/CustomDropDown";
 import Heading from "../../../Support/Heading";
 import Spinner from "../../../Support/Spinner";
 import CustomDialog from "../../Dialogues/CustomDialog";
 import dialogueTypes from "../../Dialogues/dialogueTypes";
+import openNotificationWithIcon from "../../Dialogues/Notification";
 // import ItemHolder_ConsumerPendingRequest from "./ListItemHolders/ItemHolder_ConsumerPendingRequest";
 import ItemHolder_HostAcessUrl from "./ListItemHolders/ItemHolder_HostAcessUrl";
 import ItemHolder_RemoteDatabaeAcessUrl from "./ListItemHolders/ItemHolder_RemoteDatabaeAcessUrl";
@@ -58,6 +64,7 @@ const ListOfRemoteDatabaseAccessUrls = () => {
     // Make call to load pending list of hosts
     const useData = JSON.parse(localStorage.getItem("loggedInUser"));
     const _id = useData.responsePayload._id;
+    setIsLoading(true);
     sendResquestToCentralAPI("POST", LOAD_LIST_OF_REMOTE_DATABASE_URLS, {
       adminId: _id,
     }).then(
@@ -65,30 +72,23 @@ const ListOfRemoteDatabaseAccessUrls = () => {
         const response = await success.json();
         console.log(response.responsePayload);
         let listOfUrlsToSet = response.responsePayload.map((url) => {
-          // return {
-          //   hostId: url.urlId,
-          //   hostName: url.sourceHostName,
-          //   accessUrl: url.endPointUrlAddress,
-          //   numberofRequests: url.numberOfHits,
-          //   isEnabled: url.isEnabled,
-          //   urlId: url.urlId,
-          //   url: url.url,
-          //   isPublic: url.isPublic,
-          // };
           return {
+            key: url,
             urlTitle: url.url,
             urlHost: url.sourceHostName,
             urlAddress: url.endPointUrlAddress,
             numberOfHists: url.numberOfHits,
-            status: url.isEnabled ? "Enabled" : "Disabled",
+            status: url.isEnabled == "true" ? "Enabled" : "Disabled",
             isPublic: url.isPublic ? "Public" : "Private",
           };
         });
         console.log(listOfUrlsToSet);
         setlistOfUrls(listOfUrlsToSet);
+        setIsLoading(false);
       },
       (error) => {
         console.log("Error", error);
+        setIsLoading(false);
       }
     );
   }, [refresh]);
@@ -109,7 +109,72 @@ const ListOfRemoteDatabaseAccessUrls = () => {
   };
 
   const handleOkEvent = (action) => {
-    handleClose_CustomDialog();
+    if (action) {
+      if (action.action == "delete") {
+        sendResquestToCentralAPI("POST", DELETE_REMOTE_DATABASE_ENDPOINT, {
+          urlId: currentSelectedRow.urlId,
+        }).then(
+          async (success) => {
+            const response = await success.json();
+            console.log("response", response);
+            handleClose_CustomDialog();
+            setRefresh(!refresh);
+            openNotificationWithIcon(
+              "info",
+              "Server Response",
+              response.responseMessage,
+              "bottom"
+            );
+          },
+          (error) => {
+            handleClose_CustomDialog();
+            alert(JSON.stringify(error));
+            openNotificationWithIcon(
+              "error",
+              "Server Response",
+              JSON.stringify(error),
+              "bottom"
+            );
+          }
+        );
+      } else if (action.action == "updateStates") {
+        // const { isOpenAPIEnabled, isOpenAPIPublic } = action.payload;
+        sendResquestToCentralAPI("POST", UPDATE_REMOTE_DB_URL_VISIBILITY, {
+          urlId: currentSelectedRow.urlId,
+          visibility:  action.payload.isOpenAPIPublic,
+        }).then(async (resp) => {
+          const response = await resp.json();
+          openNotificationWithIcon('info',"Server Response",response.responseMessage,"bottom");
+          setRefresh(!refresh);
+          handleClose_CustomDialog();
+        });
+      }
+
+      sendResquestToCentralAPI(
+        "POST",
+        SET_STATUS_OF_REMOTE_DATABASE_HOST_ACCESS_URL,
+        {
+          urlId: currentSelectedRow.urlId,
+          status: action.payload.isOpenAPIEnabled+"",
+        }
+      ).then(
+        async (success) => {
+          const response = await success.json();
+        
+          openNotificationWithIcon("info","Server Response",response.responseMessage,"bottom");
+          setRefresh(!refresh)
+          handleClose_CustomDialog();
+        },
+        (error) => {
+          console.log("Error", error);      
+          openNotificationWithIcon("info","Server Response",JSON.stringify(error),"bottom");
+          setRefresh(!refresh)
+          handleClose_CustomDialog();
+        }
+      );
+    } else {
+      handleClose_CustomDialog();
+    }
   };
 
   const rowSelection = {
