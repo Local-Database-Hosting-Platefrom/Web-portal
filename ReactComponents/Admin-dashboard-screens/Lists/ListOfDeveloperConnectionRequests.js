@@ -133,6 +133,13 @@ const ListOfDeveloperConnectionRequests = () => {
 
   return (
     <Container>
+      <div>
+        <Grid container>
+          <Grid item xs={8}>
+            <Heading text={"Connection Requests"} fontSize="1.5rem" />
+          </Grid>
+        </Grid>
+      </div>
       <Table
         loading={{indicator:<Spinner/>,spinning:isDataLoading}}
         rowSelection={{

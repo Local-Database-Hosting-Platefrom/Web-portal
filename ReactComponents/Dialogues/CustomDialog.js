@@ -31,8 +31,6 @@ import dialogueTypes from "./dialogueTypes";
 import CustomButton from "../../Support/CustomButton";
 import Heading from "../../Support/Heading";
 import { useEffect } from "react";
-// import Checkbox from "@mui/material/Checkbox";
-// import { CheckBox } from "@mui/icons-material";
 
 import { Button, Modal } from "antd";
 import openNotificationWithIcon from "./Notification";
@@ -52,6 +50,7 @@ export default function CustomDialog({
   handleOkEvent = null,
   handleNoEvent = null,
 }) {
+
   const isMediumScreen = useMediaQuery("(min-width:600px)");
   const [accessRole, setAccessRole] = React.useState("");
 
@@ -88,10 +87,6 @@ export default function CustomDialog({
   useEffect(() => {
     // Load the acccess roles
     if (alertMessage.status) setIsLdUrlEnabled(alertMessage.status);
-    // if (alertMessage.status)
-    //   setIsOpenAPIEnabled(alertMessage.status == "Enabled" ? true : false);
-    // if (alertMessage.isPublic)
-    //   setIsOpenAPIPublic(alertMessage.isPublic == "Public" ? true : false);
   }, []);
 
   return (
@@ -123,12 +118,12 @@ export default function CustomDialog({
           </Modal>
         </div>
       )}
-
       {alertType == dialogueTypes.OPEN_API_SELECTION_OPTIONS_DEV && (
         <div>
           <Modal
             visible={open}
-            closable={false}
+            closable={true}
+            onCancel={handleNoEvent}
             footer={null}
             title={"Perform action on selected url"}
           >

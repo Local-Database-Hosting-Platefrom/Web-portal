@@ -10,6 +10,7 @@ import { OpenApisListItemHolder } from "./itemHolders/OpenApisListItemHolder";
 import { Button, Table } from "antd";
 import CustomDialog from "../Dialogues/CustomDialog";
 import dialogueTypes from "../Dialogues/dialogueTypes";
+import Spinner from "../../Support/Spinner";
 
 const columns = [
   {
@@ -39,11 +40,13 @@ const OpenAPIs = () => {
   const [alertMessage_CustomDialog, setAlertMessage_CustomDialog] =
     useState("");
   const [alertTitle_CustomDialog, setAlertTitle_CustomDialog] = useState("");
+  const [isDataLoading,setIsLoading]=useState(false);
 
   useEffect(() => {
     let loggedInUser = localStorage.getItem("loggedInUser");
     loggedInUser = JSON.parse(loggedInUser);
     // console.log(loggedInUser);
+    setIsLoading(true);
     let developerId = loggedInUser.responsePayload._id;
     let token = loggedInUser.responsePayload.jwtToken;
     sendResquestToCentralAPI(
@@ -66,9 +69,11 @@ const OpenAPIs = () => {
         });
         // console.log(response)
         setListOfUrls(list);
+        setIsLoading(false)
       },
       (error) => {
         console.log(error);
+        setIsLoading(false)
       }
     );
   }, []);
@@ -94,6 +99,10 @@ const OpenAPIs = () => {
     handleClose_CustomDialog();
   };
 
+const handleNoEvent = (action) => {
+    handleClose_CustomDialog();
+  };
+  
   const displayDialog = (dialogType, dialogTitle, dialogMessage) => {
     setAlertMessage_CustomDialog(dialogMessage);
     setAlertTitle_CustomDialog(dialogTitle);
@@ -116,6 +125,8 @@ const OpenAPIs = () => {
           type: "radio",
           ...rowSelection,
         }}
+        loading={{indicator:<Spinner/>,spinning:isDataLoading}}
+       
         columns={columns}
         dataSource={listOfUrls}
       />
@@ -128,6 +139,7 @@ const OpenAPIs = () => {
         alertMessage={alertMessage_CustomDialog}
         alertTitle={alertTitle_CustomDialog}
         handleOkEvent={handleOkEvent}
+        handleNoEvent={handleNoEvent}
       />
     </div>
   );
