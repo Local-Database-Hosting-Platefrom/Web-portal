@@ -20,7 +20,7 @@ import TestHostAccresUrlScreen from "../../ReactComponents/Consumer-dashboard-sc
 import SettingsScreen from "../../ReactComponents/Consumer-dashboard-screens/SettingsScreen";
 import StatisticsScreen from "../../ReactComponents/Consumer-dashboard-screens/StatisticsScreen";
 import { useRouter } from "next/router";
-import { AUTH_PAGE, VERIFY_JWT_TOKEN } from "../../request-manager/requestUrls";
+import { AUTH_PAGE, LOAD_LIST_OF_ACTIVE_HOSTS_BY_DEVELOPER_ID, VERIFY_JWT_TOKEN } from "../../request-manager/requestUrls";
 import { TOKEN_NOT_VERIFIED, TOKEN_VERIFIED } from "../../request-manager/responseCodes";
 import dialogueTypes from "../../ReactComponents/Dialogues/dialogueTypes";
 import { useEffect } from "react";
@@ -90,6 +90,17 @@ const Index = () => {
     <StatisticsScreen  />
   );
 
+  const [listOfHosts,setListOfHosts]=useState([
+    {
+      key: "1",
+      label: (
+        <a>
+          1st menu item
+        </a>
+      ),
+    },
+  ])
+
   const navigation = useRouter();
   const [alertType,setAlertType]=useState(null);
   const [openCustomDialog, setOpenCustomDialog] = useState(false);
@@ -149,8 +160,16 @@ const Index = () => {
 
   const handleOkEvent=(action)=>{
     if(action=="re-login")
-    localStorage.setItem("isLoggedIn",false);
-    navigation.push(AUTH_PAGE)
+    {
+      localStorage.setItem("isLoggedIn",false);
+      navigation.push(AUTH_PAGE)
+    }else if(action==null){
+      handleClose_CustomDialog();
+    }
+  }
+
+  const handleNoEvent=()=>{
+    handleClose_CustomDialog();
   }
 
   const handleScreenChange = (index) => {
@@ -161,9 +180,56 @@ const Index = () => {
         break;
       case 1:
         // Renew token screen
-        setCurrentOpenedScreen(<GenerateTokenScreen />);
+        //TODO:Open get api dialoage.
+        const useData = JSON.parse(localStorage.getItem("loggedInUser"));
+    const _id = useData.responsePayload._id;
+    sendResquestToCentralAPI(
+      "POST",
+      LOAD_LIST_OF_ACTIVE_HOSTS_BY_DEVELOPER_ID,
+      {
+        developerId: _id,
+      }
+    ).then(
+      async (success) => {
+        const list = await success.json();
+        let temp = [];
+        console.log(" list.responsePayload", list.responsePayload)
+        list.responsePayload.forEach((item) => {
+          item.listOfDatabases.forEach((host,index) => {
+            if (host.hostAcessUrl.status == true) {
+              // let m = {
+              //   optionTitle: host.hostName,
+              //   optionValue: host.hostId,
+              //   hostUrl: host.hostAcessUrl.url,
+              // };
+
+              let m = {
+                key: JSON.stringify(host),
+                label: (
+                  <a>
+                    {host.hostName}
+                  </a>
+                ),
+              }
+
+              temp.push(m);
+            }
+          });
+        });
+        // setListOfHosts(temp);
+        console.log(temp);
+        displayDialog(dialogueTypes.GET_TOKEN,"Get token for LD-Url",temp);
+      
+      },
+      (error) => {
+        console.log("Error", error);
+        //TODO:add notification
+      }
+    );
+        // setCurrentOpenedScreen(<GenerateTokenScreen />);
         break;
       case 2:
+        
         setCurrentOpenedScreen(<AvaibleServiceProviders/>)
         break;
       case 3:
@@ -447,6 +513,8 @@ const Index = () => {
           alertMessage={alertMessage_CustomDialog}
           alertTitle={alertTitle_CustomDialog}
           handleOkEvent={handleOkEvent}
+          handleNoEvent={handleNoEvent}
+          listOfHosts={listOfHosts}
         />
     </Box>
   );

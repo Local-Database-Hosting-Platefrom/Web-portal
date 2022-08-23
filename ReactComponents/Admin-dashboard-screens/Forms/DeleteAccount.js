@@ -1,7 +1,10 @@
 import { Container } from "@mui/material";
 import { useState } from "react";
 import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
-import { AUTH_PAGE, DELETE_ACCOUNT } from "../../../request-manager/requestUrls";
+import {
+  AUTH_PAGE,
+  DELETE_ACCOUNT,
+} from "../../../request-manager/requestUrls";
 import { DELETED } from "../../../request-manager/responseCodes";
 import CustomButton from "../../../Support/CustomButton";
 import Heading from "../../../Support/Heading";
@@ -9,42 +12,45 @@ import InputField from "../../../Support/InputFields";
 import CustomDialog from "../../Dialogues/CustomDialog";
 import dialogueTypes from "../../Dialogues/dialogueTypes";
 import { useRouter } from "next/router";
+import { Button, Card, Input, Modal } from "antd";
+import openNotificationWithIcon from "../../Dialogues/Notification";
 const DeleteAccount = () => {
-  
   const navigation = useRouter();
-  const [isLinkSent, setIsLinkSent] = useState(false);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const [alertType, setAlertType] = useState(null);
-  const [openCustomDialog, setOpenCustomDialog] = useState(false);
-  const [alertMessage_CustomDialog, setAlertMessage_CustomDialog] =
-    useState("");
-  const [alertTitle_CustomDialog, setAlertTitle_CustomDialog] = useState("");
   const useData = JSON.parse(localStorage.getItem("loggedInUser"));
+  const [loadingsForTerminatingUrls, setLoadingsForTerminatingUrls] = useState([]);
+ 
   let authType = null;
   if (useData) {
     authType = useData.responsePayload.authType;
     email = useData.responsePayload.email;
   }
-
-  const displayDialog = (dialogType, dialogTitle, dialogMessage) => {
-    setAlertMessage_CustomDialog(dialogMessage);
-    setAlertTitle_CustomDialog(dialogTitle);
-    setAlertType(dialogType);
-    handleClickOpen_CustomDialog();
-  };
-
-  const handleClickOpen_CustomDialog = () => {
-    setOpenCustomDialog(true);
-  };
-
-  const handleClose_CustomDialog = () => {
-    setOpenCustomDialog(false);
-  };
-
   const handleOkEvent = (action) => {
     //delete it.
     handleClose_CustomDialog();
+
+    
+  };
+
+  const [visible, setVisible] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [modalText, setModalText] = useState(
+    "Are you sure you want to delete the account ?"
+  );
+
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const handleOk = (index) => {
+    
+    setVisible(false);
+    setLoadingsForTerminatingUrls((prevLoadings) => {
+      const newLoadings = [...prevLoadings];
+      newLoadings[index] = true;
+      return newLoadings;
+    });
 
     let data = null;
     let readyToRequest = false;
@@ -59,11 +65,8 @@ const DeleteAccount = () => {
         };
         readyToRequest = true;
       } else {
-        displayDialog(
-          dialogueTypes.INFO_WITHOUT_OK,
-          "Invalid password",
-          "Please provide you password to confirm it"
-        );
+        
+        openNotificationWithIcon("error","Invalid input","Please provide your password..!","bottom")
       }
     } else {
       data = {
@@ -78,38 +81,100 @@ const DeleteAccount = () => {
         .then((resp) => resp.json())
         .then((data) => {
           if (data.responseCode == DELETED) {
-            displayDialog(
-              dialogueTypes.INFO_WITHOUT_OK,
-              "Server response",
-              data.responseMessage
-            );
-            localStorage.setItem("isLoggedIn",false);
-            navigation.push(AUTH_PAGE)
+            openNotificationWithIcon("info","Server Response",data.responseMessage,"bottom")
+            localStorage.setItem("isLoggedIn", false);
+            navigation.push(AUTH_PAGE);
           } else {
           }
         });
     }
   };
 
-  const handleNoEvent = (action) => {
-    handleClose_CustomDialog();
+  const handleCancel = () => {
+    setVisible(false);
   };
 
   return (
     <Container>
-      <div>
-        <Heading text="Delete My Account" fontSize="1.5rem" />
-      </div>
-      <div style={{ textAlign: "center" }}>
-        {/* <div>
-          <InputField
-            placeholder={"Type your Email"}
+      <Card title="Master Controller" style={{marginTop:"2%"}}>
+        <Card.Grid
+          style={{
+            width: "100%",
+            textAlign: "center",
+          }}
+        >
+          <div>
+            <Input
+              style={{
+                fontSize: "0.8rem",
+                padding: "0.7rem",
+                borderRadius: "5rem",
+                width:"40%"
+              }}
+              // autoSize={true}
+              type="text"
+              // bordered={true}
+              size="middle"
+              // prefix={<UserOutlined />}
+              // showCount={true}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+
               value={email}
-            onChange={(e) => {
-             setEmail(e.target.value);
+              placeholder="Type email"
+            />
+          </div>
+          <div>
+            {authType == "userName&Password" && (
+              <div>
+                <Input.Password
+                  style={{
+                    fontSize: "0.7rem",
+                    padding: "0.8rem",
+                    borderRadius: "5rem",
+                    width:"40%",
+                    marginTop:"2%"
+                  }}
+
+                  // autoSize={true}
+                  size="middle"
+                  placeholder="input password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                />
+              </div>
+            )}
+          </div>
+          <Button
+            type="danger"
+            shape="round"
+            style={{ width: "40%",marginTop:"2%" }}
+            size={"middle"}
+            loading={loadingsForTerminatingUrls[0]}
+            onClick={() => {
+              showModal();
             }}
-          />
-        </div> */}
+          >
+            Delete Account
+          </Button>
+        </Card.Grid>
+      </Card>
+      <Modal
+        title="Critical Action"
+        visible={visible}
+        onOk={() => {
+          handleOk(0);
+        }}
+        confirmLoading={confirmLoading}
+        onCancel={handleCancel}
+      >
+        <h3>{modalText}</h3>
+      </Modal>
+      {/* <div style={{ textAlign: "center" }}>
+       
         {authType == "userName&Password" && (
           <div>
             <InputField
@@ -125,11 +190,8 @@ const DeleteAccount = () => {
         <div style={{ marginTop: "2%" }}>
           <CustomButton
             style={{
-              // marginLeft:isMediumScreen? "40%":"35%",
-              // marginTop: isMediumScreen? "3%":"3%",
-              // left: isMediumScreen? "10":"",
+            
               backgroundColor: "red",
-              // fontSize: isMediumScreen? "0.8rem" :"",
             }}
             onClick={() => {
               displayDialog(
@@ -154,7 +216,7 @@ const DeleteAccount = () => {
         alertTitle={alertTitle_CustomDialog}
         handleOkEvent={handleOkEvent}
         handleNoEvent={handleNoEvent}
-      />
+      /> */}
     </Container>
   );
 };

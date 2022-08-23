@@ -20,13 +20,13 @@ const columns = [
     render: (text) => <a>{text}</a>,
   },
   {
-    title: "Host Url",
-    dataIndex: "hostUrl",
+    title: "Host Id",
+    dataIndex: "hostId",
   },
-  {
-    title: "Number Of Requests",
-    dataIndex: "numberOfRequests",
-  },
+  // {
+  //   title: "Number Of Requests",
+  //   dataIndex: "numberOfRequests",
+  // },
   {
     title: "Status",
     dataIndex: "status",
@@ -67,8 +67,8 @@ const ListOfHostAccessUrls = () => {
             tempList.push({
               key:element,
               hostName: element.hostName,
-              hostUrl: element.hostAcessUrl.url,
-              numberOfRequests: element.hostAcessUrl.numberOfHits,
+              hostId: element.hostId,
+              // numberOfRequests: element.hostAcessUrl.numberOfHits,
               status: element.hostAcessUrl.status ? "Enabled" : "Disabled",
             });
           });

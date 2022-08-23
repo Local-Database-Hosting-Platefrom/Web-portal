@@ -31,9 +31,15 @@ import dialogueTypes from "./dialogueTypes";
 import CustomButton from "../../Support/CustomButton";
 import Heading from "../../Support/Heading";
 import { useEffect } from "react";
+import { DownOutlined, SmileOutlined } from "@ant-design/icons";
+import { Dropdown, Menu } from "antd";
 
 import { Button, Modal } from "antd";
 import openNotificationWithIcon from "./Notification";
+import { useState } from "react";
+import { GENERATE_HOST_ACCESS_URL_TOKEN } from "../../request-manager/requestUrls";
+import { sendResquestToCentralAPI } from "../../request-manager/requestManager";
+import { FETCHED } from "../../request-manager/responseCodes";
 
 const gridStyle = {
   width: "50%",
@@ -49,17 +55,32 @@ export default function CustomDialog({
   alertTitle,
   handleOkEvent = null,
   handleNoEvent = null,
+  listOfHosts = null,
 }) {
-
   const isMediumScreen = useMediaQuery("(min-width:600px)");
   const [accessRole, setAccessRole] = React.useState("");
 
   const [isAutoTokenGeneratingAllowed, setIsAutoTokenGeneratingAllowed] =
     React.useState(true);
 
-  const [isLdUrlEnabled, setIsLdUrlEnabled] = React.useState(false);
+  const [isLdUrlEnabled, setIsLdUrlEnabled] = React.useState(null);
   const [isOpenAPIEnabled, setIsOpenAPIEnabled] = React.useState(null);
   const [isOpenAPIPublic, setIsOpenAPIPublic] = React.useState(null);
+
+  const [loadingsForGeneratingToken, setLoadingsForGeneratingToken] = useState(
+    []
+  );
+
+  const [selectedHostTitle, setSelectedHostTitle] = useState("Select Host");
+
+  const [selectedtokenExpiryTime, setSelectedtokenExpiryTime] = useState("1h");
+  const [selectedtokenExpiryTimeTitle, setSelectedtokenExpiryTimeTitle] =
+    useState("Expiry time");
+  const [isTokenGenerated, setIsTokenGenerated] = useState(false);
+  const [url, setUrl] = useState("");
+  const [secretKey, setSecretKey] = useState("");
+  const [selectedHost, setSelectedHost] = useState({});
+  const [jwtToken, setJwtToken] = useState(null);
 
   const handleTokenGeneration = (event) => {
     setIsAutoTokenGeneratingAllowed(event.target.checked);
@@ -85,9 +106,72 @@ export default function CustomDialog({
   };
 
   useEffect(() => {
-    // Load the acccess roles
-    if (alertMessage.status) setIsLdUrlEnabled(alertMessage.status);
+    // if (alertMessage.status) setIsLdUrlEnabled();
   }, []);
+
+  const handelGenerateToken = (index) => {
+    if (selectedtokenExpiryTime != null && setSelectedHost != null) {
+      setLoadingsForGeneratingToken((prevLoadings) => {
+        const newLoadings = [...prevLoadings];
+        newLoadings[index] = true;
+        return newLoadings;
+      });
+      sendResquestToCentralAPI("POST", GENERATE_HOST_ACCESS_URL_TOKEN, {
+        hostId: selectedHost.hostId,
+        developerEmail: JSON.parse(localStorage.getItem("loggedInUser"))
+          .responsePayload.email,
+        expiresIn: selectedtokenExpiryTime,
+      }).then(async (success) => {
+        const data = await success.json();
+        console.log("Response  : ", data);
+        if (data.responseCode == FETCHED) {
+          setJwtToken(data.responsePayload.jwtToken);
+          setUrl(data.responsePayload.host[0].hostAcessUrl.url);
+          console.log(data.responsePayload.host[0].hostAcessUrl.url)
+          setSecretKey(
+            JSON.parse(localStorage.getItem("loggedInUser")).responsePayload
+              .email
+          );
+          setIsTokenGenerated(true);
+          setLoadingsForGeneratingToken((prevLoadings) => {
+            const newLoadings = [...prevLoadings];
+            newLoadings[index] = false;
+            return newLoadings;
+          });
+          openNotificationWithIcon(
+            "info",
+            "Sever Response",
+            data.responseMessage,
+            "bottom"
+          );
+        } else {
+          openNotificationWithIcon(
+            "error",
+            "Sever Response",
+            data.responseMessage,
+            "bottom"
+          );
+          setLoadingsForGeneratingToken((prevLoadings) => {
+            const newLoadings = [...prevLoadings];
+            newLoadings[index] = false;
+            return newLoadings;
+          });
+        }
+      });
+    } else {
+      // displayDialog(
+      //   dialogueTypes.WARNING,
+      //   "Error",
+      //   "Please select a host and validation time"
+      // );
+      openNotificationWithIcon(
+        "error",
+        "Invalid input",
+        "Kindly select any host..",
+        "top"
+      );
+    }
+  };
 
   return (
     <div>
@@ -397,7 +481,7 @@ export default function CustomDialog({
                     checkedChildren="Enabled"
                     unCheckedChildren="Disabled"
                     // defaultChecked
-                    checked={isLdUrlEnabled}
+                    checked={isLdUrlEnabled==null ? alertMessage.status=="Enabled" ? true : false : isLdUrlEnabled}
                     onChange={(e) => {
                       console.log(e);
                       setIsLdUrlEnabled(e);
@@ -535,7 +619,6 @@ export default function CustomDialog({
         <div>
           <Modal visible={open} closable={false} footer={null} title={null}>
             <div>
-             
               {/* Developer Name,Host Name,Request Query,Response */}
               <Card title="Request details">
                 <Card.Grid style={gridStyle}>
@@ -868,7 +951,7 @@ export default function CustomDialog({
         </div>
       )}
 
-{alertType == dialogueTypes.VIEW_HOST_CONNECTION && (
+      {alertType == dialogueTypes.VIEW_HOST_CONNECTION && (
         <div>
           <Modal
             visible={open}
@@ -904,7 +987,7 @@ export default function CustomDialog({
                       handleOkEvent({ payload: "Decline" });
                     }}
                   >
-                    Remove Permanently 
+                    Remove Permanently
                   </Button>
                 </div>
               </Grid>
@@ -912,7 +995,6 @@ export default function CustomDialog({
           </Modal>
         </div>
       )}
-
 
       {alertType == dialogueTypes.INVALID_LOGIN && (
         <div>
@@ -1071,6 +1153,207 @@ export default function CustomDialog({
               </div>
             </DialogContent>
           </Dialog>
+        </div>
+      )}
+
+      {alertType == dialogueTypes.GET_TOKEN && (
+        <div>
+          <Modal
+            visible={open}
+            closable={true}
+            onCancel={handleNoEvent}
+            footer={null}
+            title={"Generate token"}
+          >
+            <Grid container>
+              <Grid item xs={12} style={{ textAlign: "center" }}>
+                <Dropdown.Button
+                  overlay={
+                    <Menu
+                      onClick={(e) => {
+                        console.log(JSON.parse(e.key));
+                        setSelectedHostTitle(JSON.parse(e.key).hostName);
+                        setSelectedHost(JSON.parse(e.key));
+                      }}
+                      items={alertMessage}
+                    />
+                  }
+                >
+                  <a
+                    onClick={(e) => {
+                      e.preventDefault();
+                    }}
+                  >
+                    <Space>{selectedHostTitle}</Space>
+                  </a>
+                </Dropdown.Button>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                style={{ textAlign: "center", marginTop: "2%" }}
+              >
+                <Dropdown.Button
+                  overlay={
+                    <Menu
+                      onClick={(e) => {
+                        console.log(e);
+                        switch (e.key) {
+                          case "1h":
+                            setSelectedtokenExpiryTimeTitle("For 1 hour");
+                            break;
+                          case "1d":
+                            setSelectedtokenExpiryTimeTitle("For 1 Day");
+                            break;
+                          case "1w":
+                            setSelectedtokenExpiryTimeTitle("For 1 Week");
+                            break;
+                          case "30d":
+                            setSelectedtokenExpiryTimeTitle("For 1 Month");
+                            break;
+                          case "365d":
+                            setSelectedtokenExpiryTimeTitle("For 1 Year");
+                            break;
+                        }
+                        setSelectedtokenExpiryTime(e.key);
+                      }}
+                      items={[
+                        {
+                          key: "1h",
+                          label: <a>For 1 hour</a>,
+                        },
+                        {
+                          key: "1d",
+                          label: <a>For 1 Day</a>,
+                        },
+                        {
+                          key: "1h",
+                          label: <a>For 1 Week</a>,
+                        },
+                        {
+                          key: "30d",
+                          label: <a>For 1 Month</a>,
+                        },
+                        {
+                          key: "365d",
+                          label: <a>For 1 Year</a>,
+                        },
+                      ]}
+                    />
+                  }
+                >
+                  <a
+                    onClick={(e) => {
+                      e.preventDefault();
+                    }}
+                  >
+                    <Space>{selectedtokenExpiryTimeTitle}</Space>
+                  </a>
+                </Dropdown.Button>
+              </Grid>
+              <Grid item xs={12}>
+                <div style={{ textAlign: "center", marginTop: "2%" }}>
+                  <Button
+                    type="secondary"
+                    shape="round"
+                    style={{ width: "40%" }}
+                    size={"middle"}
+                    loading={loadingsForGeneratingToken[0]}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handelGenerateToken(0);
+                      // handleOkEvent(null);
+                      // console.log(alertMessage[0].)
+                      // const useData = JSON.parse(
+                      //   localStorage.getItem("loggedInUser")
+                      // );
+                      // let apiKey = "GENERATE_NEW_KEY";
+                      // if (useData) apiKey = useData.responsePayload.apiKey;
+                      // window
+                      //   .open(alertMessage[0].urlAddress + apiKey, "_blank")
+                      //   .focus();
+                    }}
+                  >
+                   {isTokenGenerated==false ? 'Generate token' : 'Re-generate token'}
+                  </Button>
+                </div>
+              </Grid>
+              <Grid item xs={12} style={{paddingLeft:"20%",paddingRight:"20%",marginTop:"3%"}}>
+                {isTokenGenerated == true && (
+                  <div>
+                    <Card >
+                      <Card.Grid
+                        style={{
+                          width: "100%",
+                          textAlign: "center",
+                          cursor:"pointer"
+                        }}
+                        onClick={()=>{
+                          navigator.clipboard.writeText(jwtToken).then(function() {
+                            // console.log('Copied access token to clipboard ');
+                            openNotificationWithIcon("info","Great..!!","Copied access token to clipboard","bottom")
+                          }, function(err) {
+                            // console.error('Could not copy access token to clipboard ', err);
+                            openNotificationWithIcon("error","Shit..!!","Could not copy access token to clipboard","bottom")
+                            
+                          });
+                        }}
+                      >
+                        <Text  style={{ fontSize: "1rem"}}>
+                          Access Token
+                        </Text>{" "}
+                      </Card.Grid>
+
+                      <Card.Grid
+                        style={{
+                          width: "100%",
+                          textAlign: "center",
+                          cursor:"pointer"
+                        }}
+                        onClick={()=>{
+                          navigator.clipboard.writeText(url).then(function() {
+                            // console.log('Copied access token to clipboard ');
+                            openNotificationWithIcon("info","Great..!!","Copied url to clipboard","bottom")
+                          }, function(err) {
+                            // console.error('Could not copy url to clipboard ', err);
+                            openNotificationWithIcon("error","Shit..!!","Could not copy access token to clipboard","bottom")
+                            
+                          });
+                        }}
+                      >
+                        <Text  style={{ fontSize: "1rem"}}>
+                         Host URL 
+                        </Text>{" "}
+                      </Card.Grid>
+
+                      
+                      <Card.Grid
+                        style={{
+                          width: "100%",
+                          textAlign: "center",
+                          cursor:"pointer"
+                        }}
+                        onClick={()=>{
+                          navigator.clipboard.writeText(secretKey).then(function() {
+                            // console.log('Copied access token to clipboard ');
+                            openNotificationWithIcon("info","Great..!!","Copied secret key to clipboard","bottom")
+                          }, function(err) {
+                            // console.error('Could not copy secret key to clipboard ', err);
+                            openNotificationWithIcon("error","Shit..!!","Could not copy access token to clipboard","bottom")
+                            
+                          });
+                        }}
+                      >
+                        <Text  style={{ fontSize: "1rem"}}>
+                         Secret Key 
+                        </Text>{" "}
+                      </Card.Grid>
+                    </Card>
+                  </div>
+                )}
+              </Grid>
+            </Grid>
+          </Modal>
         </div>
       )}
     </div>

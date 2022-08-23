@@ -228,11 +228,12 @@ const Index = (props) => {
       })
         .then((resp) => resp.json())
         .then((data) => {
-          setLoadingsForSignIn((prevLoadings) => {
-            const newLoadings = [...prevLoadings];
-            newLoadings[index] = false;
-            return newLoadings;
-          });
+
+          // setLoadingsForSignIn((prevLoadings) => {
+          //   const newLoadings = [...prevLoadings];
+          //   newLoadings[index] = false;
+          //   return newLoadings;
+          // });
 
           if (data.responseCode == COULD_NOT_LOGIN) {
             displayDialog(
@@ -268,6 +269,7 @@ const Index = (props) => {
         newLoadings[index] = true;
         return newLoadings;
       });
+
       navigation.push(GOOGLE_AUTH);
     } else {
       displayDialog(
