@@ -173,50 +173,7 @@ const DeleteAccount = () => {
       >
         <h3>{modalText}</h3>
       </Modal>
-      {/* <div style={{ textAlign: "center" }}>
-       
-        {authType == "userName&Password" && (
-          <div>
-            <InputField
-              placeholder={"Enter your password"}
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
-          </div>
-        )}
-
-        <div style={{ marginTop: "2%" }}>
-          <CustomButton
-            style={{
-            
-              backgroundColor: "red",
-            }}
-            onClick={() => {
-              displayDialog(
-                dialogueTypes.WARNING,
-                "Critical Action",
-                "Are you sure you want to delete the account?"
-              );
-            }}
-            name="Delete My Account"
-          />
-        </div>
-        <div>
-          {isLinkSent ? `We sent you reset link on provided email.!` : ``}
-        </div>
-      </div>
-      <CustomDialog
-        alertType={alertType}
-        handleClickOpen={handleClickOpen_CustomDialog}
-        handleCloseEvent={handleClose_CustomDialog}
-        open={openCustomDialog}
-        alertMessage={alertMessage_CustomDialog}
-        alertTitle={alertTitle_CustomDialog}
-        handleOkEvent={handleOkEvent}
-        handleNoEvent={handleNoEvent}
-      /> */}
+      
     </Container>
   );
 };
