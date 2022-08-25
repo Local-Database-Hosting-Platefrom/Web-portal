@@ -37,7 +37,7 @@ import { Dropdown, Menu } from "antd";
 import { Button, Modal } from "antd";
 import openNotificationWithIcon from "./Notification";
 import { useState } from "react";
-import { GENERATE_HOST_ACCESS_URL_TOKEN } from "../../request-manager/requestUrls";
+import { GENERATE_AND_UPDATE_APIKEY, GENERATE_HOST_ACCESS_URL_TOKEN } from "../../request-manager/requestUrls";
 import { sendResquestToCentralAPI } from "../../request-manager/requestManager";
 import { FETCHED } from "../../request-manager/responseCodes";
 
@@ -76,12 +76,13 @@ export default function CustomDialog({
   const [selectedtokenExpiryTime, setSelectedtokenExpiryTime] = useState("1h");
   const [selectedtokenExpiryTimeTitle, setSelectedtokenExpiryTimeTitle] =
     useState("Expiry time");
+
   const [isTokenGenerated, setIsTokenGenerated] = useState(false);
   const [url, setUrl] = useState("");
   const [secretKey, setSecretKey] = useState("");
   const [selectedHost, setSelectedHost] = useState({});
   const [jwtToken, setJwtToken] = useState(null);
-
+  const [generatedApiKey,setGeneratedApiKey]=useState("DEFAULT_KEY")
   const handleTokenGeneration = (event) => {
     setIsAutoTokenGeneratingAllowed(event.target.checked);
   };
@@ -159,11 +160,7 @@ export default function CustomDialog({
         }
       });
     } else {
-      // displayDialog(
-      //   dialogueTypes.WARNING,
-      //   "Error",
-      //   "Please select a host and validation time"
-      // );
+   
       openNotificationWithIcon(
         "error",
         "Invalid input",
@@ -172,7 +169,25 @@ export default function CustomDialog({
       );
     }
   };
-
+  const handleGenerateKey =()=>{ 
+    const useData = JSON.parse(localStorage.getItem("loggedInUser"));
+    const email = useData.responsePayload.email; 
+    sendResquestToCentralAPI("POST", GENERATE_AND_UPDATE_APIKEY, {
+      email
+    }).then(
+      async (success) => {
+        const response = await success.json();
+        console.log("api key", response);
+        localStorage.setItem("apiKey",response.responsePayload)
+        setGeneratedApiKey(response.responsePayload)
+        openNotificationWithIcon("info","Server response","API Key generated.","bottom")
+      },
+      (error) => {
+        console.log("Error", error);
+        openNotificationWithIcon("error","Server error",JSON.stringify(error),"bottom")
+      }
+    );
+  }
   return (
     <div>
       {alertType == dialogueTypes.SETTING_UP_ENVIRONMENT && (
@@ -1356,6 +1371,71 @@ export default function CustomDialog({
           </Modal>
         </div>
       )}
+
+{alertType == dialogueTypes.GENERATE_AND_UPDATE_API_KEY && (
+        <div>
+          <Modal
+            visible={open}
+            closable={true}
+            onCancel={handleNoEvent}
+            footer={null}
+            title={alertTitle}
+          >
+            <Grid container>
+              <Grid item xs={12}>
+                <div style={{ textAlign: "center" }}>
+                  <Button
+                    type="secondary"
+                    shape="round"
+                    style={{ width: "50%" }}
+                    size={"middle"}
+                    onClick={() => {
+                      // handleOkEvent();
+                      // console.log(alertMessage[0].)
+                      const useData = JSON.parse(
+                        localStorage.getItem("loggedInUser")
+                      );
+                      let apiKey = "GENERATE_NEW_KEY";
+                      if (generatedApiKey!="DEFAULT_KEY"){
+                        // apiKey = useData.responsePayload.apiKey;
+                        navigator.clipboard.writeText(generatedApiKey);
+                        openNotificationWithIcon("info","Great..","Newly generated API Key is copied to clip board","bottom")
+                      }
+                      else if(useData){
+                        apiKey = useData.responsePayload.apiKey;
+                        navigator.clipboard.writeText(apiKey);
+                        openNotificationWithIcon("info","Great..","Old stored API Key is copied to clip board","bottom")
+                        
+                      }
+                      else{
+                        openNotificationWithIcon("error","Aww..","Found no user data.. Please re-login.","bottom")
+                      }
+                      
+                    
+                    }}
+                  >
+                    Copy API Key
+                  </Button>
+                </div>
+                <div style={{ textAlign: "center", marginTop: "2%" }}>
+                  <Button
+                    type="secondary"
+                    shape="round"
+                    style={{ width: "50%" }}
+                    size={"middle"}
+                    onClick={() => {
+                      handleGenerateKey()
+                    }}
+                  >
+                    Generate API Key
+                  </Button>
+                </div>
+              </Grid>
+            </Grid>
+          </Modal>
+        </div>
+      )}
+
     </div>
   );
 }
