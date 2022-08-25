@@ -71,6 +71,11 @@ export default function CustomDialog({
     []
   );
 
+  const [loadingsForGeneratingAPIKey, setLoadingsForGeneratingAPIKey] = useState(
+    []
+  );
+  const [areWeGeneratingApiKey,setAreWeGeneratingApiKey]=useState(false);
+
   const [selectedHostTitle, setSelectedHostTitle] = useState("Select Host");
 
   const [selectedtokenExpiryTime, setSelectedtokenExpiryTime] = useState("1h");
@@ -108,7 +113,8 @@ export default function CustomDialog({
 
   useEffect(() => {
     // if (alertMessage.status) setIsLdUrlEnabled();
-  }, []);
+    setAreWeGeneratingApiKey(false);
+  }, [alertMessage]);
 
   const handelGenerateToken = (index) => {
     if (selectedtokenExpiryTime != null && setSelectedHost != null) {
@@ -117,6 +123,7 @@ export default function CustomDialog({
         newLoadings[index] = true;
         return newLoadings;
       });
+
       sendResquestToCentralAPI("POST", GENERATE_HOST_ACCESS_URL_TOKEN, {
         hostId: selectedHost.hostId,
         developerEmail: JSON.parse(localStorage.getItem("loggedInUser"))
@@ -169,13 +176,30 @@ export default function CustomDialog({
       );
     }
   };
-  const handleGenerateKey =()=>{ 
+  const handleGenerateKey =(index)=>{ 
+    
+    
+
     const useData = JSON.parse(localStorage.getItem("loggedInUser"));
     const email = useData.responsePayload.email; 
+
+    
+      setLoadingsForGeneratingAPIKey((prevLoadings) => {
+        const newLoadings = [...prevLoadings];
+        newLoadings[index] = true;
+        return newLoadings;
+      });
+
+    
     sendResquestToCentralAPI("POST", GENERATE_AND_UPDATE_APIKEY, {
       email
     }).then(
       async (success) => {
+        setLoadingsForGeneratingAPIKey((prevLoadings) => {
+          const newLoadings = [...prevLoadings];
+          newLoadings[index] = false;
+          return newLoadings;
+        });
         const response = await success.json();
         console.log("api key", response);
         localStorage.setItem("apiKey",response.responsePayload)
@@ -187,6 +211,7 @@ export default function CustomDialog({
         openNotificationWithIcon("error","Server error",JSON.stringify(error),"bottom")
       }
     );
+    
   }
   return (
     <div>
@@ -1411,7 +1436,6 @@ export default function CustomDialog({
                         openNotificationWithIcon("error","Aww..","Found no user data.. Please re-login.","bottom")
                       }
                       
-                    
                     }}
                   >
                     Copy API Key
@@ -1423,8 +1447,10 @@ export default function CustomDialog({
                     shape="round"
                     style={{ width: "50%" }}
                     size={"middle"}
-                    onClick={() => {
-                      handleGenerateKey()
+                    loading={loadingsForGeneratingAPIKey[0]}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleGenerateKey(0)
                     }}
                   >
                     Generate API Key
