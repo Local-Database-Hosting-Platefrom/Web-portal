@@ -77,7 +77,6 @@ const DeleteAccount = ()=>{
         .then((resp) => resp.json())
         .then((data) => {
           if (data.responseCode == DELETED) {
-          
             localStorage.setItem("isLoggedIn", false);
             navigation.push(AUTH_PAGE);
             openNotificationWithIcon("info","Server Response",data.responseMessage,"bottom")

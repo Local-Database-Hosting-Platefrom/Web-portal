@@ -36,6 +36,7 @@ const AvaibleServiceProviders = () => {
   const [alertTitle_CustomDialog, setAlertTitle_CustomDialog] = useState("");
 
   const [listOfServiceProviders, setListOfServiceProviders] = useState([]);
+  const [refresh,setRefresh]=useState(false);
 
   useEffect(() => {
     // Make call to load  list of service providers
@@ -48,22 +49,41 @@ const AvaibleServiceProviders = () => {
 
       async (success) => {
         const list = await success.json();
-        console.log("Service providers:", list);
+        // console.log("Service providers:", list);
         let temp = [];
         list.responsePayload.forEach((record) => {
-          console.log("Host list : ",record.connectedHostList)
+          // console.log("Host list : ",record.connectedHostList)
+          console.log("record.totalHostsProvided",record)
+          let accessRole=null;
+          if(record.connectionRequest){
+            if(record.connectionRequest.accessRole==="1202"){
+              accessRole="Read only"
+            }
+            if(record.connectionRequest.accessRole==="1201"){
+              accessRole="Write only"
+            }
+            if(record.connectionRequest.accessRole==="1203"){
+              accessRole="Read and Write"
+            }
+          }
           let rec = {
-            serviceProviderName: record.firstName + " " + record.lastName,
+            serviceProviderName: record.firstName,
             serviceProviderId: record.serviceProviderId,
+            serviceProviderPhoto:record.profilePhotoUrl,
             serviceProvider_ConnectedHosts: record.connectedHostList,
+            plainNamesOfAllProvidedDatabases:record.connectedHostList.map((item)=>{
+              return item.hostName
+            }),
+
             connectionRequest: record.connectionRequest,
+            totalHostsProvided:record.connectedHostList.length,
+            numberOfOpenAPIs:record.numberOfOpenAPIs,
+            numberOfEntertainedRequests:0,
+            accessRole:accessRole
           };
           temp.push(rec);
         });
-        console.log(
-          "List of service providers after loading",
-          list.responsePayload[0]
-        );
+       
         setListOfServiceProviders(temp);
 
       },
@@ -71,88 +91,13 @@ const AvaibleServiceProviders = () => {
         console.log("Error", error);
       }
     );
-  }, []);
+  }, [refresh]);
 
-  const manageListOfCheckCheckboxes = (isChecked, value) => {
-    if (isChecked) {
-      // puch in case not in list
-      let flag = false;
 
-      checkedHostList.forEach((item) => {
-        if (item.hostId == value.hostId) {
-          flag = true;
-        }
-      });
-
-      if (!flag) {
-        checkedHostList.push(value);
-      }
-
-      setListOfCheckedHost(checkedHostList);
-
-    } else {
-
-      setListOfCheckedHost(
-        checkedHostList.map((item) => {
-          if (item.hostId != value.hostId) {
-            return item;
-          } else {
-            return {};
-          }
-        })
-      );
-    }
-  };
-
-  const handleMakeRegisterRequest = (serviceProviderId) => {
-    let listOfDatabases = checkedHostList.map((item) => {
-      if (item.adminId == serviceProviderId) {
-        return item.hostId;
-      }
-    });
-    console.log("Databases to be sent : ",listOfDatabases)
-    // console.log("Service provider id :", serviceProviderId);
-    const userData = JSON.parse(localStorage.getItem("loggedInUser"));
-    const developerId = userData.responsePayload._id;
-
-    sendResquestToCentralAPI("POST", MAKE_CON_REQUEST_FOR_DEV_TO_ADMIN, {
-      listOfDatabases: listOfDatabases,
-      adminId: serviceProviderId,
-      developerId: developerId,
-      developerName:
-      userData.responsePayload.firstName +
-        " " +
-      userData.responsePayload.lastName,
-      developerEmail: userData.responsePayload.email,
-    }).then(
-      async (success) => {
-        const response = await success.json();
-        // console.log("Made connection request", response);
-        if (response.responseCode == CREATED_ACCOUNT) {
-          setAlertTitle_CustomDialog("Great..!!");
-        } else {
-          setAlertTitle_CustomDialog("Something wrong went");
-        }
-
-        setAlertType(dialogueTypes.INFO);
-        setAlertMessage_CustomDialog(response.responseMessage);
-        handleClickOpen_CustomDialog();
-      },
-      (error) => {
-        console.log("Error", error);
-      }
-    );
-  };
-
-  const handleClickOpen_CustomDialog = () => {
-    setOpenCustomDialog(true);
-  };
-  const handleClose_CustomDialog = () => {
-    setOpenCustomDialog(false);
-  };
+  
 
   return (
-    <Container>
+   
       <Grid container>
         <Grid item xs={12}>
           <Heading text={"Service providers"} fontSize="1.4rem" />
@@ -168,145 +113,18 @@ const AvaibleServiceProviders = () => {
             height: "25rem",
           }}
         >
-          {listOfServiceProviders.map((item) => {
-            return (
-              <div style={{ marginTop: "2%" }}>
-                <Accordion>
-                  <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                  >
-                    <Typography>
-                      {" "}
-                      Provider Name : {item.serviceProviderName}
-                    </Typography>
-                  </AccordionSummary>
-                  <AccordionDetails>
-                    <Typography>Connected Hosts</Typography>
-                    <div>
-                      <FormGroup row>
-                        {item.serviceProvider_ConnectedHosts.map((host) => {
-                         if(host.hostAcessUrl.status==true){
-                            return  (
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    sx={{
-                                      color: "black",
-                                      "&.Mui-checked": {
-                                        color: "blue",
-                                      },
-                                    }}
-                                  />
-                                }
-                                
-                                value={JSON.stringify({
-                                  ...host,
-                                  adminId: item.serviceProviderId,
-                                })}
-                                label={host.hostName}
-                                onChange={(e) => {
-                                  // console.log("Checkbox",JSON.parse(e.target.value))
-                                  manageListOfCheckCheckboxes(
-                                    e.target.checked,
-                                    JSON.parse(e.target.value)
-                                  );
-                                }}
-                              />
-                            );
-                            }
-                              
-                        })}
-                      </FormGroup>
-                    </div>
+        <Grid container>
 
-                    {/* If request is not already sent. */}
-                    {item.connectionRequest == null && (
-                      <div
-                        value={item.serviceProviderId}
-                        onClick={(e) => {
-                          // console.log("service provider inner id : ",e.target.value)
-                          handleMakeRegisterRequest(e.target.value);
-                        }}
-                      >
-                        <CustomButton
-                          style={{
-                            // marginLeft:isMediumScreen? "40%":"35%",
-                            marginTop: isMediumScreen ? "3%" : "3%",
-                            // left: isMediumScreen? "10":"",
-                            // position: "absolute",
-                            // right: 5,
-                            // bottom: 10,
-                            backgroundColor: "#10365B",
-                            fontSize: isMediumScreen ? "0.8rem" : "",
-                          }}
-                          value={item.serviceProviderId}
-                          name={`Get Service`}
-                        />
-                      </div>
-                    )}
-                    {/* If request is already sent. */}
-                    {item.connectionRequest != null && (
-                      <div>
-                        <div style={{ borderBottom: "1px solid #7ea69f" }}>
-                          <Heading
-                            text={"Request Status"}
-                            fontWeight={"bold"}
-                            fontSize={"1.2rem"}
-                          />
-                        </div>
-                        <div style={{ marginTop: "1%" }}>
-                          <Heading
-                            text={`Request Status : ${item.connectionRequest.requestStatus}`}
-                            fontSize={"1rem"}
-                          />
-                          <Heading
-                            text={`Assigned Role : ${item.connectionRequest.accessRole}`}
-                            fontSize={"1rem"}
-                          />
-                          <div style={{ borderBottom: "1px solid #7ea69f" }}>
-                            <Heading
-                              text={`Allowed Hosts :`}
-                              fontWeight={"bold"}
-                              fontSize={"1rem"}
-                            />
-                            {item.serviceProvider_ConnectedHosts !=
-                              undefined && (
-                              <div>
-                                {item.serviceProvider_ConnectedHosts.map(
-                                  (host, index) => {
-                                    return (
-                                      <div>
-                                        {`${index + 1} :  ${
-                                          (host != null) ? host.hostName : ""
-                                        }`}
-                                      </div>
-                                    );
-                                  }
-                                )}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </AccordionDetails>
-                </Accordion>
-              </div>
-            );
+          {listOfServiceProviders.map((item) => {
+            return <Grid item xs={6} style={{ marginTop: "2%",padding:"1rem" }}>
+                <ServiceProviderListItemHolder item={item} setRefresh={setRefresh} refresh={refresh}/>
+              </Grid>
           })}
+          </Grid>
         </Grid>
       </Grid>
-      <CustomDialog
-        alertType={alertType}
-        handleClickOpen={handleClickOpen_CustomDialog}
-        handleCloseEvent={handleClose_CustomDialog}
-        open={openCustomDialog}
-        alertMessage={alertMessage_CustomDialog}
-        alertTitle={alertTitle_CustomDialog}
-      />
-    </Container>
+     
+    
   );
 };
 export default AvaibleServiceProviders;

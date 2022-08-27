@@ -196,7 +196,7 @@ const Index = () => {
 
         // Renew token screen
         //TODO:Open get api dialoage.
-        openNotificationWithIcon("info","Please wait","Loading the allowed hosts to generate tokens.!!")
+        openNotificationWithIcon("info","Please wait","Loading the allowed hosts to generate tokens.!!","bottom")
         const useData = JSON.parse(localStorage.getItem("loggedInUser"));
         const _id = useData.responsePayload._id;
         sendResquestToCentralAPI(

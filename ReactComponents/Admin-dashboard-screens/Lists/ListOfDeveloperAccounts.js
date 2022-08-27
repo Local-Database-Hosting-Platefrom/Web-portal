@@ -79,7 +79,9 @@ const ListOfDeveloperAccounts = () => {
             key: item,
             developerName: item.developerName,
             developerEmail: item.developerEmail,
-            requestedHosts: item.listOfDatabases.map((host) => host.hostName),
+            requestedHosts: item.listOfDatabases.map((host,index) => {
+              return <div> {index+1} : {host[0].hostName}   </div>
+            }),
             requestStatus: item.requestStatus,
             assignedRole: item.accessRole,
           });
