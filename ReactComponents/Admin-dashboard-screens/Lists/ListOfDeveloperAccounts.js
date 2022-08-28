@@ -118,7 +118,6 @@ const ListOfDeveloperAccounts = () => {
     }).then(
       async (success) => {
         const response = await success.json();
-        console.log("Connectioon Status updated", response);
         openNotificationWithIcon(
           "info",
           "Server Response",
@@ -188,7 +187,7 @@ const ListOfDeveloperAccounts = () => {
         columns={columns}
         dataSource={listOfConsumers}
       />
-
+      
       <CustomDialog
         alertType={alertType}
         handleClickOpen={handleClickOpen_CustomDialog}

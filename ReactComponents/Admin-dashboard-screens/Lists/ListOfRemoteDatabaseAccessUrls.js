@@ -110,6 +110,7 @@ const ListOfRemoteDatabaseAccessUrls = () => {
 
   const handleOkEvent = (action) => {
     if (action) {
+
       if (action.action == "delete") {
         sendResquestToCentralAPI("POST", DELETE_REMOTE_DATABASE_ENDPOINT, {
           urlId: currentSelectedRow.urlId,
@@ -137,11 +138,13 @@ const ListOfRemoteDatabaseAccessUrls = () => {
             );
           }
         );
-      } else if (action.action == "updateStates") {
+
+      } 
+      else if (action.action == "updateStates") {
         // const { isOpenAPIEnabled, isOpenAPIPublic } = action.payload;
         sendResquestToCentralAPI("POST", UPDATE_REMOTE_DB_URL_VISIBILITY, {
           urlId: currentSelectedRow.urlId,
-          visibility:  action.payload.isOpenAPIPublic,
+          visibility: action.payload!=null ? action.payload.isOpenAPIPublic : false,
         }).then(async (resp) => {
           const response = await resp.json();
           openNotificationWithIcon('info',"Server Response",response.responseMessage,"bottom");
@@ -155,8 +158,9 @@ const ListOfRemoteDatabaseAccessUrls = () => {
         SET_STATUS_OF_REMOTE_DATABASE_HOST_ACCESS_URL,
         {
           urlId: currentSelectedRow.urlId,
-          status: action.payload.isOpenAPIEnabled+"",
+          status: action.payload!=null ?  action.payload.isOpenAPIEnabled+"" : "true",
         }
+
       ).then(
         async (success) => {
           const response = await success.json();

@@ -742,8 +742,10 @@ export default function CustomDialog({
                     shape="round"
                     style={{ width: "30%", marginTop: "1%" }}
                     size={"middle"}
-                    onClick={() => {
-                      handleOkEvent({ action: "delete", payload: null });
+                    onClick={(e) => {
+                      let action = { action: "delete", payload: null }
+                      e.preventDefault();
+                      handleOkEvent(action);
                     }}
                   >
                     Delete
@@ -758,7 +760,8 @@ export default function CustomDialog({
                     shape="round"
                     style={{ width: "50%" }}
                     size={"middle"}
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.preventDefault();
                       handleOkEvent(null);
                     }}
                   >
@@ -773,7 +776,8 @@ export default function CustomDialog({
                     shape="round"
                     style={{ width: "50%" }}
                     size={"middle"}
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.preventDefault();
                       handleOkEvent({
                         action: "updateStates",
                         payload: {
