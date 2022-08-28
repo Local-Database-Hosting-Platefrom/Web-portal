@@ -207,28 +207,29 @@ const Index = () => {
           }
         ).then(
           async (success) => {
-            const list = await success.json();
+            const response = await success.json();
             let temp = [];
-            console.log(" list.responsePayload", list.responsePayload);
-            list.responsePayload.forEach((item) => {
-              item.listOfDatabases.forEach((host, index) => {
+            console.log(" response.responsePayload", response.responsePayload);
+           
+            response.responsePayload.forEach((host, index) => {
                 if (host.hostAcessUrl.status == true) {
                  
                   let m = {
                     key: JSON.stringify(host),
                     label: <a>{host.hostName}</a>,
                   };
-
                   temp.push(m);
                 }
               });
-            });
-            // setListOfHosts(temp);
-            console.log(temp);
+         
+
+            setListOfHosts(temp);
+
+            
             displayDialog(
               dialogueTypes.GET_TOKEN,
               "Get token for LD-Url",
-              temp
+             temp
             );
           },
           (error) => {

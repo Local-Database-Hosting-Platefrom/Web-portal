@@ -118,9 +118,25 @@ const handleNoEvent = (action) => {
     setOpenCustomDialog(false);
   };
 
+  let locale = {
+    emptyText: (
+      <span>
+        <img
+                  src="/no_data_found.jpg"
+                  width="300px"
+                  height="300px"
+                />
+                <Heading text={"Found no open API.!!"} fontSize={"1.5rem"}/>
+            
+      
+      </span>
+    )
+  };
+
   return (
     <div>
       <Table
+        locale={locale}
         rowSelection={{
           type: "radio",
           ...rowSelection,

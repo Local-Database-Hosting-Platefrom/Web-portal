@@ -325,7 +325,7 @@ export default function CustomDialog({
             <Grid container>
               <Grid item xs={4}>
                 <img
-                  src="/setting-up-enviroment-1.gif"
+                  src="/output-onlinegiftools.gif"
                   width="200px"
                   height="200px"
                 />
@@ -564,8 +564,8 @@ export default function CustomDialog({
                     defaultValue={alertMessage.assignedRole}
                     buttonStyle="solid"
                     style={{ marginLeft: "1%" }}
-                    onChange_HostSelection={(e) => {
-                      // console.log(e);
+                    onChange={(e) => {
+                      console.log(e);
                       setAccessRole(e.target.value);
                     }}
                     // value={alertMessage[0].accessRole}
@@ -1671,11 +1671,12 @@ export default function CustomDialog({
                   <Divider />
                   {alertMessage.connectionRequest != null && (
                     <div>
-                      {alertMessage.accessRole == null
+                      {alertMessage.accessRole == null || alertMessage.connectionRequest.requestStatus == "Un-resolved"
                         ? " Once request is accepted then you will be assigned a role by admin"
                         : alertMessage.accessRole}
                     </div>
                   )}
+
                 </Card.Grid>
                 <Card.Grid hoverable={false} style={{ width: "100%" }}>
                   <Text keyboard style={{ fontSize: "1rem" }}>

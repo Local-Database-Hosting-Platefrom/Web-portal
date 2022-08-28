@@ -16,7 +16,7 @@ const States = ({ title, value }) => {
         {value == null ? (
           <div>
             <img
-              src="/setting-up-enviroment-1.gif"
+              src="/output-onlinegiftools.gif"
               width="150px"
               height="150px"
             />
