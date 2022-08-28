@@ -543,23 +543,11 @@ export default function CustomDialog({
             title={"Update Connection Details"}
           >
             <div>
-              {/* list of databases */}
-              {/* selection of role */}
-              {/* allow auto generating token */}
-              {/* Accept/decline */}
+             
 
               <Grid container>
-                {/* <Grid item xs={12}>
-                  <Text keyboard style={{ fontSize: "1.2rem" }}>
-                    Developer Name : {alertMessage.developerName}
-                  </Text>
-                </Grid>
-                <Grid item xs={12} style={{ marginTop: "2%" }}>
-                  <Text keyboard style={{ fontSize: "1.2rem" }}>
-                    Requested Databases : {alertMessage.requestedHosts}
-                  </Text>
-                </Grid> */}
-                <Grid item xs={12} style={{ marginTop: "2%" }}>
+              
+                <Grid item xs={12} style={{ marginTop: "2%",textAlign:'center' }}>
                   <Radio.Group
                     defaultValue={alertMessage.assignedRole}
                     buttonStyle="solid"
@@ -575,7 +563,7 @@ export default function CustomDialog({
                     <Radio.Button value="1203">Read & Write</Radio.Button>
                   </Radio.Group>
                 </Grid>
-                <Grid
+                {/* <Grid
                   item
                   xs={12}
                   style={{ marginTop: "2%", marginLeft: "1%" }}
@@ -586,7 +574,7 @@ export default function CustomDialog({
                   >
                     Is generating tokens allowed ?
                   </Checkbox>
-                </Grid>
+                </Grid> */}
                 <Grid
                   item
                   xs={6}
@@ -1774,7 +1762,7 @@ export default function CustomDialog({
                         )}
                       </div>
                     )}
-                    {alertMessage.connectionRequest == null && (
+                    {(alertMessage.connectionRequest == null) && (
                       <div>
                         Have not made any request yet, so there is no already
                         connected host.
@@ -1859,6 +1847,28 @@ export default function CustomDialog({
           </Modal>
         </div>
       )}
+
+{alertType == dialogueTypes.PLEASE_WAIT && (
+        <div>
+          <Modal
+            visible={open}
+            closable={true}
+            onCancel={handleNoEvent}
+            footer={null}
+            // title={"Please Wait..!!"}
+          >
+            <Grid container>
+              <Grid item xs={12}>
+                <div style={{ textAlign: "center" }}>
+                    <img src="/output-onlinegiftools.gif" width="150px" height="150px" />
+                    <Heading text={alertMessage} fontSize="1rem"/>
+                </div>
+                </Grid>
+            </Grid>
+          </Modal>
+        </div>
+      )}
+
     </div>
   );
 }

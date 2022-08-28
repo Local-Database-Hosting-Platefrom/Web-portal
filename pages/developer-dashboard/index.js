@@ -196,7 +196,12 @@ const Index = () => {
 
         // Renew token screen
         //TODO:Open get api dialoage.
-        openNotificationWithIcon("info","Please wait","Loading the allowed hosts to generate tokens.!!","bottom")
+        // openNotificationWithIcon("info","Please wait","Loading the allowed hosts to generate tokens.!!","bottom")
+        displayDialog(
+          dialogueTypes.PLEASE_WAIT,
+          "Get token for LD-Url",
+         "Please wait, loading your allowed hosts list..!"
+        );
         const useData = JSON.parse(localStorage.getItem("loggedInUser"));
         const _id = useData.responsePayload._id;
         sendResquestToCentralAPI(
@@ -225,12 +230,17 @@ const Index = () => {
 
             setListOfHosts(temp);
 
+            setTimeout(() => {
+              handleClose_CustomDialog();
+
+              displayDialog(
+                dialogueTypes.GET_TOKEN,
+                "Get token for LD-Url",
+               temp
+              );  
+            }, 3000);
+
             
-            displayDialog(
-              dialogueTypes.GET_TOKEN,
-              "Get token for LD-Url",
-             temp
-            );
           },
           (error) => {
             console.log("Error", error);

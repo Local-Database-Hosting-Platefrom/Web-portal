@@ -69,7 +69,12 @@ const ListOfDeveloperConnectionRequests = () => {
             developerEmail: item.developerEmail,
             requestedHosts: item.listOfDatabases.map((host,index) => {
               console.log("inner host name",host);
-              return <div> {index+1} : {host[0].hostName}   </div>
+              if(host[0]){
+
+              return <div> 
+                
+                {index+1} : {host[0].hostName}   </div>
+              }
             }),
             requestTimeAndData: item.requestTimeAndData,
           });

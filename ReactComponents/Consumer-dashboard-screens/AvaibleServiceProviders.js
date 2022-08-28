@@ -72,10 +72,10 @@ const AvaibleServiceProviders = () => {
             serviceProvider_ConnectedHosts: record.connectedHostList,
             plainNamesOfAllProvidedDatabases: record.connectedHostList.map(
               (item) => {
-                return item.hostName;
+                if(item) return item.hostName
               }
             ),
-
+            
             connectionRequest: record.connectionRequest,
             totalHostsProvided: record.connectedHostList.length,
             numberOfOpenAPIs: record.numberOfOpenAPIs,

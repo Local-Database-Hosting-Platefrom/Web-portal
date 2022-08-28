@@ -80,7 +80,11 @@ const ListOfDeveloperAccounts = () => {
             developerName: item.developerName,
             developerEmail: item.developerEmail,
             requestedHosts: item.listOfDatabases.map((host,index) => {
-              return <div> {index+1} : {host[0].hostName}   </div>
+              if(host[0]!=undefined){
+              return <div>
+                 {index+1} : {host[0].hostName}  
+                </div>
+              }
             }),
             requestStatus: item.requestStatus,
             assignedRole: item.accessRole,
