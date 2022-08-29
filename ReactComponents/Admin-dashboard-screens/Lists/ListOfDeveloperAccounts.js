@@ -176,8 +176,8 @@ const ListOfDeveloperAccounts = () => {
   const locale = {
     emptyText: (
         <span>
-          <img src={"/relax-women.jpg"} width={"250"} height={"250"} />
-          <Heading text={"No accounts have been registered yet..!"} fontSize={"1rem"} fontWeight={"bold"}/>
+          <img src={ isDataLoading==true ? '/please-wait.jpg' : "/relax-women.jpg"} width={"250"} height={"250"} />
+          <Heading text={ isDataLoading==true ? 'Please wait loading data' : "No accounts have been registered yet..!"} fontSize={"1rem"} fontWeight={"bold"}/>
         </span>
     ) 
   }

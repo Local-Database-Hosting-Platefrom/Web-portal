@@ -106,7 +106,14 @@ const ListOfResolvedRequests = () => {
       displayDialog(dialogueTypes.VIEW_COMPLETE_REQUEST, "", selectedRows[0]);
     },
   };
-  
+  const locale = {
+    emptyText: (
+        <span>
+          <img src={ isDataLoading==true ? '/please-wait.jpg' : "/relax-women.jpg"} width={"250"} height={"250"} />
+          <Heading text={ isDataLoading==true ? 'Please wait loading resolved requests' : "No request has been resolved yet  ..!"} fontSize={"1rem"} fontWeight={"bold"}/>
+        </span>
+    ) 
+  }
   return (
     <Container>
       <div>
@@ -117,6 +124,7 @@ const ListOfResolvedRequests = () => {
         </Grid>
       </div>
       <Table
+        locale={locale}
         loading={{ indicator: <Spinner />, spinning: isDataLoading }}
         rowSelection={{
           type: "radio",

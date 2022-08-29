@@ -119,7 +119,14 @@ const ListOfDeniedRequests = ()=>{
         displayDialog(dialogueTypes.VIEW_DENIAL_REASON, "", selectedRows[0]);
       },
     };
-    
+    const locale = {
+      emptyText: (
+          <span>
+            <img src={ isDataLoading==true ? '/please-wait.jpg' : "/relax-women.jpg"} width={"250"} height={"250"} />
+            <Heading text={ isDataLoading==true ? 'Please wait loading denied requests' : "No request has been denied yet  ..!"} fontSize={"1rem"} fontWeight={"bold"}/>
+          </span>
+      ) 
+    }
   
     return <Container>
           <div>
@@ -131,6 +138,7 @@ const ListOfDeniedRequests = ()=>{
         </div>
         
         <Table
+        locale={locale}
         loading={{ indicator: <Spinner />, spinning: isDataLoading }}
         rowSelection={{
           type: "radio",

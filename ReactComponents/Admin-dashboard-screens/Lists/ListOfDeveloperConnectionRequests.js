@@ -146,8 +146,8 @@ const ListOfDeveloperConnectionRequests = () => {
   const locale = {
     emptyText: (
         <span>
-          <img src={"/relax-women.jpg"} width={"250"} height={"250"} />
-          <Heading text={"No connection requests found..!"} fontSize={"1rem"} fontWeight={"bold"}/>
+       <img src={ isDataLoading==true ? '/please-wait.jpg' : "/relax-women.jpg"} width={"250"} height={"250"} />
+       <Heading text={ isDataLoading==true ? "Please wait loading the records" : "No connection requests found..!"} fontSize={"1rem"} fontWeight={"bold"}/>
         </span>
     ) 
   }
