@@ -152,10 +152,19 @@ const ListOfConnectedHosts = ()=>{
         );
       },
     };
+    const locale = {
+      emptyText: (
+          <span>
+            <img src={ isDataLoading==true ? '/please-wait.jpg' : "/no_data_found.jpg"} width={ isDataLoading==true ? "250" : "300"} height={ isDataLoading==true ?"250" : "300"} />
+            <Heading text={ isDataLoading==true ? 'Please wait loading connected hosts..!' : "No host is connected yet..!"} fontSize={"1rem"} fontWeight={"bold"}/>
+          </span>
+      ) 
+    }
   
     return <Container>
         <Table
-        locale={CustomTableLoadingForm()}
+        
+        locale={locale}
         loading={{ indicator: <Spinner />, spinning: isDataLoading }}
         rowSelection={{
           type: "radio",
