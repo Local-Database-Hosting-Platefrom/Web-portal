@@ -165,10 +165,20 @@ const ListOfPendingHosts = () => {
     },
   };
 
+  const locale = {
+    emptyText: (
+        <span>
+          <img src={ isDataLoading==true ? '/please-wait.jpg' : "/no_data_found.jpg"} width={ isDataLoading==true ? "250" : "300"} height={ isDataLoading==true ?"250" : "300"} />
+          <Heading text={ isDataLoading==true ? 'Please wait loading list of host connection requests!' : "No host is connection request has been made yet..!"} fontSize={"1rem"} fontWeight={"bold"}/>
+        </span>
+    ) 
+  }
+
 
   return (
     <Container>
       <Table
+        locale={locale}
         loading={{ indicator: <Spinner />, spinning: isDataLoading }}
         rowSelection={{
           type: "radio",
