@@ -199,6 +199,15 @@ const ListOfRemoteDatabaseAccessUrls = () => {
 
   };
 
+  const locale = {
+    emptyText: (
+        <span>
+          <img src={ isDataLoading==true ? '/please-wait.jpg' : "/no_data_found.jpg"} width={ isDataLoading==true ? "250" : "300"} height={ isDataLoading==true ?"250" : "300"} />
+          <Heading text={ isDataLoading==true ? 'Please wait loading open APIs!' : "No api is create yet.. Let's try it ..!"} fontSize={"1rem"} fontWeight={"bold"}/>
+        </span>
+    ) 
+  }
+
 
   return (
     <Container>
@@ -208,6 +217,7 @@ const ListOfRemoteDatabaseAccessUrls = () => {
         </Grid>
       </Grid>
       <Table
+        locale={locale}
         loading={{ indicator: <Spinner />, spinning: isDataLoading }}
         rowSelection={{
           type: "radio",
