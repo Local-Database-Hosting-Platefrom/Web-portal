@@ -11,6 +11,7 @@ import { Button, Table } from "antd";
 import CustomDialog from "../Dialogues/CustomDialog";
 import dialogueTypes from "../Dialogues/dialogueTypes";
 import Spinner from "../../Support/Spinner";
+import CustomTableLoadingForm from "../../Support/CustomTableLoadingIcon";
 
 const columns = [
   {
@@ -40,7 +41,7 @@ const OpenAPIs = () => {
   const [alertMessage_CustomDialog, setAlertMessage_CustomDialog] =
     useState("");
   const [alertTitle_CustomDialog, setAlertTitle_CustomDialog] = useState("");
-  const [isDataLoading,setIsLoading]=useState(false);
+  const [isDataLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     let loggedInUser = localStorage.getItem("loggedInUser");
@@ -69,11 +70,11 @@ const OpenAPIs = () => {
         });
         // console.log(response)
         setListOfUrls(list);
-        setIsLoading(false)
+        setIsLoading(false);
       },
       (error) => {
         console.log(error);
-        setIsLoading(false)
+        setIsLoading(false);
       }
     );
   }, []);
@@ -99,10 +100,10 @@ const OpenAPIs = () => {
     handleClose_CustomDialog();
   };
 
-const handleNoEvent = (action) => {
+  const handleNoEvent = (action) => {
     handleClose_CustomDialog();
   };
-  
+
   const displayDialog = (dialogType, dialogTitle, dialogMessage) => {
     setAlertMessage_CustomDialog(dialogMessage);
     setAlertTitle_CustomDialog(dialogTitle);
@@ -118,31 +119,25 @@ const handleNoEvent = (action) => {
     setOpenCustomDialog(false);
   };
 
-  let locale = {
-    emptyText: (
-      <span>
-        <img
-                  src="/no_data_found.jpg"
-                  width="300px"
-                  height="300px"
-                />
-                <Heading text={"Found no open API.!!"} fontSize={"1.5rem"}/>
-            
-      
-      </span>
-    )
-  };
+  // let locale = {
+  //   emptyText: (
+  //     <span>
+  //       <img src="/no_data_found.jpg" width="300px" height="300px" />
+  //       <Heading text={"Found no open API.!!"} fontSize={"1.5rem"} />
+  //     </span>
+  // ),
+
+  // };
 
   return (
     <div>
       <Table
-        locale={locale}
+        locale={CustomTableLoadingForm()}
         rowSelection={{
           type: "radio",
           ...rowSelection,
         }}
-        loading={{indicator:<Spinner/>,spinning:isDataLoading}}
-       
+        loading={{ indicator: <Spinner />, spinning: isDataLoading }}
         columns={columns}
         dataSource={listOfUrls}
       />

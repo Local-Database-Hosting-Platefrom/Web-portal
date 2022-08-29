@@ -85,6 +85,7 @@ const CreateRemoteDatabaseAccessUrl = () => {
                 async (success) => {
                   const response = await success.json();
                   console.log(response);
+                  
                   setLoadingsForTestBtn((prevLoadings) => {
                     const newLoadings = [...prevLoadings];
                     newLoadings[index] = false;

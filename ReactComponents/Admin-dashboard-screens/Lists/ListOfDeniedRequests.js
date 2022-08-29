@@ -99,6 +99,12 @@ const ListOfDeniedRequests = ()=>{
     const handleOkEvent = (action) => {
       handleClose_CustomDialog();
     };
+
+    const handleNoEvent = (action) => {
+      handleClose_CustomDialog();
+    };
+
+    
   
     const rowSelection = {
       onChange: (selectedRowKeys, selectedRows) => {
@@ -142,6 +148,7 @@ const ListOfDeniedRequests = ()=>{
         alertMessage={alertMessage_CustomDialog}
         alertTitle={alertTitle_CustomDialog}
         handleOkEvent={handleOkEvent}
+        handleNoEvent={handleNoEvent}
       />
         
     </Container>

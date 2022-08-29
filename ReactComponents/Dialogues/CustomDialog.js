@@ -83,14 +83,14 @@ export default function CustomDialog({
 
   const [selectedHostTitle, setSelectedHostTitle] = useState("Select Host");
 
-  const [selectedtokenExpiryTime, setSelectedtokenExpiryTime] = useState("1h");
+  const [selectedtokenExpiryTime, setSelectedtokenExpiryTime] = useState(null);
   const [selectedtokenExpiryTimeTitle, setSelectedtokenExpiryTimeTitle] =
     useState("Expiry time");
 
   const [isTokenGenerated, setIsTokenGenerated] = useState(false);
   const [url, setUrl] = useState("");
   const [secretKey, setSecretKey] = useState("");
-  const [selectedHost, setSelectedHost] = useState({});
+  const [selectedHost, setSelectedHost] = useState(null);
   const [jwtToken, setJwtToken] = useState(null);
   const [generatedApiKey, setGeneratedApiKey] = useState("DEFAULT_KEY");
 
@@ -121,6 +121,7 @@ export default function CustomDialog({
     setIsAutoTokenGeneratingAllowed(event.target.checked);
   };
 
+
   const [listOfAccessRole, setListOfAccessRole] = React.useState([
     {
       roleTitle: "Read Only",
@@ -143,6 +144,7 @@ export default function CustomDialog({
   useEffect(() => {
     // if (alertMessage.status) setIsLdUrlEnabled();
     setAreWeGeneratingApiKey(false);
+    
   }, [alertMessage]);
 
   const handelGenerateToken = (index) => {
@@ -152,7 +154,6 @@ export default function CustomDialog({
         newLoadings[index] = true;
         return newLoadings;
       });
-
       sendResquestToCentralAPI("POST", GENERATE_HOST_ACCESS_URL_TOKEN, {
         hostId: selectedHost.hostId,
         developerEmail: JSON.parse(localStorage.getItem("loggedInUser"))
@@ -199,8 +200,8 @@ export default function CustomDialog({
       openNotificationWithIcon(
         "error",
         "Invalid input",
-        "Kindly select any host..",
-        "top"
+        "Kindly select a host and expiry time",
+        "bottom"
       );
     }
   };
@@ -409,7 +410,10 @@ export default function CustomDialog({
         <div>
           <Modal
             visible={open}
-            closable={false}
+            closable={true}
+            onCancel={() => {
+              handleNoEvent();
+            }}
             footer={null}
             title={"Connection Request"}
           >
@@ -538,7 +542,10 @@ export default function CustomDialog({
         <div>
           <Modal
             visible={open}
-            closable={false}
+            closable={true}
+            onCancel={() => {
+              handleNoEvent();
+            }}
             footer={null}
             title={"Update Connection Details"}
           >
@@ -629,7 +636,10 @@ export default function CustomDialog({
         <div>
           <Modal
             visible={open}
-            closable={false}
+            closable={true}
+            onCancel={() => {
+              handleNoEvent();
+            }}
             footer={null}
             title={"URL Status"}
           >
@@ -676,7 +686,10 @@ export default function CustomDialog({
         <div>
           <Modal
             visible={open}
-            closable={false}
+            closable={true}
+            onCancel={()=>{
+              handleNoEvent();
+            }}
             footer={null}
             title={"Open API Settings"}
           >
@@ -1332,10 +1345,23 @@ export default function CustomDialog({
             closable={true}
             onCancel={handleNoEvent}
             footer={null}
-            title={"Generate token"}
+            // title={"Generate token"}
           >
             <Grid container>
               <Grid item xs={12} style={{ textAlign: "center" }}>
+                <div>
+                  <img src="/manage_connection_icon.jpg" width={"200"} height={"200"} />
+                </div>
+                <div style={{"fontSize":"1.3rem",fontWeight:"bold"}}>
+                  Access Toke Manager
+                </div>
+                <div style={{"fontSize":"1rem",width:"60%",marginLeft:"20%",marginRight:"20%"}}>
+                  You need access tokens to using our <a> <b> local host access urls service </b></a>  in your application
+                </div>
+                <div>
+                  <a> learn more </a>
+                </div>
+                <Divider/>
                 <Dropdown.Button
                   overlay={
                     <Menu
@@ -1431,16 +1457,7 @@ export default function CustomDialog({
                     onClick={(e) => {
                       e.preventDefault();
                       handelGenerateToken(0);
-                      // handleOkEvent(null);
-                      // console.log(alertMessage[0].)
-                      // const useData = JSON.parse(
-                      //   localStorage.getItem("loggedInUser")
-                      // );
-                      // let apiKey = "GENERATE_NEW_KEY";
-                      // if (useData) apiKey = useData.responsePayload.apiKey;
-                      // window
-                      //   .open(alertMessage[0].urlAddress + apiKey, "_blank")
-                      //   .focus();
+                     
                     }}
                   >
                     {isTokenGenerated == false
@@ -1572,11 +1589,25 @@ export default function CustomDialog({
             closable={true}
             onCancel={handleNoEvent}
             footer={null}
-            title={alertTitle}
+            // title={alertTitle}
           >
             <Grid container>
               <Grid item xs={12}>
-                <div style={{ textAlign: "center" }}>
+                <div style={{textAlign:'center'}}>
+                  <img src="/api-key.png" width={"200"} height={"200"} />
+                  <div style={{fontSize:"1.3rem",fontWeight:"bold"}}>
+                    API Key Manager
+                  </div>
+                  <div style={{fontSize:"1rem"}}>
+                    You need keys for using Open APIs.
+                  </div>
+                  <div>
+                    {/* TODO:API Key manager documentation */}
+                    <a>Learn more</a>
+                  </div>
+                  <Divider/>
+                </div>
+                <div style={{ textAlign: "center",marginTop:"2%" }}>
                   <Button
                     type="secondary"
                     shape="round"

@@ -181,6 +181,9 @@ const ListOfRemoteDatabaseAccessUrls = () => {
     }
   };
 
+  const handleNoEvent=()=>{
+    handleClose_CustomDialog();
+  }
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log(
@@ -193,7 +196,9 @@ const ListOfRemoteDatabaseAccessUrls = () => {
       // console.log(selectedRows[0].accessRole);
       displayDialog(dialogueTypes.VIEW_OPEN_API, "", selectedRows[0]);
     },
+
   };
+
 
   return (
     <Container>
@@ -220,6 +225,7 @@ const ListOfRemoteDatabaseAccessUrls = () => {
         alertMessage={alertMessage_CustomDialog}
         alertTitle={alertTitle_CustomDialog}
         handleOkEvent={handleOkEvent}
+        handleNoEvent={handleNoEvent}
       />
     </Container>
   );

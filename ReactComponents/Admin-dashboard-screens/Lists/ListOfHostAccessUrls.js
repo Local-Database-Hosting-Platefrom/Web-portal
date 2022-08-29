@@ -123,6 +123,10 @@ const ListOfHostAccessUrls = () => {
     }
   };
 
+  const handleNoEvent=()=>{
+    handleClose_CustomDialog();
+  }
+
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log(
@@ -156,6 +160,7 @@ const ListOfHostAccessUrls = () => {
         alertMessage={alertMessage_CustomDialog}
         alertTitle={alertTitle_CustomDialog}
         handleOkEvent={handleOkEvent}
+        handleNoEvent={handleNoEvent}
       />
   </div>;
 };

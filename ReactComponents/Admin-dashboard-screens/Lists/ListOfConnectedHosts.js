@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
 import { LOAD_CONNECTED_HOSTS_LIST, SET_HOST_STATUS } from "../../../request-manager/requestUrls";
 import CustomDropDown from "../../../Support/CustomDropDown";
+import CustomTableLoadingForm from "../../../Support/CustomTableLoadingIcon";
 import Heading from "../../../Support/Heading";
 import Spinner from "../../../Support/Spinner";
 import CustomDialog from "../../Dialogues/CustomDialog";
@@ -56,7 +57,8 @@ const ListOfConnectedHosts = ()=>{
     useEffect(()=>{
       // Make call to load pending list of hosts
       const useData = JSON.parse(localStorage.getItem("loggedInUser"));
-      const _id = useData.responsePayload._id; 
+      const _id = useData.responsePayload._id;
+      setIsDataLoading(true); 
       sendResquestToCentralAPI("POST", LOAD_CONNECTED_HOSTS_LIST,{
         _id: _id,
       }).then(async (success)=>{
@@ -73,6 +75,7 @@ const ListOfConnectedHosts = ()=>{
             };
           })
         );
+        setIsDataLoading(false)
       },(error)=>{
         console.log("Error",error)
       })
@@ -152,6 +155,7 @@ const ListOfConnectedHosts = ()=>{
   
     return <Container>
         <Table
+        locale={CustomTableLoadingForm()}
         loading={{ indicator: <Spinner />, spinning: isDataLoading }}
         rowSelection={{
           type: "radio",

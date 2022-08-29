@@ -248,7 +248,6 @@ const Index = () => {
             openNotificationWithIcon("error","Server sent error",JSON.stringify(error));
           }
         );
-        // setCurrentOpenedScreen(<GenerateTokenScreen />);
         break;
       case 2:
         setCurrentOpenedScreen(<AvaibleServiceProviders />);
@@ -259,8 +258,7 @@ const Index = () => {
           "Manage API Keys",
           null
         );
-        // setCurrentOpenedScreen(<GetAPIKeyScreen />);
-
+      
         break;
       case 4:
         // Test Token
@@ -365,7 +363,7 @@ const Index = () => {
               }}
             >
               <img
-                src="/home-page/manage_connection_icon.png"
+                src="/manage_connection_icon.jpg"
                 width="40"
                 height="40"
               />

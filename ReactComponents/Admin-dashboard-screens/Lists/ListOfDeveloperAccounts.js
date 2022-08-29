@@ -16,7 +16,7 @@ import { Table } from "antd";
 import Spinner from "../../../Support/Spinner";
 import dialogueTypes from "../../Dialogues/dialogueTypes";
 import openNotificationWithIcon from "../../Dialogues/Notification";
-
+import CustomTableLoadingForm from '../../../Support/CustomTableLoadingIcon'
 const columns = [
   {
     title: "Developer Name",
@@ -157,7 +157,9 @@ const ListOfDeveloperAccounts = () => {
       );
     }
   };
-
+  const handleNoEvent=()=>{
+    handleClose_CustomDialog();
+  }
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log(
@@ -171,7 +173,14 @@ const ListOfDeveloperAccounts = () => {
       displayDialog(dialogueTypes.VIEW_DEV_CON_DETAILS, "", selectedRows[0]);
     },
   };
-
+  const locale = {
+    emptyText: (
+        <span>
+          <img src={"/relax-women.jpg"} width={"250"} height={"250"} />
+          <Heading text={"No accounts have been registered yet..!"} fontSize={"1rem"} fontWeight={"bold"}/>
+        </span>
+    ) 
+  }
   return (
     <Container>
       {/* Heading */}
@@ -183,6 +192,7 @@ const ListOfDeveloperAccounts = () => {
         </Grid>
       </div>
       <Table
+        locale={locale}
         loading={{ indicator: <Spinner />, spinning: isDataLoading }}
         rowSelection={{
           type: "radio",
@@ -200,6 +210,7 @@ const ListOfDeveloperAccounts = () => {
         alertMessage={alertMessage_CustomDialog}
         alertTitle={alertTitle_CustomDialog}
         handleOkEvent={handleOkEvent}
+        handleNoEvent={handleNoEvent}
       />
     </Container>
   );
