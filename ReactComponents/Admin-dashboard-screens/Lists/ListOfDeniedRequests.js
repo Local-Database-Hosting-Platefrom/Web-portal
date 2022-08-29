@@ -119,6 +119,7 @@ const ListOfDeniedRequests = ()=>{
         displayDialog(dialogueTypes.VIEW_DENIAL_REASON, "", selectedRows[0]);
       },
     };
+    
     const locale = {
       emptyText: (
           <span>

@@ -141,8 +141,18 @@ const ListOfHostAccessUrls = () => {
     },
   };
 
+  const locale = {
+    emptyText: (
+        <span>
+          <img src={ isDataLoading==true ? '/please-wait.jpg' : "/no_data_found.jpg"} width={ isDataLoading==true ? "250" : "300"} height={ isDataLoading==true ?"250" : "300"} />
+          <Heading text={ isDataLoading==true ? 'Please wait loading host access urls..!' : "No host is connected yet so there is not host access url in database  ..!"} fontSize={"1rem"} fontWeight={"bold"}/>
+        </span>
+    ) 
+  }
+
   return <div>
     <Table
+        locale={locale}
         loading={{ indicator: <Spinner />, spinning: isDataLoading }}
         rowSelection={{
           type: "radio",
