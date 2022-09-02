@@ -7,6 +7,10 @@ import {
     useMediaQuery,
   } from "@mui/material";
   import { makeStyles } from "@mui/styles";
+import { useEffect } from "react";
+import { useState } from "react";
+import { sendResquestToCentralAPI } from "../../request-manager/requestManager";
+import { GET_MAJOR_COUNTS } from "../../request-manager/requestUrls";
   
   const useStyles = makeStyles({
     root: {marginTop:"10%"},
@@ -41,6 +45,19 @@ import {
 const ServiceSummury=()=>{
     const classes = useStyles();
     const isMediumScreen = useMediaQuery("(min-width:600px)");
+    const [numberOfRequest,setNumberRequests]=useState(0);
+    const [numberOfDevelopers,setNumberOfDevelopers]=useState(0);
+    const [numberOfHosts,setNumberOfHosts]=useState(0);
+     
+    
+    useEffect(()=>{
+      sendResquestToCentralAPI("GET",GET_MAJOR_COUNTS,{}).then((resp)=>resp.json()).then((data)=>{
+        console.log(data)
+        setNumberOfDevelopers(data.responsePayload.numberOfDevelopers);
+        setNumberOfHosts(data.responsePayload.numberHosts);
+        setNumberRequests(data.responsePayload.numberOfRequests)
+      })
+    },[])
     return (
      
       <Grid container className={isMediumScreen ? classes.summury_container_md : classes.summury_container_xs}>
@@ -54,7 +71,7 @@ const ServiceSummury=()=>{
                 : classes.summury_card_title_xs
             }
           >
-            Consumers
+            Developers
           </div>
           <div
             className={
@@ -64,7 +81,7 @@ const ServiceSummury=()=>{
             }
           >
             {" "}
-            90099
+            {numberOfDevelopers}
           </div>
         </Grid>
         <Grid item md={3} xs={6} className={classes.summury_card}>
@@ -86,7 +103,7 @@ const ServiceSummury=()=>{
             }
           >
             {" "}
-            8021
+            {numberOfHosts}
           </div>
         </Grid>
         <Grid item md={3} xs={4} className={classes.summury_card}>
@@ -109,7 +126,7 @@ const ServiceSummury=()=>{
             }
           >
            
-            85903
+            {numberOfRequest}
           </div>
           </Box>
         </Grid>
