@@ -117,6 +117,7 @@ const Index = () => {
     let loggedInUser = localStorage.getItem("loggedInUser");
 
     if (loggedInUser != undefined) {
+    console.log(localStorage.getItem("accountType")+localStorage.getItem("isLoggedIn"));
       if (
         localStorage.getItem("accountType") == "developer" &&
         localStorage.getItem("isLoggedIn") == "true"

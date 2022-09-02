@@ -686,9 +686,12 @@ export default function Navbar({isProgressBarVisible=false}) {
                 <MenuItem>
                   <ListItemText
                     onClick={() => {
-                      localStorage.setItem("isLoggedIn", false);
+                      // localStorage.setItem("isLoggedIn", false);
                       // location.reload();
+                      console.log("withing nav a",localStorage.getItem("accountType"))
+                      if(localStorage.getItem("accountType")=="admin")
                       navigate.push("/admin-dashboard");
+                      else  navigate.push("/developer-dashboard");
                     }}
                   >
                     Dashboard
@@ -980,8 +983,10 @@ export default function Navbar({isProgressBarVisible=false}) {
                   fontSize: 14,
                 }}
                 onClick={(e) => {
-                  navigate.push("/Authentication");
-                  
+
+                  if(localStorage.getItem("accountType")=="admin")
+                      navigate.push("/admin-dashboard");
+                      else  navigate.push("/developer-dashboard");
                 }}
               >
                 {"Dashboard"}

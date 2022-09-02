@@ -75,7 +75,7 @@ const ListOfPendingHosts = () => {
               return {
                 key: host,
                 hostId: host.hostId,
-                hostName: host!=undefined ? host.hostName:"HOST HAS BEEN DELETED",
+                hostName: host.hostName,
                 lastSeen: host.lastSeenDateAndTime,
                 requestStatus: host.isConnected,
               };

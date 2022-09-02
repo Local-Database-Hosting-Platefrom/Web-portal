@@ -187,7 +187,7 @@ const Index = () => {
           <Grid item md={8} xs={12}>
             {/* Image side */}
             <img
-              src="/home-page/signinvector.png"
+              src="/sign-up.jpg"
               width={isMediumScreen ? "70%" : "100%"}
             />
           </Grid>

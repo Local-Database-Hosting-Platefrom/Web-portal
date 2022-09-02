@@ -23,7 +23,10 @@ import ManageConsumers from "../../ReactComponents/Admin-dashboard-screens/Manag
 import { useEffect } from "react";
 import { sendResquestToCentralAPI } from "../../request-manager/requestManager";
 import { AUTH_PAGE, VERIFY_JWT_TOKEN } from "../../request-manager/requestUrls";
-import { TOKEN_NOT_VERIFIED, TOKEN_VERIFIED } from "../../request-manager/responseCodes";
+import {
+  TOKEN_NOT_VERIFIED,
+  TOKEN_VERIFIED,
+} from "../../request-manager/responseCodes";
 import CustomDialog from "../../ReactComponents/Dialogues/CustomDialog";
 import dialogueTypes from "../../ReactComponents/Dialogues/dialogueTypes";
 import { useRouter } from "next/router";
@@ -88,70 +91,82 @@ const Index = () => {
   const [currentOpenedScreen, setCurrentOpenedScreen] = useState(
     <Statistics />
   );
-  
+
   const navigation = useRouter();
-  const [alertType,setAlertType]=useState(null);
+  const [alertType, setAlertType] = useState(null);
   const [openCustomDialog, setOpenCustomDialog] = useState(false);
-  const [alertMessage_CustomDialog,setAlertMessage_CustomDialog]=useState("");
-  const [alertTitle_CustomDialog,setAlertTitle_CustomDialog]=useState("");
+  const [alertMessage_CustomDialog, setAlertMessage_CustomDialog] =
+    useState("");
+  const [alertTitle_CustomDialog, setAlertTitle_CustomDialog] = useState("");
   const [accountType, setAccountType] = useState(null);
-  
+
   // Check if it is authenticated or not?
-  useEffect(()=>{
-   let loggedInUser =  localStorage.getItem("loggedInUser");
-   if(loggedInUser!=undefined) {
-    if(localStorage.getItem("accountType")=="admin" && localStorage.getItem("isLoggedIn")=="true")
-    {
-      loggedInUser = JSON.parse(loggedInUser);
-      console.log(loggedInUser);
-      let token = loggedInUser.responsePayload.jwtToken;
-      sendResquestToCentralAPI("POST",VERIFY_JWT_TOKEN,{_id:loggedInUser.responsePayload._id,accountType:"admin"}).then(async (response) => {
-        const data =await response.json();
-        console.log("after verfiying the data ",data);
+  useEffect(() => {
+    let loggedInUser = localStorage.getItem("loggedInUser");
+    if (loggedInUser != undefined) {
+      if (
+        localStorage.getItem("accountType") == "admin" &&
+        localStorage.getItem("isLoggedIn") == "true"
+      ) {
+        loggedInUser = JSON.parse(loggedInUser);
+        console.log(loggedInUser);
+        let token = loggedInUser.responsePayload.jwtToken;
+        sendResquestToCentralAPI("POST", VERIFY_JWT_TOKEN, {
+          _id: loggedInUser.responsePayload._id,
+          accountType: "admin",
+        }).then(
+          async (response) => {
+            const data = await response.json();
+            console.log("after verfiying the data ", data);
 
-        if(data.responseCode==TOKEN_VERIFIED){
-          // token verified.
-          localStorage.setItem("isLoggedIn", true); 
-        }else if(data.responseCode==TOKEN_NOT_VERIFIED){
-          // token is not verified
-          displayDialog(dialogueTypes.INVALID_LOGIN,"Something went wrong",data.responseMessage);
-        }
-
-      },(error)=>{
-        // when error in verfirication
-      })
-    }else{
-      console.log("accountype",localStorage.getItem("accountType"));
-      console.log("isLoggedIn",localStorage.getItem("isLoggedIn"));
-      displayDialog(dialogueTypes.INFO,"Something went wrong","Please login");
+            if (data.responseCode == TOKEN_VERIFIED) {
+              // token verified.
+              localStorage.setItem("isLoggedIn", true);
+            } else if (data.responseCode == TOKEN_NOT_VERIFIED) {
+              // token is not verified
+              displayDialog(
+                dialogueTypes.INVALID_LOGIN,
+                "Something went wrong",
+                data.responseMessage
+              );
+            }
+          },
+          (error) => {
+            // when error in verfirication
+          }
+        );
+      } else {
+        console.log("accountype", localStorage.getItem("accountType"));
+        console.log("isLoggedIn", localStorage.getItem("isLoggedIn"));
+        displayDialog(
+          dialogueTypes.INFO,
+          "Something went wrong",
+          "Please login"
+        );
+      }
     }
-   }
-  },[]);
+  }, []);
 
-
-  const displayDialog = (dialogType,dialogTitle,dialogMessage) => {
+  const displayDialog = (dialogType, dialogTitle, dialogMessage) => {
     setAlertMessage_CustomDialog(dialogMessage);
     setAlertTitle_CustomDialog(dialogTitle);
     setAlertType(dialogType);
     handleClickOpen_CustomDialog();
-  }
-
-
+  };
 
   const handleClickOpen_CustomDialog = () => {
     setOpenCustomDialog(true);
   };
-  
+
   const handleClose_CustomDialog = () => {
     setOpenCustomDialog(false);
   };
 
-  const handleOkEvent=(action)=>{
-    if(action=="re-login")
-    localStorage.setItem("isLoggedIn",false);
-    navigation.push(AUTH_PAGE)
-  }
-  
+  const handleOkEvent = (action) => {
+    if (action == "re-login") localStorage.setItem("isLoggedIn", false);
+    navigation.push(AUTH_PAGE);
+  };
+
   const handleScreenChange = (index) => {
     switch (index) {
       case 0:
@@ -244,8 +259,7 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-                <img src="/statistics.png" width="40" height="40" />
-              
+              <img src="/statistics.png" width="40" height="40" />
             </ListItemIcon>
             <ListItemText
               primary={"Statistics"}
@@ -270,7 +284,7 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <img src="/developers.png" width="40" height='40'  />
+              <img src="/developers.png" width="40" height="40" />
             </ListItemIcon>
             <ListItemText
               primary={"Developers"}
@@ -295,12 +309,9 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <img src="/manageBridge.png" width="40" height='40'  />
+              <img src="/manageBridge.png" width="40" height="40" />
             </ListItemIcon>
-            <ListItemText
-              primary={"Bridge"}
-              sx={{ opacity: open ? 1 : 0 }}
-            />
+            <ListItemText primary={"Bridge"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
           <ListItemButton
             key={"2"}
@@ -320,12 +331,9 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <img src="/home-page/hostIcon.png" width="40" height='40' />
+              <img src="/home-page/hostIcon.png" width="40" height="40" />
             </ListItemIcon>
-            <ListItemText
-              primary={"Hosts"}
-              sx={{ opacity: open ? 1 : 0 }}
-            />
+            <ListItemText primary={"Hosts"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
           <Divider />
           <ListItemButton
@@ -346,12 +354,9 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <img src="/api-key.png" width="40" height='40' />
+              <img src="/api-key.png" width="40" height="40" />
             </ListItemIcon>
-            <ListItemText
-              primary={"Open API"}
-              sx={{ opacity: open ? 1 : 0 }}
-            />
+            <ListItemText primary={"Open API"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
 
           {/* <ListItemButton
@@ -399,7 +404,7 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <img src="/settings.png" width="40" height='40' />
+              <img src="/settings.png" width="40" height="40" />
             </ListItemIcon>
             <ListItemText primary={"Settings"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
@@ -421,7 +426,7 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <img src="/home-page/helpIcon.png" width="40" height='40' />
+              <img src="/home-page/helpIcon.png" width="40" height="40" />
             </ListItemIcon>
             <ListItemText primary={"Help"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
@@ -434,14 +439,14 @@ const Index = () => {
       </Box>
 
       <CustomDialog
-          alertType={alertType}
-          handleClickOpen={handleClickOpen_CustomDialog}
-          handleCloseEvent={handleClose_CustomDialog}
-          open={openCustomDialog}
-          alertMessage={alertMessage_CustomDialog}
-          alertTitle={alertTitle_CustomDialog}
-          handleOkEvent={handleOkEvent}
-        />
+        alertType={alertType}
+        handleClickOpen={handleClickOpen_CustomDialog}
+        handleCloseEvent={handleClose_CustomDialog}
+        open={openCustomDialog}
+        alertMessage={alertMessage_CustomDialog}
+        alertTitle={alertTitle_CustomDialog}
+        handleOkEvent={handleOkEvent}
+      />
     </Box>
   );
 };
