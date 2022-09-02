@@ -152,6 +152,7 @@ const ListOfConnectedHosts = ()=>{
         );
       },
     };
+    
     const locale = {
       emptyText: (
           <span>
@@ -163,7 +164,6 @@ const ListOfConnectedHosts = ()=>{
   
     return <Container>
         <Table
-        
         locale={locale}
         loading={{ indicator: <Spinner />, spinning: isDataLoading }}
         rowSelection={{
@@ -173,7 +173,6 @@ const ListOfConnectedHosts = ()=>{
         columns={columns}
         dataSource={ListOfConnectedHosts}
       />
-
       <CustomDialog
         alertType={alertType}
         handleClickOpen={handleClickOpen_CustomDialog}
@@ -184,7 +183,6 @@ const ListOfConnectedHosts = ()=>{
         handleOkEvent={handleOkEvent}
         handleNoEvent={handleNoEvent}
       />
-       
         
     </Container>
 }

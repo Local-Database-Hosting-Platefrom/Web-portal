@@ -28,6 +28,7 @@ import CustomDialog from "../../ReactComponents/Dialogues/CustomDialog";
 import dialogueTypes from "../../ReactComponents/Dialogues/dialogueTypes";
 import { useRouter } from "next/router";
 import { useMediaQuery } from "@mui/material";
+import ManageOpenAPI from "../../ReactComponents/Admin-dashboard-screens/ManageOpenAPI";
 const drawerWidth = 280;
 
 const openedMixin = (theme) => ({
@@ -171,7 +172,8 @@ const Index = () => {
         break;
       case 4:
         // Service Pans
-        setCurrentOpenedScreen(<ServicePlans />);
+        setCurrentOpenedScreen(<ManageOpenAPI />);
+        // setCurrentOpenedScreen(<ServicePlans />);
         break;
       case 5:
         // Settings
@@ -344,13 +346,40 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
+              <img src="/api-key.png" width="40" height='40' />
+            </ListItemIcon>
+            <ListItemText
+              primary={"Open API"}
+              sx={{ opacity: open ? 1 : 0 }}
+            />
+          </ListItemButton>
+
+          {/* <ListItemButton
+            key={"2"}
+            sx={{
+              minHeight: 48,
+              justifyContent: open ? "initial" : "center",
+              px: 2.5,
+            }}
+            onClick={() => {
+              handleScreenChange(4);
+            }}
+          >
+            <ListItemIcon
+              sx={{
+                minWidth: 0,
+                mr: open ? 3 : "auto",
+                justifyContent: "center",
+              }}
+            >
               <img src="/home-page/plansIcon.png" width="40" height='40' />
             </ListItemIcon>
             <ListItemText
               primary={"Service Plans"}
               sx={{ opacity: open ? 1 : 0 }}
             />
-          </ListItemButton>
+          </ListItemButton> */}
+
           <Divider />
           <ListItemButton
             key={"2"}

@@ -69,12 +69,15 @@ const ListOfDeveloperConnectionRequests = () => {
             developerName: item.developerName,
             developerEmail: item.developerEmail,
             requestedHosts: item.listOfDatabases.map((host,index) => {
-              console.log("inner host name",host);
               if(host[0]){
 
               return <div> 
                 
                 {index+1} : {host[0].hostName}   </div>
+              }else{
+                return <div> 
+                
+                HOST HAS BEEN DELETED  </div>
               }
             }),
             requestTimeAndData: item.requestTimeAndData,
@@ -149,7 +152,7 @@ const ListOfDeveloperConnectionRequests = () => {
        <img src={ isDataLoading==true ? '/please-wait.jpg' : "/relax-women.jpg"} width={"250"} height={"250"} />
        <Heading text={ isDataLoading==true ? "Please wait loading the records" : "No connection requests found..!"} fontSize={"1rem"} fontWeight={"bold"}/>
         </span>
-    ) 
+    )  
   }
 
   return (

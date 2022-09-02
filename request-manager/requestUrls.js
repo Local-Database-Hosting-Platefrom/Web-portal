@@ -8,7 +8,7 @@ import { BACK_END_BASE_URL, FRONT_END_BASE_URL } from "./urls";
 const GOOGLE_AUTH = `${BACK_END_BASE_URL}/auth-api/googleAuthentication`;
 const GITHUB_AUTH = `${BACK_END_BASE_URL}/auth-api/githubAuhentication`;
 const AUTH_PAGE = `${FRONT_END_BASE_URL}/Authentication/SignIn`;
-
+const NO_INTERNET_CONNECTION=`${FRONT_END_BASE_URL}/error-in-connecting`;
 const CREATE_ADMIN_ACCOUNT = "/auth-api/createAdminAccount";
 const SIGN_IN_ADMIN_ACCOUNT = "/auth-api/loginToAdminAccount";
 const VERIFY_JWT_TOKEN = "/auth-api/verifyJwtToken";
@@ -95,7 +95,7 @@ const GET_TOTAL_NUMBER_OF_ENTERTAINED_REQUESTS_DEVELOPER =
 
 const GET_TOTAL_NUMBER_OF_DENED_REQUESTS_DEVELOPER =
   "/consumer-api/getTotalNumberOfDeniedRequestsByDeveloperEmail";
-
+const CHECK_API_STATUS="/check-central-api-status"
 export {
   SIGN_IN_ADMIN_ACCOUNT,
   CREATE_ADMIN_ACCOUNT,
@@ -140,4 +140,6 @@ export {
   GET_TOTAL_NUMBER_OF_OPEN_APIS_DEVELOPER,
   GET_TOTAL_NUMBER_OF_ENTERTAINED_REQUESTS_DEVELOPER,
   GET_TOTAL_NUMBER_OF_DENED_REQUESTS_DEVELOPER,
+  CHECK_API_STATUS,
+  NO_INTERNET_CONNECTION
 };

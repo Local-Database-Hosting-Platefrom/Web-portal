@@ -980,7 +980,8 @@ export default function Navbar({isProgressBarVisible=false}) {
                   fontSize: 14,
                 }}
                 onClick={(e) => {
-                  navigate.push("/admin-dashboard");
+                  navigate.push("/Authentication");
+                  
                 }}
               >
                 {"Dashboard"}

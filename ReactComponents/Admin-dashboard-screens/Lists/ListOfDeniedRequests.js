@@ -63,7 +63,7 @@ const ListOfDeniedRequests = ()=>{
             key:request,
             requestId:request.request.requestId,
             developerName: request.requestSenderName,
-            hostName: request.hostData.hostName,
+            hostName: request.hostData!=null ? request.hostData.hostName : 'HOST IS DELETED',
             denialReason:reason,
             requestTimeAndDate: request.request.requestDateAndTime,
           };

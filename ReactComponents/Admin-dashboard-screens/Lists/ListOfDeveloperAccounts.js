@@ -84,7 +84,12 @@ const ListOfDeveloperAccounts = () => {
               return <div>
                  {index+1} : {host[0].hostName}  
                 </div>
+              }else{
+                return <div>
+                HOST HAS BEEN DELETED
+                </div>
               }
+
             }),
             requestStatus: item.requestStatus,
             assignedRole: item.accessRole,

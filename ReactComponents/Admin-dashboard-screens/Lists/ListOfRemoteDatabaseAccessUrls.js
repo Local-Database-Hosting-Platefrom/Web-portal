@@ -211,11 +211,11 @@ const ListOfRemoteDatabaseAccessUrls = () => {
 
   return (
     <Container>
-      <Grid container>
+      {/* <Grid container>
         <Grid item xs={8}>
           <Heading text={"Open APIs"} fontSize="1.5rem" />
         </Grid>
-      </Grid>
+      </Grid> */}
       <Table
         locale={locale}
         loading={{ indicator: <Spinner />, spinning: isDataLoading }}

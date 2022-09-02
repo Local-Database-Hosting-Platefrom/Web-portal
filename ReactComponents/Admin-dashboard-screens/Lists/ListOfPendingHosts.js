@@ -75,7 +75,7 @@ const ListOfPendingHosts = () => {
               return {
                 key: host,
                 hostId: host.hostId,
-                hostName: host.hostName,
+                hostName: host!=undefined ? host.hostName:"HOST HAS BEEN DELETED",
                 lastSeen: host.lastSeenDateAndTime,
                 requestStatus: host.isConnected,
               };
@@ -171,7 +171,7 @@ const ListOfPendingHosts = () => {
           <img src={ isDataLoading==true ? '/please-wait.jpg' : "/no_data_found.jpg"} width={ isDataLoading==true ? "250" : "300"} height={ isDataLoading==true ?"250" : "300"} />
           <Heading text={ isDataLoading==true ? 'Please wait loading list of host connection requests!' : "No host is connection request has been made yet..!"} fontSize={"1rem"} fontWeight={"bold"}/>
         </span>
-    ) 
+    )  
   }
 
 

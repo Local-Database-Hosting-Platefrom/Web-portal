@@ -4,14 +4,14 @@ import Tabs, { tabsClasses } from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import PropTypes from "prop-types";
 import { useTheme } from "@mui/material/styles";
-import ListOfHostAccessUrl from '../Lists/ListOfHostAccessUrls'
+import ListOfHostAccessUrl from "../Lists/ListOfHostAccessUrls";
 import Typography from "@mui/material/Typography";
 import { Grid } from "@mui/material";
-import ManageConsumerRole from "../Forms/ManageConsumerRole"
+import ManageConsumerRole from "../Forms/ManageConsumerRole";
 import Heading from "../../../Support/Heading";
 import ListOfRemoteDatabaseAccessUrls from "../Lists/ListOfRemoteDatabaseAccessUrls";
-import CreateRemoteDatabaseAccessUrl from '../Forms/CreateRemoteDatabaseAccessUrl'
-import ListOfRoles from "../Lists/ListOfRoles"
+import CreateRemoteDatabaseAccessUrl from "../Forms/CreateRemoteDatabaseAccessUrl";
+import ListOfRoles from "../Lists/ListOfRoles";
 import Divider from "@mui/material/Divider";
 import { Button } from "antd";
 function TabPanel(props) {
@@ -49,8 +49,10 @@ function a11yProps(index) {
 
 export default function Tab_ManageBridge() {
   const [value, setValue] = useState(0);
-  const [currentOpenedScreen, setCurrentOpenedScreen]= useState(<ListOfHostAccessUrl/>);
- 
+  const [currentOpenedScreen, setCurrentOpenedScreen] = useState(
+    <ListOfHostAccessUrl />
+  );
+
   const [tabsList, setTabsList] = useState([
     {
       tabLable: "Local database access urls",
@@ -62,38 +64,39 @@ export default function Tab_ManageBridge() {
     //   tabLable: "Manage User Roles",
     // },
   ]);
-  useEffect(()=>{
-    if(value==0){
-      setCurrentOpenedScreen(<ListOfHostAccessUrl/>)
-    }else if (value==1){
-      setCurrentOpenedScreen(<ListOfRemoteDatabaseAccessUrls/>)
-    }else{
-      setCurrentOpenedScreen(<ListOfRoles/>)
-    }},[value]);
+  useEffect(() => {
+    if (value == 0) {
+      setCurrentOpenedScreen(<ListOfHostAccessUrl />);
+    } else if (value == 1) {
+      setCurrentOpenedScreen(<ListOfRemoteDatabaseAccessUrls />);
+    } else {
+      setCurrentOpenedScreen(<ListOfRoles />);
+    }
+  }, [value]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const handleScreenChange=(index)=>{
-    switch(index) {
+  const handleScreenChange = (index) => {
+    switch (index) {
       case 0:
-        setCurrentOpenedScreen(<ListOfRemoteDatabaseAccessUrls/>)
-      break;
+        setCurrentOpenedScreen(<ListOfRemoteDatabaseAccessUrls />);
+        break;
       case 1:
-        setCurrentOpenedScreen(<CreateRemoteDatabaseAccessUrl/>)
-      break;
+        setCurrentOpenedScreen(<CreateRemoteDatabaseAccessUrl />);
+        break;
     }
-  }
-  const handleScreenChangeForRoles=(index)=>{
-    switch(index) {
+  };
+  const handleScreenChangeForRoles = (index) => {
+    switch (index) {
       case 0:
-        setCurrentOpenedScreen(<ListOfRoles/>)
-      break;
+        setCurrentOpenedScreen(<ListOfRoles />);
+        break;
       case 1:
-        setCurrentOpenedScreen(<ManageConsumerRole/>)
-      break;
+        setCurrentOpenedScreen(<ManageConsumerRole />);
+        break;
     }
-  }
+  };
 
   return (
     <Box
@@ -138,9 +141,9 @@ export default function Tab_ManageBridge() {
                 <Heading text={"Host Access Urls"} fontSize="1.5rem" fontWeight="bold"/>
             </Grid> */}
             <Grid item xs={12}>
-                <ListOfHostAccessUrl/>
+              <ListOfHostAccessUrl />
             </Grid>
-         </Grid>
+          </Grid>
         </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
@@ -148,27 +151,53 @@ export default function Tab_ManageBridge() {
         {/* {`  Manage Remote Database Access Url`} */}
         <div>
           <Grid container>
-            {/* <Grid item xs={12}>
-                <Heading text={"Remote Database Access Urls"} fontSize="1.5rem" fontWeight="bold"/>
-            </Grid> */}
-            <Grid item xs={2} >
-              {/* Sub options 1.List of consumer account and 2.Create new user*/}
-              <div style={{marginTop:"5%",padding:"5%",borderRight: "1px solid #7ea69f"}}>
-                <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChange(0)}}>
-                {/* <Heading text={"All Open APIs"} fontSize="1rem"/> */}
-                <Button type="secondary" shape="round" style={{width:"100%"}} size={"middle"} >View Open APIs</Button>
-  
+           
+            {/* <Grid item xs={2}>
+              <div
+                style={{
+                  marginTop: "5%",
+                  padding: "5%",
+                  borderRight: "1px solid #7ea69f",
+                }}
+              >
+                <div
+                  style={{ margin: "5%", cursor: "pointer" }}
+                  onClick={() => {
+                    handleScreenChange(0);
+                  }}
+                >
+                  <Button
+                    type="secondary"
+                    shape="round"
+                    style={{ width: "100%" }}
+                    size={"middle"}
+                  >
+                    View Open APIs
+                  </Button>
                 </div>
-                <Divider/>
-                <div style={{margin:"5%",cursor: "pointer"}} onClick={() =>{handleScreenChange(1)}}>
-                <Button type="secondary" shape="round" style={{width:"100%"}} size={"middle"} >Create Open APIs</Button>
-    </div>
-                <Divider/>
+                <Divider />
+                <div
+                  style={{ margin: "5%", cursor: "pointer" }}
+                  onClick={() => {
+                    handleScreenChange(1);
+                  }}
+                >
+                  <Button
+                    type="secondary"
+                    shape="round"
+                    style={{ width: "100%" }}
+                    size={"middle"}
+                  >
+                    Create Open APIs
+                  </Button>
+                </div>
+                <Divider />
               </div>
-            </Grid>
-            <Grid item xs={10}>
+            </Grid> */}
+            <Grid item xs={12}>
               {/* Screen of sub options or call them forms and lists */}
-              {currentOpenedScreen}
+              {/* {currentOpenedScreen} */}
+              <ListOfRemoteDatabaseAccessUrls/>
             </Grid>
           </Grid>
         </div>

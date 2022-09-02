@@ -128,11 +128,22 @@ const OpenAPIs = () => {
   // ),
 
   // };
-
+  const locale = {
+    emptyText: (
+        <span>
+          <img src={ isDataLoading==true ? '/please-wait.jpg' : "/no_data_found.jpg"} width={ isDataLoading==true ? "250" : "300"} height={ isDataLoading==true ?"250" : "300"} />
+          <Heading text={ isDataLoading==true ? 'Please wait loading open apis!' : "No open API found"} fontSize={"1rem"} fontWeight={"bold"}/>
+        </span>
+    ) 
+  }
   return (
     <div>
+      <div style={{paddingLeft:"1%",}}>
+        <Heading text={"Open APIs"} fontWeight="bold" fontSize="1.5rem"/>
+      </div>
+      <div style={{marginTop:"2%"}}>
       <Table
-        locale={CustomTableLoadingForm()}
+        locale={locale}
         rowSelection={{
           type: "radio",
           ...rowSelection,
@@ -141,7 +152,7 @@ const OpenAPIs = () => {
         columns={columns}
         dataSource={listOfUrls}
       />
-
+</div>
       <CustomDialog
         alertType={alertType}
         handleClickOpen={handleClickOpen_CustomDialog}

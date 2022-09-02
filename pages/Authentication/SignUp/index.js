@@ -31,6 +31,7 @@ import { Button, Input, Switch, Tooltip } from "antd";
 // import en from "world_countries_lists/data/countries/en/world.json";
 
 import "antd-country-phone-input/dist/index.css";
+import openNotificationWithIcon from "../../../ReactComponents/Dialogues/Notification";
 
 const useStyles = makeStyles({
   root: {
@@ -119,12 +120,15 @@ const Index = () => {
       password != null &&
       mobileNumber != null
     ) {
+      if(mobileNumber.includes("+92")){
+
+      
       setLoadingsForSignIn((prevLoadings) => {
         const newLoadings = [...prevLoadings];
         newLoadings[index] = true;
         return newLoadings;
       });
-      alert(mobileNumber)
+      
       sendResquestToCentralAPI("GET", GET_UNIQUE_ID, {})
         .then((resp) => resp.json())
         .then((response) => {
@@ -147,9 +151,19 @@ const Index = () => {
                 newLoadings[index] = false;
                 return newLoadings;
               });
-              alert(JSON.stringify(data));
+
+              openNotificationWithIcon("warning","Server response",data.responseMessage,"bottom")
+    
+              // alert(JSON.stringify(data));
             });
         });
+      }else{
+        openNotificationWithIcon("warning","Invalid mobile number","Please give number in this formate : +92 _ _ ....","bottom")
+        setIsAllInputsInvalid(true);
+      setTimeout(() => {
+        setIsAllInputsInvalid(false);
+      }, 3000);
+      }
     } else {
       // alert("Please do not provide any empty field");
       setIsAllInputsInvalid(true);
@@ -310,6 +324,24 @@ const Index = () => {
                           }}
                         />
                       </ConfigProvider> */}
+                      <Input
+                      style={{
+                        fontSize: "1rem",
+                        padding: "0.7rem",
+                        borderRadius: "5rem",
+                      }}
+                      autoSize={true}
+                      type="text"
+                      bordered={true}
+                      size="large"
+                      // prefix={<UserOutlined />}
+                      // showCount={true}
+                      onChange={(e) => {
+                        setMobileNumber(e.target.value);
+                      }}
+                      value={mobileNumber}
+                      placeholder="+923053206339"
+                    />
                     </Tooltip>
                     {/* <Input
                       style={{
@@ -519,7 +551,7 @@ const Index = () => {
                       loading={loadingsForSignIn[0]}
                       onClick={() => enterLoading_signInBtn(0)}
                     >
-                      Sign In
+                      Create account
                     </Button>
                     </Tooltip>
                   </div>

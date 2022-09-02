@@ -59,7 +59,7 @@ const ListOfResolvedRequests = () => {
             key:request,
             requestId:request.request.requestId,
             developerName: request.requestSenderName,
-            hostName: request.hostData.hostName,
+            hostName: request.hostData!=null ?  request.hostData.hostName:'HOST HAS BEEN DELETED',
             requestTimeAndDate: request.request.requestDateAndTime,
           };
              return r;
@@ -120,7 +120,7 @@ const ListOfResolvedRequests = () => {
         <Grid container>
           <Grid item xs={8}>
             <Heading text={"Resolved requests"} fontSize="1.5rem" />
-          </Grid>
+          </Grid> 
         </Grid>
       </div>
       <Table
