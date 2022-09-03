@@ -48,7 +48,7 @@ const ServiceSummury=()=>{
     const [numberOfRequest,setNumberRequests]=useState(0);
     const [numberOfDevelopers,setNumberOfDevelopers]=useState(0);
     const [numberOfHosts,setNumberOfHosts]=useState(0);
-     
+    const [isDataLoading,setIsDataLoading]=useState()
     
     useEffect(()=>{
       sendResquestToCentralAPI("GET",GET_MAJOR_COUNTS,{}).then((resp)=>resp.json()).then((data)=>{
