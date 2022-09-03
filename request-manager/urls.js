@@ -1,5 +1,5 @@
 
-const FRONT_END_BASE_URL="https://central-api-layer-9en3xlodv-zeeshan-thedeveloper.vercel.app/";
+const FRONT_END_BASE_URL="https://central-api-layer-git-main-zeeshan-thedeveloper.vercel.app/";
 const BACK_END_BASE_URL="https://central-api-ldh.herokuapp.com";
 
 
