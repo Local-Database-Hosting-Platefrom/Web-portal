@@ -68,7 +68,7 @@ const Index = () => {
               else if (localStorage.getItem("accountType") == "developer")
                 navigation.push("/developer-dashboard/");
               else navigation.push("/Authentication/SignIn");
-            }, 2000);
+            }, 5000);
           } else if (data.responseCode == COULD_NOT_CREATE_ACCOUNT) {
             // when could not create account or got an error while creating.
             setServerResponse(data.responseMessage);
