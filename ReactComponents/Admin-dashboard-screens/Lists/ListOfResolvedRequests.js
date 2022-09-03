@@ -59,7 +59,7 @@ const ListOfResolvedRequests = () => {
             key:request,
             requestId:request.request.requestId,
             developerName: request.requestSenderName,
-            hostName: request.hostData.hostName,
+            hostName: request.hostData!=null ?  request.hostData.hostName:'HOST HAS BEEN DELETED',
             requestTimeAndDate: request.request.requestDateAndTime,
           };
              return r;
@@ -106,17 +106,25 @@ const ListOfResolvedRequests = () => {
       displayDialog(dialogueTypes.VIEW_COMPLETE_REQUEST, "", selectedRows[0]);
     },
   };
-  
+  const locale = {
+    emptyText: (
+        <span>
+          <img src={ isDataLoading==true ? '/please-wait.jpg' : "/relax-women.jpg"} width={"250"} height={"250"} />
+          <Heading text={ isDataLoading==true ? 'Please wait loading resolved requests' : "No request has been resolved yet  ..!"} fontSize={"1rem"} fontWeight={"bold"}/>
+        </span>
+    ) 
+  }
   return (
     <Container>
       <div>
         <Grid container>
           <Grid item xs={8}>
             <Heading text={"Resolved requests"} fontSize="1.5rem" />
-          </Grid>
+          </Grid> 
         </Grid>
       </div>
       <Table
+        locale={locale}
         loading={{ indicator: <Spinner />, spinning: isDataLoading }}
         rowSelection={{
           type: "radio",

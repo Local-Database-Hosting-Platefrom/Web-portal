@@ -59,7 +59,7 @@ const GenerateAPIKey = () => {
               let apiKey=localStorage.getItem("apiKey");
               if(apiKey!=undefined || apiKey!=null){
                 navigator.clipboard.writeText(apiKey);
-                alert("Copied to clipboard")
+                // alert("Copied to clipboard")
               }
             }}
             style={{

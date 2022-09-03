@@ -28,10 +28,12 @@ import "antd/dist/antd.css";
 // Request Manager
 import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
 import {
+  CHECK_API_STATUS,
   CREATE_ADMIN_ACCOUNT,
   GITHUB_AUTH,
   GOOGLE_AUTH,
   LOGIN_TO_ACCOUNT,
+  NO_INTERNET_CONNECTION,
 } from "../../../request-manager/requestUrls";
 
 import { useEffect, useState } from "react";
@@ -49,6 +51,7 @@ import Title from "antd/lib/skeleton/Title";
 
 import { GoogleOutlined, GithubFilled } from "@ant-design/icons";
 import { Button } from "antd";
+import openNotificationWithIcon from "../../../ReactComponents/Dialogues/Notification";
 
 const useStyles = makeStyles({
   root: {
@@ -108,6 +111,7 @@ const Index = (props) => {
     useState("");
   const [alertTitle_CustomDialog, setAlertTitle_CustomDialog] = useState("");
   const [accountType, setAccountType] = useState(null);
+  
   const router = useRouter();
 
   let user_Id = null;
@@ -118,10 +122,7 @@ const Index = (props) => {
     authType = router.query.authType;
   }
  
-  // useEffect(()=>{
-  //   setAccountType("admin")
-  //   localStorage.setItem("accountType", "admin");
-  // },[])
+  
 
   useEffect(() => {
     
@@ -228,19 +229,18 @@ const Index = (props) => {
       })
         .then((resp) => resp.json())
         .then((data) => {
+
           setLoadingsForSignIn((prevLoadings) => {
             const newLoadings = [...prevLoadings];
             newLoadings[index] = false;
             return newLoadings;
-          });
+          });        
 
           if (data.responseCode == COULD_NOT_LOGIN) {
-            displayDialog(
-              dialogueTypes.INFO_WITHOUT_OK,
-              "Login response",
-              JSON.stringify(data.responseMessage)
-            );
+            openNotificationWithIcon("warning","Server response",data.responseMessage,"bottom")
           } else {
+            openNotificationWithIcon("info","Server response",data.responseMessage,"bottom")
+    
             localStorage.setItem("loggedInUser", JSON.stringify(data));
             if (data.responsePayload.apiKey != undefined)
               localStorage.setItem("apiKey", data.responsePayload.apiKey);
@@ -251,13 +251,14 @@ const Index = (props) => {
               navigation.push("/developer-dashboard/");
             else navigation.push("/Authentication/SignIn");
           }
-        });
+        }).catch((error)=>{
+          console.log("error catched")
+          openNotificationWithIcon("error","Server response","Seems there is internet connection problem","bottom")
+        })
     } else {
-      displayDialog(
-        dialogueTypes.INFO_WITHOUT_OK,
-        "Invalid Input",
-        "Please fill all the fileds"
-      );
+      
+      openNotificationWithIcon("warning","Invalid input","Please fill all the filed","bottom")
+      
     }
   };
 
@@ -268,21 +269,18 @@ const Index = (props) => {
         newLoadings[index] = true;
         return newLoadings;
       });
-      navigation.push(GOOGLE_AUTH);
+      //set navigation if api is running.
+      sendResquestToCentralAPI("GET",CHECK_API_STATUS,{}).then((resp)=>resp.json).then((data)=>{
+        navigation.push(GOOGLE_AUTH);
+      }).catch((error)=>{
+        navigation.push(NO_INTERNET_CONNECTION);
+      })
     } else {
-      displayDialog(
-        dialogueTypes.INFO,
-        "Invalid Input",
-        "Please choose account type"
-      );
+     
+      openNotificationWithIcon("warning","Invalid input","Please choose account type","bottom")
+     
     }
-    // setTimeout(() => {
-    //   // setLoadings((prevLoadings) => {
-    //   //   const newLoadings = [...prevLoadings];
-    //   //   newLoadings[index] = false;
-    //   //   return newLoadings;
-    //   // });
-    // }, 3000);
+   
   };
 
   const enterLoading_githubBtn = (index) => {
@@ -292,20 +290,19 @@ const Index = (props) => {
         newLoadings[index] = true;
         return newLoadings;
       });
-      navigation.push(GITHUB_AUTH);
+      sendResquestToCentralAPI("GET",CHECK_API_STATUS,{}).then((resp)=>resp.json).then((data)=>{
+        navigation.push(GITHUB_AUTH);
+      }).catch((error)=>{
+        navigation.push(NO_INTERNET_CONNECTION);
+      })
+      // navigation.push(GITHUB_AUTH);
     } else {
-      displayDialog(
-        dialogueTypes.INFO,
-        "Invalid Input",
-        "Please choose account type"
-      );
+      
+      openNotificationWithIcon("warning","Invalid input","Please choose account type","bottom")
+     
     }
 
-    // setLoadings((prevLoadings) => {
-    //   const newLoadings = [...prevLoadings];
-    //   newLoadings[index] = false;
-    //   return newLoadings;
-    // });
+    
   };
 
   return (
@@ -315,8 +312,8 @@ const Index = (props) => {
           <Grid item md={8} style={{display: isMediumScreen?"block":"none"}}>
             {/* Image side */}
             <img
-              src="/home-page/signinvector.png"
-              width={isMediumScreen ? "70%" : "100%"}
+              src="/sign-in.jpg"
+              width={isMediumScreen ? "60%" : "90%"}
             />
           </Grid>
           <Grid item md={4} xs={12}>

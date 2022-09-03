@@ -11,6 +11,7 @@ import CustomDialog from "../../Dialogues/CustomDialog";
 import dialogueTypes from "../../Dialogues/dialogueTypes";
 import openNotificationWithIcon from "../../Dialogues/Notification";
 import Spinner from "../../../Support/Spinner";
+import CustomTableLoadingForm from "../../../Support/CustomTableLoadingIcon";
 const columns = [
   {
     title: "Developer Name",
@@ -67,7 +68,18 @@ const ListOfDeveloperConnectionRequests = () => {
             key:item,
             developerName: item.developerName,
             developerEmail: item.developerEmail,
-            requestedHosts: item.listOfDatabases.map((host) => host.hostName),
+            requestedHosts: item.listOfDatabases.map((host,index) => {
+              if(host[0]){
+
+              return <div> 
+                
+                {index+1} : {host[0].hostName}   </div>
+              }else{
+                return <div> 
+                
+                HOST HAS BEEN DELETED  </div>
+              }
+            }),
             requestTimeAndData: item.requestTimeAndData,
           });
         });
@@ -119,6 +131,10 @@ const ListOfDeveloperConnectionRequests = () => {
     }
   };
 
+  const handleNoEvent=()=>{
+    handleClose_CustomDialog();
+  }
+
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log(
@@ -130,6 +146,14 @@ const ListOfDeveloperConnectionRequests = () => {
       displayDialog(dialogueTypes.VIEW_DEV_CON_REQUEST, "", selectedRows[0]);
     },
   };
+  const locale = {
+    emptyText: (
+        <span>
+       <img src={ isDataLoading==true ? '/please-wait.jpg' : "/relax-women.jpg"} width={"250"} height={"250"} />
+       <Heading text={ isDataLoading==true ? "Please wait loading the records" : "No connection requests found..!"} fontSize={"1rem"} fontWeight={"bold"}/>
+        </span>
+    )  
+  }
 
   return (
     <Container>
@@ -141,6 +165,7 @@ const ListOfDeveloperConnectionRequests = () => {
         </Grid>
       </div>
       <Table
+        locale={locale}
         loading={{indicator:<Spinner/>,spinning:isDataLoading}}
         rowSelection={{
           type:"radio",
@@ -158,6 +183,7 @@ const ListOfDeveloperConnectionRequests = () => {
         alertMessage={alertMessage_CustomDialog}
         alertTitle={alertTitle_CustomDialog}
         handleOkEvent={handleOkEvent}
+        handleNoEvent={handleNoEvent}
       />
     </Container>
   );

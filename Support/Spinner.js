@@ -3,7 +3,7 @@ import { Spin } from 'antd';
 const antIcon = (
   <LoadingOutlined
     style={{
-      fontSize: 24,
+      fontSize: 34,
     }}
     spin
   />

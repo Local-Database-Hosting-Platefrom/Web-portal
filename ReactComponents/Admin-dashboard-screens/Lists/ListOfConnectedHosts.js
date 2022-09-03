@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
 import { LOAD_CONNECTED_HOSTS_LIST, SET_HOST_STATUS } from "../../../request-manager/requestUrls";
 import CustomDropDown from "../../../Support/CustomDropDown";
+import CustomTableLoadingForm from "../../../Support/CustomTableLoadingIcon";
 import Heading from "../../../Support/Heading";
 import Spinner from "../../../Support/Spinner";
 import CustomDialog from "../../Dialogues/CustomDialog";
@@ -56,7 +57,8 @@ const ListOfConnectedHosts = ()=>{
     useEffect(()=>{
       // Make call to load pending list of hosts
       const useData = JSON.parse(localStorage.getItem("loggedInUser"));
-      const _id = useData.responsePayload._id; 
+      const _id = useData.responsePayload._id;
+      setIsDataLoading(true); 
       sendResquestToCentralAPI("POST", LOAD_CONNECTED_HOSTS_LIST,{
         _id: _id,
       }).then(async (success)=>{
@@ -73,6 +75,7 @@ const ListOfConnectedHosts = ()=>{
             };
           })
         );
+        setIsDataLoading(false)
       },(error)=>{
         console.log("Error",error)
       })
@@ -149,9 +152,19 @@ const ListOfConnectedHosts = ()=>{
         );
       },
     };
+    
+    const locale = {
+      emptyText: (
+          <span>
+            <img src={ isDataLoading==true ? '/please-wait.jpg' : "/no_data_found.jpg"} width={ isDataLoading==true ? "250" : "300"} height={ isDataLoading==true ?"250" : "300"} />
+            <Heading text={ isDataLoading==true ? 'Please wait loading connected hosts..!' : "No host is connected yet..!"} fontSize={"1rem"} fontWeight={"bold"}/>
+          </span>
+      ) 
+    }
   
     return <Container>
         <Table
+        locale={locale}
         loading={{ indicator: <Spinner />, spinning: isDataLoading }}
         rowSelection={{
           type: "radio",
@@ -160,7 +173,6 @@ const ListOfConnectedHosts = ()=>{
         columns={columns}
         dataSource={ListOfConnectedHosts}
       />
-
       <CustomDialog
         alertType={alertType}
         handleClickOpen={handleClickOpen_CustomDialog}
@@ -171,7 +183,6 @@ const ListOfConnectedHosts = ()=>{
         handleOkEvent={handleOkEvent}
         handleNoEvent={handleNoEvent}
       />
-       
         
     </Container>
 }

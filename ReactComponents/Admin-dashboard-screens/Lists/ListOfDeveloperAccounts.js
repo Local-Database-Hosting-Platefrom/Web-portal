@@ -16,7 +16,7 @@ import { Table } from "antd";
 import Spinner from "../../../Support/Spinner";
 import dialogueTypes from "../../Dialogues/dialogueTypes";
 import openNotificationWithIcon from "../../Dialogues/Notification";
-
+import CustomTableLoadingForm from '../../../Support/CustomTableLoadingIcon'
 const columns = [
   {
     title: "Developer Name",
@@ -79,7 +79,18 @@ const ListOfDeveloperAccounts = () => {
             key: item,
             developerName: item.developerName,
             developerEmail: item.developerEmail,
-            requestedHosts: item.listOfDatabases.map((host) => host.hostName),
+            requestedHosts: item.listOfDatabases.map((host,index) => {
+              if(host[0]!=undefined){
+              return <div>
+                 {index+1} : {host[0].hostName}  
+                </div>
+              }else{
+                return <div>
+                HOST HAS BEEN DELETED
+                </div>
+              }
+
+            }),
             requestStatus: item.requestStatus,
             assignedRole: item.accessRole,
           });
@@ -116,7 +127,6 @@ const ListOfDeveloperAccounts = () => {
     }).then(
       async (success) => {
         const response = await success.json();
-        console.log("Connectioon Status updated", response);
         openNotificationWithIcon(
           "info",
           "Server Response",
@@ -152,7 +162,9 @@ const ListOfDeveloperAccounts = () => {
       );
     }
   };
-
+  const handleNoEvent=()=>{
+    handleClose_CustomDialog();
+  }
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log(
@@ -166,7 +178,14 @@ const ListOfDeveloperAccounts = () => {
       displayDialog(dialogueTypes.VIEW_DEV_CON_DETAILS, "", selectedRows[0]);
     },
   };
-
+  const locale = {
+    emptyText: (
+        <span>
+          <img src={ isDataLoading==true ? '/please-wait.jpg' : "/relax-women.jpg"} width={"250"} height={"250"} />
+          <Heading text={ isDataLoading==true ? 'Please wait loading data' : "No accounts have been registered yet..!"} fontSize={"1rem"} fontWeight={"bold"}/>
+        </span>
+    ) 
+  }
   return (
     <Container>
       {/* Heading */}
@@ -178,6 +197,7 @@ const ListOfDeveloperAccounts = () => {
         </Grid>
       </div>
       <Table
+        locale={locale}
         loading={{ indicator: <Spinner />, spinning: isDataLoading }}
         rowSelection={{
           type: "radio",
@@ -186,7 +206,7 @@ const ListOfDeveloperAccounts = () => {
         columns={columns}
         dataSource={listOfConsumers}
       />
-
+      
       <CustomDialog
         alertType={alertType}
         handleClickOpen={handleClickOpen_CustomDialog}
@@ -195,6 +215,7 @@ const ListOfDeveloperAccounts = () => {
         alertMessage={alertMessage_CustomDialog}
         alertTitle={alertTitle_CustomDialog}
         handleOkEvent={handleOkEvent}
+        handleNoEvent={handleNoEvent}
       />
     </Container>
   );

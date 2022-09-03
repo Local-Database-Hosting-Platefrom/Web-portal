@@ -20,13 +20,13 @@ const columns = [
     render: (text) => <a>{text}</a>,
   },
   {
-    title: "Host Url",
-    dataIndex: "hostUrl",
+    title: "Host Id",
+    dataIndex: "hostId",
   },
-  {
-    title: "Number Of Requests",
-    dataIndex: "numberOfRequests",
-  },
+  // {
+  //   title: "Number Of Requests",
+  //   dataIndex: "numberOfRequests",
+  // },
   {
     title: "Status",
     dataIndex: "status",
@@ -67,8 +67,8 @@ const ListOfHostAccessUrls = () => {
             tempList.push({
               key:element,
               hostName: element.hostName,
-              hostUrl: element.hostAcessUrl.url,
-              numberOfRequests: element.hostAcessUrl.numberOfHits,
+              hostId: element.hostId,
+              // numberOfRequests: element.hostAcessUrl.numberOfHits,
               status: element.hostAcessUrl.status ? "Enabled" : "Disabled",
             });
           });
@@ -123,6 +123,10 @@ const ListOfHostAccessUrls = () => {
     }
   };
 
+  const handleNoEvent=()=>{
+    handleClose_CustomDialog();
+  }
+
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log(
@@ -137,8 +141,18 @@ const ListOfHostAccessUrls = () => {
     },
   };
 
+  const locale = {
+    emptyText: (
+        <span>
+          <img src={ isDataLoading==true ? '/please-wait.jpg' : "/no_data_found.jpg"} width={ isDataLoading==true ? "250" : "300"} height={ isDataLoading==true ?"250" : "300"} />
+          <Heading text={ isDataLoading==true ? 'Please wait loading host access urls..!' : "No host is connected yet so there is not host access url in database  ..!"} fontSize={"1rem"} fontWeight={"bold"}/>
+        </span>
+    ) 
+  }
+
   return <div>
     <Table
+        locale={locale}
         loading={{ indicator: <Spinner />, spinning: isDataLoading }}
         rowSelection={{
           type: "radio",
@@ -156,6 +170,7 @@ const ListOfHostAccessUrls = () => {
         alertMessage={alertMessage_CustomDialog}
         alertTitle={alertTitle_CustomDialog}
         handleOkEvent={handleOkEvent}
+        handleNoEvent={handleNoEvent}
       />
   </div>;
 };

@@ -110,6 +110,7 @@ const ListOfRemoteDatabaseAccessUrls = () => {
 
   const handleOkEvent = (action) => {
     if (action) {
+
       if (action.action == "delete") {
         sendResquestToCentralAPI("POST", DELETE_REMOTE_DATABASE_ENDPOINT, {
           urlId: currentSelectedRow.urlId,
@@ -137,11 +138,13 @@ const ListOfRemoteDatabaseAccessUrls = () => {
             );
           }
         );
-      } else if (action.action == "updateStates") {
+
+      } 
+      else if (action.action == "updateStates") {
         // const { isOpenAPIEnabled, isOpenAPIPublic } = action.payload;
         sendResquestToCentralAPI("POST", UPDATE_REMOTE_DB_URL_VISIBILITY, {
           urlId: currentSelectedRow.urlId,
-          visibility:  action.payload.isOpenAPIPublic,
+          visibility: action.payload!=null ? action.payload.isOpenAPIPublic : false,
         }).then(async (resp) => {
           const response = await resp.json();
           openNotificationWithIcon('info',"Server Response",response.responseMessage,"bottom");
@@ -155,8 +158,9 @@ const ListOfRemoteDatabaseAccessUrls = () => {
         SET_STATUS_OF_REMOTE_DATABASE_HOST_ACCESS_URL,
         {
           urlId: currentSelectedRow.urlId,
-          status: action.payload.isOpenAPIEnabled+"",
+          status: action.payload!=null ?  action.payload.isOpenAPIEnabled+"" : "true",
         }
+
       ).then(
         async (success) => {
           const response = await success.json();
@@ -177,6 +181,9 @@ const ListOfRemoteDatabaseAccessUrls = () => {
     }
   };
 
+  const handleNoEvent=()=>{
+    handleClose_CustomDialog();
+  }
   const rowSelection = {
     onChange: (selectedRowKeys, selectedRows) => {
       console.log(
@@ -189,16 +196,28 @@ const ListOfRemoteDatabaseAccessUrls = () => {
       // console.log(selectedRows[0].accessRole);
       displayDialog(dialogueTypes.VIEW_OPEN_API, "", selectedRows[0]);
     },
+
   };
+
+  const locale = {
+    emptyText: (
+        <span>
+          <img src={ isDataLoading==true ? '/please-wait.jpg' : "/no_data_found.jpg"} width={ isDataLoading==true ? "250" : "300"} height={ isDataLoading==true ?"250" : "300"} />
+          <Heading text={ isDataLoading==true ? 'Please wait loading open APIs!' : "No api is create yet.. Let's try it ..!"} fontSize={"1rem"} fontWeight={"bold"}/>
+        </span>
+    ) 
+  }
+
 
   return (
     <Container>
-      <Grid container>
+      {/* <Grid container>
         <Grid item xs={8}>
           <Heading text={"Open APIs"} fontSize="1.5rem" />
         </Grid>
-      </Grid>
+      </Grid> */}
       <Table
+        locale={locale}
         loading={{ indicator: <Spinner />, spinning: isDataLoading }}
         rowSelection={{
           type: "radio",
@@ -216,6 +235,7 @@ const ListOfRemoteDatabaseAccessUrls = () => {
         alertMessage={alertMessage_CustomDialog}
         alertTitle={alertTitle_CustomDialog}
         handleOkEvent={handleOkEvent}
+        handleNoEvent={handleNoEvent}
       />
     </Container>
   );

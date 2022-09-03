@@ -63,7 +63,7 @@ const ListOfDeniedRequests = ()=>{
             key:request,
             requestId:request.request.requestId,
             developerName: request.requestSenderName,
-            hostName: request.hostData.hostName,
+            hostName: request.hostData!=null ? request.hostData.hostName : 'HOST IS DELETED',
             denialReason:reason,
             requestTimeAndDate: request.request.requestDateAndTime,
           };
@@ -99,6 +99,12 @@ const ListOfDeniedRequests = ()=>{
     const handleOkEvent = (action) => {
       handleClose_CustomDialog();
     };
+
+    const handleNoEvent = (action) => {
+      handleClose_CustomDialog();
+    };
+
+    
   
     const rowSelection = {
       onChange: (selectedRowKeys, selectedRows) => {
@@ -114,6 +120,14 @@ const ListOfDeniedRequests = ()=>{
       },
     };
     
+    const locale = {
+      emptyText: (
+          <span>
+            <img src={ isDataLoading==true ? '/please-wait.jpg' : "/relax-women.jpg"} width={"250"} height={"250"} />
+            <Heading text={ isDataLoading==true ? 'Please wait loading denied requests' : "No request has been denied yet  ..!"} fontSize={"1rem"} fontWeight={"bold"}/>
+          </span>
+      ) 
+    }
   
     return <Container>
           <div>
@@ -125,6 +139,7 @@ const ListOfDeniedRequests = ()=>{
         </div>
         
         <Table
+        locale={locale}
         loading={{ indicator: <Spinner />, spinning: isDataLoading }}
         rowSelection={{
           type: "radio",
@@ -142,6 +157,7 @@ const ListOfDeniedRequests = ()=>{
         alertMessage={alertMessage_CustomDialog}
         alertTitle={alertTitle_CustomDialog}
         handleOkEvent={handleOkEvent}
+        handleNoEvent={handleNoEvent}
       />
         
     </Container>

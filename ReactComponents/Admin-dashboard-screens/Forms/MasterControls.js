@@ -13,167 +13,103 @@ import { useState } from "react";
 import CustomButton from "../../../Support/CustomButton";
 import { sendResquestToCentralAPI } from "../../../request-manager/requestManager";
 import { TERMITE_ALL_URLS } from "../../../request-manager/requestUrls";
+import { Button, Card, Modal } from "antd";
+import openNotificationWithIcon from "../../Dialogues/Notification";
 const MasterControls = () => {
-  const [alertType, setAlertType] = useState(null);
-  const [openCustomDialog, setOpenCustomDialog] = useState(false);
-  const [alertMessage_CustomDialog, setAlertMessage_CustomDialog] =
-    useState("");
-  const [alertTitle_CustomDialog, setAlertTitle_CustomDialog] = useState("");
   const useData = JSON.parse(localStorage.getItem("loggedInUser"));
-
-
-  const displayDialog = (dialogType, dialogTitle, dialogMessage) => {
-    setAlertMessage_CustomDialog(dialogMessage);
-    setAlertTitle_CustomDialog(dialogTitle);
-    setAlertType(dialogType);
-    handleClickOpen_CustomDialog();
-  };
-
-  const handleClickOpen_CustomDialog = () => {
-    setOpenCustomDialog(true);
-  };
-
-  const handleClose_CustomDialog = () => {
-    setOpenCustomDialog(false);
-  };
+  const [loadingsForTerminatingUrls, setLoadingsForTerminatingUrls] = useState([]);
+ 
 
   const handleOkEvent = (action) => {
     //delete it.
     handleClose_CustomDialog();
-    sendResquestToCentralAPI("POST",TERMITE_ALL_URLS,{_id:useData.responsePayload._id}).then((resp)=>resp.json()).then((data)=>{
-      if(data.responsePayload){
-        displayDialog(
-          dialogueTypes.INFO_WITHOUT_OK,
-          "Server response",
-          data.responseMessage
-        ); 
-      }
+    sendResquestToCentralAPI("POST", TERMITE_ALL_URLS, {
+      _id: useData.responsePayload._id,
     })
+      .then((resp) => resp.json())
+      .then((data) => {
+        if (data.responsePayload) {
+          displayDialog(
+            dialogueTypes.INFO_WITHOUT_OK,
+            "Server response",
+            data.responseMessage
+          );
+        }
+      });
   };
 
-  const handleNoEvent = (action) => {
-    handleClose_CustomDialog();
+
+  const [visible, setVisible] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [modalText, setModalText] = useState('Are you sure you want to terminate all end-points ?');
+
+  const showModal = () => {
+    setVisible(true);
   };
 
+  const handleOk = (index) => {
+    setVisible(false)
+    setLoadingsForTerminatingUrls((prevLoadings) => {
+      const newLoadings = [...prevLoadings];
+      newLoadings[index] = true;
+      return newLoadings;
+    });
+   
+    sendResquestToCentralAPI("POST", TERMITE_ALL_URLS, {
+      _id: useData.responsePayload._id,
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        if (data.responsePayload) {
+          setLoadingsForTerminatingUrls((prevLoadings) => {
+    const newLoadings = [...prevLoadings];
+    newLoadings[index] = false;
+    return newLoadings;
+  });
+  
+          openNotificationWithIcon("info","Server Response",data.responseMessage,"bottom");
+        }
+      });
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+  };
+  
   return (
     <Container style={{ paddingTop: "2%" }}>
-      <div style={{backgroundColor:"red",paddingLeft: "1%"}}>
-        <Heading text="Master Controls" fontSize="1.5rem" />
-        <Divider />
-      </div>
-      <div style={{ marginTop: "2%",textAlign:'center' }}>
-        <Grid container >
-         
-          <Grid
-            item
-            xs={12  }
-            style={{
-              border: "1px solid #7ea69f",
-              padding: "2%",
-              textAlign: "center",
-              marginLeft: "1%"
+      <Card title="Master Controller">
+        <Card.Grid
+          style={{
+            width: "100%",
+            textAlign: "center",
+          }}
+        >
+          <Button
+            type="danger"
+            shape="round"
+            style={{ width: "40%" }}
+            size={"middle"}
+            loading={loadingsForTerminatingUrls[0]}
+            onClick={()=>{
+              showModal();
             }}
           >
-            <Heading
-              text="Terminate All Host Access urls and Open API urls"
-              fontSize="1rem"
-            ></Heading>
-            <Divider />
-            <div>
-             <CustomButton
-                      style={{
-                        // marginLeft:isMediumScreen? "40%":"35%",
-                        marginTop: "3%",
-                        // left: isMediumScreen? "10":"",
-                        backgroundColor: "#10365B",
-                        fontSize:  "0.8rem" ,
-                      }}
-                      onClick={() => {
-                        displayDialog(
-                          dialogueTypes.WARNING,
-                          "Critical Action",
-                          "Are you sure you want to terminate all host access urls?"
-                        );
-                      }}
-                      name="Terminate"
-                    />
-            </div>
-          </Grid>
-          {/* <Grid item xs={1}></Grid>
-
-          <Grid
-            item
-            xs={5}
-            style={{
-              border: "1px solid #7ea69f",
-              padding: "2%",
-              textAlign: "center",
-              paddingLeft: "1%"
-            }}
-          >
-            <Heading
-              text="Terminate All Remote database Access Urls"
-              fontSize="1rem"
-            ></Heading>
-            <Divider />
-            <div>
-            <CustomButton
-                      style={{
-                        // marginLeft:isMediumScreen? "40%":"35%",
-                        marginTop: "3%",
-                        // left: isMediumScreen? "10":"",
-                        backgroundColor: "#10365B",
-                        fontSize:  "0.8rem" ,
-                      }}
-                      onClick={() => {
-                        displayDialog(
-                          dialogueTypes.WARNING,
-                          "Critical Action",
-                          "Are you sure you want to terminate all host access urls?"
-                        );
-                      }}
-                      name="Terminate"
-                    />
-            </div>
-          </Grid> */}
-
-          {/* <Grid item xs={1}></Grid> */}
-          {/* <Grid
-            item
-            xs={3}
-            style={{
-              border: "1px solid #7ea69f",
-              padding: "2%",
-              textAlign: "center",
-              paddingLeft: "1%"
-            }}
-          >
-            <Heading
-              text="Desolve All consumer tokens"
-              fontSize="1rem"
-            ></Heading>
-            <Divider />
-            <div>
-              <FormControlLabel
-                value="end"
-                control={<Switch color="secondary" defaultChecked />}
-                // label="Status"
-                // labelPlacement="Status"
-              />
-            </div>
-          </Grid> */}
-        </Grid>
-      </div>
-      <CustomDialog
-        alertType={alertType}
-        handleClickOpen={handleClickOpen_CustomDialog}
-        handleCloseEvent={handleClose_CustomDialog}
-        open={openCustomDialog}
-        alertMessage={alertMessage_CustomDialog}
-        alertTitle={alertTitle_CustomDialog}
-        handleOkEvent={handleOkEvent}
-        handleNoEvent={handleNoEvent}
-      />
+            Terminate All
+          </Button>
+        </Card.Grid>
+      </Card>
+      <Modal
+        title="Critical Action"
+        visible={visible}
+        onOk={()=>{
+          handleOk(0);
+        }}
+        confirmLoading={confirmLoading}
+        onCancel={handleCancel}
+      >
+        <h3>{modalText}</h3>
+      </Modal>
     </Container>
   );
 };
