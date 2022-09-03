@@ -1,4 +1,4 @@
-import { Google } from "@mui/icons-material";
+// import { Google } from "@mui/icons-material";
 import { Card, Container, Grid, Link, useMediaQuery } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useRouter } from "next/router";
@@ -27,13 +27,6 @@ import {
 import "antd/dist/antd.css";
 import { Button, Input, Switch, Tooltip } from "antd";
 
-// import CountryPhoneInput, { ConfigProvider } from "antd-country-phone-input";
-<<<<<<< HEAD
-
-
-=======
->>>>>>> final-touch-up
-// import en from "world_countries_lists/data/countries/en/world.json";
 
 import "antd-country-phone-input/dist/index.css";
 import openNotificationWithIcon from "../../../ReactComponents/Dialogues/Notification";
@@ -328,10 +321,7 @@ const Index = () => {
                             setMobileNumber("+"+e.code + e.phone);
                           }}
                         />
-<<<<<<< HEAD
-                      </ConfigProvider>
-                       */}
-=======
+
                       </ConfigProvider> */}
                       <Input
                       style={{
@@ -351,7 +341,8 @@ const Index = () => {
                       value={mobileNumber}
                       placeholder="+923053206339"
                     />
->>>>>>> final-touch-up
+
+
                     </Tooltip>
                     {/* <Input
                       style={{
