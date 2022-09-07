@@ -259,7 +259,7 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <img src="/statistics.png" width="40" height="40" />
+              <img src="https://i.postimg.cc/Y0w5D7wk/statistics.png" width="40" height="40" />
             </ListItemIcon>
             <ListItemText
               primary={"Statistics"}
@@ -331,7 +331,7 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <img src="/home-page/hostIcon.png" width="40" height="40" />
+              <img src="https://i.postimg.cc/CLd2C7tm/hostIcon.png" width="40" height="40" />
             </ListItemIcon>
             <ListItemText primary={"Hosts"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
@@ -354,7 +354,7 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <img src="/api-key.png" width="40" height="40" />
+              <img src="https://i.postimg.cc/pL22XD4x/api-key.jpg" width="40" height="40" />
             </ListItemIcon>
             <ListItemText primary={"Open API"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>
@@ -404,7 +404,7 @@ const Index = () => {
                 justifyContent: "center",
               }}
             >
-              <img src="/settings.png" width="40" height="40" />
+              <img src="https://i.postimg.cc/mg2sGT1g/settings.png" width="40" height="40" />
             </ListItemIcon>
             <ListItemText primary={"Settings"} sx={{ opacity: open ? 1 : 0 }} />
           </ListItemButton>

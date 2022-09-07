@@ -488,6 +488,7 @@ export default function Navbar({isProgressBarVisible=false}) {
   );
 
   const mobileMenuId = "primary-search-account-menu-mobile";
+
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
@@ -577,6 +578,7 @@ export default function Navbar({isProgressBarVisible=false}) {
                 </Box>
               </div>
             )}
+
             <Container style={{ marginTop: "1%" }}>
               <Accordion
                 expanded={expanded === "panel1"}
@@ -724,10 +726,11 @@ export default function Navbar({isProgressBarVisible=false}) {
             <MenuItem>
               <ListItemText
                 onClick={() => {
-                  navigate.push("/Downlaods");
+                  // navigate.push("/Downlaods");
+                  window.open("https://drive.google.com/file/d/1BUf_Lc6WEyuXUHBU7cgY-1yQpy5poUtq/view?usp=sharing");
                 }}
               >
-                Downloads
+                Get_Desktop_Application
               </ListItemText>
             </MenuItem>
             <Divider />
@@ -784,6 +787,7 @@ export default function Navbar({isProgressBarVisible=false}) {
   );
 
   return (
+
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         position="fixed"
@@ -829,7 +833,7 @@ export default function Navbar({isProgressBarVisible=false}) {
 
             <Box sx={{ flexGrow: windSize.width <= 900 ? 1 : 1 }} />
 
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <Box sx={{ display: { xs: "none", md: "flex" },marginRight:"7rem" }}>
               <Button
                 color="secondary"
                 style={{
@@ -846,7 +850,7 @@ export default function Navbar({isProgressBarVisible=false}) {
               >
                 Home
               </Button>
-              <Button
+              {/* <Button
                 id="token-button"
                 aria-haspopup="true"
                 size="large"
@@ -861,7 +865,7 @@ export default function Navbar({isProgressBarVisible=false}) {
                 endIcon={<KeyboardArrowDownOutlined fontSize="large" />}
               >
                 Services
-              </Button>
+              </Button> */}
               <Button
                 color="secondary"
                 style={{
@@ -889,10 +893,11 @@ export default function Navbar({isProgressBarVisible=false}) {
                   fontSize: 14,
                 }}
                 onClick={(e) => {
-                  handleOptionSelection(e, 2);
+                  window.open( 
+                    "https://www.npmjs.com/package/ldh-react", "_blank");
                 }}
               >
-                {Strings.NavBar.DocumentationBtn}
+                {"Npm_Package"}
               </Button>
               <Button
                 color="secondary"
@@ -905,10 +910,11 @@ export default function Navbar({isProgressBarVisible=false}) {
                   fontSize: 14,
                 }}
                 onClick={(e) => {
-                  handleOptionSelection(e, 3);
+                  // handleOptionSelection(e, 3);
+                  window.open("https://drive.google.com/file/d/1BUf_Lc6WEyuXUHBU7cgY-1yQpy5poUtq/view?usp=sharing")
                 }}
               >
-                {Strings.NavBar.DownloadsBtn}
+                {"Get_Desktop_Application"}
               </Button>
             </Box>
 

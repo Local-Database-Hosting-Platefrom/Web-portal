@@ -5,6 +5,7 @@ import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import { makeStyles } from "@mui/styles";
 import ServiceSummury from "./ServiceSummury";
+import { useRouter } from "next/router";
 const useStyles = makeStyles({
   root: {
     width: "100%",
@@ -15,7 +16,7 @@ const useStyles = makeStyles({
   txt_heading_1_md: {
     marginTop: "3rem",
     fontWeight: "bold",
-    letterSpacing: "0.3rem",
+    letterSpacing: "0.1rem",
     color: "#07456A",
     fontSize: "3.5rem",
     fontFamily: "Fira Sans",
@@ -31,7 +32,7 @@ const useStyles = makeStyles({
     fontFamily: "Fira Sans",
   },
   txt_feature_heading_2_md: {
-    fontSize: "1.3rem",
+    fontSize: "1.5rem",
     fontWeight: "bold",
     fontFamily: "Fira Sans",
     marginLeft: "0.5rem",
@@ -73,6 +74,7 @@ const useStyles = makeStyles({
 
 const HomePageHeader = () => {
   const classes = useStyles();
+  const navigation = useRouter();
   const isMediumScreen = useMediaQuery("(min-width:600px)");
   console.log(isMediumScreen);
   return (
@@ -88,13 +90,12 @@ const HomePageHeader = () => {
                 : classes.txt_heading_1_xs
             }
           >
-            Host Local Database
+            Make <br/> Localhost an <br/>  Online Server
           </div>
 
           {/* This image will be visible only when its mobile screen */}
-
           <Box sx={{ display: { xs: "block", md: "none" } }}>
-            <img src="/home-page/IdeaRepresentative.png" width="350hv" height="400hv" />
+            <img src="https://i.postimg.cc/fyPBg4F5/Idea-Representative.png" width="350hv" height="400hv" />
             <ServiceSummury />
           </Box>
           <div 
@@ -107,7 +108,7 @@ const HomePageHeader = () => {
           >
             <Grid container>
               <Grid item xs={2} style={{ textAlign: "right" }}>
-                <img src="/home-page/connectIcon.png" width="50%" height="70%" />
+                <img src="https://i.postimg.cc/L8YrSD3n/connect-Icon.png" width="50%" height="70%" />
               </Grid>
               <Grid item xs={10} style={{ backgroundColor: "" }}>
                 <div
@@ -134,7 +135,7 @@ const HomePageHeader = () => {
 
             <Grid container style={{ marginTop: "2%" }}>
               <Grid item xs={2} style={{ textAlign: "right" }}>
-                <img src="/home-page/manage_connection_icon.png" width="50%" height="70%" />
+                <img src="https://i.postimg.cc/jS7km5Rf/manage-connection-icon.png" width="50%" height="70%" />
               </Grid>
               <Grid item xs={10} style={{ backgroundColor: "" }}>
                 <div
@@ -159,7 +160,7 @@ const HomePageHeader = () => {
             </Grid>
             <Grid container style={{ marginTop: "3%" }}>
               <Grid item xs={2} style={{ textAlign: "right" }}>
-                <img src="/home-page/npmIcon.png" width="50%" height="70%" />
+                <img src="https://i.postimg.cc/ZqzDSSqM/npmIcon.png" width="50%" height="70%" />
               </Grid>
               <Grid item xs={10} style={{ backgroundColor: "" }}>
                 <div
@@ -200,6 +201,9 @@ const HomePageHeader = () => {
               <Button
                 variant="outlined"
                 style={{ backgroundColor: "#169CD8", color: "white" }}
+                onClick={()=>{
+                  navigation.push("/Authentication/SignIn");
+                }}
               >
                 Start Managing
               </Button>
@@ -217,6 +221,9 @@ const HomePageHeader = () => {
               <Button
                 variant="outlined"
                 style={{ backgroundColor: "#10365B", color: "white" }}
+                onClick={()=>{
+                  window.open("https://drive.google.com/file/d/1BUf_Lc6WEyuXUHBU7cgY-1yQpy5poUtq/view")
+                }}
               >
                 Get Host Application
               </Button>
@@ -225,7 +232,7 @@ const HomePageHeader = () => {
         </Grid>
         <Grid item md={6} xs={0}>
           <Box sx={{ display: { xs: "none", md: "block" } }}>
-            <img src="/home-page/IdeaRepresentative.png" width="90%" />
+            <img src="https://i.postimg.cc/fyPBg4F5/Idea-Representative.png" width="90%" />
             <ServiceSummury />
           </Box>
         </Grid>

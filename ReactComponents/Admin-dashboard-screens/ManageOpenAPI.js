@@ -31,7 +31,7 @@ const ManageOpenAPI=()=>{
             </Grid>
             <Grid item xs={4} style={{textAlign: "center",borderBottom:"1px solid #7ea69f",borderLeft:"1px solid #7ea69f"}}>
                 {/* Icon and detail */}
-                <img src={"/api-key.png"} width={"120"} height={"120"} />
+                <img src={"https://i.postimg.cc/pL22XD4x/api-key.jpg"} width={"120"} height={"120"} />
             </Grid>
             <Grid item xs={2}>
               {/* Sub options 1.List of consumer account and 2.Create new user*/}

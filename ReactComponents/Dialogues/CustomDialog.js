@@ -326,7 +326,7 @@ export default function CustomDialog({
             <Grid container>
               <Grid item xs={4}>
                 <img
-                  src="/output-onlinegiftools.gif"
+                  src="https://i.postimg.cc/9FBhSDMk/output-onlinegiftools.gif"
                   width="200px"
                   height="200px"
                 />
@@ -1350,7 +1350,7 @@ export default function CustomDialog({
             <Grid container>
               <Grid item xs={12} style={{ textAlign: "center" }}>
                 <div>
-                  <img src="/manage_connection_icon.jpg" width={"200"} height={"200"} />
+                  <img src="https://i.postimg.cc/NF6cQMx5/manage-connection-icon.jpg" width={"200"} height={"200"} />
                 </div>
                 <div style={{"fontSize":"1.3rem",fontWeight:"bold"}}>
                   Access Toke Manager
@@ -1594,7 +1594,7 @@ export default function CustomDialog({
             <Grid container>
               <Grid item xs={12}>
                 <div style={{textAlign:'center'}}>
-                  <img src="/api-key.png" width={"200"} height={"200"} />
+                  <img src="https://i.postimg.cc/pL22XD4x/api-key.jpg" width={"200"} height={"200"} />
                   <div style={{fontSize:"1.3rem",fontWeight:"bold"}}>
                     API Key Manager
                   </div>
@@ -1891,7 +1891,7 @@ export default function CustomDialog({
             <Grid container>
               <Grid item xs={12}>
                 <div style={{ textAlign: "center" }}>
-                    <img src="/output-onlinegiftools.gif" width="150px" height="150px" />
+                    <img src="https://i.postimg.cc/9FBhSDMk/output-onlinegiftools.gif" width="150px" height="150px" />
                     <Heading text={alertMessage} fontSize="1rem"/>
                 </div>
                 </Grid>

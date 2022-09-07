@@ -1,6 +1,6 @@
 import Heading from "./Heading"
 
-const CustomTableLoadingForm=(msg="Loading please wait..!!",fontSize="1rem",img_width="200",img_height="200",img="/no_data_found.jpg",loadingGif="/output-onlinegiftools.gif",gif_width="200",gif_height="200")=>
+const CustomTableLoadingForm=(msg="Loading please wait..!!",fontSize="1rem",img_width="200",img_height="200",img="/no_data_found.jpg",loadingGif="https://i.postimg.cc/9FBhSDMk/output-onlinegiftools.gif",gif_width="200",gif_height="200")=>
 {
     emptyText: (
         <span>

@@ -88,7 +88,7 @@ const Index = () => {
         {serverResponseCode == 0 && (
             <div>
               <img
-                src="/setingup-enviroment.jpg"
+                src="https://i.postimg.cc/MGnJvtDk/setingup-enviroment.jpg"
                 width="350px"
                 height="350px"
               />
@@ -97,7 +97,7 @@ const Index = () => {
           {serverResponseCode == ALREADY_CREATED_ACCOUNT && (
             <div>
               <img
-                src="/setingup-enviroment.jpg"
+                src="https://i.postimg.cc/MGnJvtDk/setingup-enviroment.jpg"
                 width="350px"
                 height="350px"
               />
@@ -106,7 +106,7 @@ const Index = () => {
           {serverResponseCode == CREATE_ADMIN_ACCOUNT && (
             <div>
               <img
-                src="/setingup-enviroment.jpg"
+                src="https://i.postimg.cc/MGnJvtDk/setingup-enviroment.jpg"
                 width="350px"
                 height="350px"
               />
@@ -115,7 +115,7 @@ const Index = () => {
            {serverResponseCode == COULD_NOT_CREATE_ACCOUNT && (
             <div>
               <img
-                src="/conifer-access-denied.png"
+                src="https://i.postimg.cc/J4CrSwQs/conifer-access-denied.png"
                 width="350px"
                 height="350px"
               />
@@ -126,7 +126,7 @@ const Index = () => {
           {isDataLoading == true && (
             <div>
               <img
-                src="/output-onlinegiftools.gif"
+                src="https://i.postimg.cc/9FBhSDMk/output-onlinegiftools.gif"
                 width="100px"
                 height="100px"
               />

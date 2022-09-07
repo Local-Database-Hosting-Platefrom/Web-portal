@@ -66,7 +66,7 @@ const useStyles = makeStyles({
   },
   service_title_container_md: {
     fontFamily: "Fira Sans",
-    fontSize: "1.8rem",
+    fontSize: "2rem",
     // letterSpacing: "0.1rem",
     marginLeft: "5%",
     fontWeight: "bold",
@@ -83,7 +83,7 @@ const useStyles = makeStyles({
   },
   service_summury_container_md: {
     fontFamily: "Fira Sans",
-    fontSize: "1rem",
+    fontSize: "1.4rem",
     // letterSpacing: "0.1rem",
     marginLeft: "10%",
     marginRight: "20%",
@@ -140,7 +140,7 @@ const OurService=()=>{
                   : classes.service_number_container_xs
               }
             >
-              <img src="/home-page/one_icon.png" />
+              <img src="https://i.postimg.cc/6QVb6m25/one_icon.png" />
             </Grid>
           </Grid>
   
@@ -160,7 +160,7 @@ const OurService=()=>{
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
                 <div>
                   <img
-                    src="/home-page/service_1_icon.png"
+                    src="https://i.postimg.cc/fyPBg4F5/Idea-Representative.png"
                     width={isMediumScreen ? "100%" : "70%"}
                   />
                 </div>
@@ -195,11 +195,8 @@ const OurService=()=>{
                     : classes.service_summury_container_xs
                 }
               >
-                We provide you service to execute your database quries on your
-                locally hosted database from any where and get repoonses. Lorem
-                Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard dummy text
-                ever since the 1500s, when an unknown printer took a galley of
+                We provide you service to execute your database quires on your
+                locally hosted database from any where and get responses.
            
               </div>
             </Grid>
@@ -219,7 +216,7 @@ const OurService=()=>{
               <Box sx={{ display: { xs: "flex", md: "none" } }}>
                 <div>
                   <img
-                    src="/home-page/service_1_icon.png"
+                    src="https://i.postimg.cc/6QVb6m25/one_icon.png"
                     width={isMediumScreen ? "100%" : "70%"}
                   />
                 </div>
@@ -241,7 +238,7 @@ const OurService=()=>{
                   : classes.service_number_container_xs
               }
             >
-              <img src="/home-page/two_icon.png" />
+              <img src="https://i.postimg.cc/xTW6v2L1/two_icon.png" />
             </Grid>
           </Grid>
           <Grid container>
@@ -266,7 +263,7 @@ const OurService=()=>{
                 }
                 style={{ marginLeft: isMediumScreen ? "10%" : "" }}
               >
-                No need of Node Js to access MySQL
+                No need of any API to consume MySQL
               </div>
               <div
                 className={
@@ -277,11 +274,7 @@ const OurService=()=>{
                 style={{ marginLeft: isMediumScreen ? "15%" : "" }}
               >
                 We provide you service that without Node js API, access your local
-                databases in your applications from anywhere. Lorem Ipsum is
-                simply dummy text of the printing and typesetting industry. Lorem
-                Ipsum has been the industry's standard dummy text ever since the
-                1500s, when an unknown printer took a galley of type and scrambled
-                it to make a type specimen book
+                databases in your applications from anywhere by simple creating open APIs.
               </div>
             </Grid>
   
@@ -299,7 +292,7 @@ const OurService=()=>{
   
               <div>
                 <img
-                  src="/home-page/service_2_icon.png"
+                  src="https://i.postimg.cc/T2N7Pmwm/service_2_icon.png"
                   width={isMediumScreen ? "100%" : "70%"}
                 />
               </div>
@@ -319,7 +312,7 @@ const OurService=()=>{
                   : classes.service_number_container_xs
               }
             >
-              <img src="/home-page/three_icon.png" />
+              <img src="https://i.postimg.cc/c4KDtHgz/three_icon.png" />
             </Grid>
           </Grid>
           <Grid container>
@@ -337,7 +330,7 @@ const OurService=()=>{
               {/* Image/gif */}
               <Box sx={{ display: { xs: "none", md: "flex" } }}>
                 <div>
-                  <img src="/home-page/service_3_icon.png" width="90%" />
+                  <img src="https://i.postimg.cc/kMbx8hvn/service_3_icon.png" width="90%" />
                 </div>
               </Box>
             </Grid>
@@ -370,12 +363,7 @@ const OurService=()=>{
                 }
               >
                 We provide you to service to manage your shared databases, get
-                analytics your consumers and connected hosts with
-                admin-dashboard.Lorem Ipsum is simply dummy text of the printing
-                and typesetting industry. Lorem Ipsum has been the industry's
-                standard dummy text ever since the 1500s, when an unknown printer
-                took a galley of type and scrambled it to make a type specimen
-                book
+                analytics of usage of  your resources and have full control over connected hosts and developers using admin account
               </div>
             </Grid>
   
@@ -394,7 +382,7 @@ const OurService=()=>{
               <Box sx={{ display: { xs: "flex", md: "none" } }}>
                 <div>
                   <img
-                    src="/home-page/service_3_icon.png"
+                    src="https://i.postimg.cc/kMbx8hvn/service_3_icon.png"
                     width={isMediumScreen ? "100%" : "60%"}
                   />
                 </div>

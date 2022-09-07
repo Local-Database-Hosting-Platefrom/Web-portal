@@ -9,7 +9,7 @@ const States = ({title,value})=>{
         <div style={{textAlign: "center",padding:"1%",height:"150px"}}>
             {
                 (value==null) ? <div>
-                      <img src="/output-onlinegiftools.gif" width="150px" height="150px" />
+                      <img src="https://i.postimg.cc/9FBhSDMk/output-onlinegiftools.gif" width="150px" height="150px" />
                 </div> : <div>
                     <Heading text={value} fontSize="4rem"/>
                 </div>

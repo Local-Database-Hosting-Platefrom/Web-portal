@@ -312,7 +312,7 @@ const Index = (props) => {
           <Grid item md={8} style={{display: isMediumScreen?"block":"none"}}>
             {/* Image side */}
             <img
-              src="/sign-in.jpg"
+              src="https://i.postimg.cc/Cx6WTkVc/sign-in.jpg"
               width={isMediumScreen ? "60%" : "90%"}
             />
           </Grid>
