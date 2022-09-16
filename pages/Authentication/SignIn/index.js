@@ -6,7 +6,7 @@ import {
   FormControlLabel,
   Grid,
   Link,
-  Radio,
+ 
   RadioGroup,
   useMediaQuery,
 } from "@mui/material";
@@ -48,7 +48,7 @@ import CustomDialog from "../../../ReactComponents/Dialogues/CustomDialog";
 import dialogueTypes from "../../../ReactComponents/Dialogues/dialogueTypes";
 import { Input, Switch } from "antd";
 import Title from "antd/lib/skeleton/Title";
-
+import { Radio } from 'antd';
 import { GoogleOutlined, GithubFilled } from "@ant-design/icons";
 import { Button } from "antd";
 import openNotificationWithIcon from "../../../ReactComponents/Dialogues/Notification";
@@ -64,7 +64,7 @@ const useStyles = makeStyles({
   headingContainer_xs: {
     textAlign: "left",
     marginTop: "10%",
-    paddingLeft:"5%"
+    paddingLeft: "5%",
   },
   formContainer_md: {
     marginTop: "7%",
@@ -111,7 +111,7 @@ const Index = (props) => {
     useState("");
   const [alertTitle_CustomDialog, setAlertTitle_CustomDialog] = useState("");
   const [accountType, setAccountType] = useState(null);
-  
+
   const router = useRouter();
 
   let user_Id = null;
@@ -121,13 +121,9 @@ const Index = (props) => {
     user_Id = router.query.id;
     authType = router.query.authType;
   }
- 
-  
 
   useEffect(() => {
-    
     if (user_Id != null || user_Id != undefined) {
-
       displayDialog(
         dialogueTypes.SETTING_UP_ENVIRONMENT,
         "Setting Up The Environment",
@@ -214,7 +210,6 @@ const Index = (props) => {
   const [loadingsForGithubBtn, setLoadingsForGithubBtn] = useState([]);
 
   const enterLoading_signInBtn = (index) => {
-    
     if (email != null && password != null && accountType != null) {
       setLoadingsForSignIn((prevLoadings) => {
         const newLoadings = [...prevLoadings];
@@ -229,18 +224,27 @@ const Index = (props) => {
       })
         .then((resp) => resp.json())
         .then((data) => {
-
           setLoadingsForSignIn((prevLoadings) => {
             const newLoadings = [...prevLoadings];
             newLoadings[index] = false;
             return newLoadings;
-          });        
+          });
 
           if (data.responseCode == COULD_NOT_LOGIN) {
-            openNotificationWithIcon("warning","Server response",data.responseMessage,"bottom")
+            openNotificationWithIcon(
+              "warning",
+              "Server response",
+              data.responseMessage,
+              "bottom"
+            );
           } else {
-            openNotificationWithIcon("info","Server response",data.responseMessage,"bottom")
-    
+            openNotificationWithIcon(
+              "info",
+              "Server response",
+              data.responseMessage,
+              "bottom"
+            );
+
             localStorage.setItem("loggedInUser", JSON.stringify(data));
             if (data.responsePayload.apiKey != undefined)
               localStorage.setItem("apiKey", data.responsePayload.apiKey);
@@ -251,14 +255,23 @@ const Index = (props) => {
               navigation.push("/developer-dashboard/");
             else navigation.push("/Authentication/SignIn");
           }
-        }).catch((error)=>{
-          console.log("error catched")
-          openNotificationWithIcon("error","Server response","Seems there is internet connection problem","bottom")
         })
+        .catch((error) => {
+          console.log("error catched");
+          openNotificationWithIcon(
+            "error",
+            "Server response",
+            "Seems there is internet connection problem",
+            "bottom"
+          );
+        });
     } else {
-      
-      openNotificationWithIcon("warning","Invalid input","Please fill all the filed","bottom")
-      
+      openNotificationWithIcon(
+        "warning",
+        "Invalid input",
+        "Please fill all the filed",
+        "bottom"
+      );
     }
   };
 
@@ -270,17 +283,22 @@ const Index = (props) => {
         return newLoadings;
       });
       //set navigation if api is running.
-      sendResquestToCentralAPI("GET",CHECK_API_STATUS,{}).then((resp)=>resp.json).then((data)=>{
-        navigation.push(GOOGLE_AUTH);
-      }).catch((error)=>{
-        navigation.push(NO_INTERNET_CONNECTION);
-      })
+      sendResquestToCentralAPI("GET", CHECK_API_STATUS, {})
+        .then((resp) => resp.json)
+        .then((data) => {
+          navigation.push(GOOGLE_AUTH);
+        })
+        .catch((error) => {
+          navigation.push(NO_INTERNET_CONNECTION);
+        });
     } else {
-     
-      openNotificationWithIcon("warning","Invalid input","Please choose account type","bottom")
-     
+      openNotificationWithIcon(
+        "warning",
+        "Invalid input",
+        "Please choose account type",
+        "bottom"
+      );
     }
-   
   };
 
   const enterLoading_githubBtn = (index) => {
@@ -290,26 +308,34 @@ const Index = (props) => {
         newLoadings[index] = true;
         return newLoadings;
       });
-      sendResquestToCentralAPI("GET",CHECK_API_STATUS,{}).then((resp)=>resp.json).then((data)=>{
-        navigation.push(GITHUB_AUTH);
-      }).catch((error)=>{
-        navigation.push(NO_INTERNET_CONNECTION);
-      })
+      sendResquestToCentralAPI("GET", CHECK_API_STATUS, {})
+        .then((resp) => resp.json)
+        .then((data) => {
+          navigation.push(GITHUB_AUTH);
+        })
+        .catch((error) => {
+          navigation.push(NO_INTERNET_CONNECTION);
+        });
       // navigation.push(GITHUB_AUTH);
     } else {
-      
-      openNotificationWithIcon("warning","Invalid input","Please choose account type","bottom")
-     
+      openNotificationWithIcon(
+        "warning",
+        "Invalid input",
+        "Please choose account type",
+        "bottom"
+      );
     }
-
-    
   };
 
   return (
     <div className={classes.root}>
       <Container>
         <Grid container>
-          <Grid item md={8} style={{display: isMediumScreen?"block":"none"}}>
+          <Grid
+            item
+            md={8}
+            style={{ display: isMediumScreen ? "block" : "none" }}
+          >
             {/* Image side */}
             <img
               src="https://i.postimg.cc/Cx6WTkVc/sign-in.jpg"
@@ -403,49 +429,11 @@ const Index = (props) => {
                 </Grid>
 
                 <Grid item md={12} xs={12}>
-                  {/* <FormControl style={{ marginTop: "3%" }}>
-                     <RadioGroup
-                      row
-                      aria-labelledby="demo-controlled-radio-buttons-group"
-                      name="controlled-radio-buttons-group"
-                      accountType={accountType}
-                      onChange={handleChange}
-                    >
-                      <FormControlLabel
-                        value="admin"
-                        control={
-                          <Radio
-                            sx={{
-                              color: "blue",
-                              "&.Mui-checked": {
-                                color: "red",
-                              },
-                            }}
-                          />
-                        }
-                        label="Admin"
-                      />
-                      <FormControlLabel
-                        value="developer"
-                        control={
-                          <Radio
-                            sx={{
-                              color: "blue",
-                              "&.Mui-checked": {
-                                color: "red",
-                              },
-                            }}
-                          />
-                        }
-                        label="Developer"
-                      />
-                    </RadioGroup>
-                  </FormControl> */}
                   <div style={{ marginTop: "4%" }}>
                     <h5>Select account type</h5>
-                    <Switch
-                      checkedChildren="I am admin"
-                      unCheckedChildren="I am developer"
+                    {/* <Switch
+                      checkedChildren="I Am Service Manager"
+                      unCheckedChildren="I Am Developer"
                       defaultChecked
                       onChange={(e) => {
                         if (e) {
@@ -458,7 +446,23 @@ const Index = (props) => {
                           setAccountType("developer")
                         }
                       }}
-                    />
+                    /> */}
+                    <Radio.Group  buttonStyle="solid"  onChange={(e) => {
+                        if (e.target.value=="admin") {
+                         
+                          //admin
+                          localStorage.setItem("accountType", "admin");
+                          setAccountType("admin")
+                        } else {
+                          //developer
+                          localStorage.setItem("accountType", "developer");
+                          setAccountType("developer")
+                        }
+                      }}>
+                      <Radio.Button value="admin">Service Manager</Radio.Button>
+                      <Radio.Button value="developer">Developer</Radio.Button>
+                    </Radio.Group>
+
                   </div>
                 </Grid>
 

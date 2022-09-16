@@ -121,7 +121,6 @@ export default function CustomDialog({
     setIsAutoTokenGeneratingAllowed(event.target.checked);
   };
 
-
   const [listOfAccessRole, setListOfAccessRole] = React.useState([
     {
       roleTitle: "Read Only",
@@ -144,7 +143,6 @@ export default function CustomDialog({
   useEffect(() => {
     // if (alertMessage.status) setIsLdUrlEnabled();
     setAreWeGeneratingApiKey(false);
-    
   }, [alertMessage]);
 
   const handelGenerateToken = (index) => {
@@ -267,54 +265,59 @@ export default function CustomDialog({
       return newLoadings;
     });
 
-    if(listOfDatabases.length!=0){
-    sendResquestToCentralAPI("POST", MAKE_CON_REQUEST_FOR_DEV_TO_ADMIN, {
-      listOfDatabases: listOfDatabases,
-      adminId: alertMessage.serviceProviderId,
-      developerId: developerId,
-      developerName:
-        userData.responsePayload.firstName +
-        " " +
-        userData.responsePayload.lastName,
-      developerEmail: userData.responsePayload.email,
-      requestType: alertMessage.connectionRequest == null ? "new" : "update",
-      requestId:
-        alertMessage.connectionRequest == null
-          ? null
-          : alertMessage.connectionRequest._id,
-    }).then(
-      async (success) => {
-        const response = await success.json();
-        // console.log("Made connection request", response);
-        openNotificationWithIcon(
-          "info",
-          "Server response",
-          response.responseMessage,
-          "bottom"
-        );
-        setLoadingsForMakingAndUpdatingRequest((prevLoadings) => {
-          const newLoadings = [...prevLoadings];
-          newLoadings[index] = false;
-          return newLoadings;
-        });
-        handleOkEvent();
-      },
-      (error) => {
-        console.log("Error", error);
-        openNotificationWithIcon(
-          "error",
-          "Server response",
-          JSON.stringify(error)
-        );
-        setLoadingsForMakingAndUpdatingRequest((prevLoadings) => {
-          const newLoadings = [...prevLoadings];
-          newLoadings[index] = false;
-          return newLoadings;
-        });
-      }
-    );
-    }else{
-      openNotificationWithIcon("error","Invalid input","Please select databases before making request","bottom")
+    if (listOfDatabases.length != 0) {
+      sendResquestToCentralAPI("POST", MAKE_CON_REQUEST_FOR_DEV_TO_ADMIN, {
+        listOfDatabases: listOfDatabases,
+        adminId: alertMessage.serviceProviderId,
+        developerId: developerId,
+        developerName:
+          userData.responsePayload.firstName +
+          " " +
+          userData.responsePayload.lastName,
+        developerEmail: userData.responsePayload.email,
+        requestType: alertMessage.connectionRequest == null ? "new" : "update",
+        requestId:
+          alertMessage.connectionRequest == null
+            ? null
+            : alertMessage.connectionRequest._id,
+      }).then(
+        async (success) => {
+          const response = await success.json();
+          // console.log("Made connection request", response);
+          openNotificationWithIcon(
+            "info",
+            "Server response",
+            response.responseMessage,
+            "bottom"
+          );
+          setLoadingsForMakingAndUpdatingRequest((prevLoadings) => {
+            const newLoadings = [...prevLoadings];
+            newLoadings[index] = false;
+            return newLoadings;
+          });
+          handleOkEvent();
+        },
+        (error) => {
+          console.log("Error", error);
+          openNotificationWithIcon(
+            "error",
+            "Server response",
+            JSON.stringify(error)
+          );
+          setLoadingsForMakingAndUpdatingRequest((prevLoadings) => {
+            const newLoadings = [...prevLoadings];
+            newLoadings[index] = false;
+            return newLoadings;
+          });
+        }
+      );
+    } else {
+      openNotificationWithIcon(
+        "error",
+        "Invalid input",
+        "Please select databases before making request",
+        "bottom"
+      );
     }
   };
 
@@ -433,32 +436,31 @@ export default function CustomDialog({
                     {alertMessage.developerName}
                   </Card.Grid>
                   <Card.Grid style={{ width: "50%", textAlign: "center" }}>
-                  <Text keyboard style={{ fontSize: "1rem" }}>
-                    Requested Databases 
-                  </Text>
-                  <Divider/>
-                  {alertMessage.requestedHosts}
+                    <Text keyboard style={{ fontSize: "1rem" }}>
+                      Requested Databases
+                    </Text>
+                    <Divider />
+                    {alertMessage.requestedHosts}
                   </Card.Grid>
                   <Card.Grid style={{ width: "100%", textAlign: "center" }}>
-                  <Text keyboard style={{ fontSize: "1rem" }}>
-                    Access Role 
-                  </Text>
-                  <Divider/>
-                  <Radio.Group
-                    defaultValue="a"
-                    buttonStyle="solid"
-                    style={{ marginLeft: "1%" }}
-                    onChange_HostSelection={(e) => {
-                      // console.log(e);
-                      setAccessRole(e.target.value);
-                    }}
-                  >
-                    <Radio.Button value="1201">Read Only</Radio.Button>
-                    <Radio.Button value="1202">Write Only</Radio.Button>
-                    <Radio.Button value="1203">Read & Write</Radio.Button>
-                  </Radio.Group>
+                    <Text keyboard style={{ fontSize: "1rem" }}>
+                      Access Role
+                    </Text>
+                    <Divider />
+                    <Radio.Group
+                      defaultValue="a"
+                      buttonStyle="solid"
+                      style={{ marginLeft: "1%" }}
+                      onChange_HostSelection={(e) => {
+                        // console.log(e);
+                        setAccessRole(e.target.value);
+                      }}
+                    >
+                      <Radio.Button value="1201">Read Only</Radio.Button>
+                      <Radio.Button value="1202">Write Only</Radio.Button>
+                      <Radio.Button value="1203">Read & Write</Radio.Button>
+                    </Radio.Group>
                   </Card.Grid>
-                
                 </Card>
                 {/* <Grid item xs={12}>
                   <Text keyboard style={{ fontSize: "1.2rem" }}>
@@ -500,10 +502,9 @@ export default function CustomDialog({
                       handleOkEvent({
                         value: "Decline",
                         accessRole: accessRole,
-                        isAutoTokenGeneratingAllowed:
-                          true,
-                          // TODO: Replace it in future
-                          // isAutoTokenGeneratingAllowed 
+                        isAutoTokenGeneratingAllowed: true,
+                        // TODO: Replace it in future
+                        // isAutoTokenGeneratingAllowed
                       });
                     }}
                   >
@@ -550,11 +551,12 @@ export default function CustomDialog({
             title={"Update Connection Details"}
           >
             <div>
-             
-
               <Grid container>
-              
-                <Grid item xs={12} style={{ marginTop: "2%",textAlign:'center' }}>
+                <Grid
+                  item
+                  xs={12}
+                  style={{ marginTop: "2%", textAlign: "center" }}
+                >
                   <Radio.Group
                     defaultValue={alertMessage.assignedRole}
                     buttonStyle="solid"
@@ -687,7 +689,7 @@ export default function CustomDialog({
           <Modal
             visible={open}
             closable={true}
-            onCancel={()=>{
+            onCancel={() => {
               handleNoEvent();
             }}
             footer={null}
@@ -744,7 +746,7 @@ export default function CustomDialog({
                     style={{ width: "30%", marginTop: "1%" }}
                     size={"middle"}
                     onClick={(e) => {
-                      let action = { action: "delete", payload: null }
+                      let action = { action: "delete", payload: null };
                       e.preventDefault();
                       handleOkEvent(action);
                     }}
@@ -846,11 +848,11 @@ export default function CustomDialog({
                   <div style={{ height: "8rem", overflowY: "scroll" }}>
                     <Text style={{ fontSize: "1rem" }}>
                       <b> Response : </b>{" "}
-                      {
+                      {JSON.stringify(
                         JSON.parse(
                           alertMessage.key.request.requestResolvedPayload
                         ).response
-                      }
+                      )}
                     </Text>
                   </div>
                 </Card.Grid>
@@ -1350,18 +1352,34 @@ export default function CustomDialog({
             <Grid container>
               <Grid item xs={12} style={{ textAlign: "center" }}>
                 <div>
-                  <img src="https://i.postimg.cc/NF6cQMx5/manage-connection-icon.jpg" width={"200"} height={"200"} />
+                  <img
+                    src="https://i.postimg.cc/NF6cQMx5/manage-connection-icon.jpg"
+                    width={"200"}
+                    height={"200"}
+                  />
                 </div>
-                <div style={{"fontSize":"1.3rem",fontWeight:"bold"}}>
+                <div style={{ fontSize: "1.3rem", fontWeight: "bold" }}>
                   Access Toke Manager
                 </div>
-                <div style={{"fontSize":"1rem",width:"60%",marginLeft:"20%",marginRight:"20%"}}>
-                  You need access tokens to using our <a> <b> local host access urls service </b></a>  in your application
+                <div
+                  style={{
+                    fontSize: "1rem",
+                    width: "60%",
+                    marginLeft: "20%",
+                    marginRight: "20%",
+                  }}
+                >
+                  You need access tokens to using our{" "}
+                  <a>
+                    {" "}
+                    <b> local host access urls service </b>
+                  </a>{" "}
+                  in your application
                 </div>
                 <div>
                   <a> learn more </a>
                 </div>
-                <Divider/>
+                <Divider />
                 <Dropdown.Button
                   overlay={
                     <Menu
@@ -1457,7 +1475,6 @@ export default function CustomDialog({
                     onClick={(e) => {
                       e.preventDefault();
                       handelGenerateToken(0);
-                     
                     }}
                   >
                     {isTokenGenerated == false
@@ -1593,21 +1610,25 @@ export default function CustomDialog({
           >
             <Grid container>
               <Grid item xs={12}>
-                <div style={{textAlign:'center'}}>
-                  <img src="https://i.postimg.cc/pL22XD4x/api-key.jpg" width={"200"} height={"200"} />
-                  <div style={{fontSize:"1.3rem",fontWeight:"bold"}}>
+                <div style={{ textAlign: "center" }}>
+                  <img
+                    src="https://i.postimg.cc/pL22XD4x/api-key.jpg"
+                    width={"200"}
+                    height={"200"}
+                  />
+                  <div style={{ fontSize: "1.3rem", fontWeight: "bold" }}>
                     API Key Manager
                   </div>
-                  <div style={{fontSize:"1rem"}}>
+                  <div style={{ fontSize: "1rem" }}>
                     You need keys for using Open APIs.
                   </div>
                   <div>
                     {/* TODO:API Key manager documentation */}
                     <a>Learn more</a>
                   </div>
-                  <Divider/>
+                  <Divider />
                 </div>
-                <div style={{ textAlign: "center",marginTop:"2%" }}>
+                <div style={{ textAlign: "center", marginTop: "2%" }}>
                   <Button
                     type="secondary"
                     shape="round"
@@ -1694,12 +1715,13 @@ export default function CustomDialog({
                   <Divider />
                   {alertMessage.connectionRequest != null && (
                     <div>
-                      {alertMessage.accessRole == null || alertMessage.connectionRequest.requestStatus == "Un-resolved"
+                      {alertMessage.accessRole == null ||
+                      alertMessage.connectionRequest.requestStatus ==
+                        "Un-resolved"
                         ? " Once request is accepted then you will be assigned a role by admin"
                         : alertMessage.accessRole}
                     </div>
                   )}
-
                 </Card.Grid>
                 <Card.Grid hoverable={false} style={{ width: "100%" }}>
                   <Text keyboard style={{ fontSize: "1rem" }}>
@@ -1793,7 +1815,7 @@ export default function CustomDialog({
                         )}
                       </div>
                     )}
-                    {(alertMessage.connectionRequest == null) && (
+                    {alertMessage.connectionRequest == null && (
                       <div>
                         Have not made any request yet, so there is no already
                         connected host.
@@ -1879,7 +1901,7 @@ export default function CustomDialog({
         </div>
       )}
 
-{alertType == dialogueTypes.PLEASE_WAIT && (
+      {alertType == dialogueTypes.PLEASE_WAIT && (
         <div>
           <Modal
             visible={open}
@@ -1891,15 +1913,18 @@ export default function CustomDialog({
             <Grid container>
               <Grid item xs={12}>
                 <div style={{ textAlign: "center" }}>
-                    <img src="https://i.postimg.cc/9FBhSDMk/output-onlinegiftools.gif" width="150px" height="150px" />
-                    <Heading text={alertMessage} fontSize="1rem"/>
+                  <img
+                    src="https://i.postimg.cc/9FBhSDMk/output-onlinegiftools.gif"
+                    width="150px"
+                    height="150px"
+                  />
+                  <Heading text={alertMessage} fontSize="1rem" />
                 </div>
-                </Grid>
+              </Grid>
             </Grid>
           </Modal>
         </div>
       )}
-
     </div>
   );
 }

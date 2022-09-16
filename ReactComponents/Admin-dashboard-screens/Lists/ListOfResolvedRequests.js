@@ -103,6 +103,7 @@ const ListOfResolvedRequests = () => {
 
       setCurrentSelectRow(selectedRows[0].key);
       // console.log(selectedRows[0].accessRole);
+  
       displayDialog(dialogueTypes.VIEW_COMPLETE_REQUEST, "", selectedRows[0]);
     },
   };
