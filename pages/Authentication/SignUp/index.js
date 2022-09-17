@@ -2,7 +2,7 @@
 import { Card, Container, Grid, Link, useMediaQuery } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useRouter } from "next/router";
-import Radio from "@mui/material/Radio";
+import { Radio } from 'antd';
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
@@ -503,22 +503,21 @@ const Index = () => {
                   </FormControl> */}
                   <div style={{ marginTop: "4%" }}>
                     <h5>Select account type</h5>
-                    <Switch
-                      checkedChildren="I am admin"
-                      unCheckedChildren="I am developer"
-                      defaultChecked
-                      onChange={(e) => {
-                        if (e) {
+                    <Radio.Group  buttonStyle="solid"  onChange={(e) => {
+                        if (e.target.value=="admin") {
+                         
                           //admin
                           localStorage.setItem("accountType", "admin");
-                          setValue("admin");
+                          setAccountType("admin")
                         } else {
                           //developer
                           localStorage.setItem("accountType", "developer");
-                          setValue("developer");
+                          setAccountType("developer")
                         }
-                      }}
-                    />
+                      }}>
+                      <Radio.Button value="admin">Service Manager</Radio.Button>
+                      <Radio.Button value="developer">Developer</Radio.Button>
+                    </Radio.Group>
                   </div>
                 </Grid>
                 <Grid item md={12} xs={12}>
