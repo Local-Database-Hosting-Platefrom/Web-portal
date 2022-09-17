@@ -911,7 +911,9 @@ export default function Navbar({isProgressBarVisible=false}) {
                 }}
                 onClick={(e) => {
                   // handleOptionSelection(e, 3);
-                  window.open("https://drive.google.com/file/d/1BUf_Lc6WEyuXUHBU7cgY-1yQpy5poUtq/view?usp=sharing")
+                  
+                  
+                  window.open("https://drive.google.com/file/d/1UCaQlV0lwj0HZzkgN5b7wNNSYabC4JbO/view?usp=sharing");
                 }}
               >
                 {"Get_Desktop_Application"}
