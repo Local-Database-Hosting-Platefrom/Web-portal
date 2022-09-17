@@ -1,5 +1,5 @@
 
-const FRONT_END_BASE_URL="https://central-api-layer-zeeshan-thedeveloper.vercel.app/";
+const FRONT_END_BASE_URL="https://local-database-hosting.vercel.app/";
 const BACK_END_BASE_URL="https://central-api-ldh.herokuapp.com";
 
 
