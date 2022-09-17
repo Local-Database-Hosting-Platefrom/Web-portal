@@ -222,7 +222,8 @@ const HomePageHeader = () => {
                 variant="outlined"
                 style={{ backgroundColor: "#10365B", color: "white" }}
                 onClick={()=>{
-                  window.open("https://drive.google.com/file/d/1BUf_Lc6WEyuXUHBU7cgY-1yQpy5poUtq/view")
+                  navigation.push("/Downloads");
+                  // window.open("https://drive.google.com/file/d/1BUf_Lc6WEyuXUHBU7cgY-1yQpy5poUtq/view")
                 }}
               >
                 Get Host Application

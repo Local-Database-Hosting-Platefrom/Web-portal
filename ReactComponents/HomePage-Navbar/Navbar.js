@@ -910,11 +910,11 @@ export default function Navbar({isProgressBarVisible=false}) {
                   fontSize: 14,
                 }}
                 onClick={(e) => {
-                  // handleOptionSelection(e, 3);
-                  window.open("https://drive.google.com/file/d/1xI9EV5MdsLa8oRaie9wIRndMFOsEB7l0/view?usp=sharing");
+                  handleOptionSelection(e, 3);
+                  // window.open("https://drive.google.com/file/d/1xI9EV5MdsLa8oRaie9wIRndMFOsEB7l0/view?usp=sharing");
                 }}
               >
-                {"Get_Desktop_Application"}
+                {"Download"}
               </Button>
             </Box>
 
