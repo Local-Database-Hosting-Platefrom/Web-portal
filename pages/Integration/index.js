@@ -6,6 +6,12 @@ import { CaretRightOutlined } from "@ant-design/icons";
 import { Button, Collapse } from "antd";
 const { Panel } = Collapse;
 import "antd/dist/antd.css";
+import { useState } from "react";
+import CreatingServiceManagerAccount from "../../ReactComponents/IntegrationPages/CreatingServiceManagerAccount";
+import FooterWraper from "../../ReactComponents/HomePage-Footer/FooterWraper";
+import CreatingDeveloperAccount from "../../ReactComponents/IntegrationPages/CreatingDeveloperAccount";
+import DownloadingAndInstallingDesktopApplication from "../../ReactComponents/IntegrationPages/DownloadingAndInstallingDesktopApplication";
+import ConfiguringDeskAppToConnectWithRDBMS from "../../ReactComponents/IntegrationPages/ConfiguringDeskAppToConnectWithRDBMS";
 
 const useStyles = makeStyles({
   root: {
@@ -14,6 +20,27 @@ const useStyles = makeStyles({
 });
 const Index = () => {
   const classes = useStyles();
+  const [openedScreen,setOpenedScreen]=useState(<CreatingServiceManagerAccount/>);
+
+  const changeScreen=(index)=>{
+    switch (index) {
+      case 0:
+        setOpenedScreen(<CreatingServiceManagerAccount/>)
+        break;
+      case 1:
+          setOpenedScreen(<CreatingDeveloperAccount/>)
+          break;
+      case 2:
+            setOpenedScreen(<DownloadingAndInstallingDesktopApplication/>)
+            break; 
+      case 3:
+            setOpenedScreen(<ConfiguringDeskAppToConnectWithRDBMS/>)
+              break;          
+      default:
+        break;
+    }
+  }
+
   return (
     <div className={classes.root}>
       <Container>
@@ -26,11 +53,11 @@ const Index = () => {
         >
           <Heading text={"Integration"} fontWeight="bold" fontSize="2rem" />
         </div>
-        <div>
+        <div style={{marginTop:"3%"}}>
           <Grid container>
             <Grid item xs={4}>
               <Collapse
-                bordered={true}
+                bordered={false}
                 expandIcon={({ isActive }) => (
                   <CaretRightOutlined rotate={isActive ? 90 : 0} />
                 )}
@@ -43,10 +70,10 @@ const Index = () => {
                 >
                   <ul>
                     <li>
-                      <Button type="link">Service manager account</Button>
+                      <Button type="link" onClick={()=>{changeScreen(0)}}>Service manager account</Button>
                     </li>
                     <li>
-                      <Button type="link">Developer account.</Button>
+                      <Button type="link" onClick={()=>{changeScreen(1)}}>Developer account.</Button>
                     </li>
                   </ul>
                 </Panel>
@@ -57,12 +84,12 @@ const Index = () => {
                 >
                   <ul style={{ width: "5rem" }}>
                     <li>
-                      <Button type="link">
+                      <Button type="link" onClick={()=>{changeScreen(2)}}>
                         Downloading and installing desktop applications
                       </Button>
                     </li>
                     <li>
-                      <Button type="link">
+                      <Button type="link"  onClick={()=>{changeScreen(3)}}>
                         Configuring desktop application to access RDBMS
                       </Button>
                     </li>
@@ -155,11 +182,16 @@ const Index = () => {
                   key="5"
                   className="site-collapse-custom-panel"
                 >
-                  <p>{"HELL"}</p>
+                  
                 </Panel>
 
                
               </Collapse>
+            </Grid>
+            <Grid item xs={8}>
+              <div style={{borderLeft:"1px solid black",marginLeft:"2%",minHeight:"30rem"}}>
+                  {openedScreen}
+              </div>
             </Grid>
           </Grid>
         </div>
@@ -168,4 +200,4 @@ const Index = () => {
   );
 };
 
-export default NavbarWraper(Index);
+export default FooterWraper(NavbarWraper(Index));
