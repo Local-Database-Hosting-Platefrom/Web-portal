@@ -1,5 +1,7 @@
 import { Box, Container, Grid, useMediaQuery } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+
+import ReactPlayer from 'react-player'
 const useStyles = makeStyles({
   root: {
     marginTop: "5%",
@@ -113,6 +115,15 @@ const OurService=()=>{
             <Grid item md={2} xs={0}></Grid>
             <Grid item md={8} xs={12}>
               <div>
+                <div style={{textAlign:"center",marginLeft:"23%"}}>
+                <ReactPlayer
+          url='https://www.youtube.com/watch?v=mlTmBVshH9E'
+          className='react-player'
+          playing
+          width="30rem"
+          height='30rem '
+        />
+                </div>
                 <div
                   className={
                     isMediumScreen
