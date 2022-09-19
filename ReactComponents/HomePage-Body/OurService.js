@@ -115,7 +115,7 @@ const OurService=()=>{
             <Grid item md={2} xs={0}></Grid>
             <Grid item md={8} xs={12}>
               <div>
-                <div style={{textAlign:"center",marginLeft:"30%"}}>
+                <div style={{textAlign:"center",marginLeft:"27%"}}>
                 <ReactPlayer
           url='https://www.youtube.com/watch?v=mlTmBVshH9E'
           className='react-player'
