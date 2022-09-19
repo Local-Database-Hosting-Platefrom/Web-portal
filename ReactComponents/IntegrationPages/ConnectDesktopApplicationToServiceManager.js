@@ -1,7 +1,7 @@
-const ConfiguringDeskAppToConnectWithRDBMS=()=>{
+const ConnectDesktopApplicationToServiceManager=()=>{
     return <div style={{paddingLeft:"2rem",paddingRight:"2rem",paddingTop:"0.5rem"}}>
         <div style={{borderBottom:"1px solid black",fontSize:"1.5rem",padding:"1rem",fontWeight:"bold"}}>
-            Configuring desktop application to access RDBMS
+            Connecting Desktop Application To Service Manager
         </div>
         <div style={{paddingLeft:"1rem",marginBottom:"5%"}}>
             <div style={{fontSize:"1rem"}}>
@@ -9,25 +9,22 @@ const ConfiguringDeskAppToConnectWithRDBMS=()=>{
             </div>
             <div style={{fontSize:"1rem"}}>
       
-               <b> 1 : </b>When you execute the application for the first time on windows then it might show you the following warning dialogue. Don’t worry about that and just run it anyway
-            
+               <b> 1 : </b>Now click “Service Managers” and enter your service manager’s email.
+
             </div>
             <div style={{textAlign:"center"}}>
-               <img src="./integration/image3.png" width={"300"}/>
-            </div>
-            <div style={{textAlign:"center",marginTop:"2%"}}>
-               <img src="./integration/image17.png" width={"300"}/>
+               <img src="./integration/image30.png" width={"600"}/>
             </div>
             <div style={{fontSize:"1rem",marginTop:"2%"}}>
-               <b> 2 : </b>After that, provide a name to your host application and click continue.
+               <b> 2 : </b>And you must see the response message.
             </div>
             <div style={{textAlign:"center",marginTop:"2%"}}>
-               <img src="./integration/image41.png" width={"500"}/>
+               <img src="./integration/image36.png" width={"600"}/>
             </div>
             <div style={{fontSize:"1rem",marginTop:"2%"}}>
-               <b> 3 : </b>For the first time you will see following screen by default opened
+               <b> 3 : </b>Hence you have successfully sent a connection request to the service manager.
             </div>
-            <div style={{textAlign:"center",marginTop:"2%"}}>
+            {/* <div style={{textAlign:"center",marginTop:"2%"}}>
                <img src="./integration/image43.png" width={"500"}/>
             </div>
             <div style={{fontSize:"1rem",marginTop:"2%"}}>
@@ -41,10 +38,10 @@ const ConfiguringDeskAppToConnectWithRDBMS=()=>{
             </div>
             <div style={{textAlign:"center",marginTop:"2%"}}>
                <img src="./integration/image1.png" width={"600"}/>
-            </div>
+            </div> */}
             
         </div>
     </div>
 }
 
-export default ConfiguringDeskAppToConnectWithRDBMS;
+export default ConnectDesktopApplicationToServiceManager;

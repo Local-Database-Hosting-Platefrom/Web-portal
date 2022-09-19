@@ -1,30 +1,27 @@
-const ConfiguringDeskAppToConnectWithRDBMS=()=>{
+const AllowOrRistrictHostAccessUrl=()=>{
     return <div style={{paddingLeft:"2rem",paddingRight:"2rem",paddingTop:"0.5rem"}}>
         <div style={{borderBottom:"1px solid black",fontSize:"1.5rem",padding:"1rem",fontWeight:"bold"}}>
-            Configuring desktop application to access RDBMS
+            Allow/Restrict Usage Of Any Hosts
         </div>
         <div style={{paddingLeft:"1rem",marginBottom:"5%"}}>
             <div style={{fontSize:"1rem"}}>
-                Follow the steps
-            </div>
-            <div style={{fontSize:"1rem"}}>
-      
-               <b> 1 : </b>When you execute the application for the first time on windows then it might show you the following warning dialogue. Don’t worry about that and just run it anyway
-            
+               {`To make hosts visible to any connected developer account, it is necessary to enable the host. For enabling a host account got to Bridge > Local Database Access Urls`}
             </div>
             <div style={{textAlign:"center"}}>
-               <img src="./integration/image3.png" width={"300"}/>
+               <img src="./integration/image12.png" width={"600"}/>
             </div>
-            <div style={{textAlign:"center",marginTop:"2%"}}>
-               <img src="./integration/image17.png" width={"300"}/>
+            <div style={{fontSize:"1rem"}}>
+               To enable or disable click the circle and update it.
             </div>
+            <div style={{textAlign:"center"}}>
+               <img src="./integration/image25.png" width={"600"}/>
+            </div>
+          
             <div style={{fontSize:"1rem",marginTop:"2%"}}>
-               <b> 2 : </b>After that, provide a name to your host application and click continue.
+            Note : In case it is disabled then no request will be processed for this host.
             </div>
-            <div style={{textAlign:"center",marginTop:"2%"}}>
-               <img src="./integration/image41.png" width={"500"}/>
-            </div>
-            <div style={{fontSize:"1rem",marginTop:"2%"}}>
+           
+            {/* <div style={{fontSize:"1rem",marginTop:"2%"}}>
                <b> 3 : </b>For the first time you will see following screen by default opened
             </div>
             <div style={{textAlign:"center",marginTop:"2%"}}>
@@ -41,10 +38,10 @@ const ConfiguringDeskAppToConnectWithRDBMS=()=>{
             </div>
             <div style={{textAlign:"center",marginTop:"2%"}}>
                <img src="./integration/image1.png" width={"600"}/>
-            </div>
+            </div> */}
             
         </div>
     </div>
 }
 
-export default ConfiguringDeskAppToConnectWithRDBMS;
+export default AllowOrRistrictHostAccessUrl;
