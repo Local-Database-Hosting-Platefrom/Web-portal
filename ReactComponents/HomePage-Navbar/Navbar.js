@@ -809,28 +809,8 @@ export default function Navbar({isProgressBarVisible=false}) {
         }
         <Box sx={{ paddingLeft: "10%", paddingRight: "10%" }}>
           <Toolbar>
-            <ConnectWithoutContactIcon
-              fontSize="large"
-              sx={{ fontSize: 40 }}
-              style={{ color: "black" }}
-            />
-            <Typography
-              variant="h4"
-              noWrap
-              component="div"
-              sx={{
-                display: {
-                  xs: "block",
-                  sm: "block",
-                  marginLeft: "1%",
-                  fontWeight: "bold",
-                  fontFamily: "Roboto Mono,monospace",
-                },
-              }}
-            >
-              L D H
-            </Typography>
-
+            
+            <img src="/ldh-logo-2-removebg-preview.png" width={"200"} />
             <Box sx={{ flexGrow: windSize.width <= 900 ? 1 : 1 }} />
 
             <Box sx={{ display: { xs: "none", md: "flex" },marginRight:"7rem" }}>

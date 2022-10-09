@@ -9,6 +9,7 @@ const GOOGLE_AUTH = `${BACK_END_BASE_URL}/auth-api/googleAuthentication`;
 const GITHUB_AUTH = `${BACK_END_BASE_URL}/auth-api/githubAuhentication`;
 const AUTH_PAGE = `${FRONT_END_BASE_URL}/Authentication/SignIn`;
 const NO_INTERNET_CONNECTION=`${FRONT_END_BASE_URL}/error-in-connecting`;
+
 const CREATE_ADMIN_ACCOUNT = "/auth-api/createAdminAccount";
 const SIGN_IN_ADMIN_ACCOUNT = "/auth-api/loginToAdminAccount";
 const VERIFY_JWT_TOKEN = "/auth-api/verifyJwtToken";
